@@ -1,0 +1,43 @@
+/**
+ * 작성자: KYD
+ * 기능: 보돌코 스코어드 라우터
+ * 프로세스 설명: 로그인 권한별 라우팅 처리, 어드민 페이지 접근 권한 처리
+ */
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoginPage from "../pages/auth/login-page";
+import AdminPage from "../pages/admin/admin-page";
+import PlayerRatingPage from "../pages/rating/player-rating-page";
+import DashboardPage from "../pages/dashboard-page";
+import MatchRatingListPage from "../pages/match/match-rating-list-page";
+import PlayerStatsPage from "../pages/player/player-stats-page";
+import NotFoundPage from "../pages/not-found-page";
+
+const Router = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* 인증 관련 */}
+        <Route path="/" element={<LoginPage />} />
+
+        {/* 메인 대시보드 */}
+        <Route path="/dashboard" element={<DashboardPage />} />
+
+        {/* 선수 관련 */}
+        <Route path="/player/:playerId/rating" element={<PlayerRatingPage />} />
+        <Route path="/player/:playerId/stats" element={<PlayerStatsPage />} />
+
+        {/* 경기 관련 */}
+        <Route path="/match/:matchId/ratings" element={<MatchRatingListPage />} />
+
+        {/* 관리자 */}
+        <Route path="/admin" element={<AdminPage />} />
+
+        {/* 404 페이지 */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default Router;

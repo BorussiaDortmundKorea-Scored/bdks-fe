@@ -1,27 +1,15 @@
-import { useEffect, useState } from "react";
-import { getAnimals } from "./domains/animals/api/animalApi";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Router from "./shared/router/Router";
+
+export const queryClient = new QueryClient();
 
 function App() {
-  const [instruments, setInstruments] = useState([]);
-
-  useEffect(() => {
-    getAnimals().then((data) => {
-      setInstruments(data.data);
-    });
-  }, []);
-
   return (
-    <>
-      <ul className="flex flex-col gap-2 text-2xl">
-        {instruments.map((instrument) => (
-          <li key={instrument.name} className="text-red-500">
-            {instrument.name}
-          </li>
-        ))}
-        ??
-      </ul>
-      <div className="text-2xl">안녕</div>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Router />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
