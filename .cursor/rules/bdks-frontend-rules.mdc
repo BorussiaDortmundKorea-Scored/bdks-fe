@@ -1,0 +1,765 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Always
+globs: *.ts,*.tsx
+---
+'typing "보돌코스코어드 프론트엔드 규칙 적용중"  before your answer' 
+
+# 프론트엔드 설계 가이드라인
+
+이 문서는 핵심 프론트엔드 설계 원칙과 규칙을 요약하고, 권장 패턴을 보여줍니다. 프론트엔드 코드 작성 시 이 가이드라인을 따르세요.
+
+# 가독성
+
+코드의 명확성과 이해하기 쉬운 정도를 향상시킵니다.
+
+## 매직 넘버에 이름 붙이기
+
+**Rule:** 명확성을 위해 매직 넘버를 명명된 상수로 대체하세요.
+
+**Reasoning:**
+
+- 설명되지 않은 값에 의미를 부여하여 명확성을 향상시킵니다.
+- 유지보수성을 향상시킵니다.
+
+#### 권장 패턴:
+
+```typescript
+const ANIMATION_DELAY_MS = 300;
+
+async function onLikeClick() {
+  await postLike(url);
+  await delay(ANIMATION_DELAY_MS); // Clearly indicates waiting for animation
+  await refetchPostLike();
+}
+```
+
+## 구현 세부사항 추상화
+
+**Rule:** 복잡한 로직/상호작용을 전용 컴포넌트/HOC로 추상화하세요.
+
+**Reasoning:**
+
+- 관심사를 분리하여 인지 부하를 줄입니다.
+- 컴포넌트의 가독성, 테스트 가능성 및 유지보수성을 향상시킵니다.
+
+#### 권장 패턴 1: 인증 가드
+
+(로그인 확인이 래퍼/가드 컴포넌트로 추상화됨)
+
+```tsx
+// App structure
+function App() {
+  return (
+    <AuthGuard>
+      {" "}
+      {/* Wrapper handles auth check */}
+      <LoginStartPage />
+    </AuthGuard>
+  );
+}
+
+// AuthGuard component encapsulates the check/redirect logic
+function AuthGuard({ children }) {
+  const status = useCheckLoginStatus();
+  useEffect(() => {
+    if (status === "LOGGED_IN") {
+      location.href = "/home";
+    }
+  }, [status]);
+
+  // Render children only if not logged in, otherwise render null (or loading)
+  return status !== "LOGGED_IN" ? children : null;
+}
+
+// LoginStartPage is now simpler, focused only on login UI/logic
+function LoginStartPage() {
+  // ... login related logic ONLY ...
+  return <>{/* ... login related components ... */}</>;
+}
+```
+
+#### 권장 패턴 2: 전용 상호작용 컴포넌트
+
+(대화 상자 로직이 전용 InviteButton 컴포넌트로 추상화됨)
+
+```tsx
+export function FriendInvitation() {
+  const { data } = useQuery(/* ... */);
+
+  return (
+    <>
+      {/* Use the dedicated button component */}
+      <InviteButton name={data.name} />
+      {/* ... other UI ... */}
+    </>
+  );
+}
+
+// InviteButton handles the confirmation flow internally
+function InviteButton({ name }) {
+  const handleClick = async () => {
+    const canInvite = await overlay.openAsync(({ isOpen, close }) => (
+      <ConfirmDialog
+        title={`Share with ${name}`}
+        // ... dialog setup ...
+      />
+    ));
+
+    if (canInvite) {
+      await sendPush();
+    }
+  };
+
+  return <Button onClick={handleClick}>Invite</Button>;
+}
+```
+
+## 조건부 렌더링을 위한 코드 경로 분리
+
+**Rule:** 크게 다른 조건부 UI/로직을 별도의 컴포넌트로 분리하세요.
+
+**Reasoning:**
+
+- 하나의 컴포넌트 내에서 복잡한 조건문을 피하여 가독성을 향상시킵니다.
+- 각 전문 컴포넌트가 명확하고 단일한 책임을 갖도록 합니다.
+
+#### 권장 패턴:
+
+(각 역할에 대한 별도 컴포넌트)
+
+```tsx
+function SubmitButton() {
+  const isViewer = useRole() === "viewer";
+
+  // Delegate rendering to specialized components
+  return isViewer ? <ViewerSubmitButton /> : <AdminSubmitButton />;
+}
+
+// Component specifically for the 'viewer' role
+function ViewerSubmitButton() {
+  return <TextButton disabled>Submit</TextButton>;
+}
+
+// Component specifically for the 'admin' (or non-viewer) role
+function AdminSubmitButton() {
+  useEffect(() => {
+    showAnimation(); // Animation logic isolated here
+  }, []);
+
+  return <Button type="submit">Submit</Button>;
+}
+```
+
+## 복잡한 삼항 연산자 단순화
+
+**Rule:** 가독성을 위해 복잡하거나 중첩된 삼항 연산자를 if/else 또는 IIFE로 대체하세요.
+
+**Reasoning:**
+
+- 조건부 로직을 빠르게 따라가기 쉽게 만듭니다.
+- 전반적인 코드 유지보수성을 향상시킵니다.
+
+#### 권장 패턴:
+
+(if 문을 사용한 IIFE)
+
+```typescript
+const status = (() => {
+  if (ACondition && BCondition) return "BOTH";
+  if (ACondition) return "A";
+  if (BCondition) return "B";
+  return "NONE";
+})();
+```
+
+## 시선 이동 줄이기 (간단한 로직 함께 배치)
+
+**Rule:** 컨텍스트 전환을 줄이기 위해 간단하고 지역화된 로직을 함께 배치하거나 인라인 정의를 사용하세요.
+
+**Reasoning:**
+
+- 위에서 아래로 읽기와 빠른 이해를 가능하게 합니다.
+- 컨텍스트 전환(시선 이동)에서 오는 인지 부하를 줄입니다.
+
+#### 권장 패턴 A: 인라인 switch
+
+```tsx
+function Page() {
+  const user = useUser();
+
+  // Logic is directly visible here
+  switch (user.role) {
+    case "admin":
+      return (
+        <div>
+          <Button disabled={false}>Invite</Button>
+          <Button disabled={false}>View</Button>
+        </div>
+      );
+    case "viewer":
+      return (
+        <div>
+          <Button disabled={true}>Invite</Button> {/* Example for viewer */}
+          <Button disabled={false}>View</Button>
+        </div>
+      );
+    default:
+      return null;
+  }
+}
+```
+
+#### 권장 패턴 B: 함께 배치된 간단한 정책 객체
+
+```tsx
+function Page() {
+  const user = useUser();
+  // Simple policy defined right here, easy to see
+  const policy = {
+    admin: { canInvite: true, canView: true },
+    viewer: { canInvite: false, canView: true },
+  }[user.role];
+
+  // Ensure policy exists before accessing properties if role might not match
+  if (!policy) return null;
+
+  return (
+    <div>
+      <Button disabled={!policy.canInvite}>Invite</Button>
+      <Button disabled={!policy.canView}>View</Button>
+    </div>
+  );
+}
+```
+
+## 복잡한 조건에 이름 붙이기
+
+**Rule:** 복잡한 부울 조건을 명명된 변수에 할당하세요.
+
+**Reasoning:**
+
+- 조건의 의미를 명확하게 만듭니다.
+- 인지 부하를 줄여 가독성과 자체 문서화를 향상시킵니다.
+
+#### 권장 패턴:
+
+(명명된 변수에 할당된 조건)
+
+```typescript
+const matchedProducts = products.filter((product) => {
+  // Check if product belongs to the target category
+  const isSameCategory = product.categories.some(
+    (category) => category.id === targetCategory.id
+  );
+
+  // Check if any product price falls within the desired range
+  const isPriceInRange = product.prices.some(
+    (price) => price >= minPrice && price <= maxPrice
+  );
+
+  // The overall condition is now much clearer
+  return isSameCategory && isPriceInRange;
+});
+```
+
+**Guidance:** 로직이 복잡하거나, 재사용되거나, 단위 테스트가 필요한 경우 조건에 이름을 붙이세요. 매우 간단하고 일회용 조건에는 이름을 붙이지 마세요.
+
+# 예측 가능성
+
+코드가 이름, 매개변수 및 컨텍스트를 기반으로 예상대로 동작하도록 보장합니다.
+
+## 반환 타입 표준화
+
+**Rule:** 유사한 함수/훅에 대해 일관된 반환 타입을 사용하세요.
+
+**Reasoning:**
+
+- 코드 예측 가능성을 향상시킵니다; 개발자가 반환 값 형태를 예상할 수 있습니다.
+- 일관되지 않은 타입으로 인한 혼란과 잠재적 오류를 줄입니다.
+
+#### 권장 패턴 1: API 훅 (React Query)
+
+```typescript
+// Always return the Query object
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
+
+// Assuming fetchUser returns Promise<UserType>
+function useUser(): UseQueryResult<UserType, Error> {
+  const query = useQuery({ queryKey: ["user"], queryFn: fetchUser });
+  return query;
+}
+
+// Assuming fetchServerTime returns Promise<Date>
+function useServerTime(): UseQueryResult<Date, Error> {
+  const query = useQuery({
+    queryKey: ["serverTime"],
+    queryFn: fetchServerTime,
+  });
+  return query;
+}
+```
+
+#### 권장 패턴 2: 유효성 검사 함수
+
+(일관된 타입 사용, 이상적으로는 Discriminated Union)
+
+```typescript
+type ValidationResult = { ok: true } | { ok: false; reason: string };
+
+function checkIsNameValid(name: string): ValidationResult {
+  if (name.length === 0) return { ok: false, reason: "Name cannot be empty." };
+  if (name.length >= 20)
+    return { ok: false, reason: "Name cannot be longer than 20 characters." };
+  return { ok: true };
+}
+
+function checkIsAgeValid(age: number): ValidationResult {
+  if (!Number.isInteger(age))
+    return { ok: false, reason: "Age must be an integer." };
+  if (age < 18) return { ok: false, reason: "Age must be 18 or older." };
+  if (age > 99) return { ok: false, reason: "Age must be 99 or younger." };
+  return { ok: true };
+}
+
+// Usage allows safe access to 'reason' only when ok is false
+const nameValidation = checkIsNameValid(name);
+if (!nameValidation.ok) {
+  console.error(nameValidation.reason);
+}
+```
+
+## 숨겨진 로직 드러내기 (단일 책임)
+
+**Rule:** Avoid hidden side effects; functions should only perform actions
+implied by their signature (SRP).
+
+**Reasoning:**
+
+- Leads to predictable behavior without unintended side effects.
+- 관심사 분리(SRP)를 통해 더 강력하고 테스트 가능한 코드를 만듭니다.
+
+#### Recommended Pattern:
+
+```typescript
+// Function *only* fetches balance
+async function fetchBalance(): Promise<number> {
+  const balance = await http.get<number>("...");
+  return balance;
+}
+
+// Caller explicitly performs logging where needed
+async function handleUpdateClick() {
+  const balance = await fetchBalance(); // Fetch
+  logging.log("balance_fetched"); // Log (explicit action)
+  await syncBalance(balance); // Another action
+}
+```
+
+## 고유하고 설명적인 이름 사용 (모호성 피하기)
+
+**Rule:** 모호성을 피하기 위해 사용자 정의 래퍼/함수에 고유하고 설명적인 이름을 사용하세요.
+
+**Reasoning:**
+
+- 모호성을 피하고 예측 가능성을 향상시킵니다.
+- 개발자가 이름에서 직접 특정 작업(예: 인증 추가)을 이해할 수 있게 합니다.
+
+#### 권장 패턴:
+
+```typescript
+// In httpService.ts - Clearer module name
+import { http as httpLibrary } from "@some-library/http";
+
+export const httpService = {
+  // Unique module name
+  async getWithAuth(url: string) {
+    // Descriptive function name
+    const token = await fetchToken();
+    return httpLibrary.get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+};
+
+// In fetchUser.ts - Usage clearly indicates auth
+import { httpService } from "./httpService";
+export async function fetchUser() {
+  // Name 'getWithAuth' makes the behavior explicit
+  return await httpService.getWithAuth("...");
+}
+```
+
+# 응집성
+
+관련 코드를 함께 유지하고 모듈이 잘 정의된 단일 목적을 갖도록 보장합니다.
+
+## 폼 응집성 고려
+
+**Rule:** 폼 요구사항에 기반하여 필드 수준 또는 폼 수준 응집성을 선택하세요.
+
+**Reasoning:**
+
+- 필드 독립성(필드 수준)과 폼 통일성(폼 수준) 사이의 균형을 맞춥니다.
+- 요구사항에 기반하여 관련 폼 로직이 적절하게 그룹화되도록 합니다.
+
+#### 권장 패턴 (필드 수준 예시):
+
+```tsx
+// Each field uses its own `validate` function
+import { useForm } from "react-hook-form";
+
+export function Form() {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    /* defaultValues etc. */
+  });
+
+  const onSubmit = handleSubmit((formData) => {
+    console.log("Form submitted:", formData);
+  });
+
+  return (
+    <form onSubmit={onSubmit}>
+      <div>
+        <input
+          {...register("name", {
+            validate: (value) =>
+              value.trim() === "" ? "Please enter your name." : true, // Example validation
+          })}
+          placeholder="Name"
+        />
+        {errors.name && <p>{errors.name.message}</p>}
+      </div>
+      <div>
+        <input
+          {...register("email", {
+            validate: (value) =>
+              /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
+                ? true
+                : "Invalid email address.", // Example validation
+          })}
+          placeholder="Email"
+        />
+        {errors.email && <p>{errors.email.message}</p>}
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+#### 권장 패턴 (폼 수준 예시):
+
+```tsx
+// A single schema defines validation for the whole form
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  name: z.string().min(1, "Please enter your name."),
+  email: z.string().min(1, "Please enter your email.").email("Invalid email."),
+});
+
+export function Form() {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: { name: "", email: "" },
+  });
+
+  const onSubmit = handleSubmit((formData) => {
+    console.log("Form submitted:", formData);
+  });
+
+  return (
+    <form onSubmit={onSubmit}>
+      <div>
+        <input {...register("name")} placeholder="Name" />
+        {errors.name && <p>{errors.name.message}</p>}
+      </div>
+      <div>
+        <input {...register("email")} placeholder="Email" />
+        {errors.email && <p>{errors.email.message}</p>}
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+**Guidance:** Choose **field-level** for independent validation, async checks,
+or reusable fields. Choose **form-level** for related fields, wizard forms, or
+interdependent validation.
+
+## 기능/도메인별 코드 구성
+
+**Rule:** 코드 유형뿐만 아니라 기능/도메인별로 디렉토리를 구성하세요.
+
+**Reasoning:**
+
+- 관련 파일을 함께 유지하여 응집성을 높입니다.
+- 기능 이해, 개발, 유지보수 및 삭제를 단순화합니다.
+
+#### 권장 패턴:
+
+(Organized by feature/domain)
+
+```
+src/
+├── components/ # Shared/common components
+├── hooks/      # Shared/common hooks
+├── utils/      # Shared/common utils
+├── domains/
+│   ├── user/
+│   │   ├── components/
+│   │   │   └── UserProfileCard.tsx
+│   │   ├── hooks/
+│   │   │   └── useUser.ts
+│   │   └── index.ts # Optional barrel file
+│   ├── product/
+│   │   ├── components/
+│   │   │   └── ProductList.tsx
+│   │   ├── hooks/
+│   │   │   └── useProducts.ts
+│   │   └── ...
+│   └── order/
+│       ├── components/
+│       │   └── OrderSummary.tsx
+│       ├── hooks/
+│       │   └── useOrder.ts
+│       └── ...
+└── App.tsx
+```
+
+## Relating Magic Numbers to Logic
+
+**Rule:** Define constants near related logic or ensure names link them clearly.
+
+**Reasoning:**
+
+- Improves cohesion by linking constants to the logic they represent.
+- Prevents silent failures caused by updating logic without updating related
+  constants.
+
+#### Recommended Pattern:
+
+```typescript
+// Constant clearly named and potentially defined near animation logic
+const ANIMATION_DELAY_MS = 300;
+
+async function onLikeClick() {
+  await postLike(url);
+  // Delay uses the constant, maintaining the link to the animation
+  await delay(ANIMATION_DELAY_MS);
+  await refetchPostLike();
+}
+```
+
+_Ensure constants are maintained alongside the logic they depend on or clearly
+named to show the relationship._
+
+# Coupling
+
+Minimizing dependencies between different parts of the codebase.
+
+## Balancing Abstraction and Coupling (Avoiding Premature Abstraction)
+
+**Rule:** Avoid premature abstraction of duplicates if use cases might diverge;
+prefer lower coupling.
+
+**Reasoning:**
+
+- Avoids tight coupling from forcing potentially diverging logic into one
+  abstraction.
+- Allowing some duplication can improve decoupling and maintainability when
+  future needs are uncertain.
+
+#### Guidance:
+
+Before abstracting, consider if the logic is truly identical and likely to
+_stay_ identical across all use cases. If divergence is possible (e.g.,
+different pages needing slightly different behavior from a shared hook like
+`useOpenMaintenanceBottomSheet`), keeping the logic separate initially (allowing
+duplication) can lead to more maintainable, decoupled code. Discuss trade-offs
+with the team. _[No specific 'good' code example here, as the recommendation is
+situational awareness rather than a single pattern]._
+
+## Scoping State Management (Avoiding Overly Broad Hooks)
+
+**Rule:** Break down broad state management into smaller, focused
+hooks/contexts.
+
+**Reasoning:**
+
+- Reduces coupling by ensuring components only depend on necessary state slices.
+- Improves performance by preventing unnecessary re-renders from unrelated state
+  changes.
+
+#### Recommended Pattern:
+
+(Focused hooks, low coupling)
+
+```typescript
+// Hook specifically for cardId query param
+import { useQueryParam, NumberParam } from "use-query-params";
+import { useCallback } from "react";
+
+export function useCardIdQueryParam() {
+  // Assuming 'query' provides the raw param value
+  const [cardIdParam, setCardIdParam] = useQueryParam("cardId", NumberParam);
+
+  const setCardId = useCallback(
+    (newCardId: number | undefined) => {
+      setCardIdParam(newCardId, "replaceIn"); // Or 'push' depending on desired history behavior
+    },
+    [setCardIdParam]
+  );
+
+  // Provide a stable return tuple
+  return [cardIdParam ?? undefined, setCardId] as const;
+}
+
+// Separate hook for date range, etc.
+// export function useDateRangeQueryParam() { /* ... */ }
+```
+
+Components now only import and use `useCardIdQueryParam` if they need `cardId`,
+decoupling them from date range state, etc.
+
+## Eliminating Props Drilling with Composition
+
+**Rule:** Use Component Composition instead of Props Drilling.
+
+**Reasoning:**
+
+- Significantly reduces coupling by eliminating unnecessary intermediate
+  dependencies.
+- Makes refactoring easier and clarifies data flow in flatter component trees.
+
+#### Recommended Pattern:
+
+```tsx
+import React, { useState } from "react";
+
+// Assume Modal, Input, Button, ItemEditList components exist
+
+function ItemEditModal({ open, items, recommendedItems, onConfirm, onClose }) {
+  const [keyword, setKeyword] = useState("");
+
+  // Render children directly within Modal, passing props only where needed
+  return (
+    <Modal open={open} onClose={onClose}>
+      {/* Input and Button rendered directly */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "1rem",
+        }}
+      >
+        <Input
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)} // State managed here
+          placeholder="Search items..."
+        />
+        <Button onClick={onClose}>Close</Button>
+      </div>
+      {/* ItemEditList rendered directly, gets props it needs */}
+      <ItemEditList
+        keyword={keyword} // Passed directly
+        items={items} // Passed directly
+        recommendedItems={recommendedItems} // Passed directly
+        onConfirm={onConfirm} // Passed directly
+      />
+    </Modal>
+  );
+}
+
+// The intermediate ItemEditBody component is eliminated, reducing coupling.
+
+```
+
+// ... existing code ...
+// The intermediate ItemEditBody component is eliminated, reducing coupling.
+
+```
+
+## React.FC 사용 자제하기
+
+**Rule:** React.FC 타입 대신 명시적인 props 타입 정의를 사용합니다.
+
+**Reasoning:**
+
+- React.FC는 children을 암시적으로 포함하여 의도하지 않은 props 허용 문제가 있습니다.
+- TypeScript의 제네릭 문법 지원에 제한이 있습니다.
+- React 18 이후부터는 사용을 권장하지 않습니다.
+
+#### 안티패턴 (사용하지 말 것):
+
+```tsx
+interface ButtonProps {
+  text: string;
+  onClick: () => void;
+}
+
+// 안티패턴: React.FC 사용
+const Button: React.FC<ButtonProps> = ({ text, onClick, children }) => {
+  return (
+    <button onClick={onClick}>
+      {text}
+      {children} {/* children이 필요하지 않더라도 암시적으로 사용 가능 */}
+    </button>
+  );
+};
+```
+
+#### 권장 패턴:
+
+```tsx
+interface ButtonProps {
+  text: string;
+  onClick: () => void;
+  children?: React.ReactNode; // 필요한 경우에만 명시적으로 선언
+}
+
+// 권장: 함수형 컴포넌트에 props 타입을 직접 명시
+const Button = ({ text, onClick, children }: ButtonProps) => {
+  return (
+    <button onClick={onClick}>
+      {text}
+      {children}
+    </button>
+  );
+};
+
+// 제네릭 컴포넌트의 경우 더 명확하게 타입 정의 가능
+function List<T>({ items, renderItem }: { 
+  items: T[]; 
+  renderItem: (item: T) => React.ReactNode;
+}) {
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <li key={index}>{renderItem(item)}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+
+
+
+**참고:** React 18 이후부터는 컴포넌트 타입을 정의할 때 React.FC 대신 명시적인 props 타입 정의를 선호합니다. 이는 타입의 명확성과 의도를 더 잘 드러내며, 불필요한 children props를 방지할 수 있습니다.
