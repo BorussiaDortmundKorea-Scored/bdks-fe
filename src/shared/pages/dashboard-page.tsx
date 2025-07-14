@@ -1,8 +1,14 @@
+import LogoutButton from "../components/LogoutButton";
+
 const DashboardPage = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8">축구 평점 시스템</h1>
+        {/* 헤더 영역 */}
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">축구 평점 시스템</h1>
+          <LogoutButton />
+        </div>
 
         {/* 현재 경기 포메이션 */}
         <section className="mb-8">
