@@ -1,13 +1,15 @@
 ---
-description: 
-globs: 
-alwaysApply: false
+alwaysApply: true
 ---
+
 ---
+
 description: Always
-globs: *.ts,*.tsx
+globs: _.ts,_.tsx
+
 ---
-'typing "보돌코스코어드 프론트엔드 규칙 적용중"  before your answer' 
+
+'typing "보돌코스코어드 프론트엔드 규칙 적용중" before your answer'
 
 # 프론트엔드 설계 가이드라인
 
@@ -253,14 +255,10 @@ function Page() {
 ```typescript
 const matchedProducts = products.filter((product) => {
   // Check if product belongs to the target category
-  const isSameCategory = product.categories.some(
-    (category) => category.id === targetCategory.id
-  );
+  const isSameCategory = product.categories.some((category) => category.id === targetCategory.id);
 
   // Check if any product price falls within the desired range
-  const isPriceInRange = product.prices.some(
-    (price) => price >= minPrice && price <= maxPrice
-  );
+  const isPriceInRange = product.prices.some((price) => price >= minPrice && price <= maxPrice);
 
   // The overall condition is now much clearer
   return isSameCategory && isPriceInRange;
@@ -313,14 +311,12 @@ type ValidationResult = { ok: true } | { ok: false; reason: string };
 
 function checkIsNameValid(name: string): ValidationResult {
   if (name.length === 0) return { ok: false, reason: "Name cannot be empty." };
-  if (name.length >= 20)
-    return { ok: false, reason: "Name cannot be longer than 20 characters." };
+  if (name.length >= 20) return { ok: false, reason: "Name cannot be longer than 20 characters." };
   return { ok: true };
 }
 
 function checkIsAgeValid(age: number): ValidationResult {
-  if (!Number.isInteger(age))
-    return { ok: false, reason: "Age must be an integer." };
+  if (!Number.isInteger(age)) return { ok: false, reason: "Age must be an integer." };
   if (age < 18) return { ok: false, reason: "Age must be 18 or older." };
   if (age > 99) return { ok: false, reason: "Age must be 99 or younger." };
   return { ok: true };
@@ -431,8 +427,7 @@ export function Form() {
       <div>
         <input
           {...register("name", {
-            validate: (value) =>
-              value.trim() === "" ? "Please enter your name." : true, // Example validation
+            validate: (value) => (value.trim() === "" ? "Please enter your name." : true), // Example validation
           })}
           placeholder="Name"
         />
@@ -442,9 +437,7 @@ export function Form() {
         <input
           {...register("email", {
             validate: (value) =>
-              /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
-                ? true
-                : "Invalid email address.", // Example validation
+              /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) ? true : "Invalid email address.", // Example validation
           })}
           placeholder="Email"
         />
@@ -624,7 +617,7 @@ export function useCardIdQueryParam() {
     (newCardId: number | undefined) => {
       setCardIdParam(newCardId, "replaceIn"); // Or 'push' depending on desired history behavior
     },
-    [setCardIdParam]
+    [setCardIdParam],
   );
 
   // Provide a stable return tuple
@@ -688,13 +681,12 @@ function ItemEditModal({ open, items, recommendedItems, onConfirm, onClose }) {
 }
 
 // The intermediate ItemEditBody component is eliminated, reducing coupling.
-
 ```
 
 // ... existing code ...
 // The intermediate ItemEditBody component is eliminated, reducing coupling.
 
-```
+````
 
 ## React.FC 사용 자제하기
 
@@ -723,7 +715,7 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, children }) => {
     </button>
   );
 };
-```
+````
 
 #### 권장 패턴:
 
@@ -745,10 +737,7 @@ const Button = ({ text, onClick, children }: ButtonProps) => {
 };
 
 // 제네릭 컴포넌트의 경우 더 명확하게 타입 정의 가능
-function List<T>({ items, renderItem }: { 
-  items: T[]; 
-  renderItem: (item: T) => React.ReactNode;
-}) {
+function List<T>({ items, renderItem }: { items: T[]; renderItem: (item: T) => React.ReactNode }) {
   return (
     <ul>
       {items.map((item, index) => (
@@ -758,8 +747,5 @@ function List<T>({ items, renderItem }: {
   );
 }
 ```
-
-
-
 
 **참고:** React 18 이후부터는 컴포넌트 타입을 정의할 때 React.FC 대신 명시적인 props 타입 정의를 선호합니다. 이는 타입의 명확성과 의도를 더 잘 드러내며, 불필요한 children props를 방지할 수 있습니다.
