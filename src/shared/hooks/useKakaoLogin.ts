@@ -16,9 +16,8 @@ const useKakaoLogin = () => {
     setIsLoading(true);
 
     try {
-      // 환경에 따라 리다이렉트 URL 설정
-      const isProduction = window.location.hostname !== "localhost";
-      const redirectUrl = isProduction ? "https://bdks.vercel.app/dashboard" : "http://localhost:5173/dashboard";
+      // 임시 하드코딩으로 문제 해결
+      const redirectUrl = "https://bdks.vercel.app/dashboard";
 
       console.log("카카오 로그인 리다이렉트 URL:", redirectUrl);
 
