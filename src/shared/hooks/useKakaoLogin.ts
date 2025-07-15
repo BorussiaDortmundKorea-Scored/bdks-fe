@@ -16,10 +16,15 @@ const useKakaoLogin = () => {
     setIsLoading(true);
 
     try {
+      // 환경변수에서 리다이렉트 URL 가져오기, 없으면 현재 origin 사용
+      const redirectUrl = `${import.meta.env.VITE_REDIRECT_URL}/dashboard`;
+
+      console.log("카카오 로그인 리다이렉트 URL:", redirectUrl);
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "kakao",
         options: {
-          redirectTo: `${window.location.origin}/dashboard`,
+          redirectTo: redirectUrl,
           queryParams: {
             // 카카오에서 추가 정보를 요청할 수 있습니다
             scope: "profile_nickname profile_image account_email",
