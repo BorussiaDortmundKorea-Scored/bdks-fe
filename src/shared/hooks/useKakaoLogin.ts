@@ -16,8 +16,8 @@ const useKakaoLogin = () => {
     setIsLoading(true);
 
     try {
-      // 임시 하드코딩으로 문제 해결
-      const redirectUrl = "https://bdks.vercel.app/dashboard";
+      const baseUrl = import.meta.env.VITE_BASE_URL;
+      const redirectUrl = `${baseUrl}/dashboard`;
 
       console.log("카카오 로그인 리다이렉트 URL:", redirectUrl);
 
@@ -26,7 +26,6 @@ const useKakaoLogin = () => {
         options: {
           redirectTo: redirectUrl,
           queryParams: {
-            // 카카오에서 추가 정보를 요청할 수 있습니다
             scope: "profile_nickname profile_image account_email",
           },
         },
