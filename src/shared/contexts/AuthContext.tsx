@@ -56,6 +56,41 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   useEffect(() => {
+    // OAuth 콜백 처리 - URL 해시에서 access_token 추출 및 세션 설정
+    const handleOAuthCallback = async () => {
+      if (window.location.hash.includes("access_token")) {
+        console.log("OAuth 콜백 처리 시작");
+
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get("access_token");
+        const refreshToken = params.get("refresh_token");
+
+        console.log("URL 파라미터:", { accessToken: !!accessToken, refreshToken: !!refreshToken });
+
+        if (accessToken && refreshToken) {
+          try {
+            const { data, error } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken,
+            });
+
+            if (error) {
+              console.error("OAuth 세션 설정 오류:", error);
+            } else if (data.session) {
+              console.log("OAuth 로그인 성공:", data.session.user.email);
+              // localStorage에 토큰 저장
+              localStorage.setItem("access_token", data.session.access_token);
+              // 해시 제거 (URL 깔끔하게)
+              window.location.hash = "";
+            }
+          } catch (err) {
+            console.error("OAuth 콜백 처리 예외:", err);
+          }
+        }
+      }
+    };
+
     // 초기 세션 확인
     const getInitialSession = async () => {
       try {
@@ -82,6 +117,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       }
     };
 
+    // OAuth 콜백 처리 먼저 실행
+    handleOAuthCallback();
+    // 그 다음 초기 세션 확인
     getInitialSession();
 
     // 인증 상태 변경 감지
