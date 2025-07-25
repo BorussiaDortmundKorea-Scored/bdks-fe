@@ -7,7 +7,6 @@ import type { Session, User } from "@supabase/supabase-js";
 interface AuthContextType {
   user: User | null;
   session: Session | null;
-  isLoading: boolean;
   signOut: () => Promise<void>;
 }
 
@@ -130,10 +129,18 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  // 로딩 중일 때는 로딩 스피너 표시
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   const value = {
     user,
     session,
-    isLoading,
     signOut,
   };
 
