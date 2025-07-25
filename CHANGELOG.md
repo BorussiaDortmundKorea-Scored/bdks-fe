@@ -1,15 +1,20 @@
 # Changelog
 
-이 프로젝트의 모든 주목할만한 변경사항이 이 파일에 기록됩니다.
-
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
-## [Unreleased] - 미정
-
 ### 🚧 진행 예정
 
-- SUPABASE 연동 작업
+- 소스코드 리팩토링(도메인별정리, eslinter등 누락된 설정 추가)
+- YDS 연동후 디자인
+
+## [0.0.4] - 2025-07-25
+
+- [x] **strict mode** 제거
+- [x] **선수단, 포지션** 테이블 제작, 정책 부여
+- [x] **선수단** 이미지 storage 등록
+- [x] **profile** 테이블 제작: supabase에서 제공하는 auth.users을 fk로 엮어서 제작
+- [x] **닉네임설정페이지** 초안 제작
 
 ## [0.0.1] - 2025-07-10
 
