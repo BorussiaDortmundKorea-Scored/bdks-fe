@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const AuthRoute = () => {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, profile } = useAuth();
 
   // 로딩 중일 때는 로딩 화면 표시
   if (isLoading) {

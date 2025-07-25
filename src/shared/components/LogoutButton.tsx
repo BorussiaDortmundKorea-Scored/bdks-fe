@@ -3,7 +3,7 @@ import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 const LogoutButton: React.FC = () => {
-  const { user, signOut } = useAuth();
+  const { signOut, profile } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -14,40 +14,16 @@ const LogoutButton: React.FC = () => {
   };
 
   const getUserDisplayName = () => {
-    if (!user) return "사용자";
-
-    // 익명 사용자인지 확인
-    if (user.is_anonymous) {
-      return "익명 사용자";
-    }
+    if (!profile) return "사용자";
 
     // 카카오 사용자 정보 표시
-    return user.email || user.user_metadata?.name || user.user_metadata?.full_name || "사용자";
+    return profile.nickname || "사용자";
   };
-
-  const getUserType = () => {
-    if (!user) return "";
-
-    if (user.is_anonymous) {
-      return "(익명)";
-    }
-
-    if (user.app_metadata?.provider === "kakao") {
-      return "(카카오)";
-    }
-
-    return "";
-  };
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <div className="flex items-center gap-4">
       <div className="text-sm text-gray-600">
-        <span className="font-medium">{getUserDisplayName()}</span>
-        <span className="ml-1 text-gray-400">{getUserType()}</span>
+        <span className="font-medium">{getUserDisplayName()}님</span>
       </div>
       <button
         onClick={handleLogout}
