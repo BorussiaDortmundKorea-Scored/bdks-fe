@@ -16,6 +16,7 @@ import MatchRatingListPage from "../pages/match/match-rating-list-page";
 import PlayerStatsPage from "../pages/player/player-stats-page";
 import NotFoundPage from "../pages/not-found-page";
 import NicknamePage from "../pages/auth/nickname-page";
+import NicknameRoute from "../components/NicknameRoute";
 
 const Router = () => {
   return (
@@ -27,11 +28,14 @@ const Router = () => {
             <Route path="/" element={<LoginPage />} />
           </Route>
 
-          {/* 프라이빗 라우트 - 로그인된 사용자만 접근 */}
-          <Route element={<AuthRoute />}>
+          {/* 라우트 - 로그인 O, 닉네임 설정x 또는 닉네임 변경할 사용자만 접근*/}
+          <Route element={<NicknameRoute />}>
             {/* 닉네임 설정 */}
             <Route path="/nickname" element={<NicknamePage />} />
+          </Route>
 
+          {/* 어스 라우트 - 로그인 O + 닉네임 설정O 사용자만 접근 */}
+          <Route element={<AuthRoute />}>
             {/* 메인 대시보드 */}
             <Route path="/dashboard" element={<DashboardPage />} />
 

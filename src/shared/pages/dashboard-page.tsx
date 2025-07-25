@@ -1,18 +1,6 @@
-import { useEffect } from "react";
 import LogoutButton from "../components/LogoutButton";
-import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
-  const { profile } = useAuth();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!profile?.nickname) {
-      console.log("닉네임이 없어서 /nickname으로 이동");
-      navigate("/nickname");
-    }
-  }, [profile]);
-
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 py-8">

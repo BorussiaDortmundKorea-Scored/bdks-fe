@@ -3,7 +3,7 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { supabase } from "../../api/supabaseClient";
@@ -12,14 +12,8 @@ const NicknamePage = () => {
   const [nickname, setNickname] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const { user, refreshProfile } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
-
-  // 디버깅용 로그
-  useEffect(() => {
-    console.log("NicknamePage 렌더링됨");
-    console.log("user:", user);
-  }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,10 +39,6 @@ const NicknamePage = () => {
         }
         return;
       }
-
-      // 프로필 새로고침
-      await refreshProfile();
-
       // 대시보드로 이동
       navigate("/dashboard", { replace: true });
     } catch (err) {

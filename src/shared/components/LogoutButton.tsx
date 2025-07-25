@@ -3,7 +3,7 @@ import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 const LogoutButton: React.FC = () => {
-  const { signOut, profile } = useAuth();
+  const { signOut, user } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -14,10 +14,10 @@ const LogoutButton: React.FC = () => {
   };
 
   const getUserDisplayName = () => {
-    if (!profile) return "사용자";
+    if (!user) return "사용자";
 
     // 카카오 사용자 정보 표시
-    return profile.nickname || "사용자";
+    return user.email || "사용자";
   };
 
   return (
