@@ -1,6 +1,6 @@
 // src/shared/components/LogoutButton.tsx
 import React from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../domains/auth/contexts/AuthContext";
 
 const LogoutButton: React.FC = () => {
   const { signOut, user } = useAuth();

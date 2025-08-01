@@ -1,6 +1,6 @@
 // src/shared/hooks/useAnonymousLogin.ts
 import { useState } from "react";
-import { supabase } from "../api/supabaseClient";
+import { supabase } from "@shared/api/supabaseClient";
 
 interface LoginResult {
   success: boolean;

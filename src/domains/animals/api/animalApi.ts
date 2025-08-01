@@ -1,6 +1,6 @@
 // domains/animal/api/animalApi.ts
 import { axiosPublic } from "../../../shared/api/axiosPublic";
-import { axiosAuth } from "../../../shared/api/axiosAuth";
+import { axiosAuth } from "../../auth/api/axiosAuth";
 
 // 공개 데이터
 export const getAnimals = () => axiosPublic.get("/animal");

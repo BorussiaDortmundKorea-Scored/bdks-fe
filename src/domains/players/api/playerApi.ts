@@ -1,4 +1,4 @@
-import { axiosAuth } from "../../../shared/api/axiosAuth";
+import { axiosAuth } from "../../auth/api/axiosAuth";
 
 export interface IPlayer {
   id: string;

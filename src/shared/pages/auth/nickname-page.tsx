@@ -5,7 +5,7 @@
  */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../domains/auth/contexts/AuthContext";
 import { supabase } from "../../api/supabaseClient";
 
 const NicknamePage = () => {

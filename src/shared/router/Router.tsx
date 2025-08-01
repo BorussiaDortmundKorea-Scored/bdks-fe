@@ -5,10 +5,10 @@
  */
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "../contexts/AuthContext";
+import { AuthProvider } from "../../domains/auth/contexts/AuthContext";
 import PublicRoute from "../components/PublicRoute";
-import AuthRoute from "../components/AuthRoute";
-import LoginPage from "../pages/auth/login-page";
+import AuthRoute from "../../domains/auth/provider/AuthRoute";
+import LoginPage from "@auth/pages/login-page";
 import AdminPage from "../pages/admin/admin-page";
 import PlayerRatingPage from "../pages/rating/player-rating-page";
 import DashboardPage from "../pages/dashboard-page";

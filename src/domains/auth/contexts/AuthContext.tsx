@@ -1,7 +1,7 @@
 // src/shared/contexts/AuthContext.tsx
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { supabase } from "../api/supabaseClient";
+import { supabase } from "../../../shared/api/supabaseClient";
 import type { Session, User } from "@supabase/supabase-js";
 
 interface AuthContextType {

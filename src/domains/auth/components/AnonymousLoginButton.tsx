@@ -1,6 +1,6 @@
 // src/shared/components/AnonymousLoginButton.tsx
 import React from "react";
-import useAnonymousLogin from "../hooks/useAnonymousLogin";
+import useAnonymousLogin from "@auth/hooks/useAnonymousLogin";
 
 const AnonymousLoginButton: React.FC = () => {
   const { signinAnonymously, isLoading } = useAnonymousLogin();

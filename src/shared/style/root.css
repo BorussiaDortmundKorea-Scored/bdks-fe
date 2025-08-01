@@ -1,1 +1,39 @@
 @import "tailwindcss";
+@import url("https://fastly.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css");
+
+@font-face {
+  font-family: "Shilla_Culture";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/Shilla_CultureB-Medium.woff2")
+    format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Shilla_Culture";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/Shilla_CultureB-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@theme {
+  /* Background Colors */
+  --color-background-primary: #19191f;
+  --color-background-secondary: #20242d;
+
+  /* Font Family */
+  --font-yds-wanted: "Wanted Sans Variable";
+  --font-shilla-culture: "Shilla_Culture";
+}
+
+body {
+  background-color: var(--color-background-primary);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-yds-wanted);
+}
+
+@layer components {
+}
