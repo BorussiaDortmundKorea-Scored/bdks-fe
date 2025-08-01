@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev:prod": "vite --mode prod",
-    "dev:dev": "vite --mode dev",
+    "dev:prod": "vite --mode prod --host",
+    "dev:dev": "vite --mode dev --host",
     "build:prod": "tsc -b && vite build --mode prod",
     "build:dev": "tsc -b && vite build --mode dev",
     "lint": "eslint .",
@@ -23,9 +23,10 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",
     "@tailwindcss/vite": "^4.1.11",
-    "axios": "^1.10.0",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
+    "@youngduck/yd-ui": "^0.1.2",
+    "axios": "^1.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
