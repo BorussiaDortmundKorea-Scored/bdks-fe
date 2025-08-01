@@ -1,6 +1,9 @@
 // src/shared/components/KakaoLoginButton.tsx
 import React from "react";
 import useKakaoLogin from "@auth/hooks/useKakaoLogin";
+import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
+
+const KAKAO_LOGIN_BUTTON_IMAGE = `${SUPABASE_STORAGE_URL}/asset//kakao_login_logo.png`;
 
 const KakaoLoginButton: React.FC = () => {
   const { signinWithKakao, isLoading } = useKakaoLogin();
@@ -18,14 +21,15 @@ const KakaoLoginButton: React.FC = () => {
     <button
       onClick={handleKakaoLogin}
       disabled={isLoading}
-      className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-300 text-black font-bold py-2 px-4 rounded flex items-center justify-center gap-2 transition-colors w-full"
+      className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#FEE500] text-[20px] font-bold"
       aria-label="카카오로 로그인"
     >
       {isLoading ? (
         <span>로그인 중...</span>
       ) : (
         <>
-          <span>카카오로 로그인</span>
+          <img src={KAKAO_LOGIN_BUTTON_IMAGE} alt="Kakao Login Button" className="h-6 w-6" />
+          <span>카카오 로그인</span>
         </>
       )}
     </button>

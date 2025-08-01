@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url("https://fastly.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css");
+@import "tailwindcss";
 
 @font-face {
   font-family: "Shilla_Culture";
@@ -22,11 +22,51 @@
   --color-background-primary: #19191f;
   --color-background-secondary: #20242d;
 
+  /* Color Tokens */
+  --color-primary-50: #fcf6df;
+  --color-primary-100: #c9bf91;
+  --color-primary-200: #fde68a;
+  --color-primary-300: #eccb43;
+  --color-primary-400: #e9be11;
+
+  --color-rating-red: #e81215;
+  --color-rating-blue: #0f71c0;
+
+  /* Typography Tokens */
+  --font-size-yds-h1: 48px;
+  --line-height-yds-h1: 58px;
+  --font-weight-yds-h1: 600;
+  --font-size-yds-h2: 40px;
+  --line-height-yds-h2: 48px;
+  --font-weight-yds-h2: 600;
+  --font-size-yds-s1: 24px;
+  --line-height-yds-s1: 30px;
+  --font-weight-yds-s1: 600;
+  --font-size-yds-s2: 20px;
+  --line-height-yds-s2: 26px;
+  --font-weight-yds-s2: 600;
+  --font-size-yds-b1: 18px;
+  --line-height-yds-b1: 26px;
+  --font-weight-yds-b1: 400;
+  --font-size-yds-b2: 16px;
+  --line-height-yds-b2: 24px;
+  --font-weight-yds-b2: 400;
+  --font-size-yds-c1m: 12px;
+  --line-height-yds-c1m: 16px;
+  --font-weight-yds-c1m: 500;
+  --font-size-yds-c1r: 12px;
+  --line-height-yds-c1r: 16px;
+  --font-weight-yds-c1r: 400;
+  --font-size-yds-c2r: 10px;
+  --line-height-yds-c2r: 14px;
+  --font-weight-yds-c2r: 400;
+
   /* Font Family */
   --font-yds-wanted: "Wanted Sans Variable";
   --font-shilla-culture: "Shilla_Culture";
 }
 
+html,
 body {
   background-color: var(--color-background-primary);
   box-sizing: border-box;
