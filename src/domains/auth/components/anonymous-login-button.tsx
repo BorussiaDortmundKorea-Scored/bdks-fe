@@ -21,7 +21,6 @@ const AnonymousLoginButton: React.FC = () => {
       onClick={handleAnonymousLogin}
       disabled={isLoading}
       aria-label="로그인 없이 이용하기"
-      className="text-red-400"
     >
       {isLoading ? (
         <span>로그인 중...</span>

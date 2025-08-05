@@ -1,5 +1,6 @@
 @import url("https://fastly.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css");
 @import "tailwindcss";
+@import "@youngduck/yd-ui/styles";
 
 @font-face {
   font-family: "Shilla_Culture";
