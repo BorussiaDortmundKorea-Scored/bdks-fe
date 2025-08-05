@@ -26,6 +26,7 @@ const config: StorybookConfig = {
         "@shared": path.resolve(__dirname, "../src/shared"),
         "@players": path.resolve(__dirname, "../src/domains/players"),
         "@auth": path.resolve(__dirname, "../src/domains/auth"),
+        "@animals": path.resolve(__dirname, "../src/domains/animals"),
       };
     }
     return config;

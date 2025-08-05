@@ -27,7 +27,8 @@
     "paths": {
       "@shared/*": ["src/shared/*"],
       "@players/*": ["src/domains/players/*"],
-      "@auth/*": ["src/domains/auth/*"]
+      "@auth/*": ["src/domains/auth/*"],
+      "@animals/*": ["src/domains/animals/*"]
     }
   },
   "include": ["src"]
