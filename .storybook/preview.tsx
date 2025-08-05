@@ -3,32 +3,10 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { queryClient } from "../src/App";
 import "@shared/style/root.css";
+import { handlers } from "@shared/mocks/handlers/handlers";
 
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
-
-const GalaxyViewports = {
-  GalaxyS24: {
-    name: "Galaxy S24",
-    styles: {
-      width: "360px",
-      height: "647px",
-    },
-  },
-  GalaxyS24Plus: {
-    name: "Galaxy S24 Plus",
-    styles: {
-      width: "384px",
-      height: "701px",
-    },
-  },
-  GalaxyS24Ultra: {
-    name: "Galaxy S24 Ultra",
-    styles: {
-      width: "384px",
-      height: "701px",
-    },
-  },
-};
+import { GalaxyViewports } from "./constant/galaxy-viewport";
 
 const preview: Preview = {
   parameters: {
@@ -44,6 +22,9 @@ const preview: Preview = {
         ...INITIAL_VIEWPORTS,
         ...GalaxyViewports,
       },
+    },
+    msw: {
+      handlers: [...handlers],
     },
   },
   initialGlobals: {
