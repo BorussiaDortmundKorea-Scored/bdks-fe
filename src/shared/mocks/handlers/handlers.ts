@@ -1,4 +1,3 @@
-import { GuideHandlers } from "./Guide/GuideHandlers";
-import { AnimalHandlers } from "./Animal/animal-handlers";
+import { AnimalHandlers } from "@animals/mocks/animal-handlers";
 
-export const handlers = [...GuideHandlers, ...AnimalHandlers];
+export const handlers = [...AnimalHandlers];

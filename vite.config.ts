@@ -45,6 +45,7 @@ export default defineConfig({
       { find: "@shared", replacement: path.resolve(__dirname, "src/shared") },
       { find: "@players", replacement: path.resolve(__dirname, "src/domains/players") },
       { find: "@auth", replacement: path.resolve(__dirname, "src/domains/auth") },
+      { find: "@animals", replacement: path.resolve(__dirname, "src/domains/animals") },
     ],
   },
 });
