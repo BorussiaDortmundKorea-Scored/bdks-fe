@@ -5,6 +5,15 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   plugins: [react()],
 
+  resolve: {
+    alias: {
+      "@shared": path.resolve(__dirname, "src/shared"),
+      "@players": path.resolve(__dirname, "src/domains/players"),
+      "@auth": path.resolve(__dirname, "src/domains/auth"),
+      "@animals": path.resolve(__dirname, "src/domains/animals"),
+    },
+  },
+
   test: {
     globals: true,
     environment: "jsdom",

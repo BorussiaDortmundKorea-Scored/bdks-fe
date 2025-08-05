@@ -13,6 +13,9 @@ const dirname = typeof __dirname !== "undefined" ? __dirname : path.dirname(file
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: ["./src/setupTests.js"],
     projects: [
       {
         extends: true,
