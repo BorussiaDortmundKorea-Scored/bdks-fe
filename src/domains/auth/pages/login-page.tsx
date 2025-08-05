@@ -28,12 +28,12 @@ const LoginPage = () => {
       <PlayerRatingRotator />
       <img src={SIGNAL_IDUNA_PARK_IMAGE} alt="Dortmund Logo" className="h-auto w-full" />
       <h1 className="text-primary-400 font-shilla-culture text-center text-4xl font-bold">보돌코 스코어드</h1>
-      <div className="flex w-full flex-col gap-2">
+      <div className="flex w-full flex-col gap-4">
         <KakaoLoginButton />
         <AnonymousLoginButton />
       </div>
       <p className="text-primary-100 mt-4 text-center text-xs">
-        ※ 도르트문트 팬카페 회원을 위해 비영리적 목적으로 제작되었으며,
+        ※ 도르트문트 팬을 위해 비영리적 목적으로 제작되었으며,
         <br />
         저작권 문제 발생 시 어플리케이션이 삭제될 수 있습니다.
       </p>
