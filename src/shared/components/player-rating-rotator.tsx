@@ -7,6 +7,7 @@ import { useGetRotatePlayerStatAcc } from "@shared/api/react-query-api/use-get-r
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
+import type { IRotatePlayerStatAccumulated } from "@shared/api/shared-api";
 
 const PlayerRatingRotator = () => {
   //SECTION HOOK호출 영역
@@ -33,33 +34,14 @@ const PlayerRatingRotator = () => {
 
   return (
     <div className="relative w-[clamp(320px,100vw,500px)] overflow-hidden p-4">
-      <div ref={containerRef} className="flex gap-6 text-lg text-white" style={{ width: "max-content" }}>
+      <div ref={containerRef} className="flex gap-4 text-lg text-white" style={{ width: "max-content" }}>
         {/* 첫 번째 세트 */}
         {data.map((item) => (
-          <div key={`first-${item.korean_name}`} className="flex shrink-0 items-center gap-2">
-            <span className="font-medium">{item.korean_name}</span>
-            <span
-              className={`font-bold ${
-                item.overall_avg_rating && item.overall_avg_rating > 7 ? "text-rating-red" : "text-rating-blue"
-              }`}
-            >
-              {item.overall_avg_rating || "0"}
-            </span>
-          </div>
+          <PlayerRatingItem key={`first-${item.korean_name}`} {...item} />
         ))}
-
-        {/* 두 번째 세트 (무한 스크롤용) */}
+        {/* 두 번째 세트 (무한 회전용) */}
         {data.map((item) => (
-          <div key={`second-${item.korean_name}`} className="flex shrink-0 items-center gap-2">
-            <span className="font-medium">{item.korean_name}</span>
-            <span
-              className={`font-bold ${
-                item.overall_avg_rating && item.overall_avg_rating > 8 ? "text-rating-red" : "text-rating-blue"
-              }`}
-            >
-              {item.overall_avg_rating || "0"}
-            </span>
-          </div>
+          <PlayerRatingItem key={`second-${item.korean_name}`} {...item} />
         ))}
       </div>
     </div>
@@ -67,3 +49,17 @@ const PlayerRatingRotator = () => {
 };
 
 export default PlayerRatingRotator;
+
+const PlayerRatingItem = ({ korean_name, overall_avg_rating }: IRotatePlayerStatAccumulated) => {
+  const getRatingColor = (rating: number | null) => {
+    if (!rating) return "text-rating-blue";
+    return rating > 7 ? "text-rating-red" : "text-rating-blue";
+  };
+
+  return (
+    <div className="flex shrink-0 items-center gap-2">
+      <span className="font-medium">{korean_name}</span>
+      <span className={`font-bold ${getRatingColor(overall_avg_rating)}`}>{overall_avg_rating || "0"}</span>
+    </div>
+  );
+};
