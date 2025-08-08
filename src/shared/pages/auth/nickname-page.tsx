@@ -6,7 +6,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../domains/auth/contexts/AuthContext";
-import { supabase } from "../../api/supabaseClient";
+import { supabase } from "@shared/api/config/supabaseClient";
 
 const NicknamePage = () => {
   const [nickname, setNickname] = useState("");
@@ -49,8 +49,8 @@ const NicknamePage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-md">
         <div>
           <h2 className="text-center text-3xl font-bold text-gray-900">닉네임 설정</h2>
           <p className="mt-2 text-center text-sm text-gray-600">사용할 닉네임을 입력해주세요</p>
@@ -68,18 +68,18 @@ const NicknamePage = () => {
               required
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               placeholder="닉네임을 입력하세요"
               disabled={isLoading}
             />
           </div>
 
-          {error && <div className="text-red-600 text-sm text-center">{error}</div>}
+          {error && <div className="text-center text-sm text-red-600">{error}</div>}
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+            className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
           >
             {isLoading ? "설정 중..." : "닉네임 설정"}
           </button>

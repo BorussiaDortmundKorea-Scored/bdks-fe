@@ -2,7 +2,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "@auth/contexts/AuthContext";
-import { supabase } from "@shared/api/supabaseClient";
+import { supabase } from "@shared/api/config/supabaseClient";
 
 const AuthRoute = () => {
   const { user } = useAuth();

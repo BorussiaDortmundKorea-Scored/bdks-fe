@@ -1,6 +1,6 @@
 // domains/animal/api/animalApi.ts
-import { axiosPublic } from "../../../shared/api/axiosPublic";
-import { axiosAuth } from "../../auth/api/axiosAuth";
+import { axiosPublic } from "@shared/api/config/axiosPublic";
+import { axiosAuth } from "@shared/api/config/axiosAuth";
 
 export interface IAnimal {
   id: string;
