@@ -28,7 +28,7 @@ const LoginPage = () => {
   //!SECTION 메서드 영역
 
   return (
-    <div className="mx-auto flex min-h-screen w-[clamp(320px,90vw,450px)] flex-col items-center justify-center gap-5 px-4">
+    <div className="mx-auto flex h-dvh w-[clamp(320px,90vw,450px)] flex-col items-center justify-center gap-5 px-4">
       <ReactQueryBoundary skeleton={<div>Loading...</div>} errorFallback={AnimalListError}>
         <PlayerRatingRotator />
       </ReactQueryBoundary>
