@@ -1,4 +1,4 @@
-import { axiosAuth } from "../../../shared/api/axiosAuth";
+import { axiosAuth } from "@shared/api/config/axiosAuth";
 
 export interface IPlayer {
   id: string;
@@ -15,7 +15,7 @@ export interface IPlayer {
   };
 }
 
-export const getPlayers = async () => {
+export const getPlayerList = async () => {
   const response = await axiosAuth.get<IPlayer[]>("/players", {
     params: {
       select:

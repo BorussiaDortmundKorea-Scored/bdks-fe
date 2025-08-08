@@ -1,8 +1,9 @@
 import LogoutButton from "../components/LogoutButton";
+import { Button } from "@youngduck/yd-ui";
 
 const DashboardPage = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen ">
       <div className="container mx-auto px-4 py-8">
         {/* 헤더 영역 */}
         <div className="flex justify-between items-center mb-8">
@@ -34,6 +35,7 @@ const DashboardPage = () => {
               <div className="text-center text-gray-500">선수 목록</div>
             </div>
           </section>
+          <Button>저장</Button>
         </div>
       </div>
     </div>

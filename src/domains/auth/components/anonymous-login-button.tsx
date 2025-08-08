@@ -1,7 +1,7 @@
 // src/shared/components/AnonymousLoginButton.tsx
 import React from "react";
-import useAnonymousLogin from "../hooks/useAnonymousLogin";
-
+import useAnonymousLogin from "@auth/hooks/useAnonymousLogin";
+import { Button } from "@youngduck/yd-ui";
 const AnonymousLoginButton: React.FC = () => {
   const { signinAnonymously, isLoading } = useAnonymousLogin();
 
@@ -15,20 +15,21 @@ const AnonymousLoginButton: React.FC = () => {
   };
 
   return (
-    <button
+    <Button
+      variant="outlined"
+      size="full"
       onClick={handleAnonymousLogin}
       disabled={isLoading}
-      className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-300 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2 transition-colors w-full"
-      aria-label="로그인 없이 이용하기"
+      aria-label="일회용 로그인"
     >
       {isLoading ? (
         <span>로그인 중...</span>
       ) : (
         <>
-          <span>로그인 없이 이용하기</span>
+          <span>일회용 로그인</span>
         </>
       )}
-    </button>
+    </Button>
   );
 };
 

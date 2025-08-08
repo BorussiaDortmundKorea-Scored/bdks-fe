@@ -15,5 +15,6 @@
   "trailingComma": "all",
   "useTabs": false,
   "embeddedLanguageFormatting": "auto",
-  "experimentalTernaries": false
+  "experimentalTernaries": false,
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

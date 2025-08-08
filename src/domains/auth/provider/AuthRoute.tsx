@@ -1,8 +1,8 @@
 // src/shared/components/AuthRoute.tsx
 import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { supabase } from "../api/supabaseClient";
+import { useAuth } from "@auth/contexts/AuthContext";
+import { supabase } from "@shared/api/config/supabaseClient";
 
 const AuthRoute = () => {
   const { user } = useAuth();
@@ -38,8 +38,8 @@ const AuthRoute = () => {
   // profile 확인 중일 때는 로딩 표시
   if (hasProfile === null) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
       </div>
     );
   }

@@ -13,6 +13,9 @@ const dirname = typeof __dirname !== "undefined" ? __dirname : path.dirname(file
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: ["./src/setupTests.js"],
     projects: [
       {
         extends: true,
@@ -38,6 +41,14 @@ export default defineConfig({
           setupFiles: [".storybook/vitest.setup.ts"],
         },
       },
+    ],
+  },
+  resolve: {
+    alias: [
+      { find: "@shared", replacement: path.resolve(__dirname, "src/shared") },
+      { find: "@players", replacement: path.resolve(__dirname, "src/domains/players") },
+      { find: "@auth", replacement: path.resolve(__dirname, "src/domains/auth") },
+      { find: "@animals", replacement: path.resolve(__dirname, "src/domains/animals") },
     ],
   },
 });
