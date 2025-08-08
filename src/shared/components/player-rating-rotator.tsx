@@ -1,48 +1,25 @@
 /**
  * 작성자: KYD
- * 기능: 라이브경기 존재시에는 라이브평점, 라이브경기 없을시 최근 경기 평점
- * 프로세스 설명: TODO 쿼리래퍼로 선언적API호출,
+ * 기능: 유저 이목을 끌기 위한 장치로 선수 누적 평점 주식처럼 표시
+ * 프로세스 설명: SUPABASE RPC함수 - REACT QUERY 래핑 - 조회
  */
-import React from "react";
+import { useGetRotatePlayerStatAcc } from "@shared/api/react-query-api/use-get-rotate-player-stat-acc";
 
-interface IPlayerRatingRotator {}
-
-const PlayerRatingRotator: React.FC<IPlayerRatingRotator> = () => {
+const PlayerRatingRotator = () => {
   //SECTION HOOK호출 영역
-  const rawData = [
-    {
-      name: "그레고르 코벨",
-      rating: 7.9,
-    },
-    {
-      name: "세루 기라시",
-      rating: 8.4,
-    },
-    {
-      name: "니코 슐로터벡",
-      rating: 7.2,
-    },
-    {
-      name: "율리안 브란트",
-      rating: 7.2,
-    },
-  ];
+  const data = useGetRotatePlayerStatAcc();
   //!SECTION HOOK호출 영역
 
-  //SECTION 상태값 영역
-
-  //!SECTION 상태값 영역
-
-  //SECTION 메서드 영역
-
-  //!SECTION 메서드 영역
-
   return (
-    <div className="flex w-full gap-3 overflow-x-hidden text-xl text-white">
-      {rawData.map((item) => (
-        <div key={item.name} className="flex shrink-0 gap-1">
-          {item.name}
-          <span className={item.rating < 8 ? "text-rating-blue" : "text-rating-red"}>{item.rating}</span>
+    <div className="flex w-full gap-3 overflow-x-hidden text-lg text-white">
+      {data.map((item) => (
+        <div key={item.korean_name} className="flex shrink-0 gap-1">
+          {item.korean_name}
+          <span
+            className={item.overall_avg_rating && item.overall_avg_rating > 8 ? "text-rating-red" : "text-rating-blue"}
+          >
+            {item.overall_avg_rating || "0"}
+          </span>
         </div>
       ))}
     </div>
