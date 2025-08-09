@@ -28,7 +28,8 @@
       "@shared/*": ["src/shared/*"],
       "@players/*": ["src/domains/players/*"],
       "@auth/*": ["src/domains/auth/*"],
-      "@animals/*": ["src/domains/animals/*"]
+      "@animals/*": ["src/domains/animals/*"],
+      "@dashboard/*": ["src/domains/dashboard/*"]
     }
   },
   "include": ["src"]

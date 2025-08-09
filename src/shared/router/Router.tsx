@@ -11,7 +11,7 @@ import AuthRoute from "../../domains/auth/provider/AuthRoute";
 import LoginPage from "@auth/pages/login-page";
 import AdminPage from "../pages/admin/admin-page";
 import PlayerRatingPage from "../pages/rating/player-rating-page";
-import DashboardPage from "../pages/dashboard-page";
+import DashboardPage from "../../domains/dashboard/pages/dashboard-page";
 import MatchRatingListPage from "../pages/match/match-rating-list-page";
 import PlayerStatsPage from "../pages/player/player-stats-page";
 import NotFoundPage from "../pages/not-found-page";
