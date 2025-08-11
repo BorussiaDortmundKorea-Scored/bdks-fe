@@ -3,11 +3,11 @@
  * 기능: 유저 이목을 끌기 위한 장치로 선수 누적 평점 주식처럼 표시
  * 프로세스 설명: SUPABASE RPC함수 - REACT QUERY 래핑 - 조회
  */
-import { useGetRotatePlayerStatAcc } from "@shared/api/react-query-api/use-get-rotate-player-stat-acc";
+import { useGetRotatePlayerStatAcc } from "@players/players-rating-rotator/api/react-query-api/use-get-rotate-player-stat-acc";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
-import type { IRotatePlayerStatAccumulated } from "@shared/api/shared-api";
+import type { IRotatePlayerStatAccumulated } from "@players/players-rating-rotator/api/player-rating-rotator-api";
 
 const PlayerRatingRotator = () => {
   //SECTION HOOK호출 영역
@@ -33,8 +33,8 @@ const PlayerRatingRotator = () => {
   );
 
   return (
-    <div className="relative w-[clamp(320px,100vw,500px)] overflow-hidden p-4">
-      <div ref={containerRef} className="flex gap-4 text-lg text-white" style={{ width: "max-content" }}>
+    <PlayerRatingRotatorWrapper>
+      <div ref={containerRef} className="flex w-[max-content] gap-4">
         {/* 첫 번째 세트 */}
         {data.map((item) => (
           <PlayerRatingItem key={`first-${item.korean_name}`} {...item} />
@@ -44,7 +44,7 @@ const PlayerRatingRotator = () => {
           <PlayerRatingItem key={`second-${item.korean_name}`} {...item} />
         ))}
       </div>
-    </div>
+    </PlayerRatingRotatorWrapper>
   );
 };
 
@@ -62,4 +62,8 @@ const PlayerRatingItem = ({ korean_name, overall_avg_rating }: IRotatePlayerStat
       <span className={`font-bold ${getRatingColor(overall_avg_rating)}`}>{overall_avg_rating || "0"}</span>
     </div>
   );
+};
+
+export const PlayerRatingRotatorWrapper = ({ children }: { children: React.ReactNode }) => {
+  return <div className="relative w-[clamp(320px,100vw,500px)] overflow-hidden p-4 text-lg text-white">{children}</div>;
 };
