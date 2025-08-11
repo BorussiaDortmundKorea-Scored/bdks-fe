@@ -77,4 +77,7 @@ body {
 }
 
 @layer components {
+  .containerabc {
+    @apply mx-auto flex h-dvh w-[clamp(320px,90vw,450px)] flex-col items-center justify-center px-4;
+  }
 }
