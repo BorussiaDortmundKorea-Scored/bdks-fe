@@ -77,7 +77,16 @@ body {
 }
 
 @layer components {
-  .containerabc {
-    @apply mx-auto flex h-dvh w-[clamp(320px,90vw,450px)] flex-col items-center justify-center px-4;
+  .bdks-container {
+    @apply relative mx-auto flex h-dvh w-[clamp(320px,90vw,450px)] flex-col items-center justify-start px-4 pt-10;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
