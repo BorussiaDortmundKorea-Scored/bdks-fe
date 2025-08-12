@@ -4,7 +4,7 @@
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
 
-import { PlayerRatingRotatorWrapper } from "../player-rating-rotator";
+import PlayerRatingRotatorWrapper from "../wrapper/player-rating-rotator-wrapper";
 
 const PlayerRatingRotatorSkeleton = () => {
   //SECTION HOOK호출 영역

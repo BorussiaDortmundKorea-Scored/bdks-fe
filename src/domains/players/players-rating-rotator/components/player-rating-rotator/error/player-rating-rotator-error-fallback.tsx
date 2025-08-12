@@ -1,4 +1,4 @@
-import { PlayerRatingRotatorWrapper } from "../player-rating-rotator";
+import PlayerRatingRotatorWrapper from "../wrapper/player-rating-rotator-wrapper";
 
 /**
  * 작성자: KYD

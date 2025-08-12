@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import type { IRotatePlayerStatAccumulated } from "@players/players-rating-rotator/api/player-rating-rotator-api";
+import PlayerRatingRotatorWrapper from "./wrapper/player-rating-rotator-wrapper";
 
 const PlayerRatingRotator = () => {
   //SECTION HOOK호출 영역
@@ -62,8 +63,4 @@ const PlayerRatingItem = ({ korean_name, overall_avg_rating }: IRotatePlayerStat
       <span className={`font-bold ${getRatingColor(overall_avg_rating)}`}>{overall_avg_rating || "0"}</span>
     </div>
   );
-};
-
-export const PlayerRatingRotatorWrapper = ({ children }: { children: React.ReactNode }) => {
-  return <div className="relative w-[clamp(320px,100vw,500px)] overflow-hidden p-4 text-lg text-white">{children}</div>;
 };
