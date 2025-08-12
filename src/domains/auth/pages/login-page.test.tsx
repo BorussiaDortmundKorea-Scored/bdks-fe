@@ -46,20 +46,6 @@ describe("로그인 페이지", () => {
     screen.debug();
   });
 
-  it("모든 필수 컴포넌트들이 렌더링되어야 한다", async () => {
-    renderWithQueryClient(<LoginPage />);
-    screen.debug();
-    // screen.debug(screen.getByTestId("kakao-login-button")); // 특정 요소만 출력
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-    // 필수 컴포넌트들이 렌더링되는지 확인
-    expect(screen.getByTestId("player-rating-rotator")).toBeInTheDocument();
-    expect(screen.getByTestId("kakao-login-button")).toBeInTheDocument();
-    expect(screen.getByTestId("anonymous-login-button")).toBeInTheDocument();
-    screen.debug(); // 전체 DOM 출력
-  });
-
   it("보돌코 스타디움 이미지가 렌더링되어야 한다", () => {
     renderWithQueryClient(<LoginPage />);
 

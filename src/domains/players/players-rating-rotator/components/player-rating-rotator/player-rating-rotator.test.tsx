@@ -7,32 +7,6 @@ import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 import AnimalListError from "@animals/components/animal-list/error/animal-list-error";
 import { server } from "@shared/mocks/server";
 import { http, HttpResponse } from "msw";
-import { vi } from "vitest";
-
-// Supabase 클라이언트 모킹
-vi.mock("@shared/api/config/supabaseClient", () => ({
-  supabase: {
-    rpc: vi.fn().mockImplementation((functionName) => {
-      // MSW가 가로채도록 실제 fetch 요청을 보냄
-      return fetch(`https://dummy.supabase.co/rest/v1/rpc/${functionName}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          // Supabase RPC 응답 형식에 맞게 반환
-          return { data, error: null };
-        });
-    }),
-  },
-}));
 
 describe("PlayerRatingRotator 컴포넌트 테스트", () => {
   const renderWithQueryClient = (component: React.ReactElement) => {
