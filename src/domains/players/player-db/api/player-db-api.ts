@@ -1,8 +1,9 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 
 export interface IPlayerDBWithMyRatings {
+  id: string;
   korean_name: string;
-  head_profile_image_url: string | null;
+  head_profile_image_url: string;
   overall_avg_rating_all: number | null;
   overall_avg_rating_my: number | null;
 }
