@@ -78,7 +78,7 @@ body {
 
 @layer components {
   .bdks-container {
-    @apply relative mx-auto flex h-dvh w-[clamp(320px,90vw,450px)] flex-col items-center justify-start px-4 pt-15;
+    @apply relative mx-auto flex h-dvh w-[clamp(320px,100vw,450px)] flex-col items-center justify-start px-4 pt-15;
   }
 
   .scrollbar-hide {
@@ -87,6 +87,16 @@ body {
   }
 
   .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 가로 스크롤 전용 클래스 추가 */
+  .scrollbar-hide-x {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide-x::-webkit-scrollbar:horizontal {
     display: none;
   }
 }
