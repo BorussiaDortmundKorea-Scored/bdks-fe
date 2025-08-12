@@ -6,8 +6,8 @@ export interface IRotatePlayerStatAccumulated {
   overall_avg_rating: number | null;
 }
 
-export const getRotatePlayerStatAccumulated = async () => {
-  const { data, error } = await supabase.rpc("get_all_players_ratings");
+export const getPlayerRatingRotatorAcc = async () => {
+  const { data, error } = await supabase.rpc("get_player_rating_rotator_acc");
 
   if (error) {
     throw new Error(`Failed to fetch player ratings: ${error.message}`);
