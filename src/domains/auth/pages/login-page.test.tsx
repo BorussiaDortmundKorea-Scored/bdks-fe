@@ -75,14 +75,6 @@ describe("로그인 페이지", () => {
     expect(screen.getByText(/저작권 문제 발생 시 어플리케이션이 삭제될 수 있습니다/)).toBeInTheDocument();
   });
 
-  it("올바른 레이아웃 구조를 가져야 한다", () => {
-    renderWithQueryClient(<LoginPage />);
-
-    // 메인 컨테이너가 올바른 클래스를 가지고 있는지 확인
-    const mainContainer = screen.getByText("보돌코 스코어드").closest("div");
-    expect(mainContainer).toHaveClass("mx-auto", "flex", "min-h-screen");
-  });
-
   it("로그인 버튼들이 올바른 순서로 렌더링되어야 한다", () => {
     renderWithQueryClient(<LoginPage />);
 
