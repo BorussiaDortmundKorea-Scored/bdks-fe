@@ -116,20 +116,20 @@ describe("선수 누적평점 컴포넌트 렌더링 테스트", () => {
 
       if (player.overall_avg_rating_all === null) {
         const overallRatingElement = within(playerElement).getByTestId("overall-rating");
-        expect(overallRatingElement.textContent).toBe("0");
+        expect(overallRatingElement.textContent).toBe("All : 0");
       } else {
         const overallRatingElement = within(playerElement).getByTestId("overall-rating");
-        expect(overallRatingElement.textContent).toBe(String(player.overall_avg_rating_all));
+        expect(overallRatingElement.textContent).toBe("All : " + String(player.overall_avg_rating_all));
       }
 
       if (player.overall_avg_rating_my === null) {
         const myRatingElement = within(playerElement).getByTestId("my-rating");
 
-        expect(myRatingElement.textContent).toBe("0");
+        expect(myRatingElement.textContent).toBe("My : 0");
       } else {
         const myRatingElement = within(playerElement).getByTestId("my-rating");
 
-        expect(myRatingElement.textContent).toBe(String(player.overall_avg_rating_my));
+        expect(myRatingElement.textContent).toBe("My : " + String(player.overall_avg_rating_my));
       }
     });
   });
