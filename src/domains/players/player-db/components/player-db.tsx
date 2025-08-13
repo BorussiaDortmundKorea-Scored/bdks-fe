@@ -7,6 +7,7 @@ import React from "react";
 import { useGetPlayerDBWithMyRatings } from "../api/react-query-api/use-get-player-db-with-my-ratings";
 import { useAuth } from "@auth/contexts/AuthContext";
 import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/player-rating-rotator/error/player-rating-rotator-error-fallback";
+import PlayerDbWrapper from "./wrapper/player-db-wrapper";
 
 interface IPlayerDb {}
 
@@ -37,9 +38,7 @@ const PlayerDb: React.FC<IPlayerDb> = () => {
   //!SECTION 메서드 영역
 
   return (
-    <section className="text-primary-100 w-full">
-      <h2 className="mb-4 text-[22px] font-bold">선수 DB</h2>
-
+    <PlayerDbWrapper>
       {/* 가로 스크롤 컨테이너 */}
       <ul className="scrollbar-hide-x flex w-full flex-row gap-[8px] overflow-x-scroll">
         {data.map((item) => (
@@ -64,7 +63,7 @@ const PlayerDb: React.FC<IPlayerDb> = () => {
           </li>
         ))}
       </ul>
-    </section>
+    </PlayerDbWrapper>
   );
 };
 
