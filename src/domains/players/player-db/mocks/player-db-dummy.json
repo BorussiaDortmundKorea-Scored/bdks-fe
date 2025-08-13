@@ -1,125 +1,146 @@
 [
   {
-    "korean_name": "그레고어 코벨",
+    "id": "uuid-player-db-1",
+    "korean_name": "그레고르 코벨",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_kobel.png",
     "overall_avg_rating_all": 7.6,
     "overall_avg_rating_my": 7.2
   },
   {
+    "id": "uuid-player-db-2",
     "korean_name": "조브 벨링엄",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_jobe.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-3",
     "korean_name": "라미 벤세바이니",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_bensebaini.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-4",
     "korean_name": "막시밀리안 바이어",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_beier.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-5",
     "korean_name": "카니 추쿠에메카",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_chukwuemeka.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-6",
     "korean_name": "알렉산더 마이어",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_meyer.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-7",
     "korean_name": "펠릭스 은메차",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_nmecha.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-8",
     "korean_name": "지오 레이나",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_reyna.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-9",
     "korean_name": "니코 슐로터벡",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_schlotterbeck.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-10",
     "korean_name": "발데마르 안톤",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_anton.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-11",
     "korean_name": "다니엘 스벤손",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_svensson.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-12",
     "korean_name": "파스칼 그로스",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_gross.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-13",
     "korean_name": "카림 아데예미",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_adeyemi.png",
-    "overall_avg_rating_all": null,
-    "overall_avg_rating_my": null
+    "overall_avg_rating_all": 6,
+    "overall_avg_rating_my": 5
   },
   {
+    "id": "uuid-player-db-14",
     "korean_name": "세루 기라시",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_guirassy.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-15",
     "korean_name": "니클라스 쥘레",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_sule.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-16",
     "korean_name": "율리안 듀랑빌",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_duranville.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-17",
     "korean_name": "엠레 찬",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_can.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-18",
     "korean_name": "마르셀 자비처",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_sabitzer.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-19",
     "korean_name": "율리안 리에르손",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_ryerson.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-20",
     "korean_name": "율리안 브란트",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_brandt.png",
     "overall_avg_rating_all": null,
     "overall_avg_rating_my": null
   },
   {
+    "id": "uuid-player-db-21",
     "korean_name": "얀 쿠토",
     "head_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/head/head_couto.png",
     "overall_avg_rating_all": null,
