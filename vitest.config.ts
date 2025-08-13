@@ -11,6 +11,7 @@ export default defineConfig({
       "@players": path.resolve(__dirname, "src/domains/players"),
       "@auth": path.resolve(__dirname, "src/domains/auth"),
       "@animals": path.resolve(__dirname, "src/domains/animals"),
+      "@dashboard": path.resolve(__dirname, "src/domains/dashboard"),
     },
   },
 

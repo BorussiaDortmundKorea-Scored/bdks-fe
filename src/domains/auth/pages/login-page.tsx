@@ -7,9 +7,10 @@
 import KakaoLoginButton from "@auth/components/kakao-login-button";
 import AnonymousLoginButton from "@auth/components/anonymous-login-button";
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
-import PlayerRatingRotator from "@shared/components/player-rating-rotator";
+import PlayerRatingRotator from "@players/players-rating-rotator/components/player-rating-rotator/player-rating-rotator";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-import AnimalListError from "@animals/components/animal-list/error/animal-list-error";
+import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/player-rating-rotator/error/player-rating-rotator-error-fallback";
+import PlayerRatingRotatorSkeleton from "@players/players-rating-rotator/components/player-rating-rotator/skeleton/player-rating-rotator-skeleton";
 
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 const SIGNAL_IDUNA_PARK_IMAGE = `${SUPABASE_STORAGE_URL}/dortmund//iduna_park.png`;
@@ -28,8 +29,8 @@ const LoginPage = () => {
   //!SECTION 메서드 영역
 
   return (
-    <div className="mx-auto flex h-dvh w-[clamp(320px,90vw,450px)] flex-col items-center justify-center gap-5 px-4">
-      <ReactQueryBoundary skeleton={<div>Loading...</div>} errorFallback={AnimalListError}>
+    <div className="bdks-container justify-center gap-5">
+      <ReactQueryBoundary skeleton={<PlayerRatingRotatorSkeleton />} errorFallback={PlayerRatingRotatorErrorFallback}>
         <PlayerRatingRotator />
       </ReactQueryBoundary>
       <img src={SIGNAL_IDUNA_PARK_IMAGE} alt="Dortmund Logo" className="h-auto w-full" />
