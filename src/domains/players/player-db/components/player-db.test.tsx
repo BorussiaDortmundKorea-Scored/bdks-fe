@@ -1,12 +1,16 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen, waitFor, within, fireEvent } from "@testing-library/react";
 import PlayerDb from "./player-db";
 import { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-import AnimalListError from "@animals/components/animal-list/error/animal-list-error";
 import { vi } from "vitest";
 import PlayerDBDummy from "../mocks/player-db-dummy.json";
+import { server } from "@shared/mocks/server";
+import { http, HttpResponse } from "msw";
+import PlayerDbSkeleton from "./skeleton/player-db-skeleton";
+import PlayerDbErrorFallback from "./error/player-db-error-fallback";
 
 // 모킹 모듈 가져오기
 const mockUseAuth = vi.fn();
@@ -14,8 +18,7 @@ const mockUseAuth = vi.fn();
 vi.mock("@auth/contexts/AuthContext", () => ({
   useAuth: () => mockUseAuth(),
 }));
-
-// 테스트 헬퍼 함수들
+// 유저 모킹 함수들
 const mockAnonymousUser = () => {
   mockUseAuth.mockReturnValue({
     user: {
@@ -69,7 +72,7 @@ const renderWithQueryClient = (component: React.ReactElement) => {
   return render(
     <MemoryRouter>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryBoundary skeleton={<div>Loading...</div>} errorFallback={AnimalListError}>
+        <ReactQueryBoundary skeleton={<PlayerDbSkeleton />} errorFallback={PlayerDbErrorFallback}>
           {component}
         </ReactQueryBoundary>
       </QueryClientProvider>
@@ -77,42 +80,76 @@ const renderWithQueryClient = (component: React.ReactElement) => {
   );
 };
 
+// 로딩 완료 대기 헬퍼 함수
+const waitForLoadingComplete = async () => {
+  await waitFor(() => {
+    expect(screen.queryByTestId("player-db-skeleton")).not.toBeInTheDocument();
+  });
+};
+
+// 로딩 완료 후 컴포넌트 렌더링 헬퍼 함수
+const renderAndWaitForLoad = async (component: React.ReactElement) => {
+  renderWithQueryClient(component);
+  await waitForLoadingComplete();
+};
+
 describe("선수 누적평점 컴포넌트 렌더링 테스트", () => {
   beforeEach(() => {
-    // 기본값: 익명 로그인 사용자
     mockAnonymousUser();
   });
 
-  it("목데이터 21명의 선수이름을 볼 수 있어야 한다", async () => {
+  // 로딩 테스트는 한 번만
+  it("API호출 전에는 로딩컴포넌트가 나와야한다. 호출 성공시 로딩컴포넌트가 사라지고 선수데이터가 렌더링되어야한다", async () => {
     renderWithQueryClient(<PlayerDb />);
 
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
+    // 로딩 상태 확인
+    const loadingElement = await screen.findByTestId("player-db-skeleton");
+    expect(loadingElement).toBeInTheDocument();
 
-    screen.debug();
+    // 로딩 완료 후 데이터 확인
+    const title = await screen.findByText("그레고르 코벨");
+    expect(title).toBeInTheDocument();
+  });
+
+  it("API호출 실패시 에러컴포넌트가 나와야한다", async () => {
+    server.use(
+      http.post("*/rest/v1/rpc/get_all_players_db_with_my_ratings", () => {
+        return HttpResponse.error();
+      }),
+    );
+
+    renderWithQueryClient(<PlayerDb />);
+    const errorElement = await screen.findByText("에러발생");
+    expect(errorElement).toBeInTheDocument();
+  });
+
+  // 나머지 테스트들은 로딩 완료 후 실행
+  it("헤더 '선수 DB'가 렌더링 되어야 한다", async () => {
+    await renderAndWaitForLoad(<PlayerDb />);
+
+    const headerElement = screen.getByRole("heading", { level: 2 });
+    expect(headerElement).toBeInTheDocument();
+    expect(headerElement.textContent).toBe("선수 DB");
+  });
+
+  it("목데이터 21명의 선수가 모두 렌더링 되어야 한다", async () => {
+    await renderAndWaitForLoad(<PlayerDb />);
+
+    const playerList = screen.getAllByRole("listitem");
+    expect(playerList.length).toBe(21);
 
     const mockData = PlayerDBDummy;
-
     mockData.forEach((player) => {
       expect(screen.getByText(player.korean_name)).toBeInTheDocument();
     });
   });
 
-  it("목데이터 21명중 전체평점,내평점 점수가 null인경우 각각 0점으로 나와야 한다", async () => {
-    renderWithQueryClient(<PlayerDb />);
-
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-
-    // screen.debug();
+  it("목데이터 21명중  평점(전체,my)이 null인경우 0점, 아닐경우 DB상의 점수가 나와야 한다", async () => {
+    await renderAndWaitForLoad(<PlayerDb />);
 
     const mockData = PlayerDBDummy;
-
     mockData.forEach((player) => {
       const playerElement = screen.getByText(player.korean_name).closest("li") as HTMLElement;
-      // screen.debug(playerElement);
 
       if (player.overall_avg_rating_all === null) {
         const overallRatingElement = within(playerElement).getByTestId("overall-rating");
@@ -124,65 +161,69 @@ describe("선수 누적평점 컴포넌트 렌더링 테스트", () => {
 
       if (player.overall_avg_rating_my === null) {
         const myRatingElement = within(playerElement).getByTestId("my-rating");
-
         expect(myRatingElement.textContent).toBe("My : 0");
       } else {
         const myRatingElement = within(playerElement).getByTestId("my-rating");
-
         expect(myRatingElement.textContent).toBe("My : " + String(player.overall_avg_rating_my));
       }
     });
   });
 
-  it("이미지 렌더링 테스트", async () => {
-    renderWithQueryClient(<PlayerDb />);
+  it("목데이터 21명의 선수 이미지가 렌더링 되어야 한다", async () => {
+    await renderAndWaitForLoad(<PlayerDb />);
 
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+    const playerList = screen.getAllByRole("img");
+    expect(playerList.length).toBe(21);
+
+    playerList.forEach((player) => {
+      expect(player).toBeInTheDocument();
     });
-
-    screen.debug();
-
-    // expect(screen.getByText("선수목록데스네")).toBeInTheDocument();
-  });
-
-  it("선수데이터 렌더링 테스트", async () => {
-    renderWithQueryClient(<PlayerDb />);
-    // 로딩상태
-    screen.debug();
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
-    // 로딩상태 종료
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-    // 선수데이터 렌더링 목데이터 21개 존재
-
-    screen.debug();
   });
 });
 
 describe("선수 누적평점 DB 컴포넌트 기능 테스트", () => {
-  it("가로스크롤이 되어야함", () => {
-    render(<PlayerDb />);
+  it("가로스크롤이 되어야함", async () => {
+    const user = userEvent.setup();
+    mockAnonymousUser();
+    await renderAndWaitForLoad(<PlayerDb />);
+
+    const scrollContainer = screen.getByRole("list");
+
+    fireEvent.scroll(scrollContainer, {
+      target: { scrollLeft: 100 },
+    });
+
+    await user.hover(scrollContainer);
+    await user.pointer({ target: scrollContainer, keys: "[TouchA]" });
+    await user.pointer({ target: scrollContainer, coords: { x: 100, y: 0 } });
+
+    expect(scrollContainer.scrollLeft).toBe(100);
+
+    // expect(scrollContainer.scrollLeft).toBe(100);
   });
 
   it("익명로그인유저: 클릭시 이용불가팝업", async () => {
+    const user = userEvent.setup();
     mockAnonymousUser();
-    renderWithQueryClient(<PlayerDb />);
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
+    await renderAndWaitForLoad(<PlayerDb />);
 
-    screen.debug();
+    const firstPlayer = screen.getByText("그레고르 코벨").closest("li") as HTMLElement;
+    await user.click(firstPlayer);
+
+    // alert 모킹 확인
+    // expect(window.alert).toHaveBeenCalledWith("익명 로그인 사용자는 이용할 수 없습니다");
   });
 
   it("카카오 로그인유저: 클릭시 선수 상세 페이지이동", async () => {
     mockKakaoUser();
-    renderWithQueryClient(<PlayerDb />);
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
+    await renderAndWaitForLoad(<PlayerDb />);
 
-    screen.debug();
+    const playerList = screen.getAllByRole("listitem");
+    expect(playerList.length).toBe(21);
+
+    const firstPlayer = screen.getByText("그레고르 코벨").closest("li");
+    fireEvent.click(firstPlayer!);
+
+    // expect(window.alert).toHaveBeenCalledWith("준비중입니다.");
   });
 });
