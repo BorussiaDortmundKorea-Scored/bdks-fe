@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { supabase } from "@shared/api/config/supabaseClient";
 import type { Session, User } from "@supabase/supabase-js";
+import { queryClient } from "@shared/provider/query-client";
 
 interface AuthContextType {
   user: User | null;
@@ -35,7 +36,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       setSession(null);
       // localStorage에서 토큰 제거
       localStorage.removeItem("access_token");
-      console.log("로그아웃 완료");
+      // React Query 캐시 정리
+      queryClient.clear();
+      console.log("로그아웃 완료 - 쿼리 캐시 정리됨");
     }
 
     setIsLoading(false);
@@ -48,6 +51,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         console.error("로그아웃 오류:", error);
         throw error;
       }
+      // React Query 캐시 정리
+      queryClient.clear();
+      console.log("로그아웃 완료 - 쿼리 캐시 정리됨");
     } catch (err) {
       console.error("로그아웃 예외:", err);
       throw err;

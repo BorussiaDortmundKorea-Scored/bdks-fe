@@ -4,7 +4,7 @@ import PlayerRatingRotatorSkeleton from "@players/players-rating-rotator/compone
 import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/player-rating-rotator/error/player-rating-rotator-error-fallback";
 
 const meta: Meta<typeof PlayerRatingRotator> = {
-  title: "Shared/PlayerRatingRotator",
+  title: "Players/PlayerRatingRotator",
   component: PlayerRatingRotator,
 };
 
