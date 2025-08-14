@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { supabase } from "@shared/api/config/supabaseClient";
 import type { Session, User } from "@supabase/supabase-js";
-import { queryClient } from "../../../App";
+import { queryClient } from "@shared/provider/query-client";
 
 interface AuthContextType {
   user: User | null;
