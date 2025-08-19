@@ -3,7 +3,7 @@ import { supabase } from "@shared/api/config/supabaseClient";
 export interface IFinishMatchList {
   id: string;
   match_date: string;
-  text_home_away: string;
+  text_home_away: "HOME" | "AWAY";
   round_name: string;
   season: string;
   league_name: string;
