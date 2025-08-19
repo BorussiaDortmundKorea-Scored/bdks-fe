@@ -1,5 +1,6 @@
 // src/shared/components/LogoutButton.tsx
 import React from "react";
+
 import { useAuth } from "../../domains/auth/contexts/AuthContext";
 import { LogOut } from "lucide-react";
 
@@ -17,7 +18,7 @@ const LogoutButton: React.FC = () => {
   return (
     <LogOut
       size={24}
-      className="text-primary-100 absolute left-4 cursor-pointer"
+      className="text-primary-100 absolute left-1 cursor-pointer"
       onClick={handleLogout}
       aria-label="로그아웃"
     />

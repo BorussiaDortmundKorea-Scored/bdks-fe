@@ -33,6 +33,12 @@
   --color-rating-red: #e81215;
   --color-rating-blue: #0f71c0;
 
+  /* Layout Tokens */
+  --layout-header-height: 60px;
+  --layout-footer-height: 60px;
+  --layout-content-with-header: calc(100dvh - var(--layout-header-height));
+  --layout-content-with-header-footer: calc(100dvh - var(--layout-header-height) - var(--layout-footer-height));
+
   /* Typography Tokens */
   --font-size-yds-h1: 48px;
   --line-height-yds-h1: 58px;
@@ -78,7 +84,24 @@ body {
 
 @layer components {
   .bdks-container {
-    @apply relative mx-auto flex h-dvh w-[clamp(320px,100vw,450px)] flex-col items-center justify-start px-4 pt-15;
+    @apply relative mx-auto flex h-dvh w-[clamp(320px,100vw,450px)] flex-col items-center justify-start px-4;
+  }
+
+  /* Layout Classes */
+  .layout-header-height {
+    height: var(--layout-header-height);
+  }
+
+  .layout-footer-height {
+    height: var(--layout-footer-height);
+  }
+
+  .layout-content-with-header {
+    height: var(--layout-content-with-header);
+  }
+
+  .layout-content-with-header-footer {
+    height: var(--layout-content-with-header-footer);
   }
 
   .scrollbar-hide {

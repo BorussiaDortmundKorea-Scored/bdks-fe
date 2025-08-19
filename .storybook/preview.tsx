@@ -1,13 +1,14 @@
+import { BrowserRouter } from "react-router-dom";
+
+import { GalaxyViewports } from "./constant/galaxy-viewport";
 import type { Preview } from "@storybook/react-vite";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { initialize, mswLoader } from "msw-storybook-addon";
-import { BrowserRouter } from "react-router-dom";
-import { queryClient } from "../src/App";
-import "@shared/style/root.css";
-import { handlers } from "@shared/mocks/handlers/handlers";
-
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
-import { GalaxyViewports } from "./constant/galaxy-viewport";
+
+import { handlers } from "@shared/mocks/handlers/handlers";
+import { queryClient } from "@shared/provider/query-client";
+import "@shared/style/root.css";
 
 initialize();
 
