@@ -1,17 +1,20 @@
-import { render, screen, waitFor, within, fireEvent } from "@testing-library/react";
-import PlayersDb from "./players-db";
+import { MemoryRouter } from "react-router-dom";
+
 import { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
-import ReactQueryBoundary from "@shared/provider/react-query-boundary";
+import { HttpResponse, http } from "msw";
 import { vi } from "vitest";
-import PlayersDBDummy from "../mocks/players-db-dummy.json";
-import { server } from "@shared/mocks/server";
-import { http, HttpResponse } from "msw";
-import PlayerDbSkeleton from "./skeleton/players-db-skeleton";
-import PlayerDbErrorFallback from "./error/players-db-error-fallback";
+
 import { getAnonymousUserAuthMock, getKakaoUserAuthMock } from "@shared/mocks/constants/user-mock-data";
+import { server } from "@shared/mocks/server";
+import ReactQueryBoundary from "@shared/provider/react-query-boundary";
+
+import PlayerDbErrorFallback from "@players/players-db/components/error/players-db-error-fallback";
+import PlayersDb from "@players/players-db/components/players-db";
+import PlayerDbSkeleton from "@players/players-db/components/skeleton/players-db-skeleton";
+import PlayersDBDummy from "@players/players-db/mocks/players-db-dummy.json";
 
 // 모킹 모듈 가져오기
 const mockUseAuth = vi.fn();

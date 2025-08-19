@@ -3,15 +3,13 @@
  * 기능: 선수 DB 컴포넌트 - 가로 스크롤 형태의 선수 카드 목록
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import React from "react";
-import { useGetPlayersDbWithMyRatings } from "../api/react-query-api/use-get-players-db-with-my-ratings";
-import { useAuth } from "@auth/contexts/AuthContext";
+import { useGetPlayersDbWithMyRatings } from "@players/players-db/api/react-query-api/use-get-players-db-with-my-ratings";
+import PlayersDbWrapper from "@players/players-db/components/wrapper/players-db-wrapper";
 import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/player-rating-rotator/error/player-rating-rotator-error-fallback";
-import PlayerDbWrapper from "./wrapper/players-db-wrapper";
 
-interface IPlayerDb {}
+import { useAuth } from "@auth/contexts/AuthContext";
 
-const PlayersDb: React.FC<IPlayerDb> = () => {
+const PlayersDb = () => {
   //SECTION HOOK,상태값 영역
   const { user } = useAuth();
   // 방어적 프로그래밍처리 - 라우터에서 이미 user존재여부 체크함
@@ -38,7 +36,7 @@ const PlayersDb: React.FC<IPlayerDb> = () => {
   //!SECTION 메서드 영역
 
   return (
-    <PlayerDbWrapper>
+    <PlayersDbWrapper>
       {/* 가로 스크롤 컨테이너 */}
       <ul className="scrollbar-hide-x flex w-full flex-row gap-[8px] overflow-x-scroll">
         {data.map((item) => (
@@ -63,7 +61,7 @@ const PlayersDb: React.FC<IPlayerDb> = () => {
           </li>
         ))}
       </ul>
-    </PlayerDbWrapper>
+    </PlayersDbWrapper>
   );
 };
 

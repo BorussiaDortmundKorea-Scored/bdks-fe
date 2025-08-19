@@ -3,7 +3,7 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import PlayerDbWrapper from "../wrapper/players-db-wrapper";
+import PlayerDbWrapper from "@players/players-db/components/wrapper/players-db-wrapper";
 
 const PlayersDbErrorFallback = () => {
   //SECTION HOOK호출 영역
