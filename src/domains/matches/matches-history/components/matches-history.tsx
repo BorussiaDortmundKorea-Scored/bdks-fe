@@ -93,7 +93,7 @@ const MatchesHistory = () => {
                 도르트문트({match.text_home_away === "HOME" ? "홈" : "원정"}) vs {match.opponent_name}
               </div>
               <div className="text-primary-100 text-xs">
-                {match.league_name} {match.round_name}
+                {match.season} {match.league_name} {match.round_name}
               </div>
             </div>
           </li>
