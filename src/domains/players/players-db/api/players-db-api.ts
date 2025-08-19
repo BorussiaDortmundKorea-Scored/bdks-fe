@@ -8,7 +8,7 @@ export interface IPlayerDBWithMyRatings {
   overall_avg_rating_my: number | null;
 }
 
-export const getPlayerDBWithMyRatings = async (userId: string) => {
+export const getPlayersDbWithMyRatings = async (userId: string) => {
   const { data, error } = await supabase.rpc("get_all_players_db_with_my_ratings", {
     user_id_param: userId,
   });

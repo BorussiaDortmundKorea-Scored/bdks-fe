@@ -4,21 +4,21 @@
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
 import React from "react";
-import { useGetPlayerDBWithMyRatings } from "../api/react-query-api/use-get-player-db-with-my-ratings";
+import { useGetPlayersDbWithMyRatings } from "../api/react-query-api/use-get-players-db-with-my-ratings";
 import { useAuth } from "@auth/contexts/AuthContext";
 import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/player-rating-rotator/error/player-rating-rotator-error-fallback";
-import PlayerDbWrapper from "./wrapper/player-db-wrapper";
+import PlayerDbWrapper from "./wrapper/players-db-wrapper";
 
 interface IPlayerDb {}
 
-const PlayerDb: React.FC<IPlayerDb> = () => {
+const PlayersDb: React.FC<IPlayerDb> = () => {
   //SECTION HOOK,상태값 영역
   const { user } = useAuth();
   // 방어적 프로그래밍처리 - 라우터에서 이미 user존재여부 체크함
   if (!user) {
     return <PlayerRatingRotatorErrorFallback />;
   }
-  const data = useGetPlayerDBWithMyRatings(user.id);
+  const data = useGetPlayersDbWithMyRatings(user.id);
 
   //!SECTION HOOK,상태값 영역
 
@@ -67,4 +67,4 @@ const PlayerDb: React.FC<IPlayerDb> = () => {
   );
 };
 
-export default PlayerDb;
+export default PlayersDb;

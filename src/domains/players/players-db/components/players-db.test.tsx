@@ -1,16 +1,16 @@
 import { render, screen, waitFor, within, fireEvent } from "@testing-library/react";
-import PlayerDb from "./player-db";
+import PlayersDb from "./players-db";
 import { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 import { vi } from "vitest";
-import PlayerDBDummy from "../mocks/player-db-dummy.json";
+import PlayersDBDummy from "../mocks/players-db-dummy.json";
 import { server } from "@shared/mocks/server";
 import { http, HttpResponse } from "msw";
-import PlayerDbSkeleton from "./skeleton/player-db-skeleton";
-import PlayerDbErrorFallback from "./error/player-db-error-fallback";
+import PlayerDbSkeleton from "./skeleton/players-db-skeleton";
+import PlayerDbErrorFallback from "./error/players-db-error-fallback";
 
 // 모킹 모듈 가져오기
 const mockUseAuth = vi.fn();
@@ -100,7 +100,7 @@ describe("선수 누적평점 컴포넌트 렌더링 테스트", () => {
 
   // 로딩 테스트는 한 번만
   it("API호출 전에는 로딩컴포넌트가 나와야한다. 호출 성공시 로딩컴포넌트가 사라지고 선수데이터가 렌더링되어야한다", async () => {
-    renderWithQueryClient(<PlayerDb />);
+    renderWithQueryClient(<PlayersDb />);
 
     // 로딩 상태 확인
     const loadingElement = await screen.findByTestId("player-db-skeleton");
@@ -118,14 +118,14 @@ describe("선수 누적평점 컴포넌트 렌더링 테스트", () => {
       }),
     );
 
-    renderWithQueryClient(<PlayerDb />);
+    renderWithQueryClient(<PlayersDb />);
     const errorElement = await screen.findByText("에러발생");
     expect(errorElement).toBeInTheDocument();
   });
 
   // 나머지 테스트들은 로딩 완료 후 실행
   it("헤더 '선수 DB'가 렌더링 되어야 한다", async () => {
-    await renderAndWaitForLoad(<PlayerDb />);
+    await renderAndWaitForLoad(<PlayersDb />);
 
     const headerElement = screen.getByRole("heading", { level: 2 });
     expect(headerElement).toBeInTheDocument();
@@ -133,21 +133,21 @@ describe("선수 누적평점 컴포넌트 렌더링 테스트", () => {
   });
 
   it("목데이터 21명의 선수가 모두 렌더링 되어야 한다", async () => {
-    await renderAndWaitForLoad(<PlayerDb />);
+    await renderAndWaitForLoad(<PlayersDb />);
 
     const playerList = screen.getAllByRole("listitem");
     expect(playerList.length).toBe(21);
 
-    const mockData = PlayerDBDummy;
+    const mockData = PlayersDBDummy;
     mockData.forEach((player) => {
       expect(screen.getByText(player.korean_name)).toBeInTheDocument();
     });
   });
 
   it("목데이터 21명중  평점(전체,my)이 null인경우 0점, 아닐경우 DB상의 점수가 나와야 한다", async () => {
-    await renderAndWaitForLoad(<PlayerDb />);
+    await renderAndWaitForLoad(<PlayersDb />);
 
-    const mockData = PlayerDBDummy;
+    const mockData = PlayersDBDummy;
     mockData.forEach((player) => {
       const playerElement = screen.getByText(player.korean_name).closest("li") as HTMLElement;
 
@@ -170,7 +170,7 @@ describe("선수 누적평점 컴포넌트 렌더링 테스트", () => {
   });
 
   it("목데이터 21명의 선수 이미지가 렌더링 되어야 한다", async () => {
-    await renderAndWaitForLoad(<PlayerDb />);
+    await renderAndWaitForLoad(<PlayersDb />);
 
     const playerList = screen.getAllByRole("img");
     expect(playerList.length).toBe(21);
@@ -185,7 +185,7 @@ describe("선수 누적평점 DB 컴포넌트 기능 테스트", () => {
   it("가로스크롤이 되어야함", async () => {
     const user = userEvent.setup();
     mockAnonymousUser();
-    await renderAndWaitForLoad(<PlayerDb />);
+    await renderAndWaitForLoad(<PlayersDb />);
 
     const scrollContainer = screen.getByRole("list");
 
@@ -205,7 +205,7 @@ describe("선수 누적평점 DB 컴포넌트 기능 테스트", () => {
   it("익명로그인유저: 클릭시 이용불가팝업", async () => {
     const user = userEvent.setup();
     mockAnonymousUser();
-    await renderAndWaitForLoad(<PlayerDb />);
+    await renderAndWaitForLoad(<PlayersDb />);
 
     const firstPlayer = screen.getByText("그레고르 코벨").closest("li") as HTMLElement;
     await user.click(firstPlayer);
@@ -216,7 +216,7 @@ describe("선수 누적평점 DB 컴포넌트 기능 테스트", () => {
 
   it("카카오 로그인유저: 클릭시 선수 상세 페이지이동", async () => {
     mockKakaoUser();
-    await renderAndWaitForLoad(<PlayerDb />);
+    await renderAndWaitForLoad(<PlayersDb />);
 
     const playerList = screen.getAllByRole("listitem");
     expect(playerList.length).toBe(21);

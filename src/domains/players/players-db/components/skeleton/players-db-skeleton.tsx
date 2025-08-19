@@ -3,12 +3,9 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import React from "react";
-import PlayerDbWrapper from "../wrapper/player-db-wrapper";
+import PlayersDbWrapper from "../wrapper/players-db-wrapper";
 
-interface IPlayerDbSkeleton {}
-
-const PlayerDbSkeleton: React.FC<IPlayerDbSkeleton> = () => {
+const PlayersDbSkeleton = () => {
   //SECTION HOOK호출 영역
   const skeletonItems = Array.from({ length: 5 }, (_, index) => index);
   //!SECTION HOOK호출 영역
@@ -22,7 +19,7 @@ const PlayerDbSkeleton: React.FC<IPlayerDbSkeleton> = () => {
   //!SECTION 메서드 영역
 
   return (
-    <PlayerDbWrapper>
+    <PlayersDbWrapper>
       <div data-testid="player-db-skeleton">
         {/* 가로 스크롤 컨테이너 */}
         <ul className="scrollbar-hide-x flex w-full flex-row gap-[8px] overflow-x-scroll">
@@ -47,8 +44,8 @@ const PlayerDbSkeleton: React.FC<IPlayerDbSkeleton> = () => {
           ))}
         </ul>
       </div>
-    </PlayerDbWrapper>
+    </PlayersDbWrapper>
   );
 };
 
-export default PlayerDbSkeleton;
+export default PlayersDbSkeleton;

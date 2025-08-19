@@ -3,9 +3,9 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import React from "react";
+import PlayerDbWrapper from "../wrapper/players-db-wrapper";
 
-const PlayerDbWrapper = ({ children }: { children: React.ReactNode }) => {
+const PlayersDbErrorFallback = () => {
   //SECTION HOOK호출 영역
 
   //!SECTION HOOK호출 영역
@@ -19,11 +19,10 @@ const PlayerDbWrapper = ({ children }: { children: React.ReactNode }) => {
   //!SECTION 메서드 영역
 
   return (
-    <section className="text-primary-100 w-full">
-      <h2 className="mb-4 text-[22px] font-bold">선수 DB</h2>
-      {children}
-    </section>
+    <PlayerDbWrapper>
+      <div data-testid="player-db-error-fallback">에러발생</div>
+    </PlayerDbWrapper>
   );
 };
 
-export default PlayerDbWrapper;
+export default PlayersDbErrorFallback;
