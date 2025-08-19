@@ -11,6 +11,7 @@ import { server } from "@shared/mocks/server";
 import { http, HttpResponse } from "msw";
 import PlayerDbSkeleton from "./skeleton/players-db-skeleton";
 import PlayerDbErrorFallback from "./error/players-db-error-fallback";
+import { getAnonymousUserAuthMock, getKakaoUserAuthMock } from "@shared/mocks/constants/user-mock-data";
 
 // 모킹 모듈 가져오기
 const mockUseAuth = vi.fn();
@@ -20,45 +21,11 @@ vi.mock("@auth/contexts/AuthContext", () => ({
 }));
 // 유저 모킹 함수들
 const mockAnonymousUser = () => {
-  mockUseAuth.mockReturnValue({
-    user: {
-      id: "익명id여",
-      aud: "authenticated",
-      role: "authenticated",
-      email: "",
-      phone: "",
-      last_sign_in_at: "2025-08-12T16:05:55.199244225Z",
-      app_metadata: {},
-      user_metadata: {},
-      identities: [],
-      created_at: "2025-08-12T16:05:55.187667Z",
-      updated_at: "2025-08-12T16:05:55.206288Z",
-      is_anonymous: true,
-    },
-    session: null,
-    signOut: vi.fn(),
-  });
+  mockUseAuth.mockReturnValue(getAnonymousUserAuthMock());
 };
 
 const mockKakaoUser = () => {
-  mockUseAuth.mockReturnValue({
-    user: {
-      id: "카카오id여",
-      aud: "authenticated",
-      role: "authenticated",
-      email: "user@example.com",
-      phone: "",
-      last_sign_in_at: "2025-08-12T15:30:12.620044774Z",
-      app_metadata: {},
-      user_metadata: {},
-      identities: [],
-      created_at: "2025-08-12T15:30:12.614313Z",
-      updated_at: "2025-08-12T15:30:12.624367Z",
-      is_anonymous: false,
-    },
-    session: null,
-    signOut: vi.fn(),
-  });
+  mockUseAuth.mockReturnValue(getKakaoUserAuthMock());
 };
 
 const renderWithQueryClient = (component: React.ReactElement) => {
