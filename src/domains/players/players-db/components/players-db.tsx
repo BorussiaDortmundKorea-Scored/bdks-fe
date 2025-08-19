@@ -5,7 +5,7 @@
  */
 import { useGetPlayersDbWithMyRatings } from "@players/players-db/api/react-query-api/use-get-players-db-with-my-ratings";
 import PlayersDbWrapper from "@players/players-db/components/wrapper/players-db-wrapper";
-import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/player-rating-rotator/error/player-rating-rotator-error-fallback";
+import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/error/players-rating-rotator-error-fallback";
 
 import { useAuth } from "@auth/contexts/AuthContext";
 

@@ -3,14 +3,15 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-
-import KakaoLoginButton from "@auth/components/kakao-login-button";
-import AnonymousLoginButton from "@auth/components/anonymous-login-button";
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
-import PlayerRatingRotator from "@players/players-rating-rotator/components/player-rating-rotator/player-rating-rotator";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/player-rating-rotator/error/player-rating-rotator-error-fallback";
-import PlayerRatingRotatorSkeleton from "@players/players-rating-rotator/components/player-rating-rotator/skeleton/player-rating-rotator-skeleton";
+
+import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/error/players-rating-rotator-error-fallback";
+import PlayerRatingRotator from "@players/players-rating-rotator/components/players-rating-rotator";
+import PlayerRatingRotatorSkeleton from "@players/players-rating-rotator/components/skeleton/players-rating-rotator-skeleton";
+
+import AnonymousLoginButton from "@auth/components/anonymous-login-button";
+import KakaoLoginButton from "@auth/components/kakao-login-button";
 
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 const SIGNAL_IDUNA_PARK_IMAGE = `${SUPABASE_STORAGE_URL}/dortmund//iduna_park.png`;
