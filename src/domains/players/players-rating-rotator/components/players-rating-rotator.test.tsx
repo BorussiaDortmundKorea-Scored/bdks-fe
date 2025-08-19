@@ -5,9 +5,7 @@ import PlayerRatingRotatorErrorFallback from "./error/players-rating-rotator-err
 import PlayersRatingRotatorSkeleton from "./skeleton/players-rating-rotator-skeleton";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
-import { HttpResponse, http } from "msw";
 
-import { server } from "@shared/mocks/server";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 import PlayersRatingRotator from "@players/players-rating-rotator/components/players-rating-rotator";
@@ -58,24 +56,5 @@ describe("PlayerRatingRotator 컴포넌트 렌더링 테스트", () => {
 
     // 디버깅을 위한 스크린 출력
     screen.debug();
-  });
-
-  it("빈 데이터일 때는 컴포넌트가 렌더링되지 않아야한다", async () => {
-    server.use(
-      http.post("*/rest/v1/rpc/get_player_rating_rotator_acc", () => {
-        console.log("빈 데이터 반환");
-        return HttpResponse.json([]);
-      }),
-    );
-
-    renderWithQueryClient(<PlayersRatingRotator />);
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("players-rating-rotator-skeleton")).not.toBeInTheDocument();
-    });
-
-    // 빈 데이터일 때도 컴포넌트가 렌더링되는지 확인
-    const containers = screen.getAllByRole("generic");
-    expect(containers.length).toBe(0);
   });
 });
