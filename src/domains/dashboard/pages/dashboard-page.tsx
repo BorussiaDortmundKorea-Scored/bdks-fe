@@ -1,4 +1,5 @@
 import Header from "@shared/components/layout/header";
+import LayoutWithHeader from "@shared/provider/layout-with-header";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 import PlayerDbErrorFallback from "@players/players-db/components/error/players-db-error-fallback";
@@ -13,12 +14,15 @@ const DashboardPage = () => {
   return (
     <div className="bdks-container">
       <Header />
-      <ReactQueryBoundary skeleton={<MatchesHistorySkeleton />} errorFallback={MatchesHistoryErrorFallback}>
-        <MatchesHistory />
-      </ReactQueryBoundary>
-      <ReactQueryBoundary skeleton={<PlayerDbSkeleton />} errorFallback={PlayerDbErrorFallback}>
-        <PlayerDb />
-      </ReactQueryBoundary>
+      <LayoutWithHeader>
+        <ReactQueryBoundary skeleton={<MatchesHistorySkeleton />} errorFallback={MatchesHistoryErrorFallback}>
+          <MatchesHistory />
+        </ReactQueryBoundary>
+        <ReactQueryBoundary skeleton={<PlayerDbSkeleton />} errorFallback={PlayerDbErrorFallback}>
+          <PlayerDb />
+        </ReactQueryBoundary>
+        <div className="w-full h-[800px] bg-blue-500 shrink-0">아아악</div>
+      </LayoutWithHeader>
     </div>
   );
 };
