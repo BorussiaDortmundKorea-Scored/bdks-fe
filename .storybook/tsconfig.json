@@ -7,7 +7,8 @@
       "@players/*": ["src/domains/players/*"],
       "@auth/*": ["src/domains/auth/*"],
       "@animals/*": ["src/domains/animals/*"],
-      "@dashboard/*": ["src/domains/dashboard/*"]
+      "@dashboard/*": ["src/domains/dashboard/*"],
+      "@matches/*": ["src/domains/matches/*"]
     }
   },
   "include": ["../src/**/*", "**/*"]

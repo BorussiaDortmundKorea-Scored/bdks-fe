@@ -12,6 +12,7 @@ export default defineConfig({
       "@auth": path.resolve(__dirname, "src/domains/auth"),
       "@animals": path.resolve(__dirname, "src/domains/animals"),
       "@dashboard": path.resolve(__dirname, "src/domains/dashboard"),
+      "@matches": path.resolve(__dirname, "src/domains/matches"),
     },
   },
 

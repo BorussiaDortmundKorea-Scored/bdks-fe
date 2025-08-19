@@ -3,6 +3,8 @@
  * 기능: 선수 DB 컴포넌트 - 가로 스크롤 형태의 선수 카드 목록
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
+import { useRef, useState } from "react";
+
 import { useGetPlayersDbWithMyRatings } from "@players/players-db/api/react-query-api/use-get-players-db-with-my-ratings";
 import PlayersDbWrapper from "@players/players-db/components/wrapper/players-db-wrapper";
 import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/error/players-rating-rotator-error-fallback";
@@ -17,6 +19,9 @@ const PlayersDb = () => {
     return <PlayerRatingRotatorErrorFallback />;
   }
   const data = useGetPlayersDbWithMyRatings(user.id);
+  const scrollContainerRef = useRef<HTMLUListElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStateRef = useRef<{ startX: number; scrollLeft: number }>({ startX: 0, scrollLeft: 0 });
 
   //!SECTION HOOK,상태값 영역
 
@@ -33,12 +38,54 @@ const PlayersDb = () => {
     }
   };
 
+  //SECTION 드래그/휠 스크롤 핸들러 영역
+  const handleMouseDown: React.MouseEventHandler<HTMLUListElement> = (event) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    setIsDragging(true);
+    dragStateRef.current.startX = event.pageX - container.offsetLeft;
+    dragStateRef.current.scrollLeft = container.scrollLeft;
+  };
+
+  const handleMouseMove: React.MouseEventHandler<HTMLUListElement> = (event) => {
+    if (!isDragging) return;
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    event.preventDefault();
+    const x = event.pageX - container.offsetLeft;
+    const walk = x - dragStateRef.current.startX;
+    container.scrollLeft = dragStateRef.current.scrollLeft - walk;
+  };
+
+  const handleMouseUpOrLeave: React.MouseEventHandler<HTMLUListElement> = () => {
+    setIsDragging(false);
+  };
+
+  const handleWheel: React.WheelEventHandler<HTMLUListElement> = (event) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const canScrollHorizontally = container.scrollWidth > container.clientWidth;
+    if (!canScrollHorizontally) return;
+    container.scrollLeft += event.deltaY;
+  };
+  //!SECTION 드래그/휠 스크롤 핸들러 영역
+
   //!SECTION 메서드 영역
 
   return (
     <PlayersDbWrapper>
       {/* 가로 스크롤 컨테이너 */}
-      <ul className="scrollbar-hide-x flex w-full flex-row gap-[8px] overflow-x-scroll">
+      <ul
+        ref={scrollContainerRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUpOrLeave}
+        onMouseLeave={handleMouseUpOrLeave}
+        onWheel={handleWheel}
+        className={`scrollbar-hide-x flex w-full flex-row gap-[8px] overflow-x-scroll select-none ${
+          isDragging ? "cursor-grabbing" : "cursor-grab"
+        }`}
+      >
         {data.map((item) => (
           <li
             key={item.id}

@@ -24,7 +24,8 @@
     "^@animals/(.*)$",
     "^@players/(.*)$",
     "^@auth/(.*)$",
-    "^@dashboard/(.*)$"
+    "^@dashboard/(.*)$",
+    "^@matches/(.*)$"
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
