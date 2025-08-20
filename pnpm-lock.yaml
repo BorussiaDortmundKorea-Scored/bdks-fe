@@ -44,6 +44,9 @@ importers:
       react-error-boundary:
         specifier: ^4.0.13
         version: 4.1.2(react@19.1.1)
+      react-image:
+        specifier: ^4.1.0
+        version: 4.1.0(@babel/runtime@7.28.2)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react-router-dom:
         specifier: ^7.6.3
         version: 7.7.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -2480,6 +2483,13 @@ packages:
     resolution: {integrity: sha512-GQDxZ5Jd+Aq/qUxbCm1UtzmL/s++V7zKgE8yMktJiCQXCCFZnMZh9ng+6/Ne6PjNSXH0L9CjeOEREfRnq6Duag==}
     peerDependencies:
       react: '>=16.13.1'
+
+  react-image@4.1.0:
+    resolution: {integrity: sha512-qwPNlelQe9Zy14K2pGWSwoL+vHsAwmJKS6gkotekDgRpcnRuzXNap00GfibD3eEPYu3WCPlyIUUNzcyHOrLHjw==}
+    peerDependencies:
+      '@babel/runtime': '>=7'
+      react: '>=16.8'
+      react-dom: '>=16.8'
 
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
@@ -5234,6 +5244,12 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.2
       react: 19.1.1
+
+  react-image@4.1.0(@babel/runtime@7.28.2)(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+    dependencies:
+      '@babel/runtime': 7.28.2
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
 
   react-is@17.0.2: {}
 
