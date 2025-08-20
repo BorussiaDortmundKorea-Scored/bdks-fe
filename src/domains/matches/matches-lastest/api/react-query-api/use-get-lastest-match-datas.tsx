@@ -1,3 +1,4 @@
+// src/domains/matches/matches-lastest/api/react-query-api/use-get-latest-match-datas.tsx
 import { useSuspenseQueries } from "@tanstack/react-query";
 
 import { TIME_UNIT } from "@shared/constants/time-unit";
@@ -16,13 +17,13 @@ export function useGetLatestMatchDatas() {
       {
         queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_LIVE_FORMATION],
         queryFn: () => getLatestMatchLiveFormation(),
-        staleTime: TIME_UNIT.ONE_MINUTE * 5,
-        gcTime: TIME_UNIT.ONE_MINUTE * 5,
+        staleTime: TIME_UNIT.ONE_SECOND * 30, // 실시간 평점이므로 짧게
+        gcTime: TIME_UNIT.ONE_SECOND * 30,
       },
       {
         queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_INFORMATION],
         queryFn: () => getLatestMatchInformation(),
-        staleTime: TIME_UNIT.ONE_MINUTE * 5,
+        staleTime: TIME_UNIT.ONE_MINUTE * 5, // 정적 데이터이므로 길게
         gcTime: TIME_UNIT.ONE_MINUTE * 5,
       },
     ],
@@ -30,8 +31,39 @@ export function useGetLatestMatchDatas() {
 
   const [formationResult, informationResult] = results;
 
+  // 선발과 후보 분리
+  const startingPlayers = formationResult.data.filter((player) => player.is_playing);
+  const benchPlayers = formationResult.data.filter((player) => !player.is_playing);
+
+  // 선발 선수들을 라인별로 그룹화
+  const startingFormation = startingPlayers.reduce(
+    (acc, player) => {
+      const lineNumber = player.line_number;
+      if (!acc[lineNumber]) {
+        acc[lineNumber] = [];
+      }
+      acc[lineNumber].push(player);
+      return acc;
+    },
+    {} as Record<number, IMatchesLastestPlayer[]>,
+  );
+
+  // 후보 선수들을 라인별로 그룹화
+  const benchFormation = benchPlayers.reduce(
+    (acc, player) => {
+      const lineNumber = player.line_number;
+      if (!acc[lineNumber]) {
+        acc[lineNumber] = [];
+      }
+      acc[lineNumber].push(player);
+      return acc;
+    },
+    {} as Record<number, IMatchesLastestPlayer[]>,
+  );
+
   return {
-    formation: formationResult.data as IMatchesLastestPlayer[],
+    startingFormation, // 현재 뛰고 있는 선수들 (1-5선)
+    benchFormation, // 후보 선수들
     information: informationResult.data as IMatchesLastestInformation,
   };
 }

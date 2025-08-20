@@ -27,7 +27,7 @@ const MatchesLastestWrapper = ({ children }: { children: React.ReactNode }) => {
       <Suspense fallback={<SkeletonComponent />}>
         <MyImageComponent />
       </Suspense>
-      <div className="absolute inset-0 flex items-center justify-center p-4">{children}</div>
+      <div className="absolute inset-0 flex items-center justify-center p-2">{children}</div>
     </section>
   );
 };

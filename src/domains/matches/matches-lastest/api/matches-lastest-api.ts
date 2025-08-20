@@ -6,7 +6,7 @@ export interface IMatchesLastestPlayer {
   profile_image_url: string;
   avg_rating: number; // DECIMAL(3,1) 타입
   position_sort_order: number;
-  line_number: number; // SMALLINT 타입
+  line_number: 0 | 1 | 2 | 3 | 4 | 5; // SMALLINT 타입
   position_detail_name: string;
   lineup_type: string; // VARCHAR(20) 타입
   is_captain: boolean;
@@ -16,6 +16,7 @@ export interface IMatchesLastestPlayer {
   is_sent_off: boolean;
   goals: number;
   assists: number;
+  is_playing: boolean;
 }
 
 export const getLatestMatchLiveFormation = async () => {
