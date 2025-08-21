@@ -36,7 +36,7 @@ export function useGetLatestMatchDatas() {
   const benchPlayers = formationResult.data.filter((player) => !player.is_playing);
 
   // 선발 선수들을 라인별로 그룹화
-  const startingFormation = startingPlayers.reduce(
+  const playingMembers = startingPlayers.reduce(
     (acc, player) => {
       const lineNumber = player.line_number;
       if (!acc[lineNumber]) {
@@ -49,7 +49,7 @@ export function useGetLatestMatchDatas() {
   );
 
   // 후보 선수들을 라인별로 그룹화
-  const benchFormation = benchPlayers.reduce(
+  const notPlayingMembers = benchPlayers.reduce(
     (acc, player) => {
       const lineNumber = player.line_number;
       if (!acc[lineNumber]) {
@@ -62,8 +62,8 @@ export function useGetLatestMatchDatas() {
   );
 
   return {
-    startingFormation, // 현재 뛰고 있는 선수들 (1-5선)
-    benchFormation, // 후보 선수들
+    playingMembers, // 현재 뛰고 있는 선수들 (1-5선)
+    notPlayingMembers, // 후보 선수들
     information: informationResult.data as IMatchesLastestInformation,
   };
 }

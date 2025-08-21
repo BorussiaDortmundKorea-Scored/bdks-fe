@@ -71,6 +71,10 @@
   /* Font Family */
   --font-yds-wanted: "Wanted Sans Variable";
   --font-shilla-culture: "Shilla_Culture";
+
+  --breakpoint-xs: 320px; /* 320px - 작은 폰 */
+  --breakpoint-sm: 375px;
+  --breakpoint-md: 450px;
 }
 
 html,

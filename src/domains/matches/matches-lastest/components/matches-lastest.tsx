@@ -1,6 +1,7 @@
 // src/domains/matches/matches-lastest/components/matches-lastest.tsx
 import { useGetLatestMatchDatas } from "../api/react-query-api/use-get-lastest-match-datas";
 
+import { type IMatchesLastestPlayer } from "@matches/matches-lastest/api/matches-lastest-api";
 import MatchesLastestWrapper from "@matches/matches-lastest/components/wrapper/matches-lastest-wrapper";
 
 /**
@@ -14,7 +15,7 @@ import MatchesLastestWrapper from "@matches/matches-lastest/components/wrapper/m
  */
 const MatchesLastest = () => {
   //SECTION HOOK호출 영역
-  const { startingFormation, information } = useGetLatestMatchDatas();
+  const { playingMembers, information } = useGetLatestMatchDatas();
 
   //!SECTION HOOK호출 영역
 
@@ -44,12 +45,10 @@ const MatchesLastest = () => {
         </div>
         {/* 하단부 : 포메이션 렌더링 */}
         <div className="w-full h-auto flex flex-1 flex-col justify-between py-4">
-          {Object.values(startingFormation).map((line, index) => (
-            <div key={index} className="w-full h-[52px] flex items-center justify-around flex-nowrap">
+          {Object.values(playingMembers).map((line, index) => (
+            <div key={index} className="w-full h-auto flex items-center justify-around flex-nowrap">
               {line.map((player) => (
-                <div key={player.player_id} className="relative w-[52px] h-[52px] shrink-0">
-                  <img src={player.profile_image_url} alt={player.player_name} className="w-full h-full object-cover" />
-                </div>
+                <PlayerCard player={player} />
               ))}
             </div>
           ))}
@@ -60,3 +59,27 @@ const MatchesLastest = () => {
 };
 
 export default MatchesLastest;
+
+const PlayerCard = ({ player }: { player: IMatchesLastestPlayer }) => {
+  return (
+    <div className="relative xs:w-[52px] xs:h-[52px] sm:w-[60px] sm:h-[60px] md:w-[66px] md:h-[66px] shrink-0">
+      {/* 체크무늬 배경 */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-primary-200 rounded-full">
+        <div className="w-full h-full bg-[repeating-conic-gradient(from_0deg,transparent_0deg_8deg,rgba(255,255,255,0.03)_8deg_16deg)] rounded-full" />
+      </div>
+      {/* 선수 이미지 컨테이너 */}
+      <div className="relative w-full h-full rounded-full overflow-hidden  border-2 border-primary-400 shadow-lg">
+        {/* 실제 선수 이미지 */}
+        <img src={player.profile_image_url} alt={player.player_name} className="object-cover w-full h-full" />
+
+        {/* 그림자 오버레이 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80" />
+      </div>
+
+      {/* 평점 오버레이 */}
+      <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-black rounded-full border-2 border-primary-400 flex items-center justify-center shadow-lg">
+        <span className="text-white text-xs font-bold">{player.avg_rating}</span>
+      </div>
+    </div>
+  );
+};
