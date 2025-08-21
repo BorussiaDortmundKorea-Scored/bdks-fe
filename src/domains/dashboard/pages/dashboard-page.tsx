@@ -9,19 +9,24 @@ import PlayerDbSkeleton from "@players/players-db/components/skeleton/players-db
 import MatchesHistoryErrorFallback from "@matches/matches-history/components/error/matches-history-error-fallback";
 import MatchesHistory from "@matches/matches-history/components/matches-history";
 import MatchesHistorySkeleton from "@matches/matches-history/components/skeleton/matches-history-skeleton";
+import MatchesLastestErrorFallback from "@matches/matches-lastest/components/error/matches-lastest-error-fallback";
+import MatchesLastest from "@matches/matches-lastest/components/matches-lastest";
+import MatchesLastestSkeleton from "@matches/matches-lastest/components/skeleton/matches-lastest-skeleton";
 
 const DashboardPage = () => {
   return (
     <div className="bdks-container">
       <Header />
       <LayoutWithHeader>
+        <ReactQueryBoundary skeleton={<MatchesLastestSkeleton />} errorFallback={MatchesLastestErrorFallback}>
+          <MatchesLastest />
+        </ReactQueryBoundary>
         <ReactQueryBoundary skeleton={<MatchesHistorySkeleton />} errorFallback={MatchesHistoryErrorFallback}>
           <MatchesHistory />
         </ReactQueryBoundary>
         <ReactQueryBoundary skeleton={<PlayerDbSkeleton />} errorFallback={PlayerDbErrorFallback}>
           <PlayerDb />
         </ReactQueryBoundary>
-        <div className="w-full h-[800px] bg-blue-500 shrink-0">아아악</div>
       </LayoutWithHeader>
     </div>
   );
