@@ -51,6 +51,7 @@ export default defineConfig({
       { find: "@animals", replacement: path.resolve(__dirname, "src/domains/animals") },
       { find: "@dashboard", replacement: path.resolve(__dirname, "src/domains/dashboard") },
       { find: "@matches", replacement: path.resolve(__dirname, "src/domains/matches") },
+      { find: "@admin", replacement: path.resolve(__dirname, "src/domains/admin") },
     ],
   },
 });

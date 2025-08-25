@@ -25,7 +25,8 @@
     "^@players/(.*)$",
     "^@auth/(.*)$",
     "^@dashboard/(.*)$",
-    "^@matches/(.*)$"
+    "^@matches/(.*)$",
+    "^@admin/(.*)$"
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true

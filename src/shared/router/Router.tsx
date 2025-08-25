@@ -3,20 +3,21 @@
  * 기능: 보돌코 스코어드 라우터
  * 프로세스 설명: 로그인 권한별 라우팅 처리 완료, 어드민 페이지 접근 권한 처리 예정
  */
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import AdminPage from "../../domains/admin/pages/admin-page";
 import { AuthProvider } from "../../domains/auth/contexts/AuthContext";
-import PublicRoute from "../components/PublicRoute";
 import AuthRoute from "../../domains/auth/provider/AuthRoute";
-import LoginPage from "@auth/pages/login-page";
-import AdminPage from "../pages/admin/admin-page";
-import PlayerRatingPage from "../pages/rating/player-rating-page";
 import DashboardPage from "../../domains/dashboard/pages/dashboard-page";
-import MatchRatingListPage from "../pages/match/match-rating-list-page";
-import PlayerStatsPage from "../pages/player/player-stats-page";
-import NotFoundPage from "../pages/not-found-page";
-import NicknamePage from "../pages/auth/nickname-page";
 import NicknameRoute from "../components/NicknameRoute";
+import PublicRoute from "../components/PublicRoute";
+import NicknamePage from "../pages/auth/nickname-page";
+import MatchRatingListPage from "../pages/match/match-rating-list-page";
+import NotFoundPage from "../pages/not-found-page";
+import PlayerStatsPage from "../pages/player/player-stats-page";
+import PlayerRatingPage from "../pages/rating/player-rating-page";
+
+import LoginPage from "@auth/pages/login-page";
 
 const Router = () => {
   return (
@@ -48,6 +49,10 @@ const Router = () => {
 
             {/* 관리자 */}
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin/player" element={<AdminPage />} />
+            <Route path="/admin/match" element={<AdminPage />} />
+            <Route path="/admin/team" element={<AdminPage />} />
+            <Route path="/admin/league" element={<AdminPage />} />
           </Route>
 
           {/* 404 페이지 */}
