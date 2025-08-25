@@ -5,7 +5,6 @@
  */
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import AdminPage from "../../domains/admin/pages/admin-page";
 import { AuthProvider } from "../../domains/auth/contexts/AuthContext";
 import AuthRoute from "../../domains/auth/provider/AuthRoute";
 import DashboardPage from "../../domains/dashboard/pages/dashboard-page";
@@ -18,6 +17,12 @@ import PlayerStatsPage from "../pages/player/player-stats-page";
 import PlayerRatingPage from "../pages/rating/player-rating-page";
 
 import LoginPage from "@auth/pages/login-page";
+
+import AdminCompetitionPage from "@admin/admin-competition/pages/admin-competition-page";
+import AdminMatchPage from "@admin/admin-match/pages/admin-match-page";
+import AdminPlayerPage from "@admin/admin-player/pages/admin-player-page";
+import AdminTeamPage from "@admin/admin-team/pages/admin-team-page";
+import AdminPage from "@admin/pages/admin-page";
 
 const Router = () => {
   return (
@@ -49,10 +54,10 @@ const Router = () => {
 
             {/* 관리자 */}
             <Route path="/admin" element={<AdminPage />} />
-            <Route path="/admin/player" element={<AdminPage />} />
-            <Route path="/admin/match" element={<AdminPage />} />
-            <Route path="/admin/team" element={<AdminPage />} />
-            <Route path="/admin/league" element={<AdminPage />} />
+            <Route path="/admin/player" element={<AdminPlayerPage />} />
+            <Route path="/admin/match" element={<AdminMatchPage />} />
+            <Route path="/admin/team" element={<AdminTeamPage />} />
+            <Route path="/admin/competition" element={<AdminCompetitionPage />} />
           </Route>
 
           {/* 404 페이지 */}

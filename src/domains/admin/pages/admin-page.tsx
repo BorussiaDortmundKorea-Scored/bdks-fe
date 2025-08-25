@@ -5,12 +5,14 @@
  */
 import { useNavigate } from "react-router-dom";
 
+import AdminWrapper from "@admin/provider/admin-wrapper";
+
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 const adminMenus = [
-  { id: "player", label: "선수단 관리", path: "/admin-kyd/player" },
-  { id: "match", label: "경기 관리", path: "/admin-kyd/match" },
-  { id: "team", label: "상대팀 관리", path: "/admin-kyd/team" },
-  { id: "league", label: "리그 관리", path: "/admin-kyd/league" },
+  { id: "player", label: "선수단 관리", path: "/admin/player" },
+  { id: "match", label: "경기 관리", path: "/admin/match" },
+  { id: "team", label: "상대팀 관리", path: "/admin/team" },
+  { id: "competition", label: "대회 관리", path: "/admin/competition" },
 ];
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 
@@ -30,7 +32,7 @@ const AdminPage = () => {
   //!SECTION 메서드 영역
 
   return (
-    <main className="bdks-container">
+    <AdminWrapper>
       <header className="w-full flex layout-header-height items-center relative">
         <h1 className="text-primary-400 font-shilla-culture absolute left-1/2 -translate-x-1/2 text-2xl font-bold">
           관리자 페이지
@@ -41,13 +43,13 @@ const AdminPage = () => {
           <li
             key={menu.id}
             onClick={() => handleMenuClick(menu.path)}
-            className="p-4 w-full text-white bg-background-secondary even:bg-background-primary "
+            className="p-4 w-full text-white bg-background-secondary even:bg-background-primary cursor-pointer"
           >
             {menu.label}
           </li>
         ))}
       </ul>
-    </main>
+    </AdminWrapper>
   );
 };
 
