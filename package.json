@@ -28,7 +28,7 @@
     "@youngduck/yd-ui": "^0.1.4",
     "axios": "^1.10.0",
     "gsap": "^3.13.0",
-    "lucide-react": "^0.539.0",
+    "lucide-react": "^0.541.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-error-boundary": "^4.0.13",
