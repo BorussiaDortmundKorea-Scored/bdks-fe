@@ -1,3 +1,5 @@
+import { PostgrestError } from "@supabase/supabase-js";
+
 import { supabase } from "@shared/api/config/supabaseClient";
 
 export interface IPlayer {
@@ -31,17 +33,20 @@ export interface IUpdatePlayerRequest {
   head_profile_image_url?: string;
 }
 
+// API 응답 타입 정의
+export interface ApiResponse<T> {
+  data: T | null;
+  error: PostgrestError | null;
+}
+
 // 모든 선수 조회
-export const getAllPlayers = async () => {
+export const getAllPlayers = async (): Promise<ApiResponse<IPlayer[]>> => {
   const { data, error } = await supabase.rpc("get_all_players");
-  if (error) {
-    throw new Error(`Failed to get all players: ${error.message}`);
-  }
-  return data as IPlayer[];
+  return { data, error };
 };
 
 // 선수 생성
-export const createPlayer = async (player: ICreatePlayerRequest) => {
+export const createPlayer = async (player: ICreatePlayerRequest): Promise<ApiResponse<IPlayer>> => {
   const { data, error } = await supabase.rpc("insert_player", {
     player_name: player.name,
     player_korean_name: player.korean_name,
@@ -50,14 +55,15 @@ export const createPlayer = async (player: ICreatePlayerRequest) => {
     player_full_profile_image_url: player.full_profile_image_url,
     player_head_profile_image_url: player.head_profile_image_url,
   });
-  if (error) {
-    throw new Error(`Failed to create player: ${error.message}`);
-  }
-  return data[0] as IPlayer;
+
+  return {
+    data: data?.[0] || null,
+    error,
+  };
 };
 
 // 선수 수정
-export const updatePlayer = async (player: IUpdatePlayerRequest) => {
+export const updatePlayer = async (player: IUpdatePlayerRequest): Promise<ApiResponse<IPlayer>> => {
   const { data, error } = await supabase.rpc("update_player", {
     p_player_id: player.id,
     p_player_name: player.name,
@@ -67,19 +73,18 @@ export const updatePlayer = async (player: IUpdatePlayerRequest) => {
     p_player_full_profile_image_url: player.full_profile_image_url,
     p_player_head_profile_image_url: player.head_profile_image_url,
   });
-  if (error) {
-    throw new Error(`Failed to update player: ${error.message}`);
-  }
-  return data[0] as IPlayer;
+
+  return {
+    data: data?.[0] || null,
+    error,
+  };
 };
 
 // 선수 삭제
-export const deletePlayer = async (id: string) => {
+export const deletePlayer = async (id: string): Promise<ApiResponse<boolean>> => {
   const { data, error } = await supabase.rpc("delete_player", {
     player_id: id,
   });
-  if (error) {
-    throw new Error(`Failed to delete player: ${error.message}`);
-  }
-  return data as boolean;
+
+  return { data, error };
 };
