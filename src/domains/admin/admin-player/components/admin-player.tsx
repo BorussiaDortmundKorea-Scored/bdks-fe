@@ -11,13 +11,13 @@ import { ArrowLeft, Edit, FolderPlus, Trash2 } from "lucide-react";
 import type { IPlayer } from "@admin/admin-player/api/admin-player-api";
 import { useCreatePlayer } from "@admin/admin-player/api/react-query-api/use-create-player";
 import { useDeletePlayer } from "@admin/admin-player/api/react-query-api/use-delete-player";
-import { useGetAllPlayers } from "@admin/admin-player/api/react-query-api/use-get-all-players";
+import { useGetAllPlayersSuspense } from "@admin/admin-player/api/react-query-api/use-get-all-players-suspense";
 import { useUpdatePlayer } from "@admin/admin-player/api/react-query-api/use-update-player";
 
 const AdminPlayer = () => {
   //SECTION HOOK호출 영역
   const navigate = useNavigate();
-  const { data: players } = useGetAllPlayers();
+  const { data: players } = useGetAllPlayersSuspense();
   const { mutateAsync: createPlayer, isPending: isCreating } = useCreatePlayer();
   const { mutateAsync: updatePlayer, isPending: isUpdating } = useUpdatePlayer();
   const { mutateAsync: deletePlayer } = useDeletePlayer();
