@@ -1,9 +1,13 @@
+import { PostgrestError } from "@supabase/supabase-js";
+
 import { supabase } from "@shared/api/config/supabaseClient";
 
 export interface ICompetition {
   id: string;
   name: string;
   season: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface ICreateCompetitionRequest {
@@ -17,47 +21,50 @@ export interface IUpdateCompetitionRequest {
   season?: string;
 }
 
+// API 응답 타입 정의
+export interface ApiResponse<T> {
+  data: T | null;
+  error: PostgrestError | null;
+}
+
 // 모든 대회 조회
-export const getAllCompetitions = async () => {
+export const getAllCompetitions = async (): Promise<ApiResponse<ICompetition[]>> => {
   const { data, error } = await supabase.rpc("get_all_competitions");
-  if (error) {
-    throw new Error(`Failed to get all competitions: ${error.message}`);
-  }
-  return data as ICompetition[];
+  return { data, error };
 };
 
 // 대회 생성
-export const createCompetition = async (competition: ICreateCompetitionRequest) => {
+export const createCompetition = async (competition: ICreateCompetitionRequest): Promise<ApiResponse<ICompetition>> => {
   const { data, error } = await supabase.rpc("insert_competition", {
     competition_name: competition.name,
     competition_season: competition.season,
   });
-  if (error) {
-    throw new Error(`Failed to create competition: ${error.message}`);
-  }
-  return data[0] as ICompetition;
+
+  return {
+    data: data?.[0] || null,
+    error,
+  };
 };
 
 // 대회 수정
-export const updateCompetition = async (competition: IUpdateCompetitionRequest) => {
+export const updateCompetition = async (competition: IUpdateCompetitionRequest): Promise<ApiResponse<ICompetition>> => {
   const { data, error } = await supabase.rpc("update_competition", {
     competition_id: competition.id,
     competition_name: competition.name,
     competition_season: competition.season,
   });
-  if (error) {
-    throw new Error(`Failed to update competition: ${error.message}`);
-  }
-  return data[0] as ICompetition;
+
+  return {
+    data: data?.[0] || null,
+    error,
+  };
 };
 
 // 대회 삭제
-export const deleteCompetition = async (id: string) => {
+export const deleteCompetition = async (id: string): Promise<ApiResponse<boolean>> => {
   const { data, error } = await supabase.rpc("delete_competition", {
     competition_id: id,
   });
-  if (error) {
-    throw new Error(`Failed to delete competition: ${error.message}`);
-  }
-  return data as boolean;
+
+  return { data, error };
 };
