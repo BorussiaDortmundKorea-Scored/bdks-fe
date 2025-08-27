@@ -3,8 +3,13 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
+import React from "react";
 
-const AdminPage = () => {
+interface IAdminWrapper {
+  children: React.ReactNode;
+}
+
+const AdminWrapper: React.FC<IAdminWrapper> = ({ children }) => {
   //SECTION HOOK호출 영역
 
   //!SECTION HOOK호출 영역
@@ -17,7 +22,7 @@ const AdminPage = () => {
 
   //!SECTION 메서드 영역
 
-  return <div>관리자페이지</div>;
+  return <main className="bdks-container">{children}</main>;
 };
 
-export default AdminPage;
+export default AdminWrapper;
