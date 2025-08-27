@@ -3,6 +3,7 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
+import ImageWithSkeleton from "@shared/components/image/image-with-skeleton";
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
@@ -34,7 +35,9 @@ const LoginPage = () => {
       <ReactQueryBoundary skeleton={<PlayerRatingRotatorSkeleton />} errorFallback={PlayerRatingRotatorErrorFallback}>
         <PlayerRatingRotator />
       </ReactQueryBoundary>
-      <img src={SIGNAL_IDUNA_PARK_IMAGE} alt="Dortmund Logo" className="h-auto w-full" />
+      <ImageWithSkeleton src={SIGNAL_IDUNA_PARK_IMAGE} skeleton={<SkeletonComponent />}>
+        {({ src }) => <img src={src} alt="Dortmund Logo" className="aspect-[3/2] w-full" />}
+      </ImageWithSkeleton>
       <h1 className="text-primary-400 font-shilla-culture text-center text-4xl font-bold">보돌코 스코어드</h1>
       <div className="flex w-full flex-col gap-4">
         <KakaoLoginButton />
@@ -50,3 +53,9 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+const SkeletonComponent = () => {
+  return (
+    <div className="w-full aspect-[3/2] flex items-center justify-center text-white text-lg ">경기장 가져오는중...</div>
+  );
+};
