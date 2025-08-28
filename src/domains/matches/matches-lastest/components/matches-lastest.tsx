@@ -1,7 +1,12 @@
 // src/domains/matches/matches-lastest/components/matches-lastest.tsx
+import { useNavigate } from "react-router-dom";
+
 import { useGetLatestMatchDatas } from "../api/react-query-api/use-get-lastest-match-datas";
 
-import { type IMatchesLastestPlayer } from "@matches/matches-lastest/api/matches-lastest-api";
+import {
+  type IMatchesLastestInformation,
+  type IMatchesLastestPlayer,
+} from "@matches/matches-lastest/api/matches-lastest-api";
 import MatchesLastestWrapper from "@matches/matches-lastest/components/wrapper/matches-lastest-wrapper";
 
 /**
@@ -48,7 +53,7 @@ const MatchesLastest = () => {
           {Object.values(playingMembers).map((line, index) => (
             <div key={index} className="w-full h-auto flex items-center justify-around flex-nowrap">
               {line.map((player) => (
-                <PlayerCard player={player} />
+                <PlayerCard player={player} information={information} />
               ))}
             </div>
           ))}
@@ -60,9 +65,24 @@ const MatchesLastest = () => {
 
 export default MatchesLastest;
 
-const PlayerCard = ({ player }: { player: IMatchesLastestPlayer }) => {
+const PlayerCard = ({
+  player,
+  information,
+}: {
+  player: IMatchesLastestPlayer;
+  information: IMatchesLastestInformation;
+}) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/match/${information.match_id}/player/${player.player_id}/ratings`);
+  };
+
   return (
-    <div className="relative xs:w-[52px] xs:h-[52px] sm:w-[60px] sm:h-[60px] md:w-[66px] md:h-[66px] shrink-0">
+    <div
+      className="relative xs:w-[52px] xs:h-[52px] sm:w-[60px] sm:h-[60px] md:w-[66px] md:h-[66px] shrink-0 cursor-pointer"
+      onClick={handleClick}
+    >
       {/* 체크무늬 배경 */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-primary-200 rounded-full">
         <div className="w-full h-full bg-[repeating-conic-gradient(from_0deg,transparent_0deg_8deg,rgba(255,255,255,0.03)_8deg_16deg)] rounded-full" />
