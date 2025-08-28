@@ -29,7 +29,7 @@ const MatchesLastest = () => {
   return (
     <MatchesLastestWrapper>
       {/* 상단부 : 경기정보 */}
-      <div className="w-full h-full p-2 rounded-[4px] bg-background-secondary/70 flex flex-col">
+      <div className="w-full h-full p-2 rounded-[4px] bg-background-secondary-layer flex flex-col">
         <div className="w-full h-auto flex justify-between items-center gap-2">
           <div className="flex flex-col gap-1">
             <div className="text-lg font-semibold text-white">
