@@ -1,6 +1,7 @@
 import { PostgrestError } from "@supabase/supabase-js";
 
 import { supabase } from "@shared/api/config/supabaseClient";
+import { type ApiResponse } from "@shared/api/types/api-types";
 
 export interface IMatchPlayerRating {
   korean_name: string;
@@ -19,12 +20,6 @@ export interface IGetMatchPlayerRatingRequest {
   player_id: string;
 }
 
-// API 응답 타입 정의
-export interface ApiResponse<T> {
-  data: T | null;
-  error: PostgrestError | null;
-}
-
 // 특정 경기의 특정 선수 평점 조회
 export const getMatchPlayerRating = async (
   request: IGetMatchPlayerRatingRequest,
@@ -35,7 +30,7 @@ export const getMatchPlayerRating = async (
   });
 
   return {
-    data: data as IMatchPlayerRating | null, // JSON 객체를 타입으로 캐스팅
-    error,
+    data: data as IMatchPlayerRating, // JSON 객체를 타입으로 캐스팅
+    error: error as PostgrestError,
   };
 };
