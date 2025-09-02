@@ -30,3 +30,6 @@ dist-ssr
 storybook-static
 
 coverage
+
+# 라이브러리 로컬 테스트 관련 파일
+pnpm-workspace.yaml
