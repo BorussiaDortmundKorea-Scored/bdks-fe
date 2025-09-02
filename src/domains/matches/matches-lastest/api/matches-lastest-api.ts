@@ -28,6 +28,7 @@ export const getLatestMatchLiveFormation = async () => {
 };
 
 export interface IMatchesLastestInformation {
+  match_id: string;
   opponent_name: string;
   league_name: string;
   season: string;

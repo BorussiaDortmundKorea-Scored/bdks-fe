@@ -18,6 +18,8 @@ import PlayerRatingPage from "../pages/rating/player-rating-page";
 
 import LoginPage from "@auth/pages/login-page";
 
+import MatchesLastestPlayerRatingPage from "@matches/matches-lastest/matches-lastest-player-rating/pages/matches-lastest-player-rating-page";
+
 import AdminCompetitionPage from "@admin/admin-competition/pages/admin-competition-page";
 import AdminMatchPage from "@admin/admin-match/pages/admin-match-page";
 import AdminPlayerPage from "@admin/admin-player/pages/admin-player-page";
@@ -51,6 +53,7 @@ const Router = () => {
 
             {/* 경기 관련 */}
             <Route path="/match/:matchId/ratings" element={<MatchRatingListPage />} />
+            <Route path="/match/:matchId/player/:playerId/ratings" element={<MatchesLastestPlayerRatingPage />} />
 
             {/* 관리자 */}
             <Route path="/admin" element={<AdminPage />} />
