@@ -3,6 +3,14 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.11.0] - 2025-09-02
+
+### ✅ 작업 내용
+
+- [x] **Feature**: 평점입력 화면 초안 제작
+- [x] **Refactor**: api 응답 타입 interfaqce 공통모듈화
+- [x] **Feature**: 평점입력 컴포넌트 조회부분 제작작
+
 ## [0.8.0] - 2025-08-21
 
 ### ✅ 작업 내용
