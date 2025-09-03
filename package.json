@@ -25,7 +25,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
-    "@youngduck/yd-ui": "^0.1.4",
+    "@youngduck/yd-ui": "^0.3.3",
     "axios": "^1.10.0",
     "gsap": "^3.13.0",
     "lucide-react": "^0.541.0",
