@@ -3,6 +3,24 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.11.1] - 2025-09-03
+
+### ✅ 작업 내용
+
+- [x] **Feature**: Supabase Realtime 실시간 평점 시스템 Broadcast 방식 실시간 통신 (베타테스트용) 구현
+- [x] **Feature**: useEffect 최소화한 실시간 구독 훅 구현
+
+### 🔧 기술요약
+
+- **실시간 통신**: realtime에서 제공하는 broadcast 방식으로 구현
+- 시간대별로 다중 평점 입력 가능 (minute 기반)
+- **성능 최적화**: React Query invalidateQueries를 통한 캐시 관리
+- **가독성, 최적화**: useEffect 하나만 사용해서 실시간 구독 훅 구현
+
+### 🎯 요약
+
+실시간 평점 시스템 테스트를 위한 기능 작업완료. 테스트 해보면서 실제기능으로 작업할 예정
+
 ## [0.11.0] - 2025-09-02
 
 ### ✅ 작업 내용
