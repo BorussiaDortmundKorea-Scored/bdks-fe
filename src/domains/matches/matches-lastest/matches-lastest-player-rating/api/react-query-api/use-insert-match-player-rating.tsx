@@ -1,11 +1,9 @@
 // src/domains/matches/matches-lastest/matches-lastest-player-rating/api/react-query-api/use-insert-match-player-rating.tsx
+// types에서 import
+import type { IInsertPlayerRatingRequest, IInsertPlayerRatingResponse } from "../../types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import {
-  type IInsertPlayerRatingRequest,
-  type IInsertPlayerRatingResponse,
-  insertPlayerRating,
-} from "@matches/matches-lastest/matches-lastest-player-rating/api/matches-lastest-player-rating-api";
+import { insertPlayerRating } from "@matches/matches-lastest/matches-lastest-player-rating/api/matches-lastest-player-rating-api";
 import { MATCHES_LASTEST_PLAYER_RATING_QUERY_KEYS } from "@matches/matches-lastest/matches-lastest-player-rating/api/react-query-api/matches-lastest-player-rating-query-keys";
 
 export const useInsertMatchPlayerRating = () => {
