@@ -28,24 +28,17 @@ const MatchesLastestPlayerRating = () => {
   //SECTION 메서드 영역
   const handleInsertMatchPlayerRating = async () => {
     try {
-      console.log("🎯 평점 입력 버튼 클릭");
-
       await insertMatchPlayerRating({
         match_id: matchId!,
         player_id: playerId!,
         minute: Math.floor(Math.random() * 90) + 1, // 1-90분 랜덤
         rating: Math.floor(Math.random() * 10) + 1, // 1-10점 랜덤
       });
-
-      console.log("🎉 평점 입력 완료!");
     } catch (error) {
-      console.error("💥 평점 입력 에러:", error);
       alert("이미입력한시간");
     }
   };
   //!SECTION 메서드 영역
-
-  console.log("🔍 playerRating:", playerRating);
 
   return (
     <>
@@ -68,7 +61,7 @@ const MatchesLastestPlayerRating = () => {
             {/* 실시간 평점 정보 */}
             <div className="flex justify-between items-center rounded-lg">
               <div className="flex flex-col gap-1">
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-gray-400" onClick={() => alert("zz")}>
                   실시간 평점
                   <span className="text-xs"> ({playerRating?.rating_count}명이 평가했어요)</span>
                 </p>

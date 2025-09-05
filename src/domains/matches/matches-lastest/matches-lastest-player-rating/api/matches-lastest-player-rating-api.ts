@@ -6,7 +6,7 @@ import { type ApiResponse } from "@shared/api/types/api-types";
 
 export interface IMatchPlayerRating {
   korean_name: string;
-  head_profile_image_url: string;
+  full_profile_image_url: string;
   position_detail_name: string;
   line_number: number;
   avg_rating: number;
@@ -65,8 +65,6 @@ export const getMatchPlayerRating = async (
 export const insertPlayerRating = async (
   request: IInsertPlayerRatingRequest,
 ): Promise<ApiResponse<IInsertPlayerRatingResponse>> => {
-  console.log("📝 평점 입력 시작:", request);
-
   const { data, error } = await supabase.rpc("insert_player_rating", {
     p_match_id: request.match_id,
     p_player_id: request.player_id,
@@ -79,8 +77,6 @@ export const insertPlayerRating = async (
     const channelName = `match-${request.match_id}-player-${request.player_id}`;
 
     try {
-      console.log("📢 브로드캐스트 전송 시작:", channelName);
-
       await supabase.channel(channelName).send({
         type: "broadcast",
         event: "rating_updated",
@@ -93,10 +89,8 @@ export const insertPlayerRating = async (
           action: "INSERT",
         },
       });
-
-      console.log("✅ 브로드캐스트 전송 완료");
     } catch (broadcastError) {
-      console.warn("⚠️ 브로드캐스트 전송 실패:", broadcastError);
+      console.warn("브로드캐스트 전송 실패:", broadcastError);
     }
   }
 
