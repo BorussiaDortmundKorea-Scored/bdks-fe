@@ -5,7 +5,7 @@ import { useAuth } from "../../domains/auth/contexts/AuthContext";
 import { LogOut } from "lucide-react";
 
 const LogoutButton: React.FC = () => {
-  const { signOut, user } = useAuth();
+  const { signOut } = useAuth();
 
   const handleLogout = async () => {
     try {

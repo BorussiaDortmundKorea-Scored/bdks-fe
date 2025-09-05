@@ -5,10 +5,8 @@ import MatchesHistory from "./matches-history";
 import MatchesHistorySkeleton from "./skeleton/matches-history-skeleton";
 import { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { HttpResponse, http } from "msw";
-import { vi } from "vitest";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 

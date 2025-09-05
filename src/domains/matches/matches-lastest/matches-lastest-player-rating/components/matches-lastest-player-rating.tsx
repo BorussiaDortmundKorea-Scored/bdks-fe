@@ -45,53 +45,46 @@ const MatchesLastestPlayerRating = () => {
   };
   //!SECTION 메서드 영역
 
+  console.log("🔍 playerRating:", playerRating);
+
   return (
     <>
       <LayoutWithHeaderFooter>
         <div className="w-full h-auto">
-          <div className="flex flex-col gap-4 p-4">
+          <div className="flex flex-col gap-4">
             {/* 선수 정보 */}
-            <div className="flex items-center gap-4 p-4 bg-background-secondary rounded-lg">
+            <div className="flex items-center gap-4 rounded-lg">
               <img
-                src={playerRating?.head_profile_image_url}
+                src={playerRating?.full_profile_image_url}
                 alt={playerRating?.korean_name}
-                className="w-16 h-16 rounded-full object-cover"
+                className="w-[300px] h-[300px] object-cover mx-auto"
               />
-              <div className="flex flex-col">
-                <h2 className="text-xl font-bold text-white">{playerRating?.korean_name}</h2>
-                <p className="text-primary-100">{playerRating?.position_detail_name}</p>
-              </div>
+            </div>
+            <div className="flex flex-col">
+              <h2 className="text-xl font-bold text-primary-100">{playerRating?.korean_name}</h2>
+              <p className="text-white">{playerRating?.position_detail_name}</p>
             </div>
 
             {/* 실시간 평점 정보 */}
-            <div className="flex justify-between items-center p-4 bg-background-secondary rounded-lg">
+            <div className="flex justify-between items-center rounded-lg">
               <div className="flex flex-col gap-1">
-                <p className="text-sm text-gray-400">실시간 평점</p>
+                <p className="text-sm text-gray-400">
+                  실시간 평점
+                  <span className="text-xs"> ({playerRating?.rating_count}명이 평가했어요)</span>
+                </p>
                 <div className="flex items-center gap-2">
                   <p className="text-3xl font-bold text-primary-400">{playerRating?.avg_rating}</p>
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="실시간 업데이트 중" />
                 </div>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="text-sm text-gray-400">총 평가 수</p>
-                <p className="text-xl font-semibold text-primary-100">{playerRating?.rating_count}개</p>
-              </div>
-            </div>
-
-            {/* 브로드캐스트 테스트 정보 */}
-            <div className="flex justify-between items-center p-4 bg-background-secondary rounded-lg">
-              <div className="text-sm text-gray-300">
-                <p>🎯 테스트: 랜덤 평점 입력</p>
-                <p>📢 Broadcast 방식 실시간 통신</p>
               </div>
             </div>
           </div>
         </div>
       </LayoutWithHeaderFooter>
 
-      <div className="w-full h-auto flex justify-center items-center p-4">
+      <div className="w-full h-auto flex justify-center items-center">
         <Button size="full" onClick={handleInsertMatchPlayerRating} isLoading={isInserting}>
-          평점 입력 (Broadcast 테스트)
+          평점 입력하기
         </Button>
       </div>
     </>
