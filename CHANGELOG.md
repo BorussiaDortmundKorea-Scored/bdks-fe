@@ -3,6 +3,28 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.11.2] - 2025-09-08
+
+### ✅ 작업 내용
+
+- [x] **Feature**: 드래그 가능한 평점 입력 게이지 컴포넌트 구현 (0.0~10.0, 0.1 단위)
+- [x] **Feature**: 실시간 평점 시스템 멀티 브로드캐스트 구현 (개별 선수 + 전체 목록)
+- [x] **Feature**: 전체 선수 목록 화면 실시간 평점 업데이트 기능
+- [x] **Enhancement**: PostgreSQL 함수 필드 확장 (round_name, league_name, season, opponent_team_name, goals, assists)
+- [x] **Optimization**: 상태 분리 패턴으로 드래그 중 리렌더링 최적화
+- [x] **Refactor**: useGetLatestMatchDatas에 실시간 소켓통신 통합으로 훅 간소화
+
+### 🔧 기술요약
+
+- **드래그 게이지**: useRef로 실시간 드래그 입력 (useEffect 최소화)
+- **멀티 브로드캐스트**: 평점 입력시 두 개 채널 동시 전송으로 개인화면, 전체화면 실시간 갱신
+- **성능 최적화**: 상태 분리로 부모 컴포넌트 리렌더링 최소화
+- **아키텍처 개선**: 별도 실시간 훅 제거하고 데이터 조회 훅에 통합
+
+### 🎯 요약
+
+실시간 평점 시스템 고도화 및 사용자 경험 개선. 전체 선수 목록에서도 실시간 평점 변화 확인 가능
+
 ## [0.11.1] - 2025-09-03
 
 ### ✅ 작업 내용

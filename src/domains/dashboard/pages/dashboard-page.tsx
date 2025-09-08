@@ -1,4 +1,5 @@
-import Header from "@shared/components/layout/header";
+import LogoutButton from "@shared/components/layout/header/buttons/logout-button";
+import Header from "@shared/components/layout/header/header";
 import LayoutWithHeader from "@shared/provider/layout-with-header";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
@@ -13,10 +14,16 @@ import MatchesLastestErrorFallback from "@matches/matches-lastest/components/err
 import MatchesLastest from "@matches/matches-lastest/components/matches-lastest";
 import MatchesLastestSkeleton from "@matches/matches-lastest/components/skeleton/matches-lastest-skeleton";
 
+//SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
+const options = {
+  leftIcon: <LogoutButton />,
+};
+//!SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
+
 const DashboardPage = () => {
   return (
     <div className="bdks-container">
-      <Header />
+      <Header options={options} />
       <LayoutWithHeader>
         <ReactQueryBoundary skeleton={<MatchesLastestSkeleton />} errorFallback={MatchesLastestErrorFallback}>
           <MatchesLastest />

@@ -20,33 +20,16 @@ export const useRealtimeMatchPlayerRating = ({ matchId, playerId }: UseRealtimeM
   useEffect(() => {
     const channelName = `match-${matchId}-player-${playerId}`;
 
-    console.log("🔗 브로드캐스트 구독 시작:", {
-      channelName,
-      matchId,
-      playerId,
-    });
-
     const channel = supabase
       .channel(channelName)
-      .on("broadcast", { event: "rating_updated" }, (payload) => {
-        console.log("📢 브로드캐스트 수신!", {
-          payload: payload.payload,
-          timestamp: new Date().toISOString(),
-        });
-
-        // React Query 캐시 무효화로 자동 재조회
+      .on("broadcast", { event: "rating_updated" }, () => {
         queryClient.invalidateQueries({
           queryKey: [MATCHES_LASTEST_PLAYER_RATING_QUERY_KEYS.MATCH_PLAYER_RATING, matchId, playerId],
         });
-
-        console.log("🔄 데이터 새로고침 요청 완료");
       })
-      .subscribe((status) => {
-        console.log("📡 브로드캐스트 구독 상태:", status);
-      });
+      .subscribe();
 
     return () => {
-      console.log("🔌 브로드캐스트 구독 해제:", channelName);
       supabase.removeChannel(channel);
     };
   }, [matchId, playerId, queryClient]);

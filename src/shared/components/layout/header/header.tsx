@@ -5,11 +5,15 @@
  */
 import React from "react";
 
-import LogoutButton from "../LogoutButton";
+interface HeaderOptions {
+  leftIcon: React.ReactNode;
+}
 
-interface IHeader {}
+interface IHeader {
+  options: HeaderOptions;
+}
 
-const Header: React.FC<IHeader> = () => {
+const Header: React.FC<IHeader> = ({ options }) => {
   //SECTION HOOK호출 영역
 
   //!SECTION HOOK호출 영역
@@ -24,7 +28,7 @@ const Header: React.FC<IHeader> = () => {
 
   return (
     <header className="w-full flex layout-header-height items-center relative">
-      <LogoutButton />
+      {options.leftIcon}
       <h1 className="text-primary-100 font-shilla-culture absolute left-1/2 -translate-x-1/2 text-2xl font-bold">
         보돌코 스코어드
       </h1>

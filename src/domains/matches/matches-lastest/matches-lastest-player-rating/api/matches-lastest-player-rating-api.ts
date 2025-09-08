@@ -1,50 +1,18 @@
 // src/domains/matches/matches-lastest/matches-lastest-player-rating/api/matches-lastest-player-rating-api.ts
+// types에서 import
+import type {
+  IGetMatchPlayerRatingRequest,
+  IGetUserPlayerRatingsRequest,
+  IInsertPlayerRatingRequest,
+  IInsertPlayerRatingResponse,
+  IMatchPlayerRating,
+  IRatingUpdatedPayload,
+  IUserPlayerRatings,
+} from "../types";
 import { PostgrestError } from "@supabase/supabase-js";
 
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse } from "@shared/api/types/api-types";
-
-export interface IMatchPlayerRating {
-  korean_name: string;
-  head_profile_image_url: string;
-  position_detail_name: string;
-  line_number: number;
-  avg_rating: number;
-  rating_count: number;
-  lineup_type: string;
-  player_id: string;
-  match_id: string;
-}
-
-export interface IGetMatchPlayerRatingRequest {
-  match_id: string;
-  player_id: string;
-}
-
-export interface IInsertPlayerRatingRequest {
-  match_id: string;
-  player_id: string;
-  minute: number;
-  rating: number;
-}
-
-export interface IInsertPlayerRatingResponse {
-  id: string;
-  rating: number;
-  minute: number;
-  user_nickname: string;
-  success: boolean;
-  message: string;
-}
-
-export interface IUserRating {
-  id: string;
-  minute: number;
-  rating: number;
-  comment: string | null;
-  created_at: string;
-  updated_at: string;
-}
 
 // 특정 경기의 특정 선수 평점 조회
 export const getMatchPlayerRating = async (
@@ -65,8 +33,6 @@ export const getMatchPlayerRating = async (
 export const insertPlayerRating = async (
   request: IInsertPlayerRatingRequest,
 ): Promise<ApiResponse<IInsertPlayerRatingResponse>> => {
-  console.log("📝 평점 입력 시작:", request);
-
   const { data, error } = await supabase.rpc("insert_player_rating", {
     p_match_id: request.match_id,
     p_player_id: request.player_id,
@@ -76,32 +42,55 @@ export const insertPlayerRating = async (
 
   // 성공 시 broadcast로 다른 클라이언트들에게 알림
   if (!error && data) {
-    const channelName = `match-${request.match_id}-player-${request.player_id}`;
+    const payload: IRatingUpdatedPayload = {
+      match_id: request.match_id,
+      player_id: request.player_id,
+      minute: request.minute,
+      rating: request.rating,
+      timestamp: new Date().toISOString(),
+      action: "INSERT",
+    };
 
     try {
-      console.log("📢 브로드캐스트 전송 시작:", channelName);
-
-      await supabase.channel(channelName).send({
+      // 🎯 1. 개별 선수 채널 (기존 - 개별 선수 화면용)
+      const playerChannelName = `match-${request.match_id}-player-${request.player_id}`;
+      const playerResult = await supabase.channel(playerChannelName).send({
         type: "broadcast",
         event: "rating_updated",
-        payload: {
-          match_id: request.match_id,
-          player_id: request.player_id,
-          minute: request.minute,
-          rating: request.rating,
-          timestamp: new Date().toISOString(),
-          action: "INSERT",
-        },
+        payload,
       });
+      console.log("📢 개별 선수 브로드캐스트:", playerChannelName, playerResult);
 
-      console.log("✅ 브로드캐스트 전송 완료");
+      // 🎯 2. 전체 경기 채널 (새로 추가 - 전체 선수 목록용)
+      const allPlayersChannelName = `match-${request.match_id}-all-players`;
+      const allPlayersResult = await supabase.channel(allPlayersChannelName).send({
+        type: "broadcast",
+        event: "player_rating_updated", // 이벤트명 다르게 설정
+        payload,
+      });
+      console.log("📢 전체 선수 브로드캐스트:", allPlayersChannelName, allPlayersResult);
     } catch (broadcastError) {
-      console.warn("⚠️ 브로드캐스트 전송 실패:", broadcastError);
+      console.error("❌ 브로드캐스트 전송 실패:", broadcastError);
     }
   }
 
   return {
     data: data as IInsertPlayerRatingResponse,
+    error: error as PostgrestError,
+  };
+};
+
+// 사용자의 특정 선수에 대한 모든 평점 조회
+export const getUserPlayerRatings = async (
+  request: IGetUserPlayerRatingsRequest,
+): Promise<ApiResponse<IUserPlayerRatings>> => {
+  const { data, error } = await supabase.rpc("get_user_player_ratings", {
+    p_match_id: request.match_id,
+    p_player_id: request.player_id,
+  });
+
+  return {
+    data: data as IUserPlayerRatings,
     error: error as PostgrestError,
   };
 };

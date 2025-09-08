@@ -1,8 +1,9 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import LoginPage from "./login-page";
 import { MemoryRouter } from "react-router-dom";
+
+import LoginPage from "./login-page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 // QueryClient 생성
 const createTestQueryClient = () =>
