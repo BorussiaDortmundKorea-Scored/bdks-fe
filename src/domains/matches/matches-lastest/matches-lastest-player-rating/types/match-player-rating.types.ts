@@ -9,6 +9,12 @@ export interface IMatchPlayerRating {
   lineup_type: string;
   player_id: string;
   match_id: string;
+  round_name: string;
+  league_name: string;
+  season: string;
+  opponent_team_name: string;
+  goals: number;
+  assists: number;
 }
 
 export interface IUserRating {

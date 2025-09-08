@@ -11,7 +11,6 @@ export interface IInsertPlayerRatingRequest {
   player_id: string;
   minute: number;
   rating: number;
-  comment?: string;
 }
 
 export interface IInsertPlayerRatingResponse {
