@@ -1,6 +1,9 @@
 // src/domains/matches/matches-lastest/api/react-query-api/use-get-latest-match-datas.tsx
-import { useSuspenseQueries } from "@tanstack/react-query";
+import { useEffect } from "react";
 
+import { useQueryClient, useSuspenseQueries } from "@tanstack/react-query";
+
+import { supabase } from "@shared/api/config/supabaseClient";
 import { TIME_UNIT } from "@shared/constants/time-unit";
 
 import {
@@ -12,6 +15,8 @@ import {
 import { MATCHES_LASTEST_QUERY_KEYS } from "@matches/matches-lastest/api/react-query-api/matches-lastest-query-key";
 
 export function useGetLatestMatchDatas() {
+  const queryClient = useQueryClient();
+
   const results = useSuspenseQueries({
     queries: [
       {
@@ -30,6 +35,26 @@ export function useGetLatestMatchDatas() {
   });
 
   const [formationResult, informationResult] = results;
+
+  // 실시간 소켓통신 통합
+  useEffect(() => {
+    const matchId = informationResult.data.match_id;
+    const allPlayersChannelName = `match-${matchId}-all-players`;
+
+    const channel = supabase
+      .channel(allPlayersChannelName)
+      .on("broadcast", { event: "player_rating_updated" }, () => {
+        // 전체 선수 데이터 무효화 및 재조회
+        queryClient.invalidateQueries({
+          queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_LIVE_FORMATION],
+        });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [informationResult.data.match_id, queryClient]);
 
   // 선발과 후보 분리
   const startingPlayers = formationResult.data.filter((player) => player.is_playing);

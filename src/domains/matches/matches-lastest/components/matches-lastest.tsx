@@ -20,7 +20,7 @@ import MatchesLastestWrapper from "@matches/matches-lastest/components/wrapper/m
  */
 const MatchesLastest = () => {
   //SECTION HOOK호출 영역
-  const { playingMembers, information } = useGetLatestMatchDatas();
+  const { playingMembers, information } = useGetLatestMatchDatas(); // 실시간 소켓통신 포함
 
   //!SECTION HOOK호출 영역
 
@@ -34,26 +34,30 @@ const MatchesLastest = () => {
   return (
     <MatchesLastestWrapper>
       {/* 상단부 : 경기정보 */}
-      <div className="w-full h-full p-2 rounded-[4px] bg-background-secondary-layer flex flex-col">
-        <div className="w-full h-auto flex justify-between items-center gap-2">
+      <div className="bg-background-secondary-layer flex h-full w-full flex-col rounded-[4px] p-2">
+        <div className="flex h-auto w-full items-center justify-between gap-2">
           <div className="flex flex-col gap-1">
             <div className="text-lg font-semibold text-white">
               도르트문트({information.home_away === "HOME" ? "H" : "A"}) vs {information.opponent_name}
             </div>
-            <div className="text-sm text-primary-100 ">
+            <div className="text-primary-100 text-sm">
               {information.season} {information.league_name} {information.round_name}
             </div>
           </div>
-          <div className="text-md font-semibold text-primary-100 shrink-0">
-            {information.is_live ? "경기중!" : "경기종료"}
+          <div className="text-md text-primary-100 shrink-0 font-semibold">
+            {information.is_live ? "경기중! 📡" : "경기종료"}
           </div>
         </div>
         {/* 하단부 : 포메이션 렌더링 */}
-        <div className="w-full h-auto flex flex-1 flex-col justify-between py-4">
+        <div className="flex h-auto w-full flex-1 flex-col justify-between py-4">
           {Object.values(playingMembers).map((line, index) => (
-            <div key={index} className="w-full h-auto flex items-center justify-around flex-nowrap">
+            <div key={index} className="flex h-auto w-full flex-nowrap items-center justify-around">
               {line.map((player) => (
-                <PlayerCard player={player} information={information} />
+                <PlayerCard
+                  key={player.player_id} // key 추가로 리렌더링 최적화
+                  player={player}
+                  information={information}
+                />
               ))}
             </div>
           ))}
@@ -80,26 +84,34 @@ const PlayerCard = ({
 
   return (
     <div
-      className="relative xs:w-[52px] xs:h-[52px] sm:w-[60px] sm:h-[60px] md:w-[66px] md:h-[66px] shrink-0 cursor-pointer"
+      className="xs:w-[52px] xs:h-[52px] relative shrink-0 cursor-pointer sm:h-[60px] sm:w-[60px] md:h-[66px] md:w-[66px]"
       onClick={handleClick}
     >
       {/* 체크무늬 배경 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-primary-200 rounded-full">
-        <div className="w-full h-full bg-[repeating-conic-gradient(from_0deg,transparent_0deg_8deg,rgba(255,255,255,0.03)_8deg_16deg)] rounded-full" />
+      <div className="to-primary-200 absolute inset-0 rounded-full bg-gradient-to-br from-gray-800">
+        <div className="h-full w-full rounded-full bg-[repeating-conic-gradient(from_0deg,transparent_0deg_8deg,rgba(255,255,255,0.03)_8deg_16deg)]" />
       </div>
       {/* 선수 이미지 컨테이너 */}
-      <div className="relative w-full h-full rounded-full overflow-hidden  border-2 border-primary-400 shadow-lg">
+      <div className="border-primary-400 relative h-full w-full overflow-hidden rounded-full border-2 shadow-lg">
         {/* 실제 선수 이미지 */}
-        <img src={player.profile_image_url} alt={player.player_name} className="object-cover w-full h-full" />
+        <img src={player.profile_image_url} alt={player.player_name} className="h-full w-full object-cover" />
 
         {/* 그림자 오버레이 */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80" />
       </div>
 
-      {/* 평점 오버레이 */}
-      <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-black rounded-full border-2 border-primary-400 flex items-center justify-center shadow-lg">
-        <span className="text-white text-xs font-bold">{player.avg_rating}</span>
+      {/* 평점 오버레이 - 실시간 애니메이션 추가 */}
+      <div className="border-primary-400 absolute -right-1 -bottom-1 flex h-7 w-7 items-center justify-center rounded-full border-2 bg-black shadow-lg">
+        <span className="text-xs font-bold text-white transition-all duration-300 ease-out">{player.avg_rating}</span>
       </div>
+
+      {/* 실시간 업데이트 인디케이터 (라이브 경기 시만) */}
+      {information.is_live && (
+        <div
+          className="absolute -top-1 -left-1 h-3 w-3 animate-pulse rounded-full bg-green-500"
+          title="실시간 업데이트"
+        />
+      )}
     </div>
   );
 };

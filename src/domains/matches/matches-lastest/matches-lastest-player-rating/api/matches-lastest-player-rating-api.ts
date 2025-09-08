@@ -42,25 +42,35 @@ export const insertPlayerRating = async (
 
   // 성공 시 broadcast로 다른 클라이언트들에게 알림
   if (!error && data) {
-    const channelName = `match-${request.match_id}-player-${request.player_id}`;
+    const payload: IRatingUpdatedPayload = {
+      match_id: request.match_id,
+      player_id: request.player_id,
+      minute: request.minute,
+      rating: request.rating,
+      timestamp: new Date().toISOString(),
+      action: "INSERT",
+    };
 
     try {
-      const payload: IRatingUpdatedPayload = {
-        match_id: request.match_id,
-        player_id: request.player_id,
-        minute: request.minute,
-        rating: request.rating,
-        timestamp: new Date().toISOString(),
-        action: "INSERT",
-      };
-
-      await supabase.channel(channelName).send({
+      // 🎯 1. 개별 선수 채널 (기존 - 개별 선수 화면용)
+      const playerChannelName = `match-${request.match_id}-player-${request.player_id}`;
+      const playerResult = await supabase.channel(playerChannelName).send({
         type: "broadcast",
         event: "rating_updated",
         payload,
       });
+      console.log("📢 개별 선수 브로드캐스트:", playerChannelName, playerResult);
+
+      // 🎯 2. 전체 경기 채널 (새로 추가 - 전체 선수 목록용)
+      const allPlayersChannelName = `match-${request.match_id}-all-players`;
+      const allPlayersResult = await supabase.channel(allPlayersChannelName).send({
+        type: "broadcast",
+        event: "player_rating_updated", // 이벤트명 다르게 설정
+        payload,
+      });
+      console.log("📢 전체 선수 브로드캐스트:", allPlayersChannelName, allPlayersResult);
     } catch (broadcastError) {
-      console.warn("브로드캐스트 전송 실패:", broadcastError);
+      console.error("❌ 브로드캐스트 전송 실패:", broadcastError);
     }
   }
 
