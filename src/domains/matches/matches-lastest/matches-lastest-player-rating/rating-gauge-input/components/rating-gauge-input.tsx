@@ -1,36 +1,37 @@
 // src/domains/matches/matches-lastest/matches-lastest-player-rating/components/rating-input-gauge.tsx
 /**
  * 작성자: KYD
- * 기능: 드래그 가능한 평점 입력 게이지 컴포넌트
- * 프로세스 설명: 0.0~10.0 범위에서 0.1 단위로 평점 입력 가능
+ * 기능: 드래그 가능한 평점 입력 게이지 컴포넌트 (리렌더링 최적화)
+ * 프로세스 설명: 내부 상태로 드래그 중 리렌더링 방지, 완료 시에만 상위에 전달하는 방식으로 리렌더링을 최적화
  */
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface RatingGaugeInputProps {
   value: number;
-  onChange: (rating: number) => void;
-  min?: number;
-  max?: number;
-  step?: number;
-  disabled?: boolean;
+  onChangeEnd: (rating: number) => void; // 드래그 완료 시, 클릭시
+  disabled: boolean;
 }
 
-const RatingGaugeInput = ({
-  value,
-  onChange,
-  min = 0,
-  max = 10,
-  step = 0.1,
-  disabled = false,
-}: RatingGaugeInputProps) => {
+const RatingGaugeInput = ({ value: externalValue, onChangeEnd, disabled }: RatingGaugeInputProps) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const min = 0;
+  const max = 10;
+  const step = 0.1;
+
+  const [internalValue, setInternalValue] = useState<number>(externalValue);
 
   // 게이지 컨테이너 REF
   const gaugeRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (!isDragging) {
+      setInternalValue(externalValue);
+    }
+  }, [externalValue, isDragging]);
+
   // 마우스/터치 위치를 기반으로 평점 계산
   const calculateRatingFromEvent = (clientX: number) => {
-    if (!gaugeRef.current || disabled) return value;
+    if (!gaugeRef.current || disabled) return internalValue;
 
     const rect = gaugeRef.current.getBoundingClientRect();
     const x = clientX - rect.left; // 상대적 x 위치
@@ -44,10 +45,14 @@ const RatingGaugeInput = ({
 
   // 게이지 클릭 핸들러
   const handleGaugeClick = (e: React.MouseEvent) => {
-    if (disabled) return;
+    if (disabled || isDragging) return;
 
     const newRating = calculateRatingFromEvent(e.clientX);
-    onChange(newRating);
+    setInternalValue(newRating);
+
+    if (onChangeEnd) {
+      onChangeEnd(newRating);
+    }
   };
 
   // 마우스 다운 핸들러 (드래그 시작)
@@ -56,17 +61,22 @@ const RatingGaugeInput = ({
 
     e.preventDefault();
     setIsDragging(true);
+
     const newRating = calculateRatingFromEvent(e.clientX);
-    onChange(newRating);
+    setInternalValue(newRating);
 
     // 전역 마우스 이벤트 리스너 등록
     const handleMouseMove = (e: MouseEvent) => {
       const newRating = calculateRatingFromEvent(e.clientX);
-      onChange(newRating);
+      setInternalValue(newRating);
     };
 
     const handleMouseUp = () => {
       setIsDragging(false);
+      if (onChangeEnd) {
+        onChangeEnd(internalValue);
+      }
+
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
@@ -81,20 +91,26 @@ const RatingGaugeInput = ({
 
     e.preventDefault();
     setIsDragging(true);
+
     const touch = e.touches[0];
     const newRating = calculateRatingFromEvent(touch.clientX);
-    onChange(newRating);
+    setInternalValue(newRating);
 
     // 전역 터치 이벤트 리스너 등록
     const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault(); // 스크롤 방지
+      e.preventDefault();
       const touch = e.touches[0];
       const newRating = calculateRatingFromEvent(touch.clientX);
-      onChange(newRating);
+      setInternalValue(newRating);
     };
 
     const handleTouchEnd = () => {
       setIsDragging(false);
+
+      if (onChangeEnd) {
+        onChangeEnd(internalValue);
+      }
+
       document.removeEventListener("touchmove", handleTouchMove);
       document.removeEventListener("touchend", handleTouchEnd);
     };
@@ -103,14 +119,14 @@ const RatingGaugeInput = ({
     document.addEventListener("touchend", handleTouchEnd);
   };
 
-  // 게이지 위치 계산 (0-100%)
-  const gaugePercentage = ((value - min) / (max - min)) * 100;
+  const displayValue = isDragging ? internalValue : externalValue;
+  const gaugePercentage = ((displayValue - min) / (max - min)) * 100;
 
   return (
     <div className="bg-background-secondary flex flex-col gap-3 rounded-lg p-4 font-semibold">
       <div className="flex items-center justify-between">
         <h3 className="text-primary-100 text-lg">평점 입력하기</h3>
-        <span className="text-primary-400 text-xl font-bold">{value.toFixed(1)}</span>
+        <span className="text-primary-400 text-xl font-bold">{displayValue.toFixed(1)}</span>
       </div>
 
       {/* 드래그 가능한 게이지 */}
@@ -132,8 +148,8 @@ const RatingGaugeInput = ({
 
           {/* 드래그 핸들 */}
           <div
-            className={`bg-primary-400 absolute top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white transition-all duration-100 ${
-              isDragging ? "scale-110" : "scale-100"
+            className={`bg-primary-400 absolute top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white transition-all duration-100 ${
+              isDragging ? "scale-110 shadow-lg" : "scale-100"
             }`}
             style={{ left: `${gaugePercentage}%` }}
           />
@@ -143,9 +159,7 @@ const RatingGaugeInput = ({
       {/* min-max 라벨 */}
       <div className="text-primary-100 flex items-center justify-between text-sm">
         <span>{min.toFixed(1)}</span>
-        <span>{(min + (max - min) * 0.25).toFixed(1)}</span>
         <span>{(min + (max - min) * 0.5).toFixed(1)}</span>
-        <span>{(min + (max - min) * 0.75).toFixed(1)}</span>
         <span>{max.toFixed(1)}</span>
       </div>
     </div>

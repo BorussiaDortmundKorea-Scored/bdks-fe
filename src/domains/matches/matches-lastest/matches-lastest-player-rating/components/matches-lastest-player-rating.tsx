@@ -32,7 +32,7 @@ const MatchesLastestPlayerRating = () => {
   //!SECTION HOOK호출 영역
 
   //SECTION 메서드 영역
-  const handleRatingChange = (rating: number) => {
+  const handleRatingChangeEnd = (rating: number) => {
     setSelectedRating(rating);
   };
 
@@ -100,10 +100,7 @@ const MatchesLastestPlayerRating = () => {
             {/* 평점 입력 영역 */}
             <RatingGaugeInput
               value={selectedRating}
-              onChange={handleRatingChange}
-              min={0}
-              max={10}
-              step={0.1}
+              onChangeEnd={handleRatingChangeEnd} // 드래그 완료 시에만 호출
               disabled={isInserting}
             />
           </div>
