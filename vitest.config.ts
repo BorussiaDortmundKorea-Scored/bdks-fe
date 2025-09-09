@@ -7,13 +7,14 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      "@shared": path.resolve(__dirname, "src/shared"),
-      "@players": path.resolve(__dirname, "src/domains/players"),
-      "@auth": path.resolve(__dirname, "src/domains/auth"),
+      "@admin": path.resolve(__dirname, "src/domains/admin"),
       "@animals": path.resolve(__dirname, "src/domains/animals"),
+      "@auth": path.resolve(__dirname, "src/domains/auth"),
+      "@auth-profile": path.resolve(__dirname, "src/domains/auth/auth-profile"),
       "@dashboard": path.resolve(__dirname, "src/domains/dashboard"),
       "@matches": path.resolve(__dirname, "src/domains/matches"),
-      "@admin": path.resolve(__dirname, "src/domains/admin"),
+      "@players": path.resolve(__dirname, "src/domains/players"),
+      "@shared": path.resolve(__dirname, "src/shared"),
     },
   },
 

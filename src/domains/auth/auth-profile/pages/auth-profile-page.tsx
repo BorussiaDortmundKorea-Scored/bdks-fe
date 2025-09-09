@@ -5,10 +5,14 @@
  */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../domains/auth/contexts/AuthContext";
+
+import { SelectBox } from "@youngduck/yd-ui";
+
+import { useAuth } from "@auth/contexts/AuthContext";
+
 import { supabase } from "@shared/api/config/supabaseClient";
 
-const NicknamePage = () => {
+const AuthProfilePage = () => {
   const [nickname, setNickname] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -55,7 +59,7 @@ const NicknamePage = () => {
           <h2 className="text-center text-3xl font-bold text-gray-900">닉네임 설정</h2>
           <p className="mt-2 text-center text-sm text-gray-600">사용할 닉네임을 입력해주세요</p>
         </div>
-
+        <SelectBox />
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">
@@ -89,4 +93,4 @@ const NicknamePage = () => {
   );
 };
 
-export default NicknamePage;
+export default AuthProfilePage;

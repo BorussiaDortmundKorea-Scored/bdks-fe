@@ -3,13 +3,14 @@
   "compilerOptions": {
     "baseUrl": "..",
     "paths": {
-      "@shared/*": ["src/shared/*"],
-      "@players/*": ["src/domains/players/*"],
-      "@auth/*": ["src/domains/auth/*"],
+      "@admin/*": ["src/domains/admin/*"],
       "@animals/*": ["src/domains/animals/*"],
+      "@auth/*": ["src/domains/auth/*"],
+      "@auth-profile/*": ["src/domains/auth/auth-profile/*"],
       "@dashboard/*": ["src/domains/dashboard/*"],
       "@matches/*": ["src/domains/matches/*"],
-      "@admin/*": ["src/domains/admin/*"]
+      "@players/*": ["src/domains/players/*"],
+      "@shared/*": ["src/shared/*"]
     }
   },
   "include": ["../src/**/*", "**/*"]

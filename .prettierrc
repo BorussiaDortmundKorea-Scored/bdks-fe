@@ -20,13 +20,14 @@
   "importOrder": [
     "^react",
     "<THIRD_PARTY_MODULES>",
-    "^@shared/(.*)$",
+    "^@admin/(.*)$",
     "^@animals/(.*)$",
-    "^@players/(.*)$",
     "^@auth/(.*)$",
+    "^@auth-profile/(.*)$",
     "^@dashboard/(.*)$",
     "^@matches/(.*)$",
-    "^@admin/(.*)$"
+    "^@players/(.*)$",
+    "^@shared/(.*)$"
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true

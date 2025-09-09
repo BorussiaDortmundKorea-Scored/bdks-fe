@@ -45,13 +45,14 @@ export default defineConfig({
   },
   resolve: {
     alias: [
-      { find: "@shared", replacement: path.resolve(__dirname, "src/shared") },
-      { find: "@players", replacement: path.resolve(__dirname, "src/domains/players") },
-      { find: "@auth", replacement: path.resolve(__dirname, "src/domains/auth") },
+      { find: "@admin", replacement: path.resolve(__dirname, "src/domains/admin") },
       { find: "@animals", replacement: path.resolve(__dirname, "src/domains/animals") },
+      { find: "@auth", replacement: path.resolve(__dirname, "src/domains/auth") },
+      { find: "@auth-profile", replacement: path.resolve(__dirname, "src/domains/auth/auth-profile") },
       { find: "@dashboard", replacement: path.resolve(__dirname, "src/domains/dashboard") },
       { find: "@matches", replacement: path.resolve(__dirname, "src/domains/matches") },
-      { find: "@admin", replacement: path.resolve(__dirname, "src/domains/admin") },
+      { find: "@players", replacement: path.resolve(__dirname, "src/domains/players") },
+      { find: "@shared", replacement: path.resolve(__dirname, "src/shared") },
     ],
   },
 });
