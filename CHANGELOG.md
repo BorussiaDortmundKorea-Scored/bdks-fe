@@ -1,7 +1,16 @@
-# Changelog
+# 보돌코스코어드 패치노트
 
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
+
+## [0.11.3] - 2025-09-10
+
+### ✅ 작업 내용
+
+- [x] **Refactor**: 미사용 코드 제거 및 코드 정리
+- [x] **Chore**: push 전 빌드 검증 추가
+- [x] **Fix**: 선수 update RPC 파라미터 오타 수정
+- [x] **Feature**: 매치데이 경기 관리자 기능 추가
 
 ## [0.11.2] - 2025-09-08
 
