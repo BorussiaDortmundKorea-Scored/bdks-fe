@@ -5,27 +5,26 @@
  */
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import AuthProfilePage from "../../domains/auth/auth-profile/pages/auth-profile-page";
 import { AuthProvider } from "../../domains/auth/contexts/AuthContext";
 import AuthRoute from "../../domains/auth/provider/AuthRoute";
 import DashboardPage from "../../domains/dashboard/pages/dashboard-page";
-import NicknameRoute from "../components/NicknameRoute";
 import PublicRoute from "../components/PublicRoute";
-import NicknamePage from "../pages/auth/nickname-page";
 import MatchRatingListPage from "../pages/match/match-rating-list-page";
 import NotFoundPage from "../pages/not-found-page";
 import PlayerStatsPage from "../pages/player/player-stats-page";
 import PlayerRatingPage from "../pages/rating/player-rating-page";
 
-import LoginPage from "@auth/pages/login-page";
-
-import MatchesLastestPlayerRatingPage from "@matches/matches-lastest/matches-lastest-player-rating/pages/matches-lastest-player-rating-page";
-
 import AdminCompetitionPage from "@admin/admin-competition/pages/admin-competition-page";
-import AdminMatchLineupPage from "@admin/admin-match/admin-match-lineup/pages/admin-match-lineup-page";
 import AdminMatchPage from "@admin/admin-match/pages/admin-match-page";
 import AdminPlayerPage from "@admin/admin-player/pages/admin-player-page";
 import AdminTeamPage from "@admin/admin-team/pages/admin-team-page";
 import AdminPage from "@admin/pages/admin-page";
+
+import AuthProfileRoute from "@auth/auth-profile/provider/auth-profile-route";
+import LoginPage from "@auth/pages/login-page";
+
+import MatchesLastestPlayerRatingPage from "@matches/matches-lastest/matches-lastest-player-rating/pages/matches-lastest-player-rating-page";
 
 const Router = () => {
   return (
@@ -37,10 +36,9 @@ const Router = () => {
             <Route path="/" element={<LoginPage />} />
           </Route>
 
-          {/* 라우트 - 로그인 O, 닉네임 설정x 또는 닉네임 변경할 사용자만 접근*/}
-          <Route element={<NicknameRoute />}>
-            {/* 닉네임 설정 */}
-            <Route path="/nickname" element={<NicknamePage />} />
+          {/* 라우트 - 로그인 O, 닉네임 설정x 또는 닉네임이 없는 초기 사용자만 접근*/}
+          <Route element={<AuthProfileRoute />}>
+            <Route path="/auth/profile" element={<AuthProfilePage />} />
           </Route>
 
           {/* 어스 라우트 - 로그인 O + 닉네임 설정O 사용자만 접근 */}
@@ -60,7 +58,6 @@ const Router = () => {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/admin/player" element={<AdminPlayerPage />} />
             <Route path="/admin/match" element={<AdminMatchPage />} />
-            <Route path="/admin/match/:matchId/lineup" element={<AdminMatchLineupPage />} />
             <Route path="/admin/team" element={<AdminTeamPage />} />
             <Route path="/admin/competition" element={<AdminCompetitionPage />} />
           </Route>

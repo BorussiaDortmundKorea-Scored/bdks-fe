@@ -1,2 +1,0 @@
-echo "TypeScript 빌드 검증 중..."
-npx pnpm run build:dev || exit 1

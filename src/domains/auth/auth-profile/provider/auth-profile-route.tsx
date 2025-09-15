@@ -1,8 +1,8 @@
-// src/shared/components/NicknameRoute.tsx
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../domains/auth/contexts/AuthContext";
 
-const NicknameRoute = () => {
+import { useAuth } from "@auth/contexts/AuthContext";
+
+const AuthProfileRoute = () => {
   const { user } = useAuth();
 
   // 로그인되지 않은 사용자는 로그인 페이지로 리다이렉트
@@ -14,4 +14,4 @@ const NicknameRoute = () => {
   return <Outlet />;
 };
 
-export default NicknameRoute;
+export default AuthProfileRoute;

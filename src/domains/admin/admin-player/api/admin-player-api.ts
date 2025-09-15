@@ -63,7 +63,7 @@ export const updatePlayer = async (player: IUpdatePlayerRequest): Promise<ApiRes
     p_player_jersey_number: player.jersey_number,
     p_player_nationality: player.nationality,
     p_player_full_profile_image_url: player.full_profile_image_url,
-    p_player_head_profile_image_url: player.head_profile_image_url,
+    player_head_profile_image_url: player.head_profile_image_url,
   });
 
   return {
