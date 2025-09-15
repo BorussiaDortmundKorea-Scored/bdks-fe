@@ -6,11 +6,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Input } from "@youngduck/yd-ui";
 import { SelectBox } from "@youngduck/yd-ui";
 
 import { useAuth } from "@auth/contexts/AuthContext";
 
 import { supabase } from "@shared/api/config/supabaseClient";
+import LogoutButton from "@shared/components/layout/header/buttons/logout-button";
+import Header from "@shared/components/layout/header/header";
+import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
+
+//SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
+const options = {
+  leftIcon: <LogoutButton />,
+};
+//!SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 
 const AuthProfilePage = () => {
   const [nickname, setNickname] = useState("");
@@ -53,30 +63,28 @@ const AuthProfilePage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-md">
-        <div>
-          <h2 className="text-center text-3xl font-bold text-gray-900">닉네임 설정</h2>
-          <p className="mt-2 text-center text-sm text-gray-600">사용할 닉네임을 입력해주세요</p>
-        </div>
-        <SelectBox />
+    <div className="bdks-container">
+      <Header options={options} />
+      <LayoutWithHeaderFooter>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">
               닉네임
             </label>
-            <input
+            <Input
               id="nickname"
               name="nickname"
               type="text"
               required
+              color="primary-400"
+              size="full"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               placeholder="닉네임을 입력하세요"
               disabled={isLoading}
             />
           </div>
+          <SelectBox />
 
           {error && <div className="text-center text-sm text-red-600">{error}</div>}
 
@@ -88,7 +96,7 @@ const AuthProfilePage = () => {
             {isLoading ? "설정 중..." : "닉네임 설정"}
           </button>
         </form>
-      </div>
+      </LayoutWithHeaderFooter>
     </div>
   );
 };

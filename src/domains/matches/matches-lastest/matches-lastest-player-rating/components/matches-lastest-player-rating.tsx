@@ -107,7 +107,7 @@ const MatchesLastestPlayerRating = () => {
         </div>
       </LayoutWithHeaderFooter>
       <div className="flex h-auto w-full items-center justify-center">
-        <Button size="full" onClick={handleInsertMatchPlayerRating} isLoading={isInserting} disabled={isInserting}>
+        <Button size="full" onClick={handleInsertMatchPlayerRating} disabled={isInserting}>
           평점 등록하기
         </Button>
       </div>
