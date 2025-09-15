@@ -3,6 +3,12 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.11.4] - 2025-09-15
+
+### ✅ 작업 내용
+
+- [x] **Refactor**: 닉네임설정도메인 유저정보설정도메인으로 이름변경
+
 ## [0.11.2] - 2025-09-08
 
 ### ✅ 작업 내용
