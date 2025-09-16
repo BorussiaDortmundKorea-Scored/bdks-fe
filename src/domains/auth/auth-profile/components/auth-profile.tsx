@@ -7,12 +7,23 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Input } from "@youngduck/yd-ui";
+import { Button, Input, SelectBox } from "@youngduck/yd-ui";
 
 import { useAuth } from "@auth/contexts/AuthContext";
 
 import { supabase } from "@shared/api/config/supabaseClient";
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
+
+const testList = [
+  {
+    label: "국적",
+    value: "국적",
+  },
+  {
+    label: "국적2",
+    value: "국적2",
+  },
+];
 
 interface IAuthProfile {}
 
@@ -86,6 +97,7 @@ const AuthProfile: React.FC<IAuthProfile> = () => {
             placeholder="닉네임을 입력하세요"
             disabled={isLoading}
           />
+          <SelectBox size="full" options={{ lists: testList, search: false }} />
           {error && <div className="text-center text-sm text-red-600">{error}</div>}
         </LayoutWithHeaderFooter>
         <div className="flex h-auto w-full items-center justify-center">
