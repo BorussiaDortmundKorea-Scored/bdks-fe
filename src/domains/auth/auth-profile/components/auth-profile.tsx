@@ -5,67 +5,29 @@
  */
 import React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-import { Button, Input, SelectBox } from "@youngduck/yd-ui";
+import { useCreateAuthProfile } from "../api/react-query-api/use-create-auth-profile";
+import { Button, Input } from "@youngduck/yd-ui";
 
-import { useAuth } from "@auth/contexts/AuthContext";
-
-import { supabase } from "@shared/api/config/supabaseClient";
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
-
-const testList = [
-  {
-    label: "국적",
-    value: "국적",
-  },
-  {
-    label: "국적2",
-    value: "국적2",
-  },
-];
 
 interface IAuthProfile {}
 
 const AuthProfile: React.FC<IAuthProfile> = () => {
   //SECTION HOOK호출 영역
   const [nickname, setNickname] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const { user } = useAuth();
-  const navigate = useNavigate();
+  const { mutateAsync: createAuthProfile, isPending: isCreateAuthProfileLoading } = useCreateAuthProfile();
+
+  const trimNickname = (nickname: string) => {
+    return nickname.trim();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nickname.trim()) {
-      setError("닉네임을 입력해주세요.");
-      return;
-    }
-
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const { error } = await supabase.from("profiles").insert({
-        id: user?.id,
-        nickname: nickname.trim(),
-      });
-
-      if (error) {
-        if (error.code === "23505") {
-          setError("이미 사용 중인 닉네임입니다.");
-        } else {
-          setError("닉네임 설정 중 오류가 발생했습니다.");
-        }
-        return;
-      }
-      // 대시보드로 이동
-      navigate("/dashboard", { replace: true });
-    } catch (err) {
-      setError("닉네임 설정 중 오류가 발생했습니다.");
-    } finally {
-      setIsLoading(false);
-    }
+    const trimmedNickname = trimNickname(nickname);
+    await createAuthProfile({
+      nickname: trimmedNickname,
+    });
   };
   //!SECTION HOOK호출 영역
 
@@ -95,13 +57,11 @@ const AuthProfile: React.FC<IAuthProfile> = () => {
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
             placeholder="닉네임을 입력하세요"
-            disabled={isLoading}
+            disabled={isCreateAuthProfileLoading}
           />
-          <SelectBox size="full" options={{ lists: testList, search: false }} />
-          {error && <div className="text-center text-sm text-red-600">{error}</div>}
         </LayoutWithHeaderFooter>
         <div className="flex h-auto w-full items-center justify-center">
-          <Button size="full" onClick={handleSubmit} disabled={isLoading}>
+          <Button size="full" onClick={handleSubmit} disabled={isCreateAuthProfileLoading}>
             닉네임 설정
           </Button>
         </div>
