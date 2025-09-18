@@ -3,6 +3,20 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.12.1] - 2025-09-18
+
+### ✅ 작업 내용
+
+- [x] **Feature**: 사용자 프로필 설정 시스템 RPC 기반으로 리팩토링
+  - `insert_auth_profile` RPC 함수 구현 (nickname, favorite_player 지원)
+  - `auth.uid()` 기본값 활용으로 사용자 인증 자동 처리
+  - 프로필 중복 생성 방지 및 닉네임 중복 검증 로직 추가
+
+### 개선, 작업 예정
+
+- 사용자 프로필 설정시 퍼널형태로 닉네임, 좋아하는선수 등 하나의 한 데이터를 저장할 예정
+- yd-ui의 select box를 compound 컴포넌트 패턴으로 구현함에따라 이에 맞게 컴포넌트 수정예정
+
 ## [0.11.4] - 2025-09-15
 
 ### ✅ 작업 내용
