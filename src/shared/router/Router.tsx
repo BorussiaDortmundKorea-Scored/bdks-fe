@@ -16,6 +16,7 @@ import PlayerStatsPage from "../pages/player/player-stats-page";
 import PlayerRatingPage from "../pages/rating/player-rating-page";
 
 import AdminCompetitionPage from "@admin/admin-competition/pages/admin-competition-page";
+import AdminMatchLineupPage from "@admin/admin-match/admin-match-lineup/pages/admin-match-lineup-page";
 import AdminMatchPage from "@admin/admin-match/pages/admin-match-page";
 import AdminPlayerPage from "@admin/admin-player/pages/admin-player-page";
 import AdminTeamPage from "@admin/admin-team/pages/admin-team-page";
@@ -58,6 +59,7 @@ const Router = () => {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/admin/player" element={<AdminPlayerPage />} />
             <Route path="/admin/match" element={<AdminMatchPage />} />
+            <Route path="/admin/match/:matchId/lineup" element={<AdminMatchLineupPage />} />
             <Route path="/admin/team" element={<AdminTeamPage />} />
             <Route path="/admin/competition" element={<AdminCompetitionPage />} />
           </Route>
