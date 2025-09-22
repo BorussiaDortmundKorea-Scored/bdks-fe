@@ -15,7 +15,7 @@ import { useDeleteTeam } from "@admin/admin-team/api/react-query-api/use-delete-
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
 import { useUpdateTeam } from "@admin/admin-team/api/react-query-api/use-update-team";
 
-// 🔥 국가 옵션 데이터
+// 국가 옵션 데이터. 하드코딩중
 const countryOptions = [
   { label: "독일", value: "독일" },
   { label: "스페인", value: "스페인" },

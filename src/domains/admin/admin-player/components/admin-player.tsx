@@ -6,7 +6,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { Button, Input } from "@youngduck/yd-ui";
 import { ArrowLeft, Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { IPlayer } from "@admin/admin-player/api/admin-player-api";
