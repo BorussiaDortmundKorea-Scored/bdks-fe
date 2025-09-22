@@ -6,6 +6,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 import { ArrowLeft, Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { ITeam } from "@admin/admin-team/api/admin-team-api";
@@ -14,6 +15,17 @@ import { useDeleteTeam } from "@admin/admin-team/api/react-query-api/use-delete-
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
 import { useUpdateTeam } from "@admin/admin-team/api/react-query-api/use-update-team";
 
+// 국가 옵션 데이터. 하드코딩중
+const countryOptions = [
+  { label: "독일", value: "독일" },
+  { label: "스페인", value: "스페인" },
+  { label: "이탈리아", value: "이탈리아" },
+  { label: "프랑스", value: "프랑스" },
+  { label: "영국", value: "영국" },
+  { label: "네덜란드", value: "네덜란드" },
+  { label: "포르투갈", value: "포르투갈" },
+];
+
 const AdminTeam = () => {
   //SECTION HOOK호출 영역
   const navigate = useNavigate();
@@ -21,6 +33,18 @@ const AdminTeam = () => {
   const { mutateAsync: createTeam, isPending: isCreating } = useCreateTeam();
   const { mutateAsync: updateTeam, isPending: isUpdating } = useUpdateTeam();
   const { mutateAsync: deleteTeam } = useDeleteTeam();
+
+  const createCountrySelectHook = useSelectBox({
+    options: countryOptions,
+    search: true,
+    defaultValue: "독일",
+  });
+
+  const editCountrySelectHook = useSelectBox({
+    options: countryOptions,
+    search: true,
+    defaultValue: "독일",
+  });
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
@@ -28,7 +52,6 @@ const AdminTeam = () => {
   const [editingTeam, setEditingTeam] = useState<ITeam | null>(null);
   const [formData, setFormData] = useState({
     name: "",
-    country: "",
   });
   //!SECTION 상태값 영역
 
@@ -36,13 +59,10 @@ const AdminTeam = () => {
   const handleCreateTeam = async () => {
     await createTeam({
       name: formData.name,
-      country: formData.country || undefined,
+      country: createCountrySelectHook.value,
     });
     setIsCreateModalOpen(false);
-    setFormData({
-      name: "",
-      country: "",
-    });
+    setFormData({ name: "" });
   };
 
   const handleUpdateTeam = async () => {
@@ -51,18 +71,14 @@ const AdminTeam = () => {
     await updateTeam({
       id: editingTeam.id,
       name: formData.name || undefined,
-      country: formData.country || undefined,
+      country: editCountrySelectHook.value,
     });
     setEditingTeam(null);
-    setFormData({
-      name: "",
-      country: "",
-    });
+    setFormData({ name: "" });
   };
 
   const handleDeleteTeam = async (id: string) => {
     if (!confirm("정말로 이 팀을 삭제하시겠습니까?")) return;
-
     await deleteTeam(id);
   };
 
@@ -70,15 +86,31 @@ const AdminTeam = () => {
     setEditingTeam(team);
     setFormData({
       name: team.name,
-      country: team.country || "",
     });
+    // SelectBox에 기존 값 설정
+    if (team.country) {
+      const countryOption = countryOptions.find((opt) => opt.value === team.country);
+      if (countryOption) {
+        editCountrySelectHook.handleClickOption(countryOption);
+      }
+    }
+  };
+
+  const handleCreateModalClose = () => {
+    setIsCreateModalOpen(false);
+    setFormData({ name: "" });
+  };
+
+  const handleEditModalClose = () => {
+    setEditingTeam(null);
+    setFormData({ name: "" });
   };
   //!SECTION 메서드 영역
 
   return (
-    <div className="w-full flex flex-col h-full">
+    <div className="flex h-full w-full flex-col">
       {/* 고정된 헤더 */}
-      <header className="w-full flex layout-header-height items-center relative shrink-0 bg-background-primary z-10">
+      <header className="layout-header-height bg-background-primary relative z-10 flex w-full shrink-0 items-center">
         <ArrowLeft
           size={24}
           className="text-primary-400 cursor-pointer"
@@ -88,42 +120,46 @@ const AdminTeam = () => {
         <h1 className="text-primary-400 font-shilla-culture absolute left-1/2 -translate-x-1/2 text-2xl font-bold">
           팀 관리
         </h1>
-        <button
+        {/* 🔥 yd-ui Button으로 교체 */}
+        <Button
+          variant="outlined"
+          color="primary"
+          size="md"
           onClick={() => setIsCreateModalOpen(true)}
-          className="absolute right-4 border border-primary-400 cursor-pointer text-primary-400 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-500 transition-colors"
+          className="absolute right-4 flex items-center gap-2"
           aria-label="새 팀 추가"
         >
           <FolderPlus size={20} />팀 추가
-        </button>
+        </Button>
       </header>
 
-      {/* 스크롤 가능한 컨텐츠 영역 - 헤더 높이를 제외한 나머지 영역 */}
-      <div className="w-full flex-1 flex flex-col gap-4 overflow-y-auto scrollbar-hide">
+      {/* 스크롤 가능한 컨텐츠 영역 */}
+      <div className="scrollbar-hide border-primary-100 my-4 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
         <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-b border-background-secondary">
-            <tr>
-              <th className="px-6 py-3 text-left text-md font-bold uppercase tracking-wider">팀명</th>
-              <th className="px-6 py-3 text-left text-md font-bold uppercase tracking-wider">국가</th>
-              <th className="px-6 py-3 text-left text-md font-bold uppercase tracking-wider">작업</th>
+          <thead className="bg-background-primary text-primary-400 border-primary-100 text-yds-b1 border-b-2">
+            <tr className="h-12">
+              <th className="px-6 text-left uppercase">팀명</th>
+              <th className="px-6 text-left uppercase">국가</th>
+              <th className="px-6 text-left uppercase">작업</th>
             </tr>
           </thead>
-          <tbody className="bg-background-primary divide-y divide-background-secondary">
+          <tbody className="bg-background-primary">
             {teams.map((team) => (
-              <tr key={team.id} className="hover:bg-background-secondary">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary-400">{team.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-primary-100">{team.country || "-"}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <tr key={team.id} className="hover:bg-primary-300 h-12">
+                <td className="text-primary-400 px-6 py-4 text-sm font-medium whitespace-nowrap">{team.name}</td>
+                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{team.country || "-"}</td>
+                <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                   <div className="flex gap-2">
                     <button
                       onClick={() => openEditModal(team)}
-                      className="text-indigo-500 hover:text-indigo-900 cursor-pointer"
+                      className="cursor-pointer text-indigo-500 hover:text-indigo-900"
                       aria-label="수정"
                     >
                       <Edit size={16} />
                     </button>
                     <button
                       onClick={() => handleDeleteTeam(team.id)}
-                      className="text-red-600 hover:text-red-900 cursor-pointer"
+                      className="cursor-pointer text-red-600 hover:text-red-900"
                       aria-label="삭제"
                     >
                       <Trash2 size={16} />
@@ -136,93 +172,81 @@ const AdminTeam = () => {
         </table>
       </div>
 
-      {/* 생성 모달 */}
+      {/* 🔥 생성 모달 - yd-ui 컴포넌트들로 교체 */}
       {isCreateModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-96 max-h-[90vh] overflow-y-auto">
-            <h2 className="text-lg font-semibold mb-4">새 팀 추가</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">팀명 *</label>
-                <input
+        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
+          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
+            <h2 className="text-yds-b1 text-primary-100">새 팀 추가</h2>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-yds-b1 text-primary-100">팀명</label>
+                <Input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
                   placeholder="팀명을 입력하세요"
+                  size="full"
+                  color="primary-100"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">국가</label>
-                <input
-                  type="text"
-                  value={formData.country}
-                  onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
-                  placeholder="국가를 입력하세요"
-                />
+              <div className="flex flex-col gap-2">
+                <label className="text-yds-b1 text-primary-100">국가</label>
+                <SelectBox size="full" selectBoxHook={createCountrySelectHook} />
               </div>
             </div>
-            <div className="flex gap-2 mt-6">
-              <button
-                onClick={() => setIsCreateModalOpen(false)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-              >
+            <div className="mt-6 flex gap-2">
+              <Button variant="outlined" color="primary" size="full" onClick={handleCreateModalClose}>
                 취소
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="fill"
+                color="primary"
+                size="full"
                 onClick={handleCreateTeam}
                 disabled={!formData.name || isCreating}
-                className="flex-1 px-4 py-2 bg-primary-400 text-white rounded-md hover:bg-primary-500 disabled:opacity-50"
               >
                 {isCreating ? "추가 중..." : "추가"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
       )}
 
-      {/* 수정 모달 */}
+      {/* 🔥 수정 모달 - 생성 모달과 동일한 디자인 */}
       {editingTeam && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-96 max-h-[90vh] overflow-y-auto">
-            <h2 className="text-lg font-semibold mb-4">팀 수정</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">팀명 *</label>
-                <input
+        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
+          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
+            <h2 className="text-yds-b1 text-primary-100">팀 수정</h2>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-yds-b1 text-primary-100">팀명</label>
+                <Input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
                   placeholder="팀명을 입력하세요"
+                  size="full"
+                  color="primary-100"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">국가</label>
-                <input
-                  type="text"
-                  value={formData.country}
-                  onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
-                  placeholder="국가를 입력하세요"
-                />
+              <div className="flex flex-col gap-2">
+                <label className="text-yds-b1 text-primary-100">국가</label>
+                <SelectBox size="full" selectBoxHook={editCountrySelectHook} />
               </div>
             </div>
-            <div className="flex gap-2 mt-6">
-              <button
-                onClick={() => setEditingTeam(null)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-              >
+            <div className="mt-6 flex gap-2">
+              <Button variant="outlined" color="primary" size="full" onClick={handleEditModalClose}>
                 취소
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="fill"
+                color="primary"
+                size="full"
                 onClick={handleUpdateTeam}
                 disabled={!formData.name || isUpdating}
-                className="flex-1 px-4 py-2 bg-primary-400 text-white rounded-md hover:bg-primary-500 disabled:opacity-50"
               >
                 {isUpdating ? "수정 중..." : "수정"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
