@@ -3,6 +3,32 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.12.2] - 2025-09-22
+
+### ✅ 작업 내용
+
+- [x] **UI 통합**: admin-match, admin-match-lineup에 YD-UI 적용
+  - 테이블/모달 스타일을 `bg-background-*`, `border-primary-100`, `text-yds-b1` 기준으로 통일
+  - 액션 아이콘 버튼 hover/색상 일관화
+  - 모달 푸터 버튼을 YD-UI `Button`으로 교체
+- [x] **SelectBox 통합**
+  - 라인업 생성/수정 모달에 `SelectBox + useSelectBox` 도입 (선수/포지션/라인업 타입/교체 상태)
+  - 검색 옵션 활성화 및 기본값 세팅
+  - 교체 상태를 `NONE | SUBSTITUTED_IN | SUBSTITUTED_OUT`으로 변경
+  - 교체 상태에 따라 교체 시간, 교체 대상 선수 입력/선택 UI 조건부 표기
+- [x] **관리 화면 개선**
+  - admin-match 목록 헤더 버튼을 YD-UI `Button`으로 교체
+  - 테이블 외곽 `border-2`와 행 hover 효과로 가독성 향상
+
+### 🔧 기술요약
+
+- YD-UI SelectBox 훅 패턴 사용 (`filteredOptions`, `selectedText` 등 파생값 기반 렌더)
+- 생성/수정 시 훅의 `label/value`를 API 파라미터로 매핑하여 폼 로직 단순화
+
+### 🎯 요약
+
+관리자 경기/라인업 화면에 YD-UI를 일관 적용하여 디자인 통일성과 폼 사용성을 개선. 라인업 교체 로직 표기를 도메인 용어(`SUBSTITUTED_IN/OUT`)로 명확화.
+
 ## [0.12.1] - 2025-09-18
 
 ### ✅ 작업 내용
