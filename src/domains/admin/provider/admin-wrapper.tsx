@@ -22,7 +22,7 @@ const AdminWrapper: React.FC<IAdminWrapper> = ({ children }) => {
 
   //!SECTION 메서드 영역
 
-  return <main className="bdks-container">{children}</main>;
+  return <main className="bdks-admin-container">{children}</main>;
 };
 
 export default AdminWrapper;
