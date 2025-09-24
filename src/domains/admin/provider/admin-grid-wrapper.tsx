@@ -38,7 +38,7 @@ const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
   return (
     <main className="bdks-admin-container">
       <div className="grid w-full [grid-template-columns:200px_minmax(0,1fr)] gap-4">
-        <nav className="bg-background-secondary border-navy-50 relative flex min-h-[876px] flex-col gap-4 rounded-lg p-4">
+        <nav className="bg-background-secondary card-navy-50 relative flex min-h-[876px] flex-col gap-4 rounded-lg p-4">
           <h1 className="text-yds-s1 font-shilla-culture text-primary-100 text-center">
             보돌코 <br /> 스코어드
           </h1>
@@ -56,7 +56,7 @@ const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
             ))}
           </ul>
         </nav>
-        <div className="bg-background-secondary border-navy-50 rounded-lg p-4 text-white">
+        <div className="bg-background-secondary card-navy-50 rounded-lg p-4 text-white">
           <div className="grid h-full w-full grid-cols-8 grid-rows-8 gap-4">{children}</div>
         </div>
       </div>
