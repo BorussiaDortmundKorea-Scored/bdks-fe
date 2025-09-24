@@ -1,15 +1,16 @@
 /**
  * 작성자: KYD
- * 기능: 관리자 페이지 - 각 관리 메뉴로 이동
- * 프로세스 설명: 관리 메뉴 항목들을 배열로 관리하고 클릭 시 해당 페이지로 이동
+ * 기능:
+ * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Award, ChartNoAxesCombined, Trophy, Users, Volleyball } from "lucide-react";
 
-import AdminWrapper from "@admin/provider/admin-wrapper";
-
-//SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
+interface IAdminWrapper {
+  children: React.ReactNode;
+}
 const adminMenus = [
   { id: "dashboard", label: "Dashboard", path: "/admin", icon: ChartNoAxesCombined },
   { id: "player", label: "Players", path: "/admin/player", icon: Users },
@@ -17,11 +18,11 @@ const adminMenus = [
   { id: "team", label: "Teams", path: "/admin/team", icon: Award },
   { id: "competition", label: "Leagues", path: "/admin/competition", icon: Trophy },
 ];
-//SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 
-const AdminPage = () => {
+const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
   //SECTION HOOK호출 영역
   const navigate = useNavigate();
+
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
@@ -35,7 +36,7 @@ const AdminPage = () => {
   //!SECTION 메서드 영역
 
   return (
-    <AdminWrapper>
+    <main className="bdks-admin-container">
       <div className="grid w-full [grid-template-columns:200px_minmax(0,1fr)] gap-4">
         <nav className="bg-background-secondary border-navy-50 relative flex min-h-[876px] flex-col gap-4 rounded-lg p-4">
           <h1 className="text-yds-s1 font-shilla-culture text-primary-100 text-center">
@@ -55,21 +56,12 @@ const AdminPage = () => {
             ))}
           </ul>
         </nav>
-
-        <div className="bg-background-secondary rounded-lg p-4">
-          <div className="grid h-full w-full grid-cols-4 grid-rows-4 gap-4">
-            <div>1</div>
-            <div>1</div>
-            <div>1</div>
-            <div>1</div>
-            <div>1</div>
-            <div>1</div>
-            <div>1</div>
-          </div>
+        <div className="bg-background-secondary border-navy-50 rounded-lg p-4 text-white">
+          <div className="grid h-full w-full grid-cols-8 grid-rows-8 gap-4">{children}</div>
         </div>
       </div>
-    </AdminWrapper>
+    </main>
   );
 };
 
-export default AdminPage;
+export default AdminGridWrapper;
