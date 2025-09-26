@@ -3,6 +3,17 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.12.3] - 2025-09-26
+
+### ✅ 작업 내용
+
+- [x] **관리자 페이지 그리드 레이아웃 통일**: 모든 admin 페이지에 AdminGridWrapper 적용
+  - admin-player, admin-match, admin-competition, admin-team, admin-match-lineup 페이지 그리드 레이아웃 적용
+
+### 🎯 요약
+
+- AdminGridWrapper를 통한 8x8 그리드 레이아웃으로 잡음
+
 ## [0.12.2] - 2025-09-22
 
 ### ✅ 작업 내용

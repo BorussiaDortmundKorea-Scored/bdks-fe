@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllFinishMatchLists } from "../api/react-query-api/use-get-all-finish-match-lists";
 import MatchesHistoryWrapper from "./wrapper/matches-history-wrapper";
 
+import { createMatchRatingsPath } from "@shared/constants/routes";
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
@@ -31,7 +32,7 @@ const MatchesHistory = () => {
 
   //SECTION 메서드 영역
   const handleMatchCardClick = (matchId: string) => {
-    navigate(`/match/${matchId}/ratings`);
+    navigate(createMatchRatingsPath(matchId));
   };
 
   // 마우스 드래그로 가로 스크롤
@@ -85,7 +86,7 @@ const MatchesHistory = () => {
           <li
             key={match.id}
             onClick={() => handleMatchCardClick(match.id)}
-            className="flex w-[180px] shrink-0 flex-col gap-2 cursor-pointer"
+            className="flex w-[180px] shrink-0 cursor-pointer flex-col gap-2"
           >
             <img src={CARD_SECTION_IMAGE} alt="Yellow Wall" className="h-[90px] w-[180px] rounded object-cover" />
             <div className="flex flex-col text-white">

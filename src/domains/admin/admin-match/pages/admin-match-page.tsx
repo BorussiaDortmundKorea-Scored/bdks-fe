@@ -1,21 +1,27 @@
 /**
  * 작성자: KYD
- * 기능: 경기 관리 페이지 - 경기 CRUD 기능
- * 프로세스 설명: 경기 목록 조회, 생성, 수정, 삭제 기능 제공 및 라인업 관리 접근
+ * 기능: 관리자 경기 관리 페이지
+ * 프로세스 설명: 경기 목록 표시 및 경기 추가/수정/삭제 기능
  */
+import React from "react";
+
 import AdminMatch from "@admin/admin-match/components/admin-match";
-import AdminMatchErrorFallback from "@admin/admin-match/components/error/admin-match-error";
+import AdminMatchError from "@admin/admin-match/components/error/admin-match-error";
 import AdminMatchSkeleton from "@admin/admin-match/components/skeleton/admin-match-skeleton";
+import AdminGridWrapper from "@admin/provider/admin-grid-wrapper";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 const AdminMatchPage = () => {
   return (
-    <div className="bdks-admin-container">
-      <ReactQueryBoundary skeleton={<AdminMatchSkeleton />} errorFallback={AdminMatchErrorFallback}>
-        <AdminMatch />
-      </ReactQueryBoundary>
-    </div>
+    <AdminGridWrapper>
+      {/* 경기 목록 표 - 가로 전체, 세로 한 칸 빼고 */}
+      <div className="card-navy-50 col-start-1 col-end-9 row-start-1 row-end-8 h-full w-full">
+        <ReactQueryBoundary skeleton={<AdminMatchSkeleton />} errorFallback={AdminMatchError}>
+          <AdminMatch />
+        </ReactQueryBoundary>
+      </div>
+    </AdminGridWrapper>
   );
 };
 

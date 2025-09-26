@@ -5,6 +5,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { type ICreateProfileRequest, type IProfile, createProfile } from "@auth/auth-profile/api/auth-profile-api";
 import { AUTH_PROFILE_QUERY_KEYS } from "@auth/auth-profile/api/react-query-api/auth-profile-query-keys";
 
+import { ROUTES } from "@shared/constants/routes";
+
 export function useCreateAuthProfile() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ export function useCreateAuthProfile() {
       queryClient.invalidateQueries({
         queryKey: [AUTH_PROFILE_QUERY_KEYS.PROFILES],
       });
-      navigate("/dashboard", { replace: true });
+      navigate(ROUTES.DASHBOARD, { replace: true });
     },
     onError: (error: Error) => {
       console.error("Failed to create auth profile:", error);

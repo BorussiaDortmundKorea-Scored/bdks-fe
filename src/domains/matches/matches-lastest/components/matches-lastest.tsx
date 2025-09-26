@@ -9,6 +9,8 @@ import {
 } from "@matches/matches-lastest/api/matches-lastest-api";
 import MatchesLastestWrapper from "@matches/matches-lastest/components/wrapper/matches-lastest-wrapper";
 
+import { createMatchPlayerRatingsPath } from "@shared/constants/routes";
+
 /**
  * 작성자: KYD
  * 기능: 최근 경기(라이브 & 종료) 포메이션 렌더링
@@ -79,7 +81,7 @@ const PlayerCard = ({
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/match/${information.match_id}/player/${player.player_id}/ratings`);
+    navigate(createMatchPlayerRatingsPath(information.match_id, player.player_id));
   };
 
   return (

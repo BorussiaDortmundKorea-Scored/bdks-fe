@@ -102,32 +102,24 @@ const AdminPlayer = () => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      {/* 고정된 헤더 */}
-      <header className="layout-header-height bg-background-primary relative z-10 flex w-full shrink-0 items-center">
-        <ArrowLeft
-          size={24}
-          className="text-primary-400 cursor-pointer"
-          onClick={() => navigate(-1)}
-          aria-label="뒤로가기"
-        />
-        <h1 className="text-primary-400 font-shilla-culture absolute left-1/2 -translate-x-1/2 text-2xl font-bold">
-          선수 관리
-        </h1>
+      {/* 헤더 */}
+      <div className="flex w-full items-center justify-between p-4">
+        <h2 className="text-yds-s1 text-primary-100">선수 관리</h2>
         <Button
           variant="outlined"
           color="primary"
           size="md"
           onClick={() => setIsCreateModalOpen(true)}
-          className="absolute right-4 flex items-center gap-2"
+          className="flex items-center gap-2"
           aria-label="새 선수 추가"
         >
           <FolderPlus size={20} />
           선수 추가
         </Button>
-      </header>
+      </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <div className="scrollbar-hide border-primary-100 my-4 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
+      <div className="scrollbar-hide border-primary-100 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
         <table className="w-full">
           <thead className="bg-background-primary text-primary-400 border-primary-100 text-yds-b1 border-b-2">
             <tr className="h-12">
