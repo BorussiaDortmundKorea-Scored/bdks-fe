@@ -12,7 +12,7 @@ interface IAdminWrapper {
   children: React.ReactNode;
 }
 const adminMenus = [
-  { id: "dashboard", label: "Dashboard", path: "/admin", icon: ChartNoAxesCombined },
+  { id: "dashboard", label: "Dashboard", path: "/admin/dashboard", icon: ChartNoAxesCombined },
   { id: "player", label: "Players", path: "/admin/player", icon: Users },
   { id: "match", label: "Matches", path: "/admin/match", icon: Volleyball },
   { id: "team", label: "Teams", path: "/admin/team", icon: Award },
