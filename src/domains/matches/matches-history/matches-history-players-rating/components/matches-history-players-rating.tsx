@@ -15,7 +15,7 @@ interface IMatchesHistoryPlayersRating {}
 const MatchesHistoryPlayersRating: React.FC<IMatchesHistoryPlayersRating> = () => {
   //SECTION HOOK호출 영역
   const { matchId } = useParams();
-  const { data: matchesHistoryPlayersRating } = useGetMatchesHistoryPlayersRatingSuspense(matchId as string);
+  const { data: matchesHistoryPlayersRating, matchInfo } = useGetMatchesHistoryPlayersRatingSuspense(matchId as string);
 
   //!SECTION HOOK호출 영역
 
@@ -30,8 +30,10 @@ const MatchesHistoryPlayersRating: React.FC<IMatchesHistoryPlayersRating> = () =
     <MatchesHistoryPlayersRatingWrapper>
       <header className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
-          <h2 className="text-yds-s2 text-white">도르트문트 vs 레버쿠젠</h2>
-          <p className="text-yds-c1m text-primary-100">2025.09.29 18:00</p>
+          <h2 className="text-yds-s2 text-white">도르트문트 vs {matchInfo.opponent_team_name}</h2>
+          <p className="text-yds-c1m text-primary-100">
+            {matchInfo.competition_name} {matchInfo.season}
+          </p>
         </div>
         <Camera size={24} className="text-primary-100 cursor-pointer" />
       </header>

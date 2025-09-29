@@ -19,6 +19,15 @@ export interface IMatchesHistoryPlayersRating {
   botm: boolean;
 }
 
+export interface IMatchInfo {
+  home_away: "HOME" | "AWAY";
+  our_score: number;
+  opponent_score: number;
+  competition_name: string;
+  season: string;
+  opponent_team_name: string;
+}
+
 export const getMatchesHistoryPlayersRating = async (
   matchId: string,
 ): Promise<ApiResponse<IMatchesHistoryPlayersRating[]>> => {
@@ -29,4 +38,14 @@ export const getMatchesHistoryPlayersRating = async (
     error: PostgrestError | null;
   };
   return { data: data as IMatchesHistoryPlayersRating[], error: error as PostgrestError };
+};
+
+export const getMatchInfo = async (matchId: string): Promise<ApiResponse<IMatchInfo>> => {
+  const { data, error } = (await supabase.rpc("get_match_info", {
+    match_id_param: matchId,
+  })) as {
+    data: IMatchInfo;
+    error: PostgrestError | null;
+  };
+  return { data: data as IMatchInfo, error: error as PostgrestError };
 };
