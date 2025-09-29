@@ -6,7 +6,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import PublicRoute from "../components/PublicRoute";
-import MatchRatingListPage from "../pages/match/match-rating-list-page";
 import NotFoundPage from "../pages/not-found-page";
 import PlayerStatsPage from "../pages/player/player-stats-page";
 import PlayerRatingPage from "../pages/rating/player-rating-page";
@@ -26,6 +25,7 @@ import AuthRoute from "@auth/provider/AuthRoute";
 
 import DashboardPage from "@dashboard/pages/dashboard-page";
 
+import MatchesHistoryPlayersRatingPage from "@matches/matches-history/matches-history-players-rating/pages/matches-history-players-rating-page";
 import MatchesLastestPlayerRatingPage from "@matches/matches-lastest/matches-lastest-player-rating/pages/matches-lastest-player-rating-page";
 
 import { ROUTES } from "@shared/constants/routes";
@@ -55,7 +55,7 @@ const Router = () => {
             <Route path={ROUTES.PLAYER_STATS} element={<PlayerStatsPage />} />
 
             {/* 경기 관련 */}
-            <Route path={ROUTES.MATCH_RATINGS} element={<MatchRatingListPage />} />
+            <Route path={ROUTES.MATCH_RATINGS} element={<MatchesHistoryPlayersRatingPage />} />
             <Route path={ROUTES.MATCH_PLAYER_RATINGS} element={<MatchesLastestPlayerRatingPage />} />
 
             {/* 관리자 */}
