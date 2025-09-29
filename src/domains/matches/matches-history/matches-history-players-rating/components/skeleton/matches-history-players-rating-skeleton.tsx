@@ -17,7 +17,7 @@ const MatchesHistoryPlayersRatingSkeleton = () => {
 
   //!SECTION 메서드 영역
 
-  return <div>스켈레톤</div>;
+  return <div data-testid="matches-history-players-rating-skeleton">스켈레톤</div>;
 };
 
 export default MatchesHistoryPlayersRatingSkeleton;

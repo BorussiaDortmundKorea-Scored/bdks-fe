@@ -2,6 +2,7 @@ import { AdminDashboardUserCountHandlers } from "@admin/admin-dashboard/admin-da
 
 import { AnimalHandlers } from "@animals/mocks/animal-handlers";
 
+import { MatchesHistoryPlayersRatingHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/matches-history-players-rating-handler";
 import { MatchesHistoryHandlers } from "@matches/matches-history/mocks/matches-history-handler";
 
 import { PlayersDBHandlers } from "@players/players-db/mocks/players-db-handler";
@@ -11,6 +12,7 @@ export const handlers = [
   ...AdminDashboardUserCountHandlers,
   ...AnimalHandlers,
   ...MatchesHistoryHandlers,
+  ...MatchesHistoryPlayersRatingHandlers,
   ...PlayersDBHandlers,
   ...PlayersRatingRotatorHandlers,
 ];
