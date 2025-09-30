@@ -7,8 +7,9 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 import { useGetMatchesHistoryPlayersRatingSuspense } from "../api/react-query-api/use-get-matches-history-players-rating-suspense";
+import MatchesHistoryPlayersRatingItem from "./matches-history-players-rating-item/matches-history-players-rating-item";
 import MatchesHistoryPlayersRatingWrapper from "./wrapper/matches-history-players-rating-wrapper";
-import { BicepsFlexed, Camera, Trophy } from "lucide-react";
+import { Camera } from "lucide-react";
 
 interface IMatchesHistoryPlayersRating {}
 
@@ -39,35 +40,8 @@ const MatchesHistoryPlayersRating: React.FC<IMatchesHistoryPlayersRating> = () =
       </header>
       <div className="text-yds-s2 text-primary-100">선수단 평점</div>
       <ul>
-        {matchesHistoryPlayersRating.map((item) => (
-          <li
-            key={item.korean_name}
-            className="flex h-[72px] w-full items-center justify-between px-2 odd:bg-[#20242D]"
-          >
-            <div className="flex items-center gap-2">
-              <img src={item.head_profile_image_url} alt={item.korean_name} className="h-[56px] w-[56px]" />
-              <div className="flex flex-col gap-1">
-                <div className="text-yds-b1 text-white">{item.korean_name}</div>
-                <div className="text-yds-c1m text-primary-100">{item.position_detail_name}</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <div>
-                {item.botm ? (
-                  <div className="flex items-center gap-1">
-                    <BicepsFlexed size={16} className="text-primary-100" />{" "}
-                    <span className="text-yds-c1m text-primary-100">BOTM</span>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="flex items-center gap-1">
-                <Trophy size={16} className="text-primary-100" />
-                <span className="text-yds-c1m text-primary-100">{item.avg_rating}</span>
-              </div>
-            </div>
-          </li>
+        {matchesHistoryPlayersRating.map((player) => (
+          <MatchesHistoryPlayersRatingItem key={player.korean_name} player={player} />
         ))}
       </ul>
     </MatchesHistoryPlayersRatingWrapper>
