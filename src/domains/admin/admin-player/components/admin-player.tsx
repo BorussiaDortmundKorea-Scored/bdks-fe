@@ -4,10 +4,9 @@
  * 프로세스 설명: 선수 목록 조회, 생성, 수정, 삭제 기능 제공
  */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { Button, Input } from "@youngduck/yd-ui";
-import { ArrowLeft, Edit, FolderPlus, Trash2 } from "lucide-react";
+import { Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { IPlayer } from "@admin/admin-player/api/admin-player-api";
 import { useCreatePlayer } from "@admin/admin-player/api/react-query-api/use-create-player";
@@ -17,7 +16,6 @@ import { useUpdatePlayer } from "@admin/admin-player/api/react-query-api/use-upd
 
 const AdminPlayer = () => {
   //SECTION HOOK호출 영역
-  const navigate = useNavigate();
   const { data: players } = useGetAllPlayersSuspense();
   const { mutateAsync: createPlayer, isPending: isCreating } = useCreatePlayer();
   const { mutateAsync: updatePlayer, isPending: isUpdating } = useUpdatePlayer();

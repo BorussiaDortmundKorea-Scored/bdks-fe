@@ -25,6 +25,7 @@ export const ROUTES = {
 
   // 관리자
   ADMIN_DASHBOARD: "/admin/dashboard",
+  ADMIN_USER: "/admin/user",
   ADMIN_PLAYER: "/admin/player",
   ADMIN_MATCH: "/admin/match",
   ADMIN_MATCH_LINEUP: "/admin/match/:matchId/lineup",

@@ -4,10 +4,9 @@
  * 프로세스 설명: 팀 목록 조회, 생성, 수정, 삭제 기능 제공
  */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
-import { ArrowLeft, Edit, FolderPlus, Trash2 } from "lucide-react";
+import { Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { ITeam } from "@admin/admin-team/api/admin-team-api";
 import { useCreateTeam } from "@admin/admin-team/api/react-query-api/use-create-team";
@@ -28,7 +27,6 @@ const countryOptions = [
 
 const AdminTeam = () => {
   //SECTION HOOK호출 영역
-  const navigate = useNavigate();
   const { data: teams } = useGetAllTeamsSuspense();
   const { mutateAsync: createTeam, isPending: isCreating } = useCreateTeam();
   const { mutateAsync: updateTeam, isPending: isUpdating } = useUpdateTeam();

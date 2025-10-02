@@ -3,8 +3,6 @@
  * 기능: 관리자 선수 관리 페이지
  * 프로세스 설명: 선수 목록 표시 및 선수 추가/수정/삭제 기능
  */
-import React from "react";
-
 import AdminPlayer from "@admin/admin-player/components/admin-player";
 import AdminPlayerErrorFallback from "@admin/admin-player/components/error/admin-player-error-fallback";
 import AdminPlayerSkeleton from "@admin/admin-player/components/skeleton/admin-player-skeleton";

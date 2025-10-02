@@ -1,14 +1,23 @@
 // src/shared/contexts/AuthContext.tsx
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { supabase } from "@shared/api/config/supabaseClient";
+
 import type { Session, User } from "@supabase/supabase-js";
+
+import { supabase } from "@shared/api/config/supabaseClient";
 import { queryClient } from "@shared/provider/query-client";
+
+interface DeleteAccountResult {
+  success: boolean;
+  error?: string;
+  message?: string;
+}
 
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   signOut: () => Promise<void>;
+  deleteAccount: () => Promise<DeleteAccountResult>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -57,6 +66,52 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (err) {
       console.error("로그아웃 예외:", err);
       throw err;
+    }
+  };
+
+  // 회원탈퇴 기능
+  const deleteAccount = async (): Promise<DeleteAccountResult> => {
+    try {
+      if (!user) {
+        return {
+          success: false,
+          error: "로그인이 필요합니다.",
+        };
+      }
+
+      // RPC 호출로 회원탈퇴 처리
+      const { data, error } = await supabase.rpc("delete_user_account");
+
+      if (error) {
+        console.error("회원탈퇴 RPC 오류:", error);
+        return {
+          success: false,
+          error: "회원탈퇴 중 오류가 발생했습니다.",
+        };
+      }
+
+      // RPC 응답 확인
+      if (!data.success) {
+        return {
+          success: false,
+          error: data.error || "회원탈퇴 중 오류가 발생했습니다.",
+        };
+      }
+
+      // 성공 시 로그아웃 처리
+      await signOut();
+
+      console.log("회원탈퇴 완료");
+      return {
+        success: true,
+        message: data.message || "회원탈퇴가 완료되었습니다.",
+      };
+    } catch (err) {
+      console.error("회원탈퇴 예외:", err);
+      return {
+        success: false,
+        error: "회원탈퇴 중 예상치 못한 오류가 발생했습니다.",
+      };
     }
   };
 
@@ -148,6 +203,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     user,
     session,
     signOut,
+    deleteAccount,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

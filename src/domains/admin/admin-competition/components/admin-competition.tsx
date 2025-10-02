@@ -4,10 +4,9 @@
  * 프로세스 설명: 대회 목록 조회, 생성, 수정, 삭제 기능 제공
  */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { Button, Input } from "@youngduck/yd-ui";
-import { ArrowLeft, Edit, FolderPlus, Trash2 } from "lucide-react";
+import { Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { ICompetition } from "@admin/admin-competition/api/admin-competition-api";
 import { useCreateCompetition } from "@admin/admin-competition/api/react-query-api/use-create-competition";
@@ -17,7 +16,6 @@ import { useUpdateCompetition } from "@admin/admin-competition/api/react-query-a
 
 const AdminCompetition = () => {
   //SECTION HOOK호출 영역
-  const navigate = useNavigate();
   const { data: competitions } = useGetAllCompetitionsSuspense();
   const { mutateAsync: createCompetition, isPending: isCreating } = useCreateCompetition();
   const { mutateAsync: updateCompetition, isPending: isUpdating } = useUpdateCompetition();

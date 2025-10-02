@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 보돌코스코어드 빌드 시작..."
+npx pnpm run build:dev || { echo "❌ 보돌코스코어드 빌드 실패!"; exit 1; }
+
+echo "🔍 보돌코스코어드 스토리북 빌드 시작..."
+npx pnpm run build-storybook || { echo "❌ 보돌코스코어드 스토리북 빌드 실패!"; exit 1; }
+
+echo "✅ 모든 빌드 성공! Push 진행"

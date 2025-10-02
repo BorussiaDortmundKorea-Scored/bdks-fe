@@ -3,6 +3,14 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.13.2] - 2025-10-02
+
+### ✅ 작업 내용
+
+- [x] **Feature**: 회원탈퇴 기능
+  - 회원이 직접 회원탈퇴하는 기능 추가
+  - 관리자가 회원탈퇴 시키는 기능 추가
+
 ## [0.13.1] - 2025-10-02
 
 ### ✅ 작업 내용

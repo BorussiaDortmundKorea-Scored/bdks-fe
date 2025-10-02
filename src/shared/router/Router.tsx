@@ -16,6 +16,7 @@ import AdminMatchLineupPage from "@admin/admin-match/admin-match-lineup/pages/ad
 import AdminMatchPage from "@admin/admin-match/pages/admin-match-page";
 import AdminPlayerPage from "@admin/admin-player/pages/admin-player-page";
 import AdminTeamPage from "@admin/admin-team/pages/admin-team-page";
+import AdminUserPage from "@admin/admin-user/pages/admin-user-page";
 
 import AuthProfilePage from "@auth/auth-profile/pages/auth-profile-page";
 import AuthProfileRoute from "@auth/auth-profile/provider/auth-profile-route";
@@ -60,6 +61,7 @@ const Router = () => {
 
             {/* 관리자 */}
             <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboardPage />} />
+            <Route path={ROUTES.ADMIN_USER} element={<AdminUserPage />} />
             <Route path={ROUTES.ADMIN_PLAYER} element={<AdminPlayerPage />} />
             <Route path={ROUTES.ADMIN_MATCH} element={<AdminMatchPage />} />
             <Route path={ROUTES.ADMIN_MATCH_LINEUP} element={<AdminMatchLineupPage />} />

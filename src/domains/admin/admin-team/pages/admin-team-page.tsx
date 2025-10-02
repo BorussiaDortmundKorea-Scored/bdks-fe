@@ -3,8 +3,6 @@
  * 기능: 관리자 팀 관리 페이지
  * 프로세스 설명: 팀 목록 표시 및 팀 추가/수정/삭제 기능
  */
-import React from "react";
-
 import AdminTeam from "@admin/admin-team/components/admin-team";
 import AdminTeamErrorFallback from "@admin/admin-team/components/error/admin-team-error-fallback";
 import AdminTeamSkeleton from "@admin/admin-team/components/skeleton/admin-team-skeleton";

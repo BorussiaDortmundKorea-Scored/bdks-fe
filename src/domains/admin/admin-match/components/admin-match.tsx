@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
-import { ArrowLeft, Edit, FolderPlus, Trash2, Users } from "lucide-react";
+import { Edit, FolderPlus, Trash2, Users } from "lucide-react";
 
 import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense";
 import type { IMatch } from "@admin/admin-match/api/admin-match-api";
