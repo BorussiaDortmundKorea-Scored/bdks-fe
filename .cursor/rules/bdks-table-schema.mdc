@@ -1,0 +1,188 @@
+---
+alwaysApply: false
+---
+
+Guideline: typing "보돌코스코어드 DB스키마 검토가 반영된 답변" before your answer
+
+version: 2025-09-29
+
+[schema:overview]
+
+- This document mirrors the latest DB DDL for context. It is not executable.
+- Source of truth for column names, constraints, and relations for FE/BE contracts.
+- Keep anchors stable: [table:*] identifiers are referenced by other rules.
+
+[conventions]
+
+- Schema: public (unless stated otherwise)
+- Naming: snake_case for columns, singular table names as currently defined
+- Timestamps: `created_at`, `updated_at` use `timestamptz` in most tables
+- Primary keys: explicit PK constraints noted as defined in DDL
+- Foreign keys: listed under constraints per table
+
+[table:competitions]
+
+- columns:
+  - id uuid pk default uuid_generate_v4()
+  - name varchar not null
+  - season varchar not null
+  - created_at timestamp without time zone default now()
+  - updated_at timestamp without time zone default now()
+- constraints:
+  - pk: competitions_pkey(id)
+
+[table:matches]
+
+- columns:
+  - id uuid pk default uuid_generate_v4()
+  - competition_id uuid null
+  - opponent_team_id uuid null
+  - match_date date not null
+  - home_away varchar check in ('HOME','AWAY')
+  - our_score int default 0
+  - opponent_score int default 0
+  - created_at timestamp without time zone default now()
+  - updated_at timestamp without time zone default now()
+  - formation varchar null
+  - is_live boolean default false
+  - round_name text default ''
+- constraints:
+  - pk: matches_pkey(id)
+  - fk: matches_competition_id_fkey(competition_id) -> competitions(id)
+  - fk: matches_opponent_team_id_fkey(opponent_team_id) -> teams(id)
+
+[table:players]
+
+- columns:
+  - id uuid pk default gen_random_uuid()
+  - name text not null
+  - korean_name text null
+  - jersey_number int null
+  - nationality text null
+  - full_profile_image_url text null
+  - head_profile_image_url text null
+  - created_at timestamptz default timezone('Asia/Seoul', now())
+  - updated_at timestamptz default timezone('Asia/Seoul', now())
+- constraints:
+  - pk: players_pkey(id)
+
+[table:positions]
+
+- columns:
+  - id uuid pk default gen_random_uuid()
+  - position_code text not null
+  - sort_order int null
+  - position_detail_name text null
+  - line_number smallint not null default 1
+- constraints:
+  - pk: positions_pkey(id)
+
+[table:match_lineups]
+
+- columns:
+  - id bigint identity pk
+  - match_id uuid not null
+  - player_id uuid not null
+  - position_id uuid null
+  - lineup_type varchar not null check in ('STARTING','BENCH')
+  - is_captain boolean default false
+  - substitution_status varchar default 'NONE' check in ('NONE','SUBSTITUTED_OUT','SUBSTITUTED_IN')
+  - substitution_minute int null
+  - substitution_partner_id uuid null
+  - yellow_cards int default 0 check 0..2
+  - red_card_minute int null
+  - is_sent_off boolean default false
+  - goals int default 0 check >= 0
+  - assists int default 0 check >= 0
+  - created_at timestamptz default timezone('Asia/Seoul', now())
+  - updated_at timestamptz default timezone('Asia/Seoul', now())
+- constraints:
+  - pk: match_lineups_pkey(id)
+  - fk: match_lineups_match_id_fkey(match_id) -> matches(id)
+  - fk: match_lineups_player_id_fkey(player_id) -> players(id)
+  - fk: match_lineups_position_id_fkey(position_id) -> positions(id)
+  - fk: match_lineups_substitution_partner_fkey(substitution_partner_id) -> players(id)
+
+[table:profiles]
+
+- columns:
+  - id uuid pk (auth.users.id)
+  - nickname text not null unique
+  - favorite_player uuid null
+  - created_at timestamptz not null default timezone('Asia/Seoul', now())
+  - updated_at timestamptz not null default timezone('Asia/Seoul', now())
+  - is_admin boolean default false
+- constraints:
+  - pk: profiles_pkey(id)
+  - fk: profiles_id_fkey(id) -> auth.users(id)
+  - fk: profiles_favorite_player_fkey(favorite_player) -> players(id)
+
+[table:ratings]
+
+- columns:
+  - id bigint identity pk
+  - user_id uuid not null
+  - match_id uuid not null
+  - player_id uuid not null
+  - minute int not null
+  - rating numeric not null check 0.0..10.0
+  - comment text null
+  - created_at timestamptz default timezone('Asia/Seoul', now())
+  - updated_at timestamptz default timezone('Asia/Seoul', now())
+- constraints:
+  - pk: ratings_pkey(id)
+  - fk: ratings_user_id_fkey(user_id) -> auth.users(id)
+  - fk: ratings_match_id_fkey(match_id) -> matches(id)
+  - fk: ratings_player_id_fkey(player_id) -> players(id)
+- notes:
+  - Multiple ratings per (user, player, match) allowed across different `minute` values per DDL.
+
+[table:teams]
+
+- columns:
+  - id uuid pk default uuid_generate_v4()
+  - name varchar not null
+  - country varchar null
+  - created_at timestamp without time zone default now()
+  - updated_at timestamp without time zone default now()
+- constraints:
+  - pk: teams_pkey(id)
+
+[table:result]
+
+- columns:
+  - json_build_object json
+- notes:
+  - Utility table for returning json payloads (as per DDL).
+
+[relations]
+
+- matches.competition_id -> competitions.id
+- matches.opponent_team_id -> teams.id
+- match_lineups.match_id -> matches.id
+- match_lineups.player_id -> players.id
+- match_lineups.position_id -> positions.id
+- match_lineups.substitution_partner_id -> players.id
+- ratings.user_id -> auth.users.id
+- ratings.match_id -> matches.id
+- ratings.player_id -> players.id
+- profiles.id -> auth.users.id
+- profiles.favorite_player -> players.id
+
+[indexes]
+
+- Only primary keys declared in provided DDL. No additional indexes defined.
+
+[rls]
+
+- RLS policies are not included in the provided DDL. Document them here when available.
+
+[contracts:fe]
+
+- Rating UI uses `ratings.rating` numeric range [0.0, 10.0] with 0.1 precision on the client.
+- Multiple ratings per user per player are differentiated by `minute`.
+- Real-time updates are delivered via broadcast channels keyed by match and player context in the app layer.
+
+[migration:notes]
+
+- This file is for documentation. Apply DDL changes through migration files, then update this rule.
