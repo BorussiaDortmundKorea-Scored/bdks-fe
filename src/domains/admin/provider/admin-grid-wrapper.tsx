@@ -17,6 +17,7 @@ const adminMenus = [
   { id: "match", label: "Matches", path: "/admin/match", icon: Volleyball },
   { id: "team", label: "Teams", path: "/admin/team", icon: Award },
   { id: "competition", label: "Leagues", path: "/admin/competition", icon: Trophy },
+  { id: "user", label: "Users", path: "/admin/user", icon: Users },
 ];
 
 const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
