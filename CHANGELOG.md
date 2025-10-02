@@ -3,6 +3,32 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.13.1] - 2025-10-02
+
+### ✅ 작업 내용
+
+- [x] **Feature**: 경기별 평점 리스트 시스템 구현
+  - 경기 정보와 선수 평점 데이터 병렬 조회 (`useSuspenseQueries`)
+  - 골, 어시스트, 옐로카드, 레드카드, 교체 상태 표시 기능
+  - BOTM(Best of the Match) 표시 및 평점 순위 정렬
+  - Supabase S3 이미지를 활용한 통계 배지 시스템
+
+- [x] **Testing**: MSW를 활용한 API 모킹 시스템
+  - 스토리북 데코레이터 모듈화 (QueryClient 분리)
+  - 로딩/에러 상태 시뮬레이션을 위한 MSW 핸들러 구현
+  - 테스트 코드 러프하게 구현
+
+### 🔧 기술요약
+
+- **RPC 확장**: `get_matches_player_ratings` 함수에 선수 통계 필드 추가
+- **정렬 로직**: BOTM 우선, 라인업 타입(스타팅/벤치), 라인(축구용어: 1선,2선,3선) 번호 순으로 정렬
+- **상태 관리**: React Query의 `useSuspenseQueries`로 병렬 데이터 페칭
+- **스토리북 데코레이터 제거**: Storybook msw적용을 위한 preview.ts상 queryclient 데코레이터 제거. 개별 스토리북에서 queryclient주입하도록 처리. 추후 별도 모듈을 만들어 주입시 공통 모듈을 삽입하는 방식 검토?
+
+### 🎯 요약
+
+경기별 평점 리스트 기능 완성. 선수의 상세 통계 표시와 직관적인 UI로 경기 분석 기능 제공.
+
 ## [0.12.3] - 2025-09-26
 
 ### ✅ 작업 내용
