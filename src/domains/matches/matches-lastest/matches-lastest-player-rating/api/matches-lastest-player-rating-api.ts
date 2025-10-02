@@ -52,25 +52,23 @@ export const insertPlayerRating = async (
     };
 
     try {
-      // 🎯 1. 개별 선수 채널 (기존 - 개별 선수 화면용)
+      // 개별 선수 채널 (기존 - 개별 선수 화면용)
       const playerChannelName = `match-${request.match_id}-player-${request.player_id}`;
-      const playerResult = await supabase.channel(playerChannelName).send({
+      await supabase.channel(playerChannelName).send({
         type: "broadcast",
         event: "rating_updated",
         payload,
       });
-      console.log("📢 개별 선수 브로드캐스트:", playerChannelName, playerResult);
 
-      // 🎯 2. 전체 경기 채널 (새로 추가 - 전체 선수 목록용)
+      // 전체 경기 채널 (새로 추가 - 전체 선수 목록용)
       const allPlayersChannelName = `match-${request.match_id}-all-players`;
-      const allPlayersResult = await supabase.channel(allPlayersChannelName).send({
+      await supabase.channel(allPlayersChannelName).send({
         type: "broadcast",
         event: "player_rating_updated", // 이벤트명 다르게 설정
         payload,
       });
-      console.log("📢 전체 선수 브로드캐스트:", allPlayersChannelName, allPlayersResult);
     } catch (broadcastError) {
-      console.error("❌ 브로드캐스트 전송 실패:", broadcastError);
+      console.error("브로드캐스트 전송 실패:", broadcastError);
     }
   }
 
