@@ -3,8 +3,6 @@
  * 기능: 관리자 경기 관리 페이지
  * 프로세스 설명: 경기 목록 표시 및 경기 추가/수정/삭제 기능
  */
-import React from "react";
-
 import AdminMatch from "@admin/admin-match/components/admin-match";
 import AdminMatchError from "@admin/admin-match/components/error/admin-match-error";
 import AdminMatchSkeleton from "@admin/admin-match/components/skeleton/admin-match-skeleton";

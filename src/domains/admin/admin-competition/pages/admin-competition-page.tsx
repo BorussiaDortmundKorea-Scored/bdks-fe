@@ -3,8 +3,6 @@
  * 기능: 관리자 리그 관리 페이지
  * 프로세스 설명: 리그 목록 표시 및 리그 추가/수정/삭제 기능
  */
-import React from "react";
-
 import AdminCompetition from "@admin/admin-competition/components/admin-competition";
 import AdminCompetitionErrorFallback from "@admin/admin-competition/components/error/admin-competition-error-fallback";
 import AdminCompetitionSkeleton from "@admin/admin-competition/components/skeleton/admin-competition-skeleton";

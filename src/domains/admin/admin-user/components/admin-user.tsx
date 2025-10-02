@@ -5,8 +5,7 @@
  */
 import { useState } from "react";
 
-import { Button } from "@youngduck/yd-ui";
-import { FolderPlus, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 import type { IUser } from "@admin/admin-user/api/admin-user-api";
 import { useDeleteUser } from "@admin/admin-user/api/react-query-api/use-delete-user";
