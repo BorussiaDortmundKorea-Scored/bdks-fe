@@ -1,3 +1,5 @@
+import MatchesHistoryPlayersRatingWrapper from "../wrapper/matches-history-players-rating-wrapper";
+
 /**
  * 작성자: KYD
  * 기능:
@@ -16,7 +18,11 @@ const MatchesHistoryPlayersRatingErrorFallback = () => {
 
   //!SECTION 메서드 영역
 
-  return <div data-testid="matches-history-players-rating-error-fallback">에러발생</div>;
+  return (
+    <MatchesHistoryPlayersRatingWrapper>
+      <div data-testid="matches-history-players-rating-error-fallback">에러발생</div>
+    </MatchesHistoryPlayersRatingWrapper>
+  );
 };
 
 export default MatchesHistoryPlayersRatingErrorFallback;

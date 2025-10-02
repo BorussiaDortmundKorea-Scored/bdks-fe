@@ -36,14 +36,14 @@ const MatchesHistoryPlayersRatingItem = ({ player }: MatchesHistoryPlayersRating
             {hasGoals ? (
               <div className="flex items-center gap-0.5">
                 {Array.from({ length: player.goals }).map((_, idx) => (
-                  <img key={`goal-${idx}-${player.korean_name}`} src={GOAL_IMAGE} alt="goal" className="h-3 w-3" />
+                  <img key={`goal-${idx}-${player.korean_name}`} src={GOAL_IMAGE} alt="goal" className="h-4 w-4" />
                 ))}
               </div>
             ) : null}
             {hasYellowCards ? (
               <div className="flex items-center gap-0.5">
                 {Array.from({ length: player.yellow_cards }).map((_, idx) => (
-                  <img key={`yc-${idx}`} src={YELLOW_CARD_IMAGE} alt="yellow card" className="h-3 w-2" />
+                  <img key={`yc-${idx}`} src={YELLOW_CARD_IMAGE} alt="yellow card" className="h-3 w-3" />
                 ))}
               </div>
             ) : null}

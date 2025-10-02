@@ -12,6 +12,10 @@ import Header from "@shared/components/layout/header/header";
 import LayoutWithHeader from "@shared/provider/layout-with-header";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
+const options = {
+  leftIcon: <BackButton />,
+};
+
 const MatchesHistoryPlayersRatingPage = () => {
   //SECTION HOOK호출 영역
 
@@ -23,9 +27,6 @@ const MatchesHistoryPlayersRatingPage = () => {
 
   //SECTION 메서드 영역
 
-  const options = {
-    leftIcon: <BackButton />,
-  };
   //!SECTION 메서드 영역
 
   return (
