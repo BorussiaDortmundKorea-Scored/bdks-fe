@@ -16,7 +16,6 @@ export const ROUTES = {
   DASHBOARD: "/dashboard",
 
   // 선수 관련
-  PLAYER_RATING: "/player/:playerId/rating",
   PLAYER_STATS: "/player/:playerId/stats",
 
   // 경기 관련
@@ -34,7 +33,6 @@ export const ROUTES = {
 } as const;
 
 // 동적 라우트 생성 함수들
-export const createPlayerRatingPath = (playerId: string) => `/player/${playerId}/rating`;
 export const createPlayerStatsPath = (playerId: string) => `/player/${playerId}/stats`;
 export const createMatchRatingsPath = (matchId: string) => `/match/${matchId}/ratings`;
 export const createMatchPlayerRatingsPath = (matchId: string, playerId: string) =>

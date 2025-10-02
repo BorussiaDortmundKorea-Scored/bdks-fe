@@ -9,6 +9,7 @@ import MatchesHistoryPlayersRatingSkeleton from "../components/skeleton/matches-
 
 import BackButton from "@shared/components/layout/header/buttons/back-button";
 import Header from "@shared/components/layout/header/header";
+import { usePageTransition } from "@shared/hooks/use-page-transition";
 import LayoutWithHeader from "@shared/provider/layout-with-header";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
@@ -18,6 +19,7 @@ const options = {
 
 const MatchesHistoryPlayersRatingPage = () => {
   //SECTION HOOK호출 영역
+  const { pageRef } = usePageTransition();
 
   //!SECTION HOOK호출 영역
 
@@ -30,7 +32,7 @@ const MatchesHistoryPlayersRatingPage = () => {
   //!SECTION 메서드 영역
 
   return (
-    <div className="bdks-container">
+    <div className="bdks-container" ref={pageRef}>
       <Header options={options} />
       <LayoutWithHeader>
         <ReactQueryBoundary

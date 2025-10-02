@@ -8,7 +8,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PublicRoute from "../components/PublicRoute";
 import NotFoundPage from "../pages/not-found-page";
 import PlayerStatsPage from "../pages/player/player-stats-page";
-import PlayerRatingPage from "../pages/rating/player-rating-page";
 
 import AdminCompetitionPage from "@admin/admin-competition/pages/admin-competition-page";
 import AdminDashboardPage from "@admin/admin-dashboard/admin-dashboard-page";
@@ -52,7 +51,6 @@ const Router = () => {
             <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
 
             {/* 선수 관련 */}
-            <Route path={ROUTES.PLAYER_RATING} element={<PlayerRatingPage />} />
             <Route path={ROUTES.PLAYER_STATS} element={<PlayerStatsPage />} />
 
             {/* 경기 관련 */}
