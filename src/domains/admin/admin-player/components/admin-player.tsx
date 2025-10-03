@@ -170,7 +170,9 @@ const AdminPlayer = () => {
                 <Input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="선수 이름을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -181,7 +183,9 @@ const AdminPlayer = () => {
                 <Input
                   type="text"
                   value={formData.korean_name}
-                  onChange={(e) => setFormData({ ...formData, korean_name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, korean_name: e.target.value })
+                  }
                   placeholder="한국어 이름을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -192,7 +196,9 @@ const AdminPlayer = () => {
                 <Input
                   type="number"
                   value={formData.jersey_number}
-                  onChange={(e) => setFormData({ ...formData, jersey_number: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, jersey_number: e.target.value })
+                  }
                   placeholder="등번호를 입력하세요"
                   size="full"
                   color="primary-100"
@@ -203,7 +209,9 @@ const AdminPlayer = () => {
                 <Input
                   type="text"
                   value={formData.nationality}
-                  onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, nationality: e.target.value })
+                  }
                   placeholder="국적을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -214,7 +222,9 @@ const AdminPlayer = () => {
                 <Input
                   type="url"
                   value={formData.full_profile_image_url}
-                  onChange={(e) => setFormData({ ...formData, full_profile_image_url: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, full_profile_image_url: e.target.value })
+                  }
                   placeholder="전신 프로필 이미지 URL을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -225,7 +235,9 @@ const AdminPlayer = () => {
                 <Input
                   type="url"
                   value={formData.head_profile_image_url}
-                  onChange={(e) => setFormData({ ...formData, head_profile_image_url: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, head_profile_image_url: e.target.value })
+                  }
                   placeholder="얼굴 프로필 이미지 URL을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -261,7 +273,9 @@ const AdminPlayer = () => {
                 <Input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="선수 이름을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -272,7 +286,9 @@ const AdminPlayer = () => {
                 <Input
                   type="text"
                   value={formData.korean_name}
-                  onChange={(e) => setFormData({ ...formData, korean_name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, korean_name: e.target.value })
+                  }
                   placeholder="한국어 이름을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -283,7 +299,9 @@ const AdminPlayer = () => {
                 <Input
                   type="number"
                   value={formData.jersey_number}
-                  onChange={(e) => setFormData({ ...formData, jersey_number: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, jersey_number: e.target.value })
+                  }
                   placeholder="등번호를 입력하세요"
                   size="full"
                   color="primary-100"
@@ -294,7 +312,9 @@ const AdminPlayer = () => {
                 <Input
                   type="text"
                   value={formData.nationality}
-                  onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, nationality: e.target.value })
+                  }
                   placeholder="국적을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -305,7 +325,9 @@ const AdminPlayer = () => {
                 <Input
                   type="url"
                   value={formData.full_profile_image_url}
-                  onChange={(e) => setFormData({ ...formData, full_profile_image_url: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, full_profile_image_url: e.target.value })
+                  }
                   placeholder="전신 프로필 이미지 URL을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -316,7 +338,9 @@ const AdminPlayer = () => {
                 <Input
                   type="url"
                   value={formData.head_profile_image_url}
-                  onChange={(e) => setFormData({ ...formData, head_profile_image_url: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, head_profile_image_url: e.target.value })
+                  }
                   placeholder="얼굴 프로필 이미지 URL을 입력하세요"
                   size="full"
                   color="primary-100"

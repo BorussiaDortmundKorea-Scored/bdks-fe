@@ -172,7 +172,9 @@ const AdminTeam = () => {
                 <Input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="팀명을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -212,7 +214,9 @@ const AdminTeam = () => {
                 <Input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="팀명을 입력하세요"
                   size="full"
                   color="primary-100"

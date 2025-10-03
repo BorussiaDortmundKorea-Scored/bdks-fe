@@ -142,7 +142,9 @@ const AdminCompetition = () => {
                 <Input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="대회명을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -153,7 +155,9 @@ const AdminCompetition = () => {
                 <Input
                   type="text"
                   value={formData.season}
-                  onChange={(e) => setFormData({ ...formData, season: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, season: e.target.value })
+                  }
                   placeholder="시즌을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -189,7 +193,9 @@ const AdminCompetition = () => {
                 <Input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="대회명을 입력하세요"
                   size="full"
                   color="primary-100"
@@ -200,7 +206,9 @@ const AdminCompetition = () => {
                 <Input
                   type="text"
                   value={formData.season}
-                  onChange={(e) => setFormData({ ...formData, season: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, season: e.target.value })
+                  }
                   placeholder="시즌을 입력하세요"
                   size="full"
                   color="primary-100"
