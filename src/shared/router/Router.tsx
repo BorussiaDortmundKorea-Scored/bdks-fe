@@ -5,7 +5,6 @@
  */
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import PublicRoute from "../components/PublicRoute";
 import NotFoundPage from "../pages/not-found-page";
 import PlayerStatsPage from "../pages/player/player-stats-page";
 
@@ -21,7 +20,7 @@ import AuthProfilePage from "@auth/auth-profile/pages/auth-profile-page";
 import AuthProfileRoute from "@auth/auth-profile/provider/auth-profile-route";
 import { AuthProvider } from "@auth/contexts/AuthContext";
 import LoginPage from "@auth/pages/login-page";
-import AuthRoute from "@auth/provider/AuthRoute";
+import AuthRoute from "@auth/provider/auth-route";
 
 import DashboardPage from "@dashboard/pages/dashboard-page";
 
@@ -29,6 +28,7 @@ import MatchesHistoryPlayersRatingPage from "@matches/matches-history/matches-hi
 import MatchesLastestPlayerRatingPage from "@matches/matches-lastest/matches-lastest-player-rating/pages/matches-lastest-player-rating-page";
 
 import { ROUTES } from "@shared/constants/routes";
+import PublicRoute from "@shared/provider/public-route";
 
 const Router = () => {
   return (

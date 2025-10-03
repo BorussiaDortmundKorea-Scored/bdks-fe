@@ -6,12 +6,27 @@ import react from "@vitejs/plugin-react-swc";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
+import Sitemap from "vite-plugin-sitemap";
 
 const dirname = typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    Sitemap({
+      hostname: "https://bdks.vercel.app",
+      dynamicRoutes: ["/", "/dashboard"],
+      exclude: ["/admin/**"],
+      outDir: "dist",
+      changefreq: "daily",
+      priority: 1.0,
+      lastmod: new Date(),
+      readable: true,
+      generateRobotsTxt: true,
+    }),
+  ],
   test: {
     globals: true,
     environment: "jsdom",

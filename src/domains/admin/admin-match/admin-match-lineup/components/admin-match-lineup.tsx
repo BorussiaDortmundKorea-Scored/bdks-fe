@@ -359,7 +359,7 @@ const AdminMatchLineup = () => {
                     min={1}
                     max={120}
                     value={formData.substitution_minute || ""}
-                    onChange={(e) =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setFormData({ ...formData, substitution_minute: parseInt(e.target.value) || null })
                     }
                     size="full"
@@ -379,7 +379,9 @@ const AdminMatchLineup = () => {
                     type="number"
                     min={0}
                     value={formData.goals}
-                    onChange={(e) => setFormData({ ...formData, goals: parseInt(e.target.value) || 0 })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, goals: parseInt(e.target.value) || 0 })
+                    }
                     size="full"
                     color="primary-100"
                     placeholder="0"
@@ -391,7 +393,9 @@ const AdminMatchLineup = () => {
                     type="number"
                     min={0}
                     value={formData.assists}
-                    onChange={(e) => setFormData({ ...formData, assists: parseInt(e.target.value) || 0 })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, assists: parseInt(e.target.value) || 0 })
+                    }
                     size="full"
                     color="primary-100"
                     placeholder="0"
@@ -405,7 +409,9 @@ const AdminMatchLineup = () => {
                   min={0}
                   max={2}
                   value={formData.yellow_cards}
-                  onChange={(e) => setFormData({ ...formData, yellow_cards: parseInt(e.target.value) || 0 })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, yellow_cards: parseInt(e.target.value) || 0 })
+                  }
                   size="full"
                   color="primary-100"
                   placeholder="0"
@@ -428,7 +434,9 @@ const AdminMatchLineup = () => {
                     min={1}
                     max={120}
                     value={formData.red_card_minute || ""}
-                    onChange={(e) => setFormData({ ...formData, red_card_minute: parseInt(e.target.value) || null })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, red_card_minute: parseInt(e.target.value) || null })
+                    }
                     size="full"
                     color="primary-100"
                     placeholder="예: 90"
@@ -495,7 +503,7 @@ const AdminMatchLineup = () => {
                     min={1}
                     max={120}
                     value={formData.substitution_minute || ""}
-                    onChange={(e) =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setFormData({ ...formData, substitution_minute: parseInt(e.target.value) || null })
                     }
                     size="full"
@@ -515,7 +523,9 @@ const AdminMatchLineup = () => {
                     type="number"
                     min={0}
                     value={formData.goals}
-                    onChange={(e) => setFormData({ ...formData, goals: parseInt(e.target.value) || 0 })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, goals: parseInt(e.target.value) || 0 })
+                    }
                     size="full"
                     color="primary-100"
                     placeholder="0"
@@ -527,7 +537,9 @@ const AdminMatchLineup = () => {
                     type="number"
                     min={0}
                     value={formData.assists}
-                    onChange={(e) => setFormData({ ...formData, assists: parseInt(e.target.value) || 0 })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, assists: parseInt(e.target.value) || 0 })
+                    }
                     size="full"
                     color="primary-100"
                     placeholder="0"
@@ -541,7 +553,9 @@ const AdminMatchLineup = () => {
                   min={0}
                   max={2}
                   value={formData.yellow_cards}
-                  onChange={(e) => setFormData({ ...formData, yellow_cards: parseInt(e.target.value) || 0 })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, yellow_cards: parseInt(e.target.value) || 0 })
+                  }
                   size="full"
                   color="primary-100"
                   placeholder="0"
@@ -564,7 +578,9 @@ const AdminMatchLineup = () => {
                     min={1}
                     max={120}
                     value={formData.red_card_minute || ""}
-                    onChange={(e) => setFormData({ ...formData, red_card_minute: parseInt(e.target.value) || null })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, red_card_minute: parseInt(e.target.value) || null })
+                    }
                     size="full"
                     color="primary-100"
                     placeholder="예: 90"

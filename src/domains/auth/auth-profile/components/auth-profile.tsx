@@ -66,7 +66,7 @@ const AuthProfile: React.FC<IAuthProfile> = () => {
             color="primary-100"
             size="full"
             value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNickname(e.target.value)}
             placeholder="닉네임을 입력하세요"
             disabled={isCreateAuthProfileLoading}
           />

@@ -279,7 +279,9 @@ const AdminMatch = () => {
                 <Input
                   type="date"
                   value={formData.match_date}
-                  onChange={(e) => setFormData({ ...formData, match_date: (e.target as HTMLInputElement).value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, match_date: e.target.value })
+                  }
                   size="full"
                   color="primary-100"
                 />
@@ -295,7 +297,9 @@ const AdminMatch = () => {
                     type="number"
                     min={0}
                     value={formData.our_score}
-                    onChange={(e) => setFormData({ ...formData, our_score: parseInt(e.target.value) || 0 })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, our_score: parseInt(e.target.value) || 0 })
+                    }
                     size="full"
                     color="primary-100"
                   />
@@ -306,7 +310,9 @@ const AdminMatch = () => {
                     type="number"
                     min={0}
                     value={formData.opponent_score}
-                    onChange={(e) => setFormData({ ...formData, opponent_score: parseInt(e.target.value) || 0 })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, opponent_score: parseInt(e.target.value) || 0 })
+                    }
                     size="full"
                     color="primary-100"
                   />
@@ -317,7 +323,9 @@ const AdminMatch = () => {
                 <Input
                   type="text"
                   value={formData.formation}
-                  onChange={(e) => setFormData({ ...formData, formation: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, formation: e.target.value })
+                  }
                   size="full"
                   color="primary-100"
                   placeholder="예: 4-3-3"
@@ -328,7 +336,9 @@ const AdminMatch = () => {
                 <Input
                   type="text"
                   value={formData.round_name}
-                  onChange={(e) => setFormData({ ...formData, round_name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, round_name: e.target.value })
+                  }
                   size="full"
                   color="primary-100"
                   placeholder="예: 1라운드"
@@ -389,7 +399,9 @@ const AdminMatch = () => {
                 <Input
                   type="date"
                   value={formData.match_date}
-                  onChange={(e) => setFormData({ ...formData, match_date: (e.target as HTMLInputElement).value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, match_date: e.target.value })
+                  }
                   size="full"
                   color="primary-100"
                 />
@@ -405,7 +417,9 @@ const AdminMatch = () => {
                     type="number"
                     min={0}
                     value={formData.our_score}
-                    onChange={(e) => setFormData({ ...formData, our_score: parseInt(e.target.value) || 0 })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, our_score: parseInt(e.target.value) || 0 })
+                    }
                     size="full"
                     color="primary-100"
                   />
@@ -416,7 +430,9 @@ const AdminMatch = () => {
                     type="number"
                     min={0}
                     value={formData.opponent_score}
-                    onChange={(e) => setFormData({ ...formData, opponent_score: parseInt(e.target.value) || 0 })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, opponent_score: parseInt(e.target.value) || 0 })
+                    }
                     size="full"
                     color="primary-100"
                   />
@@ -427,7 +443,9 @@ const AdminMatch = () => {
                 <Input
                   type="text"
                   value={formData.formation}
-                  onChange={(e) => setFormData({ ...formData, formation: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, formation: e.target.value })
+                  }
                   size="full"
                   color="primary-100"
                   placeholder="예: 4-3-3"
@@ -438,7 +456,9 @@ const AdminMatch = () => {
                 <Input
                   type="text"
                   value={formData.round_name}
-                  onChange={(e) => setFormData({ ...formData, round_name: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, round_name: e.target.value })
+                  }
                   size="full"
                   color="primary-100"
                   placeholder="예: 1라운드"
