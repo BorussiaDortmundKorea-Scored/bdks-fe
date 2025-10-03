@@ -3,8 +3,6 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import { Helmet } from "react-helmet-async";
-
 import AnonymousLoginButton from "@auth/components/anonymous-login-button";
 import KakaoLoginButton from "@auth/components/kakao-login-button";
 
@@ -13,6 +11,7 @@ import PlayerRatingRotator from "@players/players-rating-rotator/components/play
 import PlayerRatingRotatorSkeleton from "@players/players-rating-rotator/components/skeleton/players-rating-rotator-skeleton";
 
 import ImageWithSkeleton from "@shared/components/image/image-with-skeleton";
+import CustomHelmet from "@shared/components/seo/custom-helmet";
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
@@ -34,9 +33,13 @@ const LoginPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>보돌코 스코어드zz</title>
-      </Helmet>
+      <CustomHelmet
+        title="보돌코 스코어드"
+        description="보루시아 도르트문트 팬을 위한 평점 입력 사이트"
+        keywords="도르트문트, 보루시아 도르트문트, 보돌코, 보돌코스코어드"
+        url="https://bdks.vercel.app/"
+        type="website"
+      />
 
       <div className="bdks-container justify-center gap-5">
         <ReactQueryBoundary skeleton={<PlayerRatingRotatorSkeleton />} errorFallback={PlayerRatingRotatorErrorFallback}>
@@ -53,7 +56,7 @@ const LoginPage = () => {
         <p className="text-primary-100 mt-4 text-center text-xs">
           ※ 도르트문트 팬을 위해 비영리적 목적으로 제작되었으며,
           <br />
-          저작권 문제 발생 시 어플리케이션이 삭제될 수 있습니다.
+          모든 저작권은 도르트문트 | 분데스리가에 있습니다.
         </p>
       </div>
     </>
