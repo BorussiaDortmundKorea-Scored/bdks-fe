@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@youngduck/yd-ui': link:../../../../AppData/Local/pnpm/global/5/node_modules/@youngduck/yd-ui
-
 importers:
 
   .:
@@ -27,8 +24,8 @@ importers:
         specifier: ^5.81.5
         version: 5.84.1(@tanstack/react-query@5.84.1(react@19.1.1))(react@19.1.1)
       '@youngduck/yd-ui':
-        specifier: ^0.3.4
-        version: 0.3.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+        specifier: ^0.4.2
+        version: 0.4.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       axios:
         specifier: ^1.10.0
         version: 1.11.0
@@ -47,6 +44,9 @@ importers:
       react-error-boundary:
         specifier: ^4.0.13
         version: 4.1.2(react@19.1.1)
+      react-helmet-async:
+        specifier: ^2.0.5
+        version: 2.0.5(react@19.1.1)
       react-image:
         specifier: ^4.1.0
         version: 4.1.0(@babel/runtime@7.28.2)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -1440,8 +1440,8 @@ packages:
   '@vitest/utils@3.2.4':
     resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
 
-  '@youngduck/yd-ui@0.3.4':
-    resolution: {integrity: sha512-+H3FQQQXvak98TweyZ9zX5+9v0inx6KGi+OHrQrVRSeGtCKGYJGwmhSYw+x4lHp/YlCzTTenzUY8LlKi6Y+KMQ==}
+  '@youngduck/yd-ui@0.4.2':
+    resolution: {integrity: sha512-9PWLthmpG5RQe7PiwcFZOJXX8ifBXJksNNPrHOTlHasMGCK50VjbxnR95xINo2Sk+SdyaXJxxJNx7nwXX8ys+Q==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -2041,6 +2041,9 @@ packages:
     resolution: {integrity: sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==}
     engines: {node: '>=8'}
 
+  invariant@2.2.4:
+    resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
+
   is-core-module@2.16.1:
     resolution: {integrity: sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==}
     engines: {node: '>= 0.4'}
@@ -2263,6 +2266,10 @@ packages:
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+
+  loose-envify@1.4.0:
+    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
 
   loupe@3.2.0:
     resolution: {integrity: sha512-2NCfZcT5VGVNX9mSZIxLRkEAegDGBpuQZBy13desuHeVORmBDyAET4TkJr4SjqQy3A8JDofMN6LpkK8Xcm/dlw==}
@@ -2600,6 +2607,14 @@ packages:
     peerDependencies:
       react: '>=16.13.1'
 
+  react-fast-compare@3.2.2:
+    resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
+
+  react-helmet-async@2.0.5:
+    resolution: {integrity: sha512-rYUYHeus+i27MvFE+Jaa4WsyBKGkL6qVgbJvSBoX8mbsWoABJXdEO0bZyi0F6i+4f0NuIb8AvqPMj3iXFHkMwg==}
+    peerDependencies:
+      react: ^16.6.0 || ^17.0.0 || ^18.0.0
+
   react-image@4.1.0:
     resolution: {integrity: sha512-qwPNlelQe9Zy14K2pGWSwoL+vHsAwmJKS6gkotekDgRpcnRuzXNap00GfibD3eEPYu3WCPlyIUUNzcyHOrLHjw==}
     peerDependencies:
@@ -2698,6 +2713,9 @@ packages:
 
   set-cookie-parser@2.7.1:
     resolution: {integrity: sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==}
+
+  shallowequal@1.1.0:
+    resolution: {integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==}
 
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -2810,10 +2828,6 @@ packages:
 
   tailwindcss@4.1.13:
     resolution: {integrity: sha512-i+zidfmTqtwquj4hMEwdjshYYgMbOrPzb9a0M3ZgNa0JMoZeFC6bxZvO8yr8ozS6ix2SDz0+mvryPeBs2TFE+w==}
-
-  tapable@2.2.2:
-    resolution: {integrity: sha512-Re10+NauLTMCudc7T5WLFLAwDhQ0JWdrMK+9B2M8zR5hRExKmsRDCBA7/aV/pNJFltmBFO5BAMlQFi/vq3nKOg==}
-    engines: {node: '>=6'}
 
   tapable@2.2.3:
     resolution: {integrity: sha512-ZL6DDuAlRlLGghwcfmSn9sK3Hr6ArtyudlSAiCqQ6IfE+b+HHbydbYDIG15IfS5do+7XQQBdBiubF/cV2dnDzg==}
@@ -4391,14 +4405,14 @@ snapshots:
       loupe: 3.2.0
       tinyrainbow: 2.0.0
 
-  '@youngduck/yd-ui@0.3.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
+  '@youngduck/yd-ui@0.4.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
     dependencies:
       '@tailwindcss/postcss': 4.1.13
       lucide-react: 0.542.0(react@19.1.1)
       postcss: 8.5.6
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
-      tailwindcss: 4.1.11
+      tailwindcss: 4.1.13
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
@@ -4612,7 +4626,7 @@ snapshots:
   enhanced-resolve@5.18.2:
     dependencies:
       graceful-fs: 4.2.11
-      tapable: 2.2.2
+      tapable: 2.2.3
 
   enhanced-resolve@5.18.3:
     dependencies:
@@ -4970,6 +4984,10 @@ snapshots:
 
   indent-string@4.0.0: {}
 
+  invariant@2.2.4:
+    dependencies:
+      loose-envify: 1.4.0
+
   is-core-module@2.16.1:
     dependencies:
       hasown: 2.0.2
@@ -5168,7 +5186,7 @@ snapshots:
 
   lightningcss@1.30.1:
     dependencies:
-      detect-libc: 2.0.4
+      detect-libc: 2.1.0
     optionalDependencies:
       lightningcss-darwin-arm64: 1.30.1
       lightningcss-darwin-x64: 1.30.1
@@ -5192,6 +5210,10 @@ snapshots:
   lodash.merge@4.6.2: {}
 
   lodash@4.17.21: {}
+
+  loose-envify@1.4.0:
+    dependencies:
+      js-tokens: 4.0.0
 
   loupe@3.2.0: {}
 
@@ -5465,6 +5487,15 @@ snapshots:
       '@babel/runtime': 7.28.2
       react: 19.1.1
 
+  react-fast-compare@3.2.2: {}
+
+  react-helmet-async@2.0.5(react@19.1.1):
+    dependencies:
+      invariant: 2.2.4
+      react: 19.1.1
+      react-fast-compare: 3.2.2
+      shallowequal: 1.1.0
+
   react-image@4.1.0(@babel/runtime@7.28.2)(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
     dependencies:
       '@babel/runtime': 7.28.2
@@ -5565,6 +5596,8 @@ snapshots:
   semver@7.7.2: {}
 
   set-cookie-parser@2.7.1: {}
+
+  shallowequal@1.1.0: {}
 
   shebang-command@2.0.0:
     dependencies:
@@ -5670,8 +5703,6 @@ snapshots:
   tailwindcss@4.1.11: {}
 
   tailwindcss@4.1.13: {}
-
-  tapable@2.2.2: {}
 
   tapable@2.2.3: {}
 
