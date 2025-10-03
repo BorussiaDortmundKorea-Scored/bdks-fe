@@ -3,6 +3,16 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [0.14.1] - 2025-10-04
+
+### ✅ 작업 내용
+
+- [x] **Feature**: SEO등록하기
+  - react-helmet-async 라이브러리 활용하여 custom-helmet 공통컴포넌트 제작
+  - og,title등등 메타태그 설정
+  - vite-plugin-sitemap 라이브러리 활용하여 sitemap, robot.txt 자동 컨피그 등록
+  - 구글서치콘솔등록용 메타태그 추가
+
 ## [0.13.2] - 2025-10-02
 
 ### ✅ 작업 내용
