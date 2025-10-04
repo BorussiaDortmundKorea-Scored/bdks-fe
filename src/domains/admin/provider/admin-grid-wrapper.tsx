@@ -8,16 +8,18 @@ import { useNavigate } from "react-router-dom";
 
 import { Award, ChartNoAxesCombined, Trophy, Users, Volleyball } from "lucide-react";
 
+import { ROUTES } from "@shared/constants/routes";
+
 interface IAdminWrapper {
   children: React.ReactNode;
 }
 const adminMenus = [
-  { id: "dashboard", label: "Dashboard", path: "/admin/dashboard", icon: ChartNoAxesCombined },
-  { id: "player", label: "Players", path: "/admin/player", icon: Users },
-  { id: "match", label: "Matches", path: "/admin/match", icon: Volleyball },
-  { id: "team", label: "Teams", path: "/admin/team", icon: Award },
-  { id: "competition", label: "Leagues", path: "/admin/competition", icon: Trophy },
-  { id: "user", label: "Users", path: "/admin/user", icon: Users },
+  { id: "dashboard", label: "Dashboard", path: ROUTES.ADMIN_DASHBOARD, icon: ChartNoAxesCombined },
+  { id: "player", label: "Players", path: ROUTES.ADMIN_PLAYER, icon: Users },
+  { id: "match", label: "Matches", path: ROUTES.ADMIN_MATCH, icon: Volleyball },
+  { id: "team", label: "Teams", path: ROUTES.ADMIN_TEAM, icon: Award },
+  { id: "competition", label: "Leagues", path: ROUTES.ADMIN_COMPETITION, icon: Trophy },
+  { id: "user", label: "Users", path: ROUTES.ADMIN_USER, icon: Users },
 ];
 
 const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
@@ -40,7 +42,10 @@ const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
     <main className="bdks-admin-container">
       <div className="grid w-full [grid-template-columns:200px_minmax(0,1fr)] gap-4">
         <nav className="bg-background-secondary card-navy-50 relative flex min-h-[876px] flex-col gap-4 rounded-lg p-4">
-          <h1 className="text-yds-s1 font-shilla-culture text-primary-100 text-center">
+          <h1
+            className="text-yds-s1 font-shilla-culture text-primary-100 text-center"
+            onClick={() => navigate(ROUTES.ADMIN_DASHBOARD)}
+          >
             보돌코 <br /> 스코어드
           </h1>
           <div className="text-yds-s2 text-white">MENU</div>

@@ -3,6 +3,7 @@
  * 기능: 관리자 페이지 - 각 관리 메뉴로 이동
  * 프로세스 설명: 관리 메뉴 항목들을 배열로 관리하고 클릭 시 해당 페이지로 이동
  */
+import AdminDashboardHome from "./admin-dashboard-home/admin-dashboard-home";
 import AdminDashboardSites from "./admin-dashboard-sites/components/admin-dashboard-sites";
 import AdminDashboardUserCountError from "./admin-dashboard-user-count/components/error/admin-dashboard-user-count-error";
 import AdminDashboardUserCountSkeleton from "./admin-dashboard-user-count/components/skeleton/admin-dashboard-user-count-skeleton";
@@ -20,7 +21,7 @@ const AdminDashboardPage = () => {
         <AdminDashboardUserCount />
       </ReactQueryBoundary>
       <AdminDashboardSites />
-      <div>1</div>
+      <AdminDashboardHome />
       <div>1</div>
       <div>1</div>
       <div>1</div>
