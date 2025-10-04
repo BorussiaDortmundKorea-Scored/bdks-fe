@@ -3,6 +3,19 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.0.1] - 2025-10-04
+
+### ✅ 작업 내용
+
+- [x] **Feature**: 분 단위 평점입력기능 추가
+  - ratings 테이블 전,후반 시작종료 컬럼추가
+  - minute 컬럼 integer -> text형 컬럼 변경
+- [x] **Refactor**: 배포전 미사용 코드,컴포넌트 정리
+
+### 🎯 요약
+
+베타 테스트 성격 런칭 시작
+
 ## [0.14.1] - 2025-10-04
 
 ### ✅ 작업 내용

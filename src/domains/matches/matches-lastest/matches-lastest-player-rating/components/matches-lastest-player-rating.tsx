@@ -13,6 +13,8 @@ import RatingGaugeInput from "../rating-gauge-input/components/rating-gauge-inpu
 import type { IInsertPlayerRatingRequest } from "../types";
 import { Button } from "@youngduck/yd-ui";
 
+import { getDisplayTime } from "@matches/utils/match-time-utils";
+
 // import { Camera } from "lucide-react";
 
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
@@ -20,7 +22,7 @@ import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
 const MatchesLastestPlayerRating = () => {
   //SECTION HOOK호출 영역
   const { matchId, playerId } = useParams();
-  const [selectedRating, setSelectedRating] = useState<number>(5.0);
+  const [selectedRating, setSelectedRating] = useState<number>(6.0);
 
   // broadcast 방식 실시간 구독이 포함된 훅 사용
   const { data: playerRating } = useRealtimeMatchPlayerRating({
@@ -36,19 +38,34 @@ const MatchesLastestPlayerRating = () => {
     setSelectedRating(rating);
   };
 
+  const currentMatchTime = getDisplayTime(
+    new Date(playerRating.match_start_time),
+    new Date(playerRating.first_half_end_time),
+    new Date(playerRating.second_half_start_time),
+    new Date(playerRating.second_half_end_time),
+    new Date(),
+  );
+
   const handleInsertMatchPlayerRating = async () => {
+    const realTimeMatchTime = getDisplayTime(
+      new Date(playerRating.match_start_time),
+      new Date(playerRating.first_half_end_time),
+      new Date(playerRating.second_half_start_time),
+      new Date(playerRating.second_half_end_time),
+      new Date(), // 현재 시간으로 실시간 계산
+    );
     try {
+      // 실시간 경기 시간 계산 (추가시간 포함)
       const request: IInsertPlayerRatingRequest = {
         match_id: matchId!,
         player_id: playerId!,
-        minute: Math.floor(Math.random() * 90) + 1,
+        minute: realTimeMatchTime, // "전반 45+3'" 또는 "후반 12'" 형태
         rating: selectedRating,
       };
 
       await insertMatchPlayerRating(request);
-      // 성공 시 폼 초기화는 하지 않고 사용자가 다시 평점을 수정할 수 있도록 함
     } catch (error) {
-      alert("이미 해당 시간에 평점을 입력했습니다.");
+      alert("해당 시간에 평점을 입력했습니다. 같은 시간에는 한번만 평점을 입력할 수 있어요");
     }
   };
   //!SECTION 메서드 영역
@@ -60,23 +77,26 @@ const MatchesLastestPlayerRating = () => {
           <div className="flex flex-col gap-3">
             {/* 경기 정보 헤더 */}
             <div className="flex items-center justify-between px-4">
-              <div className="flex flex-col flex-wrap gap-0">
+              <div className="flex w-full flex-col flex-wrap gap-0">
                 <div className="text-yds-s2 text-white">도르트문트 vs {playerRating.opponent_team_name}</div>
-                <div className="text-yds-b2 text-primary-100">
-                  {playerRating.season} {playerRating.league_name} {playerRating.round_name}
+                <div className="text-yds-b2 text-primary-100 flex w-full justify-between">
+                  <div className="flex gap-2">
+                    {playerRating.season} {playerRating.league_name} {playerRating.round_name}
+                  </div>
+                  <div className="text-yds-b2 text-primary-100">{currentMatchTime}</div>
                 </div>
               </div>
               {/* TODO: 카메라 버튼 기능 제공예정 */}
               {/* <Camera size={24} className="text-primary-100 cursor-pointer" /> */}
             </div>
             {/* 선수 이미지 영역 */}
-            <div className="flex flex-col items-start gap-1">
+            <div className="flex flex-col items-start gap-3">
               <img
                 src={playerRating.full_profile_image_url}
                 alt={playerRating.korean_name}
                 className="mx-auto h-[300px] w-[300px] rounded-lg object-cover"
               />
-              <div className="text-left">
+              <div className="w-full text-center">
                 <h2 className="text-primary-100 text-yds-s2">{playerRating.korean_name}</h2>
               </div>
             </div>
@@ -108,7 +128,7 @@ const MatchesLastestPlayerRating = () => {
       </LayoutWithHeaderFooter>
       <div className="flex h-auto w-full items-center justify-center">
         <Button size="full" onClick={handleInsertMatchPlayerRating} disabled={isInserting}>
-          평점 등록하기
+          평점 입력하기
         </Button>
       </div>
     </>

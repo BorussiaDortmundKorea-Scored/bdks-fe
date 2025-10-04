@@ -9,7 +9,8 @@ import { useParams } from "react-router-dom";
 import { useGetMatchesHistoryPlayersRatingSuspense } from "../api/react-query-api/use-get-matches-history-players-rating-suspense";
 import MatchesHistoryPlayersRatingItem from "./matches-history-players-rating-item/matches-history-players-rating-item";
 import MatchesHistoryPlayersRatingWrapper from "./wrapper/matches-history-players-rating-wrapper";
-import { Camera } from "lucide-react";
+
+// import { Camera } from "lucide-react";
 
 interface IMatchesHistoryPlayersRating {}
 
@@ -36,7 +37,7 @@ const MatchesHistoryPlayersRating: React.FC<IMatchesHistoryPlayersRating> = () =
             {matchInfo.competition_name} {matchInfo.season}
           </p>
         </div>
-        <Camera size={24} className="text-primary-100 cursor-pointer" />
+        {/* <Camera size={24} className="text-primary-100 cursor-pointer" /> */}
       </header>
       <div className="text-yds-s2 text-primary-100">선수단 평점</div>
       <ul>

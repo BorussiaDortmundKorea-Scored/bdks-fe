@@ -13,4 +13,4 @@ export type {
 export type MatchId = string;
 export type PlayerId = string;
 export type RatingValue = number; // 1-10
-export type MinuteValue = number; // 1-120
+export type MinuteValue = string; // "45+3" 형태로 추가시간까지 표현

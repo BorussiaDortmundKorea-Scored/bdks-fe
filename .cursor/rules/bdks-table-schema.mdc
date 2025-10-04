@@ -4,7 +4,7 @@ alwaysApply: false
 
 Guideline: typing "보돌코스코어드 DB스키마 검토가 반영된 답변" before your answer
 
-version: 2025-09-29
+version: 2025-10-04
 
 [schema:overview]
 
@@ -16,9 +16,19 @@ version: 2025-09-29
 
 - Schema: public (unless stated otherwise)
 - Naming: snake_case for columns, singular table names as currently defined
-- Timestamps: `created_at`, `updated_at` use `timestamptz` in most tables
+- Timestamps: Mixed usage - `created_at`, `updated_at` use `timestamp without time zone` in some tables, `timestamptz` in others
 - Primary keys: explicit PK constraints noted as defined in DDL
 - Foreign keys: listed under constraints per table
+
+[table:animal]
+
+- columns:
+  - id bigint identity pk
+  - name varchar null
+- constraints:
+  - pk: animal_pkey(id)
+- notes:
+  - Utility table for testing/development purposes
 
 [table:competitions]
 
@@ -46,10 +56,17 @@ version: 2025-09-29
   - formation varchar null
   - is_live boolean default false
   - round_name text default ''
+  - match_start_time timestamptz null
+  - second_half_start_time timestamptz null
+  - first_half_end_time timestamptz null
+  - second_half_end_time timestamptz null
 - constraints:
   - pk: matches_pkey(id)
   - fk: matches_competition_id_fkey(competition_id) -> competitions(id)
   - fk: matches_opponent_team_id_fkey(opponent_team_id) -> teams(id)
+- notes:
+  - New time columns added for precise match timing management
+  - `match_start_time`, `second_half_start_time`, `first_half_end_time`, `second_half_end_time` for real-time match status calculation
 
 [table:players]
 
@@ -124,7 +141,7 @@ version: 2025-09-29
   - user_id uuid not null
   - match_id uuid not null
   - player_id uuid not null
-  - minute int not null
+  - minute text not null
   - rating numeric not null check 0.0..10.0
   - comment text null
   - created_at timestamptz default timezone('Asia/Seoul', now())
@@ -136,6 +153,8 @@ version: 2025-09-29
   - fk: ratings_player_id_fkey(player_id) -> players(id)
 - notes:
   - Multiple ratings per (user, player, match) allowed across different `minute` values per DDL.
+  - `minute` field changed from int to text to support additional time notation (e.g., "45+3", "전반 45+3'", "후반 12'")
+  - Real-time match minute calculation based on match timing data with extra time support
 
 [table:teams]
 
@@ -182,7 +201,12 @@ version: 2025-09-29
 - Rating UI uses `ratings.rating` numeric range [0.0, 10.0] with 0.1 precision on the client.
 - Multiple ratings per user per player are differentiated by `minute`.
 - Real-time updates are delivered via broadcast channels keyed by match and player context in the app layer.
+- Match timing: New time columns enable real-time match status calculation and accurate minute tracking for ratings.
 
 [migration:notes]
 
+- Added new time columns to matches table: `match_start_time`, `second_half_start_time`, `first_half_end_time`, `second_half_end_time`
+- All new time columns use `timestamptz` for proper timezone handling
+- `created_at`, `updated_at` in matches table changed to nullable (no default values)
+- Changed `ratings.minute` from `int` to `text` to support additional time notation (e.g., "45+3", "전반 45+3'", "후반 12'")
 - This file is for documentation. Apply DDL changes through migration files, then update this rule.

@@ -1,4 +1,3 @@
-// src/domains/matches/matches-lastest/components/matches-lastest.tsx
 import { useNavigate } from "react-router-dom";
 
 import { useGetLatestMatchDatas } from "../api/react-query-api/use-get-lastest-match-datas";
@@ -8,6 +7,7 @@ import {
   type IMatchesLastestPlayer,
 } from "@matches/matches-lastest/api/matches-lastest-api";
 import MatchesLastestWrapper from "@matches/matches-lastest/components/wrapper/matches-lastest-wrapper";
+import { getDisplayTime } from "@matches/utils/match-time-utils";
 
 import { createMatchPlayerRatingsPath } from "@shared/constants/routes";
 
@@ -27,6 +27,20 @@ const MatchesLastest = () => {
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
+  const KST_MATCH_START_TIME = new Date(information.match_start_time);
+  const KST_FIRST_HALF_END_TIME = new Date(information.first_half_end_time);
+  const KST_SECOND_HALF_START_TIME = new Date(information.second_half_start_time);
+  const KST_SECOND_HALF_END_TIME = new Date(information.second_half_end_time);
+  const KST_CURRENT_TIME = new Date();
+
+  const displayTime = getDisplayTime(
+    KST_MATCH_START_TIME,
+    KST_FIRST_HALF_END_TIME,
+    KST_SECOND_HALF_START_TIME,
+    KST_SECOND_HALF_END_TIME,
+    KST_CURRENT_TIME,
+  );
+
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
@@ -46,9 +60,7 @@ const MatchesLastest = () => {
               {information.season} {information.league_name} {information.round_name}
             </div>
           </div>
-          <div className="text-md text-primary-100 shrink-0 font-semibold">
-            {information.is_live ? "경기중! 📡" : "경기종료"}
-          </div>
+          <div className="text-md text-primary-100 shrink-0 font-semibold">{displayTime}</div>
         </div>
         {/* 하단부 : 포메이션 렌더링 */}
         <div className="flex h-auto w-full flex-1 flex-col justify-between py-4">
@@ -89,10 +101,6 @@ const PlayerCard = ({
       className="xs:w-[52px] xs:h-[52px] relative shrink-0 cursor-pointer sm:h-[60px] sm:w-[60px] md:h-[66px] md:w-[66px]"
       onClick={handleClick}
     >
-      {/* 체크무늬 배경 */}
-      <div className="to-primary-200 absolute inset-0 rounded-full bg-gradient-to-br from-gray-800">
-        <div className="h-full w-full rounded-full bg-[repeating-conic-gradient(from_0deg,transparent_0deg_8deg,rgba(255,255,255,0.03)_8deg_16deg)]" />
-      </div>
       {/* 선수 이미지 컨테이너 */}
       <div className="border-primary-400 relative h-full w-full overflow-hidden rounded-full border-2 shadow-lg">
         {/* 실제 선수 이미지 */}
@@ -106,14 +114,6 @@ const PlayerCard = ({
       <div className="border-primary-400 absolute -right-1 -bottom-1 flex h-7 w-7 items-center justify-center rounded-full border-2 bg-black shadow-lg">
         <span className="text-xs font-bold text-white transition-all duration-300 ease-out">{player.avg_rating}</span>
       </div>
-
-      {/* 실시간 업데이트 인디케이터 (라이브 경기 시만) */}
-      {information.is_live && (
-        <div
-          className="absolute -top-1 -left-1 h-3 w-3 animate-pulse rounded-full bg-green-500"
-          title="실시간 업데이트"
-        />
-      )}
     </div>
   );
 };
