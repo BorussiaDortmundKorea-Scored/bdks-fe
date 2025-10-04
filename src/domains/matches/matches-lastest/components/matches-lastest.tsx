@@ -101,10 +101,6 @@ const PlayerCard = ({
       className="xs:w-[52px] xs:h-[52px] relative shrink-0 cursor-pointer sm:h-[60px] sm:w-[60px] md:h-[66px] md:w-[66px]"
       onClick={handleClick}
     >
-      {/* 체크무늬 배경 */}
-      <div className="to-primary-200 absolute inset-0 rounded-full bg-gradient-to-br from-gray-800">
-        <div className="h-full w-full rounded-full bg-[repeating-conic-gradient(from_0deg,transparent_0deg_8deg,rgba(255,255,255,0.03)_8deg_16deg)]" />
-      </div>
       {/* 선수 이미지 컨테이너 */}
       <div className="border-primary-400 relative h-full w-full overflow-hidden rounded-full border-2 shadow-lg">
         {/* 실제 선수 이미지 */}

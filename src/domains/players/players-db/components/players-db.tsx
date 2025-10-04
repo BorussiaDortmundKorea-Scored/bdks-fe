@@ -5,11 +5,11 @@
  */
 import { useRef, useState } from "react";
 
+import { useAuth } from "@auth/contexts/AuthContext";
+
 import { useGetPlayersDbWithMyRatings } from "@players/players-db/api/react-query-api/use-get-players-db-with-my-ratings";
 import PlayersDbWrapper from "@players/players-db/components/wrapper/players-db-wrapper";
 import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/error/players-rating-rotator-error-fallback";
-
-import { useAuth } from "@auth/contexts/AuthContext";
 
 const PlayersDb = () => {
   //SECTION HOOK,상태값 영역
@@ -33,7 +33,7 @@ const PlayersDb = () => {
     } else {
       // 카카오 로그인 사용자: 상세 페이지 이동
       // navigate(`/player/${playerId}/stats`);
-      alert("준비중입니다.");
+      alert("해당 화면은 준비중이에요.");
       console.log("선수 상세 페이지로 이동:", playerId);
     }
   };

@@ -28,7 +28,7 @@ export function useCreateAuthProfile() {
     },
     onError: (error: Error) => {
       console.error("Failed to create auth profile:", error);
-      alert(`프로필 등록 실패: ${error.message}`);
+      alert(`이미 등록된 닉네임이에요`);
     },
   });
 
