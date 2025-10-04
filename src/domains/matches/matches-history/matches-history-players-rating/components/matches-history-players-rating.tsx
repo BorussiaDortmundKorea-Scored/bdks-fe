@@ -9,7 +9,8 @@ import { useParams } from "react-router-dom";
 import { useGetMatchesHistoryPlayersRatingSuspense } from "../api/react-query-api/use-get-matches-history-players-rating-suspense";
 import MatchesHistoryPlayersRatingItem from "./matches-history-players-rating-item/matches-history-players-rating-item";
 import MatchesHistoryPlayersRatingWrapper from "./wrapper/matches-history-players-rating-wrapper";
-import { Camera } from "lucide-react";
+
+// import { Camera } from "lucide-react";
 
 interface IMatchesHistoryPlayersRating {}
 
