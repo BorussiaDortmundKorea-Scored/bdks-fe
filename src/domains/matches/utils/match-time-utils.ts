@@ -21,8 +21,9 @@ export const getMatchStatus = (
   firstHalfEndTime: Date,
   secondHalfStartTime: Date,
   secondHalfEndTime: Date,
+  nowTime: Date,
 ): MatchStatus => {
-  const now = new Date();
+  const now = nowTime;
 
   if (now < matchStartTime) return MATCH_STATUS.NOT_STARTED;
   if (now >= secondHalfEndTime) return MATCH_STATUS.FULL_TIME;
@@ -40,9 +41,10 @@ export const getCurrentMatchTime = (
   firstHalfEndTime: Date,
   secondHalfStartTime: Date,
   secondHalfEndTime: Date,
+  nowTime: Date,
 ): number => {
-  const now = new Date();
-  const status = getMatchStatus(matchStartTime, firstHalfEndTime, secondHalfStartTime, secondHalfEndTime);
+  const now = nowTime;
+  const status = getMatchStatus(matchStartTime, firstHalfEndTime, secondHalfStartTime, secondHalfEndTime, now);
 
   switch (status) {
     case MATCH_STATUS.FIRST_HALF: {
@@ -67,14 +69,22 @@ export const getDisplayTime = (
   firstHalfEndTime: Date,
   secondHalfStartTime: Date,
   secondHalfEndTime: Date,
+  nowTime: Date,
 ): string => {
-  const status = getMatchStatus(matchStartTime, firstHalfEndTime, secondHalfStartTime, secondHalfEndTime);
+  const now = nowTime;
+  const status = getMatchStatus(matchStartTime, firstHalfEndTime, secondHalfStartTime, secondHalfEndTime, now);
 
   if (status === MATCH_STATUS.NOT_STARTED) return MATCH_DISPLAY_TEXT.NOT_STARTED;
   if (status === MATCH_STATUS.FULL_TIME) return MATCH_DISPLAY_TEXT.FULL_TIME;
   if (status === MATCH_STATUS.HALF_TIME) return MATCH_DISPLAY_TEXT.HALF_TIME;
 
-  const currentTime = getCurrentMatchTime(matchStartTime, firstHalfEndTime, secondHalfStartTime, secondHalfEndTime);
+  const currentTime = getCurrentMatchTime(
+    matchStartTime,
+    firstHalfEndTime,
+    secondHalfStartTime,
+    secondHalfEndTime,
+    now,
+  );
 
   // 45분 넘어가면 추가시간 표시
   if (currentTime > 45) {

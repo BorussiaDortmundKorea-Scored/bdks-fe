@@ -1,4 +1,3 @@
-// src/domains/matches/matches-lastest/components/matches-lastest.tsx
 import { useNavigate } from "react-router-dom";
 
 import { useGetLatestMatchDatas } from "../api/react-query-api/use-get-lastest-match-datas";
@@ -8,6 +7,7 @@ import {
   type IMatchesLastestPlayer,
 } from "@matches/matches-lastest/api/matches-lastest-api";
 import MatchesLastestWrapper from "@matches/matches-lastest/components/wrapper/matches-lastest-wrapper";
+import { MATCH_STATUS, getMatchStatus } from "@matches/utils/match-time-utils";
 
 import { createMatchPlayerRatingsPath } from "@shared/constants/routes";
 
@@ -28,14 +28,18 @@ const MatchesLastest = () => {
 
   //SECTION 상태값 영역
   const KST_MATCH_START_TIME = new Date(information.match_start_time);
+  const KST_FIRST_HALF_END_TIME = new Date(information.first_half_end_time);
   const KST_SECOND_HALF_START_TIME = new Date(information.second_half_start_time);
+  const KST_SECOND_HALF_END_TIME = new Date(information.second_half_end_time);
   const KST_CURRENT_TIME = new Date();
-  const isLive = KST_MATCH_START_TIME < KST_CURRENT_TIME;
 
-  console.log(KST_MATCH_START_TIME);
-  console.log(KST_SECOND_HALF_START_TIME);
-  console.log(KST_CURRENT_TIME);
-  console.log(isLive);
+  const matchStatus = getMatchStatus(
+    KST_MATCH_START_TIME,
+    KST_FIRST_HALF_END_TIME,
+    KST_SECOND_HALF_START_TIME,
+    KST_SECOND_HALF_END_TIME,
+    KST_CURRENT_TIME,
+  );
 
   //!SECTION 상태값 영역
 
@@ -56,7 +60,9 @@ const MatchesLastest = () => {
               {information.season} {information.league_name} {information.round_name}
             </div>
           </div>
-          <div className="text-md text-primary-100 shrink-0 font-semibold">{isLive ? "경기중! 📡" : "경기종료"}</div>
+          <div className="text-md text-primary-100 shrink-0 font-semibold">
+            {matchStatus === MATCH_STATUS.FULL_TIME ? "경기종료" : "경기중! 📡"}
+          </div>
         </div>
         {/* 하단부 : 포메이션 렌더링 */}
         <div className="flex h-auto w-full flex-1 flex-col justify-between py-4">

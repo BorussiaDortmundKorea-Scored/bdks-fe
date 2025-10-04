@@ -141,7 +141,7 @@ version: 2025-10-04
   - user_id uuid not null
   - match_id uuid not null
   - player_id uuid not null
-  - minute int not null
+  - minute text not null
   - rating numeric not null check 0.0..10.0
   - comment text null
   - created_at timestamptz default timezone('Asia/Seoul', now())
@@ -153,7 +153,8 @@ version: 2025-10-04
   - fk: ratings_player_id_fkey(player_id) -> players(id)
 - notes:
   - Multiple ratings per (user, player, match) allowed across different `minute` values per DDL.
-  - `minute` field now supports real-time match minute calculation based on match timing data
+  - `minute` field changed from int to text to support additional time notation (e.g., "45+3", "전반 45+3'", "후반 12'")
+  - Real-time match minute calculation based on match timing data with extra time support
 
 [table:teams]
 
@@ -207,4 +208,5 @@ version: 2025-10-04
 - Added new time columns to matches table: `match_start_time`, `second_half_start_time`, `first_half_end_time`, `second_half_end_time`
 - All new time columns use `timestamptz` for proper timezone handling
 - `created_at`, `updated_at` in matches table changed to nullable (no default values)
+- Changed `ratings.minute` from `int` to `text` to support additional time notation (e.g., "45+3", "전반 45+3'", "후반 12'")
 - This file is for documentation. Apply DDL changes through migration files, then update this rule.

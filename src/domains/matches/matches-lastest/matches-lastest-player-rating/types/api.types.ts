@@ -9,14 +9,14 @@ export interface IGetMatchPlayerRatingRequest {
 export interface IInsertPlayerRatingRequest {
   match_id: string;
   player_id: string;
-  minute: number;
+  minute: string; // "45+3" 형태로 추가시간까지 표현
   rating: number;
 }
 
 export interface IInsertPlayerRatingResponse {
   id: string;
   rating: number;
-  minute: number;
+  minute: string; // "45+3" 형태로 추가시간까지 표현
   user_nickname: string;
   success: boolean;
   message: string;
@@ -31,7 +31,7 @@ export interface IGetUserPlayerRatingsRequest {
 export interface IRatingUpdatedPayload {
   match_id: string;
   player_id: string;
-  minute: number;
+  minute: string; // "45+3" 형태로 추가시간까지 표현
   rating: number;
   timestamp: string;
   action: "INSERT" | "UPDATE" | "DELETE";

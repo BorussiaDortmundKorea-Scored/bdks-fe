@@ -15,11 +15,15 @@ export interface IMatchPlayerRating {
   opponent_team_name: string;
   goals: number;
   assists: number;
+  match_start_time: Date;
+  first_half_end_time: Date;
+  second_half_start_time: Date;
+  second_half_end_time: Date;
 }
 
 export interface IUserRating {
   id: string;
-  minute: number;
+  minute: string; // "45+3" 형태로 추가시간 표현
   rating: number;
   comment: string | null;
   created_at: string;
