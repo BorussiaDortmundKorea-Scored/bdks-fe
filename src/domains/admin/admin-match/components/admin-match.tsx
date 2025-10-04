@@ -41,6 +41,10 @@ const AdminMatch = () => {
     formation: "",
     is_live: false,
     round_name: "",
+    match_start_time: "",
+    second_half_start_time: "",
+    first_half_end_time: "",
+    second_half_end_time: "",
   });
   //!SECTION 상태값 영역
 
@@ -101,6 +105,10 @@ const AdminMatch = () => {
       formation: formData.formation || undefined,
       is_live: formData.is_live,
       round_name: formData.round_name || undefined,
+      match_start_time: formData.match_start_time,
+      second_half_start_time: formData.second_half_start_time,
+      first_half_end_time: formData.first_half_end_time,
+      second_half_end_time: formData.second_half_end_time,
     });
     setIsCreateModalOpen(false);
     resetFormData();
@@ -120,6 +128,10 @@ const AdminMatch = () => {
       formation: formData.formation || undefined,
       is_live: formData.is_live,
       round_name: formData.round_name || undefined,
+      match_start_time: formData.match_start_time,
+      second_half_start_time: formData.second_half_start_time,
+      first_half_end_time: formData.first_half_end_time,
+      second_half_end_time: formData.second_half_end_time,
     });
     setEditingMatch(null);
     resetFormData();
@@ -143,6 +155,16 @@ const AdminMatch = () => {
       formation: match.formation || "",
       is_live: match.is_live,
       round_name: match.round_name,
+      match_start_time: match.match_start_time ? new Date(match.match_start_time).toISOString().slice(0, 16) : "",
+      second_half_start_time: match.second_half_start_time
+        ? new Date(match.second_half_start_time).toISOString().slice(0, 16)
+        : "",
+      first_half_end_time: match.first_half_end_time
+        ? new Date(match.first_half_end_time).toISOString().slice(0, 16)
+        : "",
+      second_half_end_time: match.second_half_end_time
+        ? new Date(match.second_half_end_time).toISOString().slice(0, 16)
+        : "",
     });
   };
 
@@ -157,6 +179,10 @@ const AdminMatch = () => {
       formation: "",
       is_live: false,
       round_name: "",
+      match_start_time: "",
+      second_half_start_time: "",
+      first_half_end_time: "",
+      second_half_end_time: "",
     });
   };
 
@@ -344,6 +370,62 @@ const AdminMatch = () => {
                   placeholder="예: 1라운드"
                 />
               </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-yds-b1 text-primary-100">경기 시작 시간</label>
+                  <Input
+                    type="datetime-local"
+                    value={formData.match_start_time}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, match_start_time: e.target.value })
+                    }
+                    placeholder="경기 시작 시간"
+                    size="full"
+                    color="primary-100"
+                  />
+                </div>
+                <div>
+                  <label className="text-yds-b1 text-primary-100">후반 시작 시간</label>
+                  <Input
+                    type="datetime-local"
+                    value={formData.second_half_start_time}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, second_half_start_time: e.target.value })
+                    }
+                    placeholder="후반 시작 시간"
+                    size="full"
+                    color="primary-100"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-yds-b1 text-primary-100">전반 종료 시간</label>
+                  <Input
+                    type="datetime-local"
+                    value={formData.first_half_end_time}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, first_half_end_time: e.target.value })
+                    }
+                    placeholder="전반 종료 시간"
+                    size="full"
+                    color="primary-100"
+                  />
+                </div>
+                <div>
+                  <label className="text-yds-b1 text-primary-100">후반 종료 시간</label>
+                  <Input
+                    type="datetime-local"
+                    value={formData.second_half_end_time}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, second_half_end_time: e.target.value })
+                    }
+                    placeholder="후반 종료 시간"
+                    size="full"
+                    color="primary-100"
+                  />
+                </div>
+              </div>
               <div className="flex items-center">
                 <input
                   type="checkbox"
@@ -463,6 +545,62 @@ const AdminMatch = () => {
                   color="primary-100"
                   placeholder="예: 1라운드"
                 />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-yds-b1 text-primary-100">경기 시작 시간</label>
+                  <Input
+                    type="datetime-local"
+                    value={formData.match_start_time}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, match_start_time: e.target.value })
+                    }
+                    placeholder="경기 시작 시간"
+                    size="full"
+                    color="primary-100"
+                  />
+                </div>
+                <div>
+                  <label className="text-yds-b1 text-primary-100">후반 시작 시간</label>
+                  <Input
+                    type="datetime-local"
+                    value={formData.second_half_start_time}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, second_half_start_time: e.target.value })
+                    }
+                    placeholder="후반 시작 시간"
+                    size="full"
+                    color="primary-100"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-yds-b1 text-primary-100">전반 종료 시간</label>
+                  <Input
+                    type="datetime-local"
+                    value={formData.first_half_end_time}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, first_half_end_time: e.target.value })
+                    }
+                    placeholder="전반 종료 시간"
+                    size="full"
+                    color="primary-100"
+                  />
+                </div>
+                <div>
+                  <label className="text-yds-b1 text-primary-100">후반 종료 시간</label>
+                  <Input
+                    type="datetime-local"
+                    value={formData.second_half_end_time}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, second_half_end_time: e.target.value })
+                    }
+                    placeholder="후반 종료 시간"
+                    size="full"
+                    color="primary-100"
+                  />
+                </div>
               </div>
               <div className="flex items-center">
                 <input

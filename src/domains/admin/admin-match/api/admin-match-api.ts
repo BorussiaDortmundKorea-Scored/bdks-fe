@@ -9,13 +9,17 @@ export interface IMatch {
   home_away: string;
   our_score: number;
   opponent_score: number;
-  created_at: string;
-  updated_at: string;
+  created_at: Date;
+  updated_at: Date;
   formation: string | null;
   is_live: boolean;
   round_name: string;
   competition_name: string;
   opponent_team_name: string;
+  match_start_time: Date;
+  second_half_start_time: Date;
+  first_half_end_time: Date;
+  second_half_end_time: Date;
 }
 
 export interface ICreateMatchRequest {
@@ -28,6 +32,10 @@ export interface ICreateMatchRequest {
   formation?: string;
   is_live?: boolean;
   round_name?: string;
+  match_start_time: string;
+  second_half_start_time: string;
+  first_half_end_time: string;
+  second_half_end_time: string;
 }
 
 export interface IUpdateMatchRequest {
@@ -41,6 +49,10 @@ export interface IUpdateMatchRequest {
   formation?: string;
   is_live?: boolean;
   round_name?: string;
+  match_start_time: string;
+  second_half_start_time: string;
+  first_half_end_time: string;
+  second_half_end_time: string;
 }
 
 // 모든 경기 조회
@@ -64,6 +76,10 @@ export const createMatch = async (match: ICreateMatchRequest): Promise<ApiRespon
     p_formation: match.formation || null,
     p_is_live: match.is_live || false,
     p_round_name: match.round_name || "",
+    p_match_start_time: match.match_start_time || null,
+    p_second_half_start_time: match.second_half_start_time || null,
+    p_first_half_end_time: match.first_half_end_time || null,
+    p_second_half_end_time: match.second_half_end_time || null,
   })) as { data: IMatch; error: PostgrestError | null };
 
   return {
@@ -85,6 +101,10 @@ export const updateMatch = async (match: IUpdateMatchRequest): Promise<ApiRespon
     p_formation: match.formation,
     p_is_live: match.is_live,
     p_round_name: match.round_name,
+    p_match_start_time: match.match_start_time,
+    p_second_half_start_time: match.second_half_start_time,
+    p_first_half_end_time: match.first_half_end_time,
+    p_second_half_end_time: match.second_half_end_time,
   })) as { data: IMatch; error: PostgrestError | null };
 
   return {

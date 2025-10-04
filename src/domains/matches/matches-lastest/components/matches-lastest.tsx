@@ -27,6 +27,16 @@ const MatchesLastest = () => {
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
+  const KST_MATCH_START_TIME = new Date(information.match_start_time);
+  const KST_SECOND_HALF_START_TIME = new Date(information.second_half_start_time);
+  const KST_CURRENT_TIME = new Date();
+  const isLive = KST_MATCH_START_TIME < KST_CURRENT_TIME;
+
+  console.log(KST_MATCH_START_TIME);
+  console.log(KST_SECOND_HALF_START_TIME);
+  console.log(KST_CURRENT_TIME);
+  console.log(isLive);
+
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
@@ -46,9 +56,7 @@ const MatchesLastest = () => {
               {information.season} {information.league_name} {information.round_name}
             </div>
           </div>
-          <div className="text-md text-primary-100 shrink-0 font-semibold">
-            {information.is_live ? "경기중! 📡" : "경기종료"}
-          </div>
+          <div className="text-md text-primary-100 shrink-0 font-semibold">{isLive ? "경기중! 📡" : "경기종료"}</div>
         </div>
         {/* 하단부 : 포메이션 렌더링 */}
         <div className="flex h-auto w-full flex-1 flex-col justify-between py-4">
@@ -106,14 +114,6 @@ const PlayerCard = ({
       <div className="border-primary-400 absolute -right-1 -bottom-1 flex h-7 w-7 items-center justify-center rounded-full border-2 bg-black shadow-lg">
         <span className="text-xs font-bold text-white transition-all duration-300 ease-out">{player.avg_rating}</span>
       </div>
-
-      {/* 실시간 업데이트 인디케이터 (라이브 경기 시만) */}
-      {information.is_live && (
-        <div
-          className="absolute -top-1 -left-1 h-3 w-3 animate-pulse rounded-full bg-green-500"
-          title="실시간 업데이트"
-        />
-      )}
     </div>
   );
 };

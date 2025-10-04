@@ -34,7 +34,8 @@ export interface IMatchesLastestInformation {
   season: string;
   home_away: string;
   round_name: string;
-  is_live: boolean;
+  match_start_time: Date;
+  second_half_start_time: Date;
 }
 
 export const getLatestMatchInformation = async () => {
