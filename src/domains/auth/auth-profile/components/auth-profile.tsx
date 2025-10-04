@@ -56,7 +56,7 @@ const AuthProfile: React.FC<IAuthProfile> = () => {
             <p className="text-yds-s2" onClick={() => console.log(genderSelectHook.selectedOption)}>
               사용할 닉네임을 설정해 주세요.
             </p>
-            <p className="text-yds-b2">※ 일회용 로그인의 경우 닉네임을 설정 할 수 없어요.</p>
+            {/* <p className="text-yds-b2">※ 일회용 로그인의 경우 닉네임을 설정 할 수 없어요.</p> */}
           </label>
           <Input
             id="nickname"
