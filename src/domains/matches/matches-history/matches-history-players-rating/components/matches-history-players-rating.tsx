@@ -36,7 +36,7 @@ const MatchesHistoryPlayersRating: React.FC<IMatchesHistoryPlayersRating> = () =
             {matchInfo.competition_name} {matchInfo.season}
           </p>
         </div>
-        <Camera size={24} className="text-primary-100 cursor-pointer" />
+        {/* <Camera size={24} className="text-primary-100 cursor-pointer" /> */}
       </header>
       <div className="text-yds-s2 text-primary-100">선수단 평점</div>
       <ul>
