@@ -1,0 +1,21 @@
+{
+  "korean_name": "김영덕",
+  "full_profile_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/players/full/full_schlotterbeck.png",
+  "position_detail_name": "공격수",
+  "line_number": 9,
+  "avg_rating": 7.5,
+  "rating_count": 124,
+  "lineup_type": "STARTING",
+  "player_id": "player-123",
+  "match_id": "match-456",
+  "round_name": "1라운드",
+  "league_name": "K리그1",
+  "season": "2024",
+  "opponent_team_name": "울산 현대",
+  "goals": 2,
+  "assists": 1,
+  "match_start_time": "2024-01-15T19:00:00Z",
+  "first_half_end_time": "2024-01-15T19:45:00Z",
+  "second_half_start_time": "2024-01-15T20:00:00Z",
+  "second_half_end_time": "2024-01-15T20:45:00Z"
+}
