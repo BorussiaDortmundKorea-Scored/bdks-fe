@@ -21,8 +21,6 @@ const MatchesHistory = () => {
   const finishMatchLists = useGetAllFinishMatchLists();
   const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLUListElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStateRef = useRef<{ startX: number; scrollLeft: number }>({ startX: 0, scrollLeft: 0 });
 
   //!SECTION HOOK호출 영역
 
@@ -35,30 +33,7 @@ const MatchesHistory = () => {
     navigate(createMatchRatingsPath(matchId));
   };
 
-  // 마우스 드래그로 가로 스크롤
-  const handleMouseDown: React.MouseEventHandler<HTMLUListElement> = (event) => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    setIsDragging(true);
-    dragStateRef.current.startX = event.pageX - container.offsetLeft;
-    dragStateRef.current.scrollLeft = container.scrollLeft;
-  };
-
-  const handleMouseMove: React.MouseEventHandler<HTMLUListElement> = (event) => {
-    if (!isDragging) return;
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    event.preventDefault();
-    const x = event.pageX - container.offsetLeft;
-    const walk = x - dragStateRef.current.startX; // 이동 거리
-    container.scrollLeft = dragStateRef.current.scrollLeft - walk;
-  };
-
-  const handleMouseUpOrLeave: React.MouseEventHandler<HTMLUListElement> = () => {
-    setIsDragging(false);
-  };
-
-  // 마우스 휠 세로 이동을 가로 스크롤로 변환 (트랙패드/마우스 모두 대응)
+  //SECTION 드래그/휠 스크롤 핸들러 영역
   const handleWheel: React.WheelEventHandler<HTMLUListElement> = (event) => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -66,27 +41,21 @@ const MatchesHistory = () => {
     if (!canScrollHorizontally) return;
     container.scrollLeft += event.deltaY;
   };
-  //!SECTION 메서드 영역
+  //!SECTION 드래그/휠 스크롤 핸들러 영역
 
   return (
     <MatchesHistoryWrapper>
       {/* 가로 스크롤 컨테이너 */}
       <ul
         ref={scrollContainerRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUpOrLeave}
-        onMouseLeave={handleMouseUpOrLeave}
         onWheel={handleWheel}
-        className={`scrollbar-hide-x flex w-full flex-row gap-5 overflow-x-scroll select-none ${
-          isDragging ? "cursor-grabbing" : "cursor-grab"
-        }`}
+        className={`scrollbar-hide-x flex w-full flex-row gap-5 overflow-x-scroll select-none`}
       >
         {finishMatchLists.map((match) => (
           <li
             key={match.id}
             onClick={() => handleMatchCardClick(match.id)}
-            className="flex w-[180px] shrink-0 cursor-pointer flex-col gap-2"
+            className="flex w-[180px] shrink-0 flex-col gap-2 hover:cursor-pointer"
           >
             <img src={CARD_SECTION_IMAGE} alt="Yellow Wall" className="h-[90px] w-[180px] rounded object-cover" />
             <div className="flex flex-col text-white">

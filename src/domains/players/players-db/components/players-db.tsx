@@ -20,8 +20,6 @@ const PlayersDb = () => {
   }
   const data = useGetPlayersDbWithMyRatings(user.id);
   const scrollContainerRef = useRef<HTMLUListElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStateRef = useRef<{ startX: number; scrollLeft: number }>({ startX: 0, scrollLeft: 0 });
 
   //!SECTION HOOK,상태값 영역
 
@@ -29,7 +27,7 @@ const PlayersDb = () => {
   const handlePlayerClick = (playerId: string) => {
     if (user?.is_anonymous) {
       // 익명 사용자: 팝업 표시
-      alert("익명 로그인 사용자는 이용할 수 없습니다");
+      alert("해당 화면은 준비중이에요.");
     } else {
       // 카카오 로그인 사용자: 상세 페이지 이동
       // navigate(`/player/${playerId}/stats`);
@@ -39,27 +37,6 @@ const PlayersDb = () => {
   };
 
   //SECTION 드래그/휠 스크롤 핸들러 영역
-  const handleMouseDown: React.MouseEventHandler<HTMLUListElement> = (event) => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    setIsDragging(true);
-    dragStateRef.current.startX = event.pageX - container.offsetLeft;
-    dragStateRef.current.scrollLeft = container.scrollLeft;
-  };
-
-  const handleMouseMove: React.MouseEventHandler<HTMLUListElement> = (event) => {
-    if (!isDragging) return;
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    event.preventDefault();
-    const x = event.pageX - container.offsetLeft;
-    const walk = x - dragStateRef.current.startX;
-    container.scrollLeft = dragStateRef.current.scrollLeft - walk;
-  };
-
-  const handleMouseUpOrLeave: React.MouseEventHandler<HTMLUListElement> = () => {
-    setIsDragging(false);
-  };
 
   const handleWheel: React.WheelEventHandler<HTMLUListElement> = (event) => {
     const container = scrollContainerRef.current;
@@ -77,20 +54,14 @@ const PlayersDb = () => {
       {/* 가로 스크롤 컨테이너 */}
       <ul
         ref={scrollContainerRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUpOrLeave}
-        onMouseLeave={handleMouseUpOrLeave}
         onWheel={handleWheel}
-        className={`scrollbar-hide-x flex w-full flex-row gap-[8px] overflow-x-scroll select-none ${
-          isDragging ? "cursor-grabbing" : "cursor-grab"
-        }`}
+        className={`scrollbar-hide-x flex w-full flex-row gap-[8px] overflow-x-scroll select-none`}
       >
         {data.map((item) => (
           <li
             key={item.id}
             onClick={() => handlePlayerClick(item.id)}
-            className="flex w-[105px] shrink-0 flex-col items-center gap-[16px]"
+            className="flex w-[105px] shrink-0 flex-col items-center gap-[16px] hover:cursor-pointer"
           >
             <img src={item.head_profile_image_url} alt={item.korean_name} className="h-[80px] w-[80px] object-cover" />
             <div className="flex flex-col items-center gap-[2px]">
