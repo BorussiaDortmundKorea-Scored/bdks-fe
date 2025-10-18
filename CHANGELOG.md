@@ -3,6 +3,12 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.1.1] - 2025-10-19
+
+### ✅ 작업 내용
+
+- [x] **Chore**: Sentry 기본세팅
+
 ## [1.0.2] - 2025-10-19
 
 ### ✅ 작업 내용
