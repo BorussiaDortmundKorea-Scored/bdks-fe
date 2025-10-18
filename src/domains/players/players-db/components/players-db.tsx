@@ -3,7 +3,7 @@
  * 기능: 선수 DB 컴포넌트 - 가로 스크롤 형태의 선수 카드 목록
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import { useAuth } from "@auth/contexts/AuthContext";
 
