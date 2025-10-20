@@ -1,3 +1,4 @@
+import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 
 import LoginPage from "./login-page";
@@ -5,12 +6,14 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import PlayersRatingRotatorErrorFallback from "@players/players-rating-rotator/components/error/players-rating-rotator-error-fallback";
+import PlayersRatingRotatorSkeleton from "@players/players-rating-rotator/components/skeleton/players-rating-rotator-skeleton";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 const meta: Meta<typeof LoginPage> = {
   title: "Auth/LoginPage",
   component: LoginPage,
+
   decorators: [
     (Story) => {
       const queryClient = new QueryClient({
@@ -26,13 +29,18 @@ const meta: Meta<typeof LoginPage> = {
         },
       });
       return (
-        <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary skeleton={<div></div>} errorFallback={PlayersRatingRotatorErrorFallback}>
-              <Story />
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </BrowserRouter>
+        <HelmetProvider>
+          <BrowserRouter>
+            <QueryClientProvider client={queryClient}>
+              <ReactQueryBoundary
+                skeleton={<PlayersRatingRotatorSkeleton />}
+                errorFallback={PlayersRatingRotatorErrorFallback}
+              >
+                <Story />
+              </ReactQueryBoundary>
+            </QueryClientProvider>
+          </BrowserRouter>
+        </HelmetProvider>
       );
     },
   ],

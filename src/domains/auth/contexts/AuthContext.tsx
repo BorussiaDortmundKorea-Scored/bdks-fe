@@ -37,14 +37,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     if (event === "SIGNED_IN" && currentSession) {
       setUser(currentSession.user);
       setSession(currentSession);
-      // accessToken을 localStorage에 저장 (axiosAuth에서 사용)
-      localStorage.setItem("access_token", currentSession.access_token);
-      console.log("로그인 성공! Access Token:", currentSession.access_token);
+      // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 저장 불필요
+      console.log("로그인 성공! Session:", currentSession);
     } else if (event === "SIGNED_OUT") {
       setUser(null);
       setSession(null);
-      // localStorage에서 토큰 제거
-      localStorage.removeItem("access_token");
       // React Query 캐시 정리
       queryClient.clear();
       console.log("로그아웃 완료 - 쿼리 캐시 정리됨");
@@ -139,8 +136,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
               console.error("OAuth 세션 설정 오류:", error);
             } else if (data.session) {
               console.log("OAuth 로그인 성공:", data.session.user.email);
-              // localStorage에 토큰 저장
-              localStorage.setItem("access_token", data.session.access_token);
+              // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 저장 불필요
               // 해시 제거 (URL 깔끔하게)
               window.location.hash = "";
             }
@@ -168,7 +164,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         if (session) {
           setUser(session.user);
           setSession(session);
-          localStorage.setItem("access_token", session.access_token);
+          // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 저장 불필요
         }
       } catch (err) {
         console.error("초기 세션 확인 예외:", err);

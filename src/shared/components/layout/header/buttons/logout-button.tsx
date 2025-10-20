@@ -10,7 +10,7 @@ const LogoutButton: React.FC = () => {
   const handleLogout = async () => {
     try {
       await signOut();
-    } catch (error) {
+    } catch {
       alert("로그아웃 중 오류가 발생했습니다.");
     }
   };
