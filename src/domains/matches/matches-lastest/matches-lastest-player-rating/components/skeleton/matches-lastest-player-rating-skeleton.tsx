@@ -5,9 +5,7 @@
  */
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
 
-interface IMatchesLastestPlayerRatingSkeleton {}
-
-const MatchesLastestPlayerRatingSkeleton: React.FC<IMatchesLastestPlayerRatingSkeleton> = () => {
+const MatchesLastestPlayerRatingSkeleton: React.FC = () => {
   //SECTION HOOK호출 영역
 
   //!SECTION HOOK호출 영역
@@ -26,19 +24,18 @@ const MatchesLastestPlayerRatingSkeleton: React.FC<IMatchesLastestPlayerRatingSk
         <div className="h-auto w-full py-6">
           <div className="flex flex-col gap-3">
             {/* 경기 정보 헤더 스켈레톤 */}
-            <div className="flex items-center justify-between px-4">
-              <div className="flex w-full flex-col flex-wrap gap-0">
+            <div className="flex items-center justify-between">
+              <div className="flex w-full flex-col flex-wrap gap-[2px]">
                 {/* 경기 대결 정보 스켈레톤 */}
-                <div className="mb-1 h-[20px] w-[200px] animate-pulse rounded bg-gray-600" />
+                <div className="mb-1 h-[26px] w-[200px] animate-pulse rounded bg-gray-600" />
                 <div className="flex w-full justify-between">
                   {/* 시즌/리그/라운드 정보 스켈레톤 */}
                   <div className="flex gap-2">
-                    <div className="h-[16px] w-[80px] animate-pulse rounded bg-gray-600" />
-                    <div className="h-[16px] w-[100px] animate-pulse rounded bg-gray-600" />
-                    <div className="h-[16px] w-[60px] animate-pulse rounded bg-gray-600" />
+                    <div className="h-[24px] w-[80px] animate-pulse rounded bg-gray-600" />
+                    <div className="h-[24px] w-[100px] animate-pulse rounded bg-gray-600" />
                   </div>
                   {/* 현재 경기 시간 스켈레톤 */}
-                  <div className="h-[16px] w-[80px] animate-pulse rounded bg-gray-600" />
+                  <div className="h-[24px] w-[80px] animate-pulse rounded bg-gray-600" />
                 </div>
               </div>
             </div>
@@ -46,7 +43,7 @@ const MatchesLastestPlayerRatingSkeleton: React.FC<IMatchesLastestPlayerRatingSk
             {/* 선수 이미지 영역 스켈레톤 */}
             <div className="flex flex-col items-start gap-3">
               {/* 선수 이미지 스켈레톤 */}
-              <div className="mx-auto h-[300px] w-[300px] animate-pulse rounded-lg bg-gray-600" />
+              <div className="mx-auto h-[250px] w-[250px] animate-pulse rounded-lg bg-gray-600" />
               {/* 선수 이름 스켈레톤 */}
               <div className="w-full text-center">
                 <div className="mx-auto h-[24px] w-[120px] animate-pulse rounded bg-gray-600" />
@@ -65,19 +62,11 @@ const MatchesLastestPlayerRatingSkeleton: React.FC<IMatchesLastestPlayerRatingSk
                 <div className="h-[16px] w-[50px] animate-pulse rounded bg-gray-600" />
                 <div className="h-[16px] w-[20px] animate-pulse rounded bg-gray-600" />
               </div>
-              {/* 평점 정보 스켈레톤 */}
+              {/* 보루센 실시간 평점 정보 스켈레톤 */}
               <div className="flex items-center justify-between">
                 <div className="h-[16px] w-[120px] animate-pulse rounded bg-gray-600" />
                 <div className="h-[16px] w-[40px] animate-pulse rounded bg-gray-600" />
               </div>
-            </div>
-
-            {/* 평점 입력 영역 스켈레톤 */}
-            <div className="flex flex-col items-center gap-4">
-              {/* 평점 게이지 스켈레톤 */}
-              <div className="h-[200px] w-[200px] animate-pulse rounded-full bg-gray-600" />
-              {/* 평점 값 표시 스켈레톤 */}
-              <div className="h-[32px] w-[80px] animate-pulse rounded bg-gray-600" />
             </div>
           </div>
         </div>

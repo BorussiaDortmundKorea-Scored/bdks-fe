@@ -64,7 +64,7 @@ const MatchesLastestPlayerRating = () => {
       };
 
       await insertMatchPlayerRating(request);
-    } catch (error) {
+    } catch {
       alert("해당 시간에 평점을 입력했습니다. 같은 시간에는 한번만 평점을 입력할 수 있어요");
     }
   };
@@ -76,8 +76,8 @@ const MatchesLastestPlayerRating = () => {
         <div className="h-auto w-full py-6">
           <div className="flex flex-col gap-3">
             {/* 경기 정보 헤더 */}
-            <div className="flex items-center justify-between px-4">
-              <div className="flex w-full flex-col flex-wrap gap-0">
+            <div className="flex items-center justify-between">
+              <div className="flex w-full flex-col flex-wrap gap-[2px]">
                 <div className="text-yds-s2 text-white">도르트문트 vs {playerRating.opponent_team_name}</div>
                 <div className="text-yds-b2 text-primary-100 flex w-full justify-between">
                   <div className="flex gap-2">
@@ -94,7 +94,7 @@ const MatchesLastestPlayerRating = () => {
               <img
                 src={playerRating.full_profile_image_url}
                 alt={playerRating.korean_name}
-                className="mx-auto h-[300px] w-[300px] rounded-lg object-cover"
+                className="mx-auto h-[250px] w-[250px] rounded-lg object-cover"
               />
               <div className="w-full text-center">
                 <h2 className="text-primary-100 text-yds-s2">{playerRating.korean_name}</h2>

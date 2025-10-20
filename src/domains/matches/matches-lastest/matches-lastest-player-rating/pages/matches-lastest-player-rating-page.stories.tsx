@@ -186,7 +186,7 @@ export const RatingSuccess: Story = {
         }),
         http.post("*/rest/v1/rpc/insert_player_rating", async ({ request }) => {
           console.log("MSW: 평점 입력 성공 시뮬레이션");
-          const body = (await request.json()) as any;
+          const body = (await request.json()) as { p_rating: number; p_minute: string };
           console.log("MSW: 평점 입력 요청:", body);
 
           // 성공 응답

@@ -86,7 +86,7 @@ export const HighRatedPlayer: Story = {
       handlers: [
         http.post("*/rest/v1/rpc/get_match_single_player_rating", () => {
           return HttpResponse.json({
-            korean_name: "손흥민",
+            korean_name: "로이스",
             full_profile_image_url:
               "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
             position_detail_name: "공격수",
@@ -96,10 +96,10 @@ export const HighRatedPlayer: Story = {
             lineup_type: "STARTING",
             player_id: "player-456",
             match_id: "match-789",
-            round_name: "1라운드",
-            league_name: "K리그1",
+            round_name: "1R",
+            league_name: "분데스리가",
             season: "2024",
-            opponent_team_name: "서울 FC",
+            opponent_team_name: "샬케04",
             goals: 3,
             assists: 2,
             match_start_time: new Date("2024-01-15T19:00:00Z"),
@@ -109,7 +109,7 @@ export const HighRatedPlayer: Story = {
           });
         }),
         http.post("*/rest/v1/rpc/insert_player_rating", async ({ request }) => {
-          const body = (await request.json()) as any;
+          const body = (await request.json()) as { p_rating: number; p_minute: string };
           return HttpResponse.json({
             id: "rating-999",
             rating: body.p_rating,
@@ -154,7 +154,7 @@ export const LowRatedPlayer: Story = {
           });
         }),
         http.post("*/rest/v1/rpc/insert_player_rating", async ({ request }) => {
-          const body = (await request.json()) as any;
+          const body = (await request.json()) as { p_rating: number; p_minute: string };
           return HttpResponse.json({
             id: "rating-111",
             rating: body.p_rating,
