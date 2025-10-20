@@ -21,7 +21,7 @@ const MatchesHistoryPlayersRatingSkeleton = () => {
   return (
     <MatchesHistoryPlayersRatingWrapper>
       {/* 헤더 스켈레톤 */}
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between" data-testid="matches-history-players-rating-skeleton">
         <div className="flex flex-col gap-2">
           <div className="h-[26px] w-[200px] animate-pulse rounded bg-gray-600"></div>
           <div className="h-[16px] w-[120px] animate-pulse rounded bg-gray-600"></div>
