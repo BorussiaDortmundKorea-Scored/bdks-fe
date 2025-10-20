@@ -1,38 +1,46 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo "🔍 보돌코스코어드 빌드 시작..."
-npx pnpm run build:dev || { echo "❌ 보돌코스코어드 빌드 실패!"; exit 1; }
+echo "🔍 보돌코스코어드 배포 준비 검증 시작..."
 
-# 빌드 결과물 검증
+# 1. 전체 검증 실행 (린트, 타입체크, 테스트, 스토리북, 빌드)
+echo "🚀 전체 검증 실행 중..."
+npx pnpm run check || { echo "❌ 전체 검증 실패!"; exit 1; }
+
+# 2. 빌드 결과물 검증
 echo "🔍 빌드 결과물 검증 중..."
 if [ ! -d "dist" ]; then
   echo "❌ dist 폴더가 존재하지 않습니다!"
   exit 1
 fi
 
-# 빌드 크기 체크
+if [ ! -d "storybook-static" ]; then
+  echo "❌ storybook-static 폴더가 존재하지 않습니다!"
+  exit 1
+fi
+
+# 3. 빌드 크기 체크
 echo "📏 빌드 크기 체크 중..."
 if [ -d "dist" ]; then
   DIST_SIZE=$(du -sh dist | cut -f1)
   echo "📦 메인 빌드 크기: $DIST_SIZE"
-  
-  # 개별 파일 크기 체크 (큰 파일들)
-  echo "📋 주요 파일 크기:"
-  find dist -name "*.js" -o -name "*.css" | head -10 | while read file; do
-    if [ -f "$file" ]; then
-      FILE_SIZE=$(du -h "$file" | cut -f1)
-      echo "  - $(basename "$file"): $FILE_SIZE"
-    fi
-  done
   
   # 전체 빌드 크기가 너무 큰 경우 경고
   DIST_SIZE_KB=$(du -sk dist | cut -f1)
   if [ "$DIST_SIZE_KB" -gt 10240 ]; then  # 10MB 이상
     echo "⚠️  빌드 크기가 큽니다 ($DIST_SIZE). 번들 최적화를 고려해보세요."
   fi
-else
-  echo "⚠️  dist 폴더를 찾을 수 없습니다."
 fi
 
-echo "✅ 모든 빌드 성공! Push 진행"
+if [ -d "storybook-static" ]; then
+  STORYBOOK_SIZE=$(du -sh storybook-static | cut -f1)
+  echo "📚 스토리북 빌드 크기: $STORYBOOK_SIZE"
+  
+  # 스토리북 빌드 크기가 너무 큰 경우 경고
+  STORYBOOK_SIZE_KB=$(du -sk storybook-static | cut -f1)
+  if [ "$STORYBOOK_SIZE_KB" -gt 5120 ]; then  # 5MB 이상
+    echo "⚠️  스토리북 빌드 크기가 큽니다 ($STORYBOOK_SIZE). 최적화를 고려해보세요."
+  fi
+fi
+
+echo "✅ 모든 검증 완료! Push 진행"

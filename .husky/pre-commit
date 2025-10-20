@@ -1,0 +1,9 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 보돌코스코어드 커밋 전 테스트코드 검증 시작..."
+
+echo "⚡ 테스트코드 검증 실행 중..."
+npx pnpm run test || { echo "❌ 테스트코드 검증 실패!"; exit 1; }
+
+echo "✅ 테스트코드 검증 완료! 커밋 진행"

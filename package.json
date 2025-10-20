@@ -17,7 +17,9 @@
     "preview": "vite preview",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "check": "pnpm run lint && pnpm run type-check && pnpm run test && pnpm run build-storybook && pnpm run build:dev",
+    "check:quick": "pnpm run lint && pnpm run type-check && pnpm run test"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
