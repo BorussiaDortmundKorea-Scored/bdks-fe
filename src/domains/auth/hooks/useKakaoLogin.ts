@@ -1,12 +1,13 @@
 // src/shared/hooks/useKakaoLogin.ts
 import { useState } from "react";
+
 import { supabase } from "@shared/api/config/supabaseClient";
 
 interface LoginResult {
   success: boolean;
   error?: string;
-  user?: any;
-  session?: any;
+  user?: unknown;
+  session?: unknown;
 }
 
 const useKakaoLogin = () => {
@@ -68,8 +69,7 @@ const useKakaoLogin = () => {
       }
 
       if (session) {
-        // accessToken을 localStorage에 저장 (axiosAuth에서 사용)
-        localStorage.setItem("access_token", session.access_token);
+        // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 저장 불필요
         return session;
       }
 
@@ -90,8 +90,7 @@ const useKakaoLogin = () => {
         return false;
       }
 
-      // localStorage에서 토큰 제거
-      localStorage.removeItem("access_token");
+      // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 제거 불필요
       return true;
     } catch (err) {
       console.error("로그아웃 예외:", err);
@@ -100,7 +99,7 @@ const useKakaoLogin = () => {
   };
 
   // 사용자 상태 변경 감지
-  const onAuthStateChange = (callback: (event: string, session: any) => void) => {
+  const onAuthStateChange = (callback: (event: string, session: unknown) => void) => {
     return supabase.auth.onAuthStateChange(callback);
   };
 
