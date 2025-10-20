@@ -28,6 +28,17 @@ vi.mock("@shared/components/player-rating-rotator", () => ({
   default: () => <div data-testid="player-rating-rotator">플레이어 평점</div>,
 }));
 
+// React Helmet 모킹
+vi.mock("react-helmet-async", () => ({
+  Helmet: ({ children }: { children: React.ReactNode }) => children,
+}));
+
+// ImageWithSkeleton 모킹
+vi.mock("@shared/components/image/image-with-skeleton", () => ({
+  default: ({ children }: { children: (props: { src: string }) => React.ReactNode }) =>
+    children({ src: "mock-image-url" }),
+}));
+
 describe("로그인 페이지", () => {
   const renderWithQueryClient = (component: React.ReactElement) => {
     const queryClient = createTestQueryClient();
@@ -58,8 +69,8 @@ describe("로그인 페이지", () => {
   it("저작권 고지문이 렌더링되어야 한다", () => {
     renderWithQueryClient(<LoginPage />);
 
-    expect(screen.getByText(/도르트문트 팬을 위해 비영리적 목적으로 제작되었으며/)).toBeInTheDocument();
-    expect(screen.getByText(/저작권 문제 발생 시 어플리케이션이 삭제될 수 있습니다/)).toBeInTheDocument();
+    expect(screen.getByText(/※ 도르트문트 팬을 위해 비영리적 목적으로 제작되었으며,/)).toBeInTheDocument();
+    expect(screen.getByText(/모든 저작권은 도르트문트 | 분데스리가에 있습니다./)).toBeInTheDocument();
   });
 
   it("로그인 버튼들이 올바른 순서로 렌더링되어야 한다", () => {
