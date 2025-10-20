@@ -3,6 +3,22 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.2.1] - 2025-10-20
+
+### ✅ 작업 내용
+
+- [x] **Chore**: 커밋,푸시전 규칙 강화 코드 husky에 추가
+- [x] **Test**: 평점입력컴포넌트 스토리북 케이스 추가
+- [x] **Chore**: 평점입력 페이지 선수이미지 크기 축소
+- [x] **Test**: 로그인페이지 테스트코드에 react-helmet 컨텍스트 추가
+- [x] **Refactor**: 로그인 accessToken 획일화
+
+## [1.1.1] - 2025-10-19
+
+### ✅ 작업 내용
+
+- [x] **Chore**: Sentry 기본세팅
+
 ## [1.0.2] - 2025-10-19
 
 ### ✅ 작업 내용
