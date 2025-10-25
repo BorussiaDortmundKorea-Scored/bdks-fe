@@ -1,0 +1,103 @@
+[
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440001",
+    "match_name": "2024/25 분데스리가 vs 바이에른 뮌헨 (홈)",
+    "season": "2024/25",
+    "competition_name": "분데스리가",
+    "opponent_name": "바이에른 뮌헨",
+    "match_date": "2024-10-15",
+    "unique_user_count": 245,
+    "total_rating_count": 2450
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440002",
+    "match_name": "2024/25 분데스리가 vs 레버쿠젠 (원정)",
+    "season": "2024/25",
+    "competition_name": "분데스리가",
+    "opponent_name": "레버쿠젠",
+    "match_date": "2024-10-08",
+    "unique_user_count": 198,
+    "total_rating_count": 1980
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440003",
+    "match_name": "2024/25 챔피언스리그 vs 레알 마드리드 (홈)",
+    "season": "2024/25",
+    "competition_name": "챔피언스리그",
+    "opponent_name": "레알 마드리드",
+    "match_date": "2024-10-01",
+    "unique_user_count": 312,
+    "total_rating_count": 3120
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440004",
+    "match_name": "2024/25 분데스리가 vs RB 라이프치히 (홈)",
+    "season": "2024/25",
+    "competition_name": "분데스리가",
+    "opponent_name": "RB 라이프치히",
+    "match_date": "2024-09-24",
+    "unique_user_count": 167,
+    "total_rating_count": 1670
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440005",
+    "match_name": "2024/25 분데스리가 vs 프랑크푸르트 (원정)",
+    "season": "2024/25",
+    "competition_name": "분데스리가",
+    "opponent_name": "프랑크푸르트",
+    "match_date": "2024-09-17",
+    "unique_user_count": 143,
+    "total_rating_count": 1430
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440006",
+    "match_name": "2024/25 챔피언스리그 vs AC 밀란 (원정)",
+    "season": "2024/25",
+    "competition_name": "챔피언스리그",
+    "opponent_name": "AC 밀란",
+    "match_date": "2024-09-10",
+    "unique_user_count": 201,
+    "total_rating_count": 2010
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440007",
+    "match_name": "2024/25 분데스리가 vs 볼프스부르크 (홈)",
+    "season": "2024/25",
+    "competition_name": "분데스리가",
+    "opponent_name": "볼프스부르크",
+    "match_date": "2024-09-03",
+    "unique_user_count": 132,
+    "total_rating_count": 1320
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440008",
+    "match_name": "2024/25 분데스리가 vs 보훔 (원정)",
+    "season": "2024/25",
+    "competition_name": "분데스리가",
+    "opponent_name": "보훔",
+    "match_date": "2024-08-27",
+    "unique_user_count": 98,
+    "total_rating_count": 980
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440009",
+    "match_name": "2024/25 DFB 포칼 vs 1860 뮌헨 (원정)",
+    "season": "2024/25",
+    "competition_name": "DFB 포칼",
+    "opponent_name": "1860 뮌헨",
+    "match_date": "2024-08-20",
+    "unique_user_count": 76,
+    "total_rating_count": 760
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440010",
+    "match_name": "2024/25 분데스리가 vs 아우크스부르크 (홈)",
+    "season": "2024/25",
+    "competition_name": "분데스리가",
+    "opponent_name": "아우크스부르크",
+    "match_date": "2024-08-13",
+    "unique_user_count": 54,
+    "total_rating_count": 540
+  }
+]
+

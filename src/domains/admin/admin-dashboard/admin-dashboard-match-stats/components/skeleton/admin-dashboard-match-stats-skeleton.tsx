@@ -7,7 +7,10 @@ import AdminDashboardMatchStatsWrapper from "../wrapper/admin-dashboard-match-st
 const AdminDashboardMatchStatsSkeleton = () => {
   return (
     <AdminDashboardMatchStatsWrapper>
-      <div className="flex h-full w-full animate-pulse flex-col items-center justify-center gap-4 p-4">
+      <div
+        data-testid="admin-dashboard-match-stats-skeleton"
+        className="flex h-full w-full animate-pulse flex-col items-center justify-center gap-4 p-4"
+      >
         <div className="bg-background-secondary h-6 w-2/3 rounded"></div>
         <div className="flex h-3/4 w-full items-end justify-around gap-2">
           {[...Array(10)].map((_, index) => (
