@@ -3,6 +3,14 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.2.2] - 2025-10-25
+
+### ✅ 작업 내용
+
+- [x] **Chore**: 차트 라이브러리 chart.js 설치
+- [x] **Feat**: 관리자페이지 경기별 참여 유저수, 평점 입력갯수 집계 지표 차트 추가
+- [x] **Test**: vitest,storybook 테스트코드 추가
+
 ## [1.2.1] - 2025-10-20
 
 ### ✅ 작업 내용
