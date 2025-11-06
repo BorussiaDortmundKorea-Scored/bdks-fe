@@ -1,4 +1,5 @@
 import { supabase } from "@shared/api/config/supabaseClient";
+import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
 
 export interface IMatchesLastestPlayer {
   player_id: string; // UUID 타입
@@ -19,12 +20,12 @@ export interface IMatchesLastestPlayer {
   is_playing: boolean;
 }
 
-export const getLatestMatchLiveFormation = async () => {
-  const { data, error } = await supabase.rpc("get_latest_match_live_formation");
-  if (error) {
-    throw new Error(`Failed to get latest match live formation: ${error.message}`);
-  }
-  return data as IMatchesLastestPlayer[];
+export const getLatestMatchLiveFormation = async (): Promise<ApiResponse<IMatchesLastestPlayer[]>> => {
+  const { data, error } = (await supabase.rpc("get_latest_match_live_formation")) as {
+    data: IMatchesLastestPlayer[];
+    error: PostgrestError | null;
+  };
+  return { data: data as IMatchesLastestPlayer[], error: error as PostgrestError };
 };
 
 export interface IMatchesLastestInformation {
@@ -40,10 +41,13 @@ export interface IMatchesLastestInformation {
   second_half_end_time: Date;
 }
 
-export const getLatestMatchInformation = async () => {
-  const { data, error } = await supabase.rpc("get_latest_match_information");
+export const getLatestMatchInformation = async (): Promise<ApiResponse<IMatchesLastestInformation>> => {
+  const { data, error } = (await supabase.rpc("get_latest_match_information")) as {
+    data: IMatchesLastestInformation;
+    error: PostgrestError | null;
+  };
   if (error) {
     throw new Error(`Failed to get latest match information: ${error.message}`);
   }
-  return data as IMatchesLastestInformation;
+  return { data: data as IMatchesLastestInformation, error: error as unknown as PostgrestError };
 };

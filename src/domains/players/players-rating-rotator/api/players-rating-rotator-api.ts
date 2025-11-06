@@ -1,4 +1,5 @@
 import { supabase } from "@shared/api/config/supabaseClient";
+import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
 
 // axios가 필요없다. why? supabase rls설정 rpc를 통하여 권한체크 가능함
 
@@ -7,12 +8,12 @@ export interface IRotatePlayerStatAccumulated {
   overall_avg_rating: number | null;
 }
 
-export const getPlayersRatingRotatorAcc = async () => {
+export const getPlayersRatingRotatorAcc = async (): Promise<ApiResponse<IRotatePlayerStatAccumulated[]>> => {
   const { data, error } = await supabase.rpc("get_player_rating_rotator_acc");
 
   if (error) {
     throw new Error(`Failed to fetch player ratings: ${error.message}`);
   }
 
-  return data as IRotatePlayerStatAccumulated[];
+  return { data: data as IRotatePlayerStatAccumulated[], error: error as unknown as PostgrestError };
 };
