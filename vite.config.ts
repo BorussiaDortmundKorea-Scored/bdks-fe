@@ -24,7 +24,7 @@ export default defineConfig({
       priority: 1.0,
       lastmod: new Date(),
       readable: true,
-      generateRobotsTxt: true,
+      generateRobotsTxt: false, // robots.txt는 public 폴더에서 직접 관리
     }),
   ],
   test: {

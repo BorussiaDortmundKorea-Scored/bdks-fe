@@ -18,6 +18,8 @@
 
 ### 수정
 
+- vercel 배포시 [vite-plugin-sitemap] ENOENT: no such file or directory, open '/vercel/path0/dist/robots.txt' 에러가 발생하여 vite.config에 robot.txt generate값 false로 수정 및 robot.txt파일 public폴더에 추가제공
+
 ### 제거
 
 - axios api통신 관련코드들 제거 -> supabase rpc기반으로 통신하므로
