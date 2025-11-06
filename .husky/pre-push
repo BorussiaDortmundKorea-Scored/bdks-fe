@@ -3,11 +3,18 @@
 
 echo "🔍 보돌코스코어드 배포 준비 검증 시작..."
 
-# 1. 전체 검증 실행 (테스트코드, 스토리북, 빌드)
-echo "🚀 전체 검증 실행 중..."
-npx pnpm run test || { echo "❌ 전체 검증 실패!"; exit 1; }
+# 1. 테스트 실행
+echo "🧪 테스트 실행 중..."
+npx pnpm run test || { echo "❌ 테스트 실패!"; exit 1; }
 
-# 2. 빌드 결과물 검증
+# 2. 빌드 실행
+echo "🔨 개발 빌드 실행 중..."
+npx pnpm run build:dev || { echo "❌ 개발 빌드 실패!"; exit 1; }
+
+echo "📚 스토리북 빌드 실행 중..."
+npx pnpm run build-storybook || { echo "❌ 스토리북 빌드 실패!"; exit 1; }
+
+# 3. 빌드 결과물 검증
 echo "🔍 빌드 결과물 검증 중..."
 if [ ! -d "dist" ]; then
   echo "❌ dist 폴더가 존재하지 않습니다!"
@@ -19,7 +26,7 @@ if [ ! -d "storybook-static" ]; then
   exit 1
 fi
 
-# 3. 빌드 크기 체크
+# 4. 빌드 크기 체크
 echo "📏 빌드 크기 체크 중..."
 if [ -d "dist" ]; then
   DIST_SIZE=$(du -sh dist | cut -f1)
