@@ -6,11 +6,16 @@ import {
   updateMatchLineup,
 } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 
+import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
+
 export const useUpdateMatchLineup = (matchId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (lineup: IUpdateMatchLineupRequest) => updateMatchLineup(lineup),
+    mutationFn: async (lineup: IUpdateMatchLineupRequest) => {
+      const response = await updateMatchLineup(lineup);
+      return handleSupabaseApiResponse(response, lineup);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ADMIN_MATCH_LINEUP_QUERY_KEYS.list(matchId),

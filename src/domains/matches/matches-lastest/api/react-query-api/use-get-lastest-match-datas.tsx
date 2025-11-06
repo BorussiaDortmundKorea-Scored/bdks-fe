@@ -3,9 +3,6 @@ import { useEffect } from "react";
 
 import { useQueryClient, useSuspenseQueries } from "@tanstack/react-query";
 
-import { supabase } from "@shared/api/config/supabaseClient";
-import { TIME_UNIT } from "@shared/constants/time-unit";
-
 import {
   type IMatchesLastestInformation,
   type IMatchesLastestPlayer,
@@ -14,6 +11,10 @@ import {
 } from "@matches/matches-lastest/api/matches-lastest-api";
 import { MATCHES_LASTEST_QUERY_KEYS } from "@matches/matches-lastest/api/react-query-api/matches-lastest-query-key";
 
+import { supabase } from "@shared/api/config/supabaseClient";
+import { TIME_UNIT } from "@shared/constants/time-unit";
+import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
+
 export function useGetLatestMatchDatas() {
   const queryClient = useQueryClient();
 
@@ -21,13 +22,19 @@ export function useGetLatestMatchDatas() {
     queries: [
       {
         queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_LIVE_FORMATION],
-        queryFn: () => getLatestMatchLiveFormation(),
+        queryFn: async () => {
+          const response = await getLatestMatchLiveFormation();
+          return handleSupabaseApiResponse(response);
+        },
         staleTime: TIME_UNIT.ONE_SECOND * 30, // 실시간 평점이므로 짧게
         gcTime: TIME_UNIT.ONE_SECOND * 30,
       },
       {
         queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_INFORMATION],
-        queryFn: () => getLatestMatchInformation(),
+        queryFn: async () => {
+          const response = await getLatestMatchInformation();
+          return handleSupabaseApiResponse(response);
+        },
         staleTime: TIME_UNIT.ONE_MINUTE * 5, // 정적 데이터이므로 길게
         gcTime: TIME_UNIT.ONE_MINUTE * 5,
       },

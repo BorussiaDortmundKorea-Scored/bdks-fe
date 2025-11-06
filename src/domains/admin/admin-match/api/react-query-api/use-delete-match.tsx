@@ -3,18 +3,20 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { deleteMatch } from "@admin/admin-match/api/admin-match-api";
 
+import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
+
 export const useDeleteMatch = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => deleteMatch(id),
+    mutationFn: async (id: string) => {
+      const response = await deleteMatch(id);
+      return handleSupabaseApiResponse(response, id);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ADMIN_MATCH_QUERY_KEYS.lists(),
       });
-    },
-    onError: (error) => {
-      console.error("경기 삭제 실패:", error);
     },
   });
 };

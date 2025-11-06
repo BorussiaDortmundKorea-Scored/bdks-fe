@@ -4,6 +4,7 @@
  * 프로세스 설명: Supabase RPC 함수로 경기별 유저 수와 평점 총 개수를 집계
  */
 import { supabase } from "@shared/api/config/supabaseClient";
+import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
 
 export interface IMatchStatsData {
   match_id: string;
@@ -22,10 +23,13 @@ export interface IMatchStatsData {
  * - 각 경기별로 입력된 전체 평점 개수
  * - matches, competitions, teams, ratings 테이블 JOIN
  */
-export const getMatchStatsData = async (): Promise<IMatchStatsData[]> => {
+export const getMatchStatsData = async (): Promise<ApiResponse<IMatchStatsData[]>> => {
   const { data, error } = await supabase.rpc("get_match_rating_stats", { limit_count: 10 });
 
   if (error) throw error;
 
-  return data || [];
+  return {
+    data: data as IMatchStatsData[],
+    error: error as unknown as PostgrestError,
+  };
 };

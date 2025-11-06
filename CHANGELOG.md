@@ -3,6 +3,28 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.2.3] - 2025-11-06
+
+**Branch**: `bdks-v1.2.3-Sentry-고도화`
+
+### 추가
+
+- supabase rpc 에러 응답시 400번대 에러 Sentry에 안잡혀서 인위적으로 capture후 전송하는 util함수`handleSupabaseApiResponse`제작
+
+### 변경
+
+- 세션리플레이 기능 마스킹처리 해제
+- api호출 부분 일괄적으로 `handleSupabaseApiResponse` 함수 등록
+
+### 수정
+
+### 제거
+
+- axios api통신 관련코드들 제거 -> supabase rpc기반으로 통신하므로
+- animal(테스트도메인) 관련 코드들 제거
+
+---
+
 ## [1.2.2] - 2025-10-25
 
 ### ✅ 작업 내용

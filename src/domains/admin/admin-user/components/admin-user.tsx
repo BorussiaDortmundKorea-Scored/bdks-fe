@@ -38,10 +38,10 @@ const AdminUser = () => {
     try {
       const result = await deleteUser(user.id);
 
-      if (result.data.success) {
-        alert(result.data.message || "사용자 탈퇴가 완료되었습니다.");
+      if (result.success) {
+        alert(result.message || "사용자 탈퇴가 완료되었습니다.");
       } else {
-        alert(result.data.error || "사용자 탈퇴 중 오류가 발생했습니다.");
+        alert(result.error || "사용자 탈퇴 중 오류가 발생했습니다.");
       }
     } catch (error) {
       console.error("사용자 탈퇴 오류:", error);
