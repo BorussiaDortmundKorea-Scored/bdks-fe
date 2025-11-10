@@ -1,6 +1,8 @@
 // src/shared/components/KakaoLoginButton.tsx
 import React from "react";
+
 import useKakaoLogin from "@auth/hooks/useKakaoLogin";
+
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 
 const KAKAO_LOGIN_BUTTON_IMAGE = `${SUPABASE_STORAGE_URL}/asset//kakao_login_logo.png`;
@@ -21,7 +23,7 @@ const KakaoLoginButton: React.FC = () => {
     <button
       onClick={handleKakaoLogin}
       disabled={isLoading}
-      className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#FEE500] text-[20px] font-bold"
+      className="yds-button-typography gap-2 bg-[#FEE500]"
       aria-label="카카오로 로그인"
     >
       {isLoading ? (
