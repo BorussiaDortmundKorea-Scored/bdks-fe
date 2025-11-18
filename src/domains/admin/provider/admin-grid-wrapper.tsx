@@ -43,7 +43,7 @@ const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
       <div className="grid w-full [grid-template-columns:200px_minmax(0,1fr)] gap-4">
         <nav className="bg-background-secondary card-navy-50 relative flex min-h-[876px] flex-col gap-4 rounded-lg p-4">
           <h1
-            className="text-yds-s1 font-shilla-culture text-primary-100 text-center"
+            className="font-shilla-culture text-primary-100 text-center text-[24px] font-semibold"
             onClick={() => navigate(ROUTES.ADMIN_DASHBOARD)}
           >
             보돌코 <br /> 스코어드
