@@ -23,7 +23,7 @@ const KakaoLoginButton: React.FC = () => {
     <button
       onClick={handleKakaoLogin}
       disabled={isLoading}
-      className="yds-button-typography gap-2 bg-[#FEE500]"
+      className="yds-button gap-2 bg-[#FEE500]"
       aria-label="카카오로 로그인"
     >
       {isLoading ? (
