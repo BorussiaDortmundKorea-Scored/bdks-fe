@@ -12,12 +12,12 @@ const AdmiDashboardHome = () => {
   };
   return (
     <div
-      className="text-primary-100 font-shilla-culture bg-background-tertiary text-yds-b1 card-navy-50 col-start-7 col-end-8 row-start-2 row-end-4 flex h-full w-full cursor-pointer items-center justify-center text-center"
+      className="text-primary-100 font-shilla-culture bg-background-tertiary card-navy-50 col-start-7 col-end-9 row-start-2 row-end-4 flex h-full w-full cursor-pointer items-center justify-center text-center"
       onClick={handleNavigateToDashboard}
     >
-      <div className="mx-auto h-4/5 w-4/5">
-        <img src={BDKS_LOGO} alt="BDKS Logo" className="w-full" />
-        <span className="text-primary-100 text-yds-s1">바로가기</span>
+      <div className="mx-auto flex h-4/5 w-4/5 flex-col items-center justify-center">
+        <img src={BDKS_LOGO} alt="BDKS Logo" className="h-4/5 w-4/5" />
+        <span className="text-primary-100 text-[24px] font-semibold">홈으로 이동</span>
       </div>
     </div>
   );

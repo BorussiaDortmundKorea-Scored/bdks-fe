@@ -27,8 +27,8 @@ importers:
         specifier: ^5.81.5
         version: 5.84.1(@tanstack/react-query@5.84.1(react@19.1.1))(react@19.1.1)
       '@youngduck/yd-ui':
-        specifier: ^0.4.5
-        version: 0.4.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+        specifier: ^0.5.1
+        version: 0.5.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       axios:
         specifier: ^1.10.0
         version: 1.11.0
@@ -1491,8 +1491,8 @@ packages:
   '@vitest/utils@3.2.4':
     resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
 
-  '@youngduck/yd-ui@0.4.5':
-    resolution: {integrity: sha512-wxpVftE4scC71f34sjEHBOf71+FdHYKbjN7ulXbHOb+8sA2z4Z/w2GvuvOfIymOIuWHAH5vOjHUqvvEsS5/pRg==}
+  '@youngduck/yd-ui@0.5.1':
+    resolution: {integrity: sha512-vvQSydaRHKen2dF+FYeIshCL1BMxnVCvGy7ce4/bbQPJ+hiYZX7hjIHtHfpvuJQlp9u3d6rQF53NYIDePFdzug==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -4604,14 +4604,14 @@ snapshots:
       loupe: 3.2.0
       tinyrainbow: 2.0.0
 
-  '@youngduck/yd-ui@0.4.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
+  '@youngduck/yd-ui@0.5.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
     dependencies:
       '@tailwindcss/postcss': 4.1.16
       lucide-react: 0.542.0(react@19.1.1)
       postcss: 8.5.6
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
-      tailwindcss: 4.1.11
+      tailwindcss: 4.1.16
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:

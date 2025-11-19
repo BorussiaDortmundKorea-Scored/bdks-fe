@@ -3,6 +3,27 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.2.4] - 2025-11-18
+
+**Branch**: `bdks-v1.2.4-YD-UI-토큰재설계변경사항적용`
+
+### 추가
+
+### 변경
+
+- 버튼 컴포넌트 디자인 토큰 값 수정
+
+### 수정
+
+- 어드민 페이지 text-yds-xx와 font신라체 스타일 충돌 이슈 해결
+
+### 제거
+
+- axios api통신 관련코드들 제거 -> supabase rpc기반으로 통신하므로
+- animal(테스트도메인) 관련 코드들 제거
+
+---
+
 ## [1.2.3] - 2025-11-06
 
 **Branch**: `bdks-v1.2.3-Sentry-고도화`
