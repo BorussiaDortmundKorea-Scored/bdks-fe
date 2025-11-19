@@ -3,6 +3,24 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.3.1] - 2025-11-19
+
+**Branch**: `bdks-v1.3.1-크로마틱연결`
+
+### 추가
+
+- 크로마틱 라이브러리 설치 및 연동작업
+
+### 변경
+
+- vercel 배포 파이프라인에 node_modules, pnpm-lock.yaml 삭제후 재설치 과정 추가
+
+### 수정
+
+### 제거
+
+---
+
 ## [1.2.4] - 2025-11-18
 
 **Branch**: `bdks-v1.2.4-YD-UI-토큰재설계변경사항적용`
