@@ -3,6 +3,24 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.3.2] - 2025-12-11
+
+**Branch**: `bdks-v1.3.2-수파베이스MCP연결`
+
+### 추가
+
+- feat: supabase mcp연결
+
+### 변경
+
+### 수정
+
+### 제거
+
+- refactor: db스키마를 수기로 적어놓은 cursor rule 제거 (mcp를 활용하면됨)
+
+---
+
 ## [1.3.1] - 2025-11-19
 
 **Branch**: `bdks-v1.3.1-크로마틱연결`
