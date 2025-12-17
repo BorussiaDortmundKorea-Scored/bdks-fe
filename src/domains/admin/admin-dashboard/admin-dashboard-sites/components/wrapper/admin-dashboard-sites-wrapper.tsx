@@ -23,7 +23,7 @@ const AdminDashboardSitesWrapper: React.FC<IAdminDashboardSitesWrapper> = ({ chi
 
   return (
     <div
-      className={`bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 col-start-4 col-end-7 row-start-3 row-end-5 flex h-full w-full flex-col justify-between`}
+      className={`bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 md:col-start-4 md:col-end-7 md:row-start-3 md:row-end-5 flex h-full w-full flex-col justify-between`}
     >
       {children}
     </div>
