@@ -40,16 +40,16 @@ const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
 
   return (
     <main className="bdks-admin-container">
-      <div className="grid w-full [grid-template-columns:200px_minmax(0,1fr)] gap-4">
-        <nav className="bg-background-secondary card-navy-50 relative flex min-h-[876px] flex-col gap-4 rounded-lg p-4">
+      <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-[200px_minmax(0,1fr)]">
+        <nav className="bg-background-secondary card-navy-50 relative flex h-auto w-full flex-col gap-4 rounded-lg p-4 md:h-full md:min-h-[876px] md:w-full">
           <h1
             className="font-shilla-culture text-primary-100 text-center text-[24px] font-semibold"
             onClick={() => navigate(ROUTES.ADMIN_DASHBOARD)}
           >
             보돌코 <br /> 스코어드
           </h1>
-          <div className="text-yds-s2 text-white">MENU</div>
-          <ul className="flex w-full flex-col gap-4">
+          <div className="text-yds-s2 hidden text-white md:block">MENU</div>
+          <ul className="hidden w-full flex-col gap-4 md:flex">
             {adminMenus.map((menu) => (
               <li
                 key={menu.id}
@@ -61,9 +61,20 @@ const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
               </li>
             ))}
           </ul>
+          <ul className="flex w-full gap-4 md:hidden!">
+            {adminMenus.map((menu) => (
+              <li
+                key={menu.id}
+                onClick={() => handleMenuClick(menu.path)}
+                className="flex w-full cursor-pointer items-center gap-2"
+              >
+                <menu.icon size={24} className="text-primary-100" />
+              </li>
+            ))}
+          </ul>
         </nav>
         <div className="bg-background-secondary card-navy-50 rounded-lg p-4 text-white">
-          <div className="grid h-full w-full grid-cols-8 grid-rows-8 gap-4">{children}</div>
+          <div className="grid h-full w-full grid-cols-1 gap-4 md:grid-cols-8 md:grid-rows-8">{children}</div>
         </div>
       </div>
     </main>

@@ -19,7 +19,7 @@ import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 const AdminDashboardPage = () => {
   return (
     <AdminGridWrapper>
-      <div className="card-navy-50 col-start-1 col-end-9 row-start-1 row-end-2 h-full w-full">1</div>
+      <div className="card-navy-50 h-full w-full md:col-start-1 md:col-end-9 md:row-start-1 md:row-end-2">1</div>
       <ReactQueryBoundary skeleton={<AdminDashboardUserCountSkeleton />} errorFallback={AdminDashboardUserCountError}>
         <AdminDashboardUserCount />
       </ReactQueryBoundary>

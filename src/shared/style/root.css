@@ -51,7 +51,7 @@ body {
     @apply relative mx-auto flex h-dvh w-[clamp(320px,100vw,450px)] flex-col items-center justify-start px-4;
   }
   .bdks-admin-container {
-    @apply relative mx-auto flex h-dvh w-[1200px] items-start justify-start gap-4 p-4;
+    @apply relative mx-auto flex h-auto w-full items-start justify-start gap-4 p-4 md:h-dvh md:w-[1200px];
   }
 
   /* Layout Classes */

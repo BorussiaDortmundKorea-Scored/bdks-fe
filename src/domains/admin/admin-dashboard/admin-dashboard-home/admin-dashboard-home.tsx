@@ -12,7 +12,7 @@ const AdmiDashboardHome = () => {
   };
   return (
     <div
-      className="text-primary-100 font-shilla-culture bg-background-tertiary card-navy-50 col-start-7 col-end-9 row-start-2 row-end-4 flex h-full w-full cursor-pointer items-center justify-center text-center"
+      className="text-primary-100 font-shilla-culture bg-background-tertiary card-navy-50 flex h-[200px] w-[200px] cursor-pointer items-center justify-center text-center md:col-start-7 md:col-end-9 md:row-start-2 md:row-end-4 md:h-full md:w-full"
       onClick={handleNavigateToDashboard}
     >
       <div className="mx-auto flex h-4/5 w-4/5 flex-col items-center justify-center">

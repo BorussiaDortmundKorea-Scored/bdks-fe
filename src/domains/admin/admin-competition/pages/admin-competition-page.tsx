@@ -14,7 +14,7 @@ const AdminCompetitionPage = () => {
   return (
     <AdminGridWrapper>
       {/* 리그 목록 표 - 가로 전체, 세로 한 칸 빼고 */}
-      <div className="card-navy-50 col-start-1 col-end-9 row-start-1 row-end-8 h-full w-full">
+      <div className="col-start-1 col-end-9 row-start-1 row-end-9 h-full w-full">
         <ReactQueryBoundary skeleton={<AdminCompetitionSkeleton />} errorFallback={AdminCompetitionErrorFallback}>
           <AdminCompetition />
         </ReactQueryBoundary>

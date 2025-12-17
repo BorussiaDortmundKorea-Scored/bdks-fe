@@ -12,7 +12,7 @@ import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 const AdminUserPage = () => {
   return (
     <AdminGridWrapper>
-      <div className="col-start-1 col-end-9 row-start-1 row-end-8">
+      <div className="col-start-1 col-end-9 row-start-1 row-end-9 h-full w-full">
         <ReactQueryBoundary skeleton={<AdminUserSkeleton />} errorFallback={AdminUserErrorFallback}>
           <AdminUser />
         </ReactQueryBoundary>
