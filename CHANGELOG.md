@@ -3,6 +3,22 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.4.3] - 2025-12-18
+
+**Branch**: `bdks-v1.4.2-관리자페이지선수교체한방RPC제작`
+
+### 추가
+
+- feat: 경기중 선수교체발생시 API두번 일일히 호출해주던것 한방에호출하는방식으로 개선
+
+### 변경
+
+### 수정
+
+### 제거
+
+---
+
 ## [1.4.2] - 2025-12-18
 
 **Branch**: `bdks-v1.4.2-관리자페이지이동권한및이동방식추가`
