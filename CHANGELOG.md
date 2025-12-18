@@ -3,6 +3,22 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.4.1] - 2025-12-11
+
+**Branch**: `bdks-v1.1.1-관리자페이지반응형제작`
+
+### 추가
+
+### 변경
+
+### 수정
+
+- refactor: 관리자페이지 반응형 처리
+
+### 제거
+
+---
+
 ## [1.3.2] - 2025-12-11
 
 **Branch**: `bdks-v1.3.2-수파베이스MCP연결`
