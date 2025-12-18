@@ -9,7 +9,7 @@ import PlayerDbErrorFallback from "@players/players-db/components/error/players-
 import PlayerDb from "@players/players-db/components/players-db";
 import PlayerDbSkeleton from "@players/players-db/components/skeleton/players-db-skeleton";
 
-import LogoutButton from "@shared/components/layout/header/buttons/logout-button";
+import { MenuButton } from "@shared/components/layout/header/buttons";
 import Header from "@shared/components/layout/header/header";
 import CustomHelmet from "@shared/components/seo/custom-helmet";
 import { usePageTransition } from "@shared/hooks/use-page-transition";
@@ -18,7 +18,7 @@ import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 const options = {
-  leftIcon: <LogoutButton />,
+  leftIcon: <MenuButton />,
 };
 //!SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 

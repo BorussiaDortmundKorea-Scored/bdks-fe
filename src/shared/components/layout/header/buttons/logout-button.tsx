@@ -15,14 +15,7 @@ const LogoutButton: React.FC = () => {
     }
   };
 
-  return (
-    <LogOut
-      size={24}
-      className="text-primary-100 absolute left-1 cursor-pointer"
-      onClick={handleLogout}
-      aria-label="로그아웃"
-    />
-  );
+  return <LogOut size={24} className="text-primary-100 cursor-pointer" onClick={handleLogout} aria-label="로그아웃" />;
 };
 
 export default LogoutButton;

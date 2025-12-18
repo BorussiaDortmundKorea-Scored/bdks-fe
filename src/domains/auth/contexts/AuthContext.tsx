@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 
 import type { Session, User } from "@supabase/supabase-js";
 
+import type { IProfile } from "@auth/auth-profile/api/auth-profile-api";
+
 import { supabase } from "@shared/api/config/supabaseClient";
 import { queryClient } from "@shared/provider/query-client";
 
@@ -16,6 +18,7 @@ interface DeleteAccountResult {
 interface AuthContextType {
   user: User | null;
   session: Session | null;
+  profile: IProfile | null;
   signOut: () => Promise<void>;
   deleteAccount: () => Promise<DeleteAccountResult>;
 }
@@ -29,6 +32,7 @@ interface AuthProviderProps {
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [profile, setProfile] = useState<IProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleAuthStateChange = (event: string, currentSession: Session | null) => {
@@ -37,11 +41,14 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     if (event === "SIGNED_IN" && currentSession) {
       setUser(currentSession.user);
       setSession(currentSession);
+      // 프로필 정보 로드
+      void loadProfile(currentSession.user.id);
       // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 저장 불필요
       console.log("로그인 성공! Session:", currentSession);
     } else if (event === "SIGNED_OUT") {
       setUser(null);
       setSession(null);
+      setProfile(null);
       // React Query 캐시 정리
       queryClient.clear();
       console.log("로그아웃 완료 - 쿼리 캐시 정리됨");
@@ -63,6 +70,23 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (err) {
       console.error("로그아웃 예외:", err);
       throw err;
+    }
+  };
+
+  const loadProfile = async (userId: string) => {
+    try {
+      const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).maybeSingle();
+
+      if (error) {
+        console.error("프로필 조회 오류:", error);
+        setProfile(null);
+        return;
+      }
+
+      setProfile((data as IProfile) ?? null);
+    } catch (err) {
+      console.error("프로필 조회 예외:", err);
+      setProfile(null);
     }
   };
 
@@ -165,6 +189,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
           setUser(session.user);
           setSession(session);
           // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 저장 불필요
+          await loadProfile(session.user.id);
         }
       } catch (err) {
         console.error("초기 세션 확인 예외:", err);
@@ -198,6 +223,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const value = {
     user,
     session,
+    profile,
     signOut,
     deleteAccount,
   };

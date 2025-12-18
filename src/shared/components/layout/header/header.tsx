@@ -27,8 +27,8 @@ const Header: React.FC<IHeader> = ({ options }) => {
   //!SECTION 메서드 영역
 
   return (
-    <header className="w-full flex layout-header-height items-center relative">
-      {options.leftIcon}
+    <header className="layout-header-height relative flex w-full items-center justify-between">
+      <div className="absolute left-1">{options.leftIcon}</div>
       <h1 className="text-primary-100 font-shilla-culture absolute left-1/2 -translate-x-1/2 text-2xl font-bold">
         보돌코 스코어드
       </h1>
