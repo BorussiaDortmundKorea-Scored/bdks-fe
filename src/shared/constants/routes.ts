@@ -30,6 +30,9 @@ export const ROUTES = {
   ADMIN_MATCH_LINEUP: "/admin/match/:matchId/lineup",
   ADMIN_TEAM: "/admin/team",
   ADMIN_COMPETITION: "/admin/competition",
+
+  // 카페
+  NAVER_CAFE: "https://cafe.naver.com/greendkxc9",
 } as const;
 
 // 동적 라우트 생성 함수들
