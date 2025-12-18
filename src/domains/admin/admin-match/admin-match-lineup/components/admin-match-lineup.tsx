@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
-import { Edit, FolderPlus, Star, Trash2 } from "lucide-react";
+import { ArrowLeftRight, Edit, FolderPlus, Star, Trash2 } from "lucide-react";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 import { useCreateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-create-match-lineup";
@@ -15,6 +15,7 @@ import { useDeleteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
 import { useGetAllPositionsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-positions-suspense";
 import { useGetMatchLineupsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense";
+import { useSubstituteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-substitute-match-lineup";
 import { useUpdateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-update-match-lineup";
 
 const AdminMatchLineup = () => {
@@ -31,11 +32,14 @@ const AdminMatchLineup = () => {
   const { mutateAsync: createLineup, isPending: isCreating } = useCreateMatchLineup(matchId);
   const { mutateAsync: updateLineup, isPending: isUpdating } = useUpdateMatchLineup(matchId);
   const { mutateAsync: deleteLineup } = useDeleteMatchLineup(matchId);
+  const { mutateAsync: substituteLineup, isPending: isSubstituting } = useSubstituteMatchLineup(matchId);
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingLineup, setEditingLineup] = useState<IMatchLineup | null>(null);
+  const [substitutionTarget, setSubstitutionTarget] = useState<IMatchLineup | null>(null);
+  const [substitutionMinuteInput, setSubstitutionMinuteInput] = useState<number | "">("");
   const [formData, setFormData] = useState({
     player_id: "",
     position_id: "",
@@ -128,6 +132,11 @@ const AdminMatchLineup = () => {
         ? getPlayerValueById(editingLineup.substitution_partner_id)
         : undefined,
   });
+
+  const substitutionBenchPlayerHook = useSelectBox({
+    options: playerOptions,
+    search: true,
+  });
   //!SECTION SelectBox 옵션/훅
 
   //SECTION 메서드 영역
@@ -174,6 +183,35 @@ const AdminMatchLineup = () => {
     });
     setEditingLineup(null);
     resetFormData();
+  };
+
+  const handleOpenSubstitutionModal = (lineup: IMatchLineup) => {
+    if (lineup.lineup_type !== "STARTING") return;
+    setSubstitutionTarget(lineup);
+    setSubstitutionMinuteInput("");
+  };
+
+  const handleConfirmSubstitution = async () => {
+    if (!substitutionTarget) return;
+    if (!substitutionMinuteInput || substitutionMinuteInput < 1 || substitutionMinuteInput > 120) {
+      alert("교체 시간은 1분 이상 120분 이하로 입력해주세요.");
+      return;
+    }
+
+    const partnerPlayerId = substitutionBenchPlayerHook.label as string | undefined;
+    if (!partnerPlayerId) {
+      alert("교체로 들어올 선수를 선택해주세요.");
+      return;
+    }
+
+    await substituteLineup({
+      lineup_id: substitutionTarget.id,
+      substitution_minute: substitutionMinuteInput,
+      partner_player_id: partnerPlayerId,
+    });
+
+    setSubstitutionTarget(null);
+    setSubstitutionMinuteInput("");
   };
 
   const handleDeleteLineup = async (id: number) => {
@@ -298,6 +336,15 @@ const AdminMatchLineup = () => {
                 </td>
                 <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                   <div className="flex items-center gap-3">
+                    {lineup.lineup_type === "STARTING" && (
+                      <button
+                        onClick={() => handleOpenSubstitutionModal(lineup)}
+                        className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
+                        aria-label="교체"
+                      >
+                        <ArrowLeftRight size={16} />
+                      </button>
+                    )}
                     <button
                       onClick={() => openEditModal(lineup)}
                       className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
@@ -602,6 +649,59 @@ const AdminMatchLineup = () => {
               </Button>
               <Button variant="fill" color="primary" size="full" onClick={handleUpdateLineup} disabled={isUpdating}>
                 {isUpdating ? "수정 중..." : "수정"}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 교체 모달 */}
+      {substitutionTarget && (
+        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
+          <div className="bg-background-secondary flex w-96 flex-col gap-4 rounded-lg p-6">
+            <h2 className="text-yds-b1 text-primary-100">선수 교체</h2>
+            <p className="text-primary-200 text-sm">
+              {substitutionTarget.player_korean_name || substitutionTarget.player_name} 선수를 교체합니다.
+            </p>
+            <div>
+              <label className="text-yds-b1 text-primary-100">교체로 들어올 선수 *</label>
+              <SelectBox size="full" selectBoxHook={substitutionBenchPlayerHook} />
+            </div>
+            <div>
+              <label className="text-yds-b1 text-primary-100">교체 시간 (분)</label>
+              <Input
+                type="number"
+                min={1}
+                max={120}
+                value={substitutionMinuteInput}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSubstitutionMinuteInput(e.target.value === "" ? "" : parseInt(e.target.value) || "")
+                }
+                size="full"
+                color="primary-100"
+                placeholder="예: 67"
+              />
+            </div>
+            <div className="mt-6 flex gap-2">
+              <Button
+                variant="outlined"
+                color="primary"
+                size="full"
+                onClick={() => {
+                  setSubstitutionTarget(null);
+                  setSubstitutionMinuteInput("");
+                }}
+              >
+                취소
+              </Button>
+              <Button
+                variant="fill"
+                color="primary"
+                size="full"
+                onClick={handleConfirmSubstitution}
+                disabled={isSubstituting}
+              >
+                {isSubstituting ? "교체 적용 중..." : "교체 적용"}
               </Button>
             </div>
           </div>

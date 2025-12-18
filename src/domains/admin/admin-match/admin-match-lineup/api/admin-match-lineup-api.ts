@@ -79,6 +79,12 @@ export interface IPosition {
   line_number: number;
 }
 
+export interface ISubstituteMatchLineupRequest {
+  lineup_id: number;
+  substitution_minute: number;
+  partner_player_id: string;
+}
+
 // 특정 경기의 라인업 조회
 export const getMatchLineups = async (matchId: string): Promise<ApiResponse<IMatchLineup[]>> => {
   const { data, error } = (await supabase.rpc("get_match_lineups", {
@@ -112,6 +118,17 @@ export const createMatchLineup = async (lineup: ICreateMatchLineupRequest): Prom
     data: data as IMatchLineup,
     error: error as PostgrestError,
   };
+};
+
+// 라인업 교체 적용 (선발 ↔ 교체 선수 상태/시간/포지션 반영)
+export const substituteMatchLineup = async (payload: ISubstituteMatchLineupRequest): Promise<ApiResponse<boolean>> => {
+  const { data, error } = (await supabase.rpc("substitute_match_lineup", {
+    p_lineup_id: payload.lineup_id,
+    p_substitution_minute: payload.substitution_minute,
+    p_partner_player_id: payload.partner_player_id,
+  })) as { data: boolean; error: PostgrestError | null };
+
+  return { data: data as boolean, error: error as PostgrestError };
 };
 
 // 라인업 수정
