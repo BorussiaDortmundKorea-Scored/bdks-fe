@@ -5,6 +5,8 @@
  */
 import { ArrowLeft, FolderPlus } from "lucide-react";
 
+import { Table, THead, TBody, Th, Td, Tr } from "@youngduck/yd-ui/Table";
+
 const AdminMatchSkeleton = () => {
   return (
     <div className="flex h-full w-full flex-col">
@@ -25,52 +27,50 @@ const AdminMatchSkeleton = () => {
       </header>
 
       {/* 스크롤 가능한 컨텐츠 영역 - 헤더 높이를 제외한 나머지 영역 */}
-      <div className="scrollbar-hide flex w-full flex-1 flex-col gap-4 overflow-y-auto">
-        <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-background-secondary border-b">
-            <tr>
-              <th className="text-md px-6 py-3 text-left font-bold tracking-wider uppercase">경기일</th>
-              <th className="text-md px-6 py-3 text-left font-bold tracking-wider uppercase">대회</th>
-              <th className="text-md px-6 py-3 text-left font-bold tracking-wider uppercase">상대팀</th>
-              <th className="text-md px-6 py-3 text-left font-bold tracking-wider uppercase">홈/어웨이</th>
-              <th className="text-md px-6 py-3 text-left font-bold tracking-wider uppercase">스코어</th>
-              <th className="text-md px-6 py-3 text-left font-bold tracking-wider uppercase">라운드</th>
-              <th className="text-md px-6 py-3 text-left font-bold tracking-wider uppercase">작업</th>
-            </tr>
-          </thead>
-          <tbody className="bg-background-primary divide-background-secondary divide-y">
-            {Array.from({ length: 5 }).map((_, index) => (
-              <tr key={index} className="hover:bg-background-secondary">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="h-4 animate-pulse rounded bg-gray-200"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="h-4 animate-pulse rounded bg-gray-200"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="h-4 animate-pulse rounded bg-gray-200"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="h-4 w-16 animate-pulse rounded bg-gray-200"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="h-4 w-12 animate-pulse rounded bg-gray-200"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="h-4 w-20 animate-pulse rounded bg-gray-200"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex gap-2">
-                    <div className="h-4 w-4 animate-pulse rounded bg-gray-200"></div>
-                    <div className="h-4 w-4 animate-pulse rounded bg-gray-200"></div>
-                    <div className="h-4 w-4 animate-pulse rounded bg-gray-200"></div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>경기일</Th>
+            <Th>대회</Th>
+            <Th>상대팀</Th>
+            <Th>홈/어웨이</Th>
+            <Th>스코어</Th>
+            <Th>라운드</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Tr key={index}>
+              <Td>
+                <div className="h-4 animate-pulse rounded bg-gray-200"></div>
+              </Td>
+              <Td>
+                <div className="h-4 animate-pulse rounded bg-gray-200"></div>
+              </Td>
+              <Td>
+                <div className="h-4 animate-pulse rounded bg-gray-200"></div>
+              </Td>
+              <Td>
+                <div className="h-4 w-16 animate-pulse rounded bg-gray-200"></div>
+              </Td>
+              <Td>
+                <div className="h-4 w-12 animate-pulse rounded bg-gray-200"></div>
+              </Td>
+              <Td>
+                <div className="h-4 w-20 animate-pulse rounded bg-gray-200"></div>
+              </Td>
+              <Td>
+                <div className="flex gap-2">
+                  <div className="h-4 w-4 animate-pulse rounded bg-gray-200"></div>
+                  <div className="h-4 w-4 animate-pulse rounded bg-gray-200"></div>
+                  <div className="h-4 w-4 animate-pulse rounded bg-gray-200"></div>
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
     </div>
   );
 };

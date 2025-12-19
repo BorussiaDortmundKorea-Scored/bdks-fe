@@ -1,3 +1,5 @@
+import { Table, THead, TBody, Th, Td, Tr } from "@youngduck/yd-ui/Table";
+
 const AdminTeamSkeleton = () => {
   return (
     <div className="w-full h-full flex flex-col">
@@ -9,35 +11,33 @@ const AdminTeamSkeleton = () => {
       </div>
 
       {/* 테이블 스켈레톤 */}
-      <div className="w-full flex-1 flex flex-col gap-4 overflow-y-auto">
-        <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-b border-background-secondary">
-            <tr>
-              <th className="px-6 py-3 text-left text-md font-bold uppercase tracking-wider">팀명</th>
-              <th className="px-6 py-3 text-left text-md font-bold uppercase tracking-wider">국가</th>
-              <th className="px-6 py-3 text-left text-md font-bold uppercase tracking-wider">작업</th>
-            </tr>
-          </thead>
-          <tbody className="bg-background-primary divide-y divide-background-secondary">
-            {Array.from({ length: 5 }).map((_, index) => (
-              <tr key={index} className="hover:bg-background-secondary">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="w-32 h-4 bg-gray-300 rounded animate-pulse"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="w-20 h-4 bg-gray-300 rounded animate-pulse"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex gap-2">
-                    <div className="w-4 h-4 bg-gray-300 rounded animate-pulse"></div>
-                    <div className="w-4 h-4 bg-gray-300 rounded animate-pulse"></div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>팀명</Th>
+            <Th>국가</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Tr key={index}>
+              <Td>
+                <div className="w-32 h-4 bg-gray-300 rounded animate-pulse"></div>
+              </Td>
+              <Td>
+                <div className="w-20 h-4 bg-gray-300 rounded animate-pulse"></div>
+              </Td>
+              <Td>
+                <div className="flex gap-2">
+                  <div className="w-4 h-4 bg-gray-300 rounded animate-pulse"></div>
+                  <div className="w-4 h-4 bg-gray-300 rounded animate-pulse"></div>
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
     </div>
   );
 };

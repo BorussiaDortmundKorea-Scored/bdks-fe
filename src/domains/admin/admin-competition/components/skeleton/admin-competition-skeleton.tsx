@@ -1,43 +1,43 @@
+import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
+
 const AdminCompetitionSkeleton = () => {
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="flex h-full w-full flex-col">
       {/* 헤더 스켈레톤 */}
-      <div className="w-full flex layout-header-height items-center relative shrink-0 bg-background-primary">
-        <div className="w-6 h-6 bg-gray-300 rounded animate-pulse"></div>
-        <div className="absolute left-1/2 -translate-x-1/2 w-32 h-8 bg-gray-300 rounded animate-pulse"></div>
-        <div className="absolute right-4 w-24 h-10 bg-gray-300 rounded animate-pulse"></div>
+      <div className="layout-header-height bg-background-primary relative flex w-full shrink-0 items-center">
+        <div className="h-6 w-6 animate-pulse rounded bg-gray-300"></div>
+        <div className="absolute left-1/2 h-8 w-32 -translate-x-1/2 animate-pulse rounded bg-gray-300"></div>
+        <div className="absolute right-4 h-10 w-24 animate-pulse rounded bg-gray-300"></div>
       </div>
 
       {/* 테이블 스켈레톤 */}
-      <div className="w-full flex-1 flex flex-col gap-4 overflow-y-auto">
-        <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-b border-background-secondary">
-            <tr>
-              <th className="px-6 py-3 text-left text-md font-bold uppercase tracking-wider">대회명</th>
-              <th className="px-6 py-3 text-left text-md font-bold uppercase tracking-wider">시즌</th>
-              <th className="px-6 py-3 text-left text-md font-bold uppercase tracking-wider">작업</th>
-            </tr>
-          </thead>
-          <tbody className="bg-background-primary divide-y divide-background-secondary">
-            {Array.from({ length: 5 }).map((_, index) => (
-              <tr key={index} className="hover:bg-background-secondary">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="w-32 h-4 bg-gray-300 rounded animate-pulse"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="w-20 h-4 bg-gray-300 rounded animate-pulse"></div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex gap-2">
-                    <div className="w-4 h-4 bg-gray-300 rounded animate-pulse"></div>
-                    <div className="w-4 h-4 bg-gray-300 rounded animate-pulse"></div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>대회명</Th>
+            <Th>시즌</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Tr key={index}>
+              <Td>
+                <div className="h-4 w-32 animate-pulse rounded bg-gray-300"></div>
+              </Td>
+              <Td>
+                <div className="h-4 w-20 animate-pulse rounded bg-gray-300"></div>
+              </Td>
+              <Td>
+                <div className="flex gap-2">
+                  <div className="h-4 w-4 animate-pulse rounded bg-gray-300"></div>
+                  <div className="h-4 w-4 animate-pulse rounded bg-gray-300"></div>
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
     </div>
   );
 };

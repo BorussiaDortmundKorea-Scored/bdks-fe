@@ -6,6 +6,7 @@
 import { useState } from "react";
 
 import { Button, Input } from "@youngduck/yd-ui";
+import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { IPlayer } from "@admin/admin-player/api/admin-player-api";
@@ -117,47 +118,45 @@ const AdminPlayer = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <div className="scrollbar-hide border-primary-100 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
-        <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-primary-100 text-yds-b1 border-b-2">
-            <tr className="h-12">
-              <th className="px-6 text-left uppercase">이름</th>
-              <th className="px-6 text-left uppercase">한국어 이름</th>
-              <th className="px-6 text-left uppercase">등번호</th>
-              <th className="px-6 text-left uppercase">국적</th>
-              <th className="px-6 text-left uppercase">작업</th>
-            </tr>
-          </thead>
-          <tbody className="bg-background-primary">
-            {players.map((player) => (
-              <tr key={player.id} className="hover:bg-primary-100/5 h-12">
-                <td className="text-primary-100 px-6 py-4 text-sm font-medium whitespace-nowrap">{player.name}</td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{player.korean_name || "-"}</td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{player.jersey_number || "-"}</td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{player.nationality || "-"}</td>
-                <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => openEditModal(player)}
-                      className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
-                      aria-label="수정"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDeletePlayer(player.id)}
-                      className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
-                      aria-label="삭제"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>영문 이름</Th>
+            <Th>이름</Th>
+            <Th>등번호</Th>
+            <Th>국적</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {players.map((player) => (
+            <Tr key={player.id}>
+              <Td>{player.name}</Td>
+              <Td>{player.korean_name || "-"}</Td>
+              <Td>{player.jersey_number || "-"}</Td>
+              <Td>{player.nationality || "-"}</Td>
+              <Td>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => openEditModal(player)}
+                    className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
+                    aria-label="수정"
+                  >
+                    <Edit size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDeletePlayer(player.id)}
+                    className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
+                    aria-label="삭제"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
 
       {/* 생성 모달 */}
       {isCreateModalOpen && (
