@@ -3,6 +3,24 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.4.4] - 2025-12-19
+
+**Branch**: `bdks-v1.4.4-yd-ui테이블컴포넌트일괄적용`
+
+### 추가
+
+### 변경
+
+- refactor: 테이블 사용컴포넌트들 일괄 yd-ui의 테이블컴포넌트로 교체
+
+### 수정
+
+- fix: yd-ui 0.9.1버전 토큰값 변경으로인한 게이지 컴포넌트 css수정
+
+### 제거
+
+---
+
 ## [1.4.3] - 2025-12-18
 
 **Branch**: `bdks-v1.4.3-관리자페이지선수교체한방쿼리제작`
