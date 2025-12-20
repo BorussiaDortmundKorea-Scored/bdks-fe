@@ -6,6 +6,7 @@
 import { useState } from "react";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { ITeam } from "@admin/admin-team/api/admin-team-api";
@@ -123,43 +124,41 @@ const AdminTeam = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <div className="scrollbar-hide border-primary-100 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
-        <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-primary-100 text-yds-b1 border-b-2">
-            <tr className="h-12">
-              <th className="px-6 text-left uppercase">팀명</th>
-              <th className="px-6 text-left uppercase">국가</th>
-              <th className="px-6 text-left uppercase">작업</th>
-            </tr>
-          </thead>
-          <tbody className="bg-background-primary">
-            {teams.map((team) => (
-              <tr key={team.id} className="hover:bg-primary-300 h-12">
-                <td className="text-primary-400 px-6 py-4 text-sm font-medium whitespace-nowrap">{team.name}</td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{team.country || "-"}</td>
-                <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => openEditModal(team)}
-                      className="cursor-pointer text-indigo-500 hover:text-indigo-900"
-                      aria-label="수정"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteTeam(team.id)}
-                      className="cursor-pointer text-red-600 hover:text-red-900"
-                      aria-label="삭제"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>팀명</Th>
+            <Th>국가</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {teams.map((team) => (
+            <Tr key={team.id}>
+              <Td>{team.name}</Td>
+              <Td>{team.country || "-"}</Td>
+              <Td>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => openEditModal(team)}
+                    className="cursor-pointer text-indigo-500 hover:text-indigo-900"
+                    aria-label="수정"
+                  >
+                    <Edit size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteTeam(team.id)}
+                    className="cursor-pointer text-red-600 hover:text-red-900"
+                    aria-label="삭제"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
 
       {/* 🔥 생성 모달 - yd-ui 컴포넌트들로 교체 */}
       {isCreateModalOpen && (

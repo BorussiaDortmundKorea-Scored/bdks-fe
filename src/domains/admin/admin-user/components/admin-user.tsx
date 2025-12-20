@@ -5,6 +5,7 @@
  */
 import { useState } from "react";
 
+import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Trash2 } from "lucide-react";
 
 import type { IUser } from "@admin/admin-user/api/admin-user-api";
@@ -73,40 +74,40 @@ const AdminUser = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <div className="scrollbar-hide border-primary-100 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
-        <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-primary-100 text-yds-b1 border-b-2">
-            <tr className="h-12">
-              <th className="px-6 text-left uppercase">닉네임</th>
-              <th className="px-6 text-left uppercase">이메일</th>
-              <th className="px-6 text-left uppercase">권한</th>
-              <th className="px-6 text-left uppercase">가입일</th>
-              <th className="px-6 text-left uppercase">최근 로그인</th>
-              <th className="px-6 text-left uppercase">작업</th>
-            </tr>
-          </thead>
-          <tbody className="bg-background-primary">
-            {users.map((user) => (
-              <tr key={user.id} className="hover:bg-primary-100/5 h-12">
-                <td className="text-primary-100 px-6 py-4 text-sm font-medium whitespace-nowrap">{user.nickname}</td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{user.email || "익명 사용자"}</td>
-                <td className="px-6 py-4 text-sm whitespace-nowrap">
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>닉네임</Th>
+            <Th>이메일</Th>
+            <Th>권한</Th>
+            <Th>가입일</Th>
+            <Th>최근 로그인</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {users.map((user) => (
+            <Tr key={user.id}>
+              <Td>{user.nickname}</Td>
+              <Td>{user.email || "익명 사용자"}</Td>
+              <Td>
+                {user.is_admin ? (
+                  <span className="rounded-full bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-400">
+                    관리자
+                  </span>
+                ) : (
+                  <span className="text-primary-100 rounded-full bg-blue-500/20 px-2 py-1 text-xs font-medium">
+                    일반
+                  </span>
+                )}
+              </Td>
+              <Td>{formatDate(user.created_at)}</Td>
+              <Td>{user.last_sign_in_at ? formatDate(user.last_sign_in_at) : "-"}</Td>
+              <Td className="whitespace-nowrap">
+                <div className="flex items-center gap-3">
                   {user.is_admin ? (
-                    <span className="rounded-full bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-400">
-                      관리자
-                    </span>
+                    <></>
                   ) : (
-                    <span className="text-primary-100 rounded-full bg-blue-500/20 px-2 py-1 text-xs font-medium">
-                      일반
-                    </span>
-                  )}
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{formatDate(user.created_at)}</td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">
-                  {user.last_sign_in_at ? formatDate(user.last_sign_in_at) : "-"}
-                </td>
-                <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                  <div className="flex items-center gap-3">
                     <button
                       onClick={() => handleDeleteUser(user)}
                       disabled={isDeleting && deletingUserId === user.id}
@@ -120,13 +121,13 @@ const AdminUser = () => {
                     >
                       <Trash2 size={16} />
                     </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                  )}
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
     </div>
   );
 };

@@ -6,6 +6,7 @@
 import { useState } from "react";
 
 import { Button, Input } from "@youngduck/yd-ui";
+import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { ICompetition } from "@admin/admin-competition/api/admin-competition-api";
@@ -93,43 +94,41 @@ const AdminCompetition = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <div className="scrollbar-hide border-primary-100 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
-        <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-primary-100 text-yds-b1 border-b-2">
-            <tr className="h-12">
-              <th className="px-6 text-left uppercase">대회명</th>
-              <th className="px-6 text-left uppercase">시즌</th>
-              <th className="px-6 text-left uppercase">작업</th>
-            </tr>
-          </thead>
-          <tbody className="bg-background-primary">
-            {competitions.map((competition) => (
-              <tr key={competition.id} className="hover:bg-primary-100/5 h-12">
-                <td className="text-primary-100 px-6 py-4 text-sm font-medium whitespace-nowrap">{competition.name}</td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{competition.season}</td>
-                <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => openEditModal(competition)}
-                      className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
-                      aria-label="수정"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteCompetition(competition.id)}
-                      className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
-                      aria-label="삭제"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>대회명</Th>
+            <Th>시즌</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {competitions.map((competition) => (
+            <Tr key={competition.id}>
+              <Td>{competition.name}</Td>
+              <Td>{competition.season}</Td>
+              <Td>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => openEditModal(competition)}
+                    className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
+                    aria-label="수정"
+                  >
+                    <Edit size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteCompetition(competition.id)}
+                    className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
+                    aria-label="삭제"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
 
       {/* 생성 모달 */}
       {isCreateModalOpen && (

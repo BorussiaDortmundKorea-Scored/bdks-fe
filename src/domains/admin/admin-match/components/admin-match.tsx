@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2, Users } from "lucide-react";
 
 import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense";
@@ -214,77 +215,67 @@ const AdminMatch = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <div className="scrollbar-hide border-primary-100 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
-        <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-primary-100 text-yds-b1 border-b-2">
-            <tr className="h-12">
-              <th className="px-6 text-left uppercase">경기일</th>
-              <th className="px-6 text-left uppercase">대회</th>
-              <th className="px-6 text-left uppercase">상대팀</th>
-              <th className="px-6 text-left uppercase">홈/어웨이</th>
-              <th className="px-6 text-left uppercase">스코어</th>
-              <th className="px-6 text-left uppercase">라운드</th>
-              <th className="px-6 text-left uppercase">작업</th>
-            </tr>
-          </thead>
-          <tbody className="bg-background-primary">
-            {matches.map((match) => (
-              <tr
-                key={match.id}
-                className="hover:bg-primary-100/5 h-12 cursor-pointer"
-                onClick={() => handleLineupManagement(match.id)}
-              >
-                <td className="text-primary-100 px-6 py-4 text-sm font-medium whitespace-nowrap">
-                  {formatDate(match.match_date)}
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{match.competition_name}</td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{match.opponent_team_name}</td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">
-                  {match.home_away === "HOME" ? "홈" : "어웨이"}
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">
-                  {match.our_score} : {match.opponent_score}
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">{match.round_name}</td>
-                <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleLineupManagement(match.id);
-                      }}
-                      className="cursor-pointer rounded-md p-1 text-green-500 transition-colors hover:bg-green-500/20 hover:text-white"
-                      aria-label="라인업 관리"
-                    >
-                      <Users size={16} />
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openEditModal(match);
-                      }}
-                      className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
-                      aria-label="수정"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteMatch(match.id);
-                      }}
-                      className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
-                      aria-label="삭제"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>경기일</Th>
+            <Th>대회</Th>
+            <Th>상대팀</Th>
+            <Th>홈/어웨이</Th>
+            <Th>스코어</Th>
+            <Th>라운드</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {matches.map((match) => (
+            <Tr key={match.id}>
+              <Td>{formatDate(match.match_date)}</Td>
+              <Td>{match.competition_name}</Td>
+              <Td>{match.opponent_team_name}</Td>
+              <Td>{match.home_away === "HOME" ? "홈" : "어웨이"}</Td>
+              <Td>
+                {match.our_score} : {match.opponent_score}
+              </Td>
+              <Td>{match.round_name}</Td>
+              <Td>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLineupManagement(match.id);
+                    }}
+                    className="cursor-pointer rounded-md p-1 text-green-500 transition-colors hover:bg-green-500/20 hover:text-white"
+                    aria-label="라인업 관리"
+                  >
+                    <Users size={16} />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openEditModal(match);
+                    }}
+                    className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
+                    aria-label="수정"
+                  >
+                    <Edit size={16} />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteMatch(match.id);
+                    }}
+                    className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
+                    aria-label="삭제"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
 
       {/* 생성 모달 */}
       {isCreateModalOpen && (

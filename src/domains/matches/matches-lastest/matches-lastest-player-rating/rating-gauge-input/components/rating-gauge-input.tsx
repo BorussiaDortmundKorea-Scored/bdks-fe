@@ -99,13 +99,13 @@ const RatingGaugeInput = ({ value: externalValue, onChangeEnd, disabled }: Ratin
         >
           {/* 활성화된 게이지 */}
           <div
-            className="bg-primary-400 absolute top-0 left-0 h-full rounded-full transition-all duration-100"
+            className="absolute top-0 left-0 h-full rounded-full bg-yellow-500 transition-all duration-100"
             style={{ width: `${gaugePercentage}%` }}
           />
 
           {/* 드래그 핸들 */}
           <div
-            className={`bg-primary-400 absolute top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white transition-all duration-100 ${
+            className={`absolute top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-yellow-500 transition-all duration-100 ${
               isDragging ? "scale-110 shadow-lg" : "scale-100"
             }`}
             style={{ left: `${gaugePercentage}%` }}
