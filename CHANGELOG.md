@@ -3,6 +3,23 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.4.5] - 2025-12-23
+
+**Branch**: `bdks-v1.4.5-css수정사항적용`
+
+### 추가
+
+### 변경
+
+### 수정
+
+- fix: 뒤로가기버튼 absolute 속성 제거 -> v1.4.2에서 메뉴버튼 relative 속성추가해주면서 생긴 이슈
+- fix: 관리자페이지 차트 대시보드 모바일 height길이 지정 -> 모바일에서 차트가 너무작아서 안보임
+
+### 제거
+
+---
+
 ## [1.4.4] - 2025-12-19
 
 **Branch**: `bdks-v1.4.4-yd-ui테이블컴포넌트일괄적용`
