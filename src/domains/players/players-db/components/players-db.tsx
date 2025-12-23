@@ -4,36 +4,25 @@
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "@auth/contexts/AuthContext";
 
 import { useGetPlayersDbWithMyRatings } from "@players/players-db/api/react-query-api/use-get-players-db-with-my-ratings";
 import PlayersDbWrapper from "@players/players-db/components/wrapper/players-db-wrapper";
-import PlayerRatingRotatorErrorFallback from "@players/players-rating-rotator/components/error/players-rating-rotator-error-fallback";
 
 const PlayersDb = () => {
   //SECTION HOOK,상태값 영역
+  const navigate = useNavigate();
   const { user } = useAuth();
-  // 방어적 프로그래밍처리 - 라우터에서 이미 user존재여부 체크함
-  if (!user) {
-    return <PlayerRatingRotatorErrorFallback />;
-  }
-  const data = useGetPlayersDbWithMyRatings(user.id);
+  const PlayersDbWithMyRating = useGetPlayersDbWithMyRatings(user!.id);
   const scrollContainerRef = useRef<HTMLUListElement>(null);
 
   //!SECTION HOOK,상태값 영역
 
   //SECTION 메서드 영역
   const handlePlayerClick = (playerId: string) => {
-    if (user?.is_anonymous) {
-      // 익명 사용자: 팝업 표시
-      alert("해당 화면은 준비중이에요.");
-    } else {
-      // 카카오 로그인 사용자: 상세 페이지 이동
-      // navigate(`/player/${playerId}/stats`);
-      alert("해당 화면은 준비중이에요.");
-      console.log("선수 상세 페이지로 이동:", playerId);
-    }
+    navigate(`/player/${playerId}/stats`);
   };
 
   //SECTION 드래그/휠 스크롤 핸들러 영역
@@ -57,7 +46,7 @@ const PlayersDb = () => {
         onWheel={handleWheel}
         className={`scrollbar-hide-x flex w-full flex-row gap-[8px] overflow-x-scroll select-none`}
       >
-        {data.map((item) => (
+        {PlayersDbWithMyRating.map((item) => (
           <li
             key={item.id}
             onClick={() => handlePlayerClick(item.id)}
