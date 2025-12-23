@@ -7,9 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ArrowLeft } from "lucide-react";
 
-interface IBackButton {}
-
-const BackButton: React.FC<IBackButton> = () => {
+const BackButton = () => {
   //SECTION HOOK호출 영역
   const navigate = useNavigate();
 
@@ -23,9 +21,7 @@ const BackButton: React.FC<IBackButton> = () => {
 
   //!SECTION 메서드 영역
 
-  return (
-    <ArrowLeft onClick={() => navigate(-1)} size={24} className="text-primary-100 absolute left-1 cursor-pointer" />
-  );
+  return <ArrowLeft onClick={() => navigate(-1)} size={24} className="text-primary-100 cursor-pointer" />;
 };
 
 export default BackButton;
