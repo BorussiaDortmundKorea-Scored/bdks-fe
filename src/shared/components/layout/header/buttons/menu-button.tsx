@@ -16,7 +16,7 @@ import { ROUTES } from "@shared/constants/routes";
 const MenuButton = () => {
   //SECTION HOOK호출 영역
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const { profile } = useAuth();
+  const { profile, signOut } = useAuth();
   const navigate = useNavigate();
   const isAdmin = Boolean(profile?.is_admin);
   //!SECTION HOOK호출 영역
@@ -29,6 +29,14 @@ const MenuButton = () => {
   const handleGoAdminDashboard = () => {
     navigate(ROUTES.ADMIN_DASHBOARD);
     setIsMenuOpen(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch {
+      alert("로그아웃 중 오류가 발생했습니다.");
+    }
   };
   //!SECTION 메서드 영역
 
@@ -46,7 +54,7 @@ const MenuButton = () => {
             <li className="flex cursor-pointer items-center gap-2" onClick={handleBlankNaverCafe}>
               <Coffee size={24} className="text-primary-100" /> 네이버 카페 바로가기
             </li>
-            <li className="flex cursor-pointer items-center gap-2">
+            <li className="flex cursor-pointer items-center gap-2" onClick={handleLogout}>
               <LogoutButton /> 로그아웃 하기
             </li>
             {isAdmin && (
