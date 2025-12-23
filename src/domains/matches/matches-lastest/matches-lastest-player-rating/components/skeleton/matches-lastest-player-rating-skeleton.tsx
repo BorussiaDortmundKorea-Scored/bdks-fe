@@ -43,7 +43,7 @@ const MatchesLastestPlayerRatingSkeleton: React.FC = () => {
             {/* 선수 이미지 영역 스켈레톤 */}
             <div className="flex flex-col items-start gap-3">
               {/* 선수 이미지 스켈레톤 */}
-              <div className="mx-auto h-[220px] w-[220px] animate-pulse rounded-lg bg-gray-600" />
+              <div className="mx-auto h-[300px] w-[300px] animate-pulse rounded-lg bg-gray-600" />
               {/* 선수 이름 스켈레톤 */}
               <div className="w-full text-center">
                 <div className="mx-auto h-[24px] w-[120px] animate-pulse rounded bg-gray-600" />
