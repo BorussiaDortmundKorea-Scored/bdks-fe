@@ -144,7 +144,7 @@ const AdminDashboardMatchStatsChart = () => {
   };
 
   return (
-    <div className="h-full w-full p-4">
+    <div className="h-[300px] w-full p-4 md:h-full md:w-full">
       <Bar data={chartData} options={chartOptions} />
     </div>
   );
