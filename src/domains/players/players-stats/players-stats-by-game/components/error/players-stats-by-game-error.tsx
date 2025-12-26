@@ -5,7 +5,7 @@
  */
 import type { ErrorFallbackProps } from "@shared/provider/react-query-boundary";
 
-const PlayersStatsByGameError = ({ error, resetErrorBoundary }: ErrorFallbackProps) => {
+const PlayersStatsByGameError = ({ resetErrorBoundary }: ErrorFallbackProps) => {
   //SECTION HOOK호출 영역
 
   //!SECTION HOOK호출 영역
@@ -27,7 +27,7 @@ const PlayersStatsByGameError = ({ error, resetErrorBoundary }: ErrorFallbackPro
       <p className="text-primary-100 text-sm">잠시 후 다시 시도해주세요</p>
       <button
         onClick={resetErrorBoundary}
-        className="mt-4 rounded bg-primary-100 px-4 py-2 text-sm text-white hover:bg-primary-200"
+        className="bg-primary-100 hover:bg-primary-200 mt-4 rounded px-4 py-2 text-sm text-white"
         type="button"
       >
         다시 시도
@@ -37,4 +37,3 @@ const PlayersStatsByGameError = ({ error, resetErrorBoundary }: ErrorFallbackPro
 };
 
 export default PlayersStatsByGameError;
-
