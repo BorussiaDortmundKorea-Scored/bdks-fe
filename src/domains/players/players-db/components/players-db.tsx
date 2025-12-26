@@ -11,6 +11,8 @@ import { useAuth } from "@auth/contexts/AuthContext";
 import { useGetPlayersDbWithMyRatings } from "@players/players-db/api/react-query-api/use-get-players-db-with-my-ratings";
 import PlayersDbWrapper from "@players/players-db/components/wrapper/players-db-wrapper";
 
+import { createPlayerStatsPath } from "@shared/constants/routes";
+
 const PlayersDb = () => {
   //SECTION HOOK,상태값 영역
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ const PlayersDb = () => {
 
   //SECTION 메서드 영역
   const handlePlayerClick = (playerId: string) => {
-    navigate(`/player/${playerId}/stats`);
+    navigate(createPlayerStatsPath(playerId));
   };
 
   //SECTION 드래그/휠 스크롤 핸들러 영역

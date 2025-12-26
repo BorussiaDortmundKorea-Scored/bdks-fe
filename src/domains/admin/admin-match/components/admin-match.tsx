@@ -18,6 +18,8 @@ import { useGetAllMatchesSuspense } from "@admin/admin-match/api/react-query-api
 import { useUpdateMatch } from "@admin/admin-match/api/react-query-api/use-update-match";
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
 
+import { createAdminMatchLineupPath } from "@shared/constants/routes";
+
 const AdminMatch = () => {
   //SECTION HOOK호출 영역
   const navigate = useNavigate();
@@ -188,7 +190,7 @@ const AdminMatch = () => {
   };
 
   const handleLineupManagement = (matchId: string) => {
-    navigate(`/admin/match/${matchId}/lineup`);
+    navigate(createAdminMatchLineupPath(matchId));
   };
 
   const formatDate = (dateString: string) => {
