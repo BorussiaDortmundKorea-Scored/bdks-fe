@@ -17,15 +17,20 @@ import {
   Tooltip,
 } from "chart.js";
 
-import BackButton from "@shared/components/layout/header/buttons/back-button";
-import Header from "@shared/components/layout/header/header";
-import { usePageTransition } from "@shared/hooks/use-page-transition";
 import { useGetPlayerStats } from "@players/players-stats/api/react-query-api/use-get-player-stats";
 import {
   playerStatsChartData,
   playerStatsChartOptions,
 } from "@players/players-stats/constants/player-stats-chart-config";
+import PlayersStatsByGameError from "@players/players-stats/players-stats-by-game/components/error/players-stats-by-game-error";
+import PlayersStatsByGame from "@players/players-stats/players-stats-by-game/components/players-stats-by-game";
+import PlayersStatsByGameSkeleton from "@players/players-stats/players-stats-by-game/components/skeleton/players-stats-by-game-skeleton";
+
+import BackButton from "@shared/components/layout/header/buttons/back-button";
+import Header from "@shared/components/layout/header/header";
+import { usePageTransition } from "@shared/hooks/use-page-transition";
 import LayoutWithHeader from "@shared/provider/layout-with-header";
+import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 // Chart.js 필수 요소 등록
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -39,8 +44,8 @@ const headerOptions = {
 const PlayerStatsPage = () => {
   //SECTION HOOK호출 영역
   const { pageRef } = usePageTransition();
-  const { playerId } = useParams<{ playerId: string }>();
-  const { data: playerStats } = useGetPlayerStats({ player_id: playerId ?? "" });
+  const { playerId } = useParams<{ playerId: string }>() as { playerId: string };
+  const { data: playerStats } = useGetPlayerStats({ player_id: playerId });
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
@@ -66,10 +71,13 @@ const PlayerStatsPage = () => {
           </div>
         </div>
         <Line options={playerStatsChartOptions} data={playerStatsChartData} />
+        {/* 선수별 경기 통계 리스트 */}
+        <ReactQueryBoundary skeleton={<PlayersStatsByGameSkeleton />} errorFallback={PlayersStatsByGameError}>
+          <PlayersStatsByGame playerId={playerId} />
+        </ReactQueryBoundary>
       </LayoutWithHeader>
     </div>
   );
 };
 
 export default PlayerStatsPage;
-

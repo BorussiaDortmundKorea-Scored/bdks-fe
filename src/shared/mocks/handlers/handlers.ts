@@ -10,6 +10,7 @@ import { matchesLastestPlayerRatingHandlers } from "@matches/matches-lastest/mat
 import { PlayersDBHandlers } from "@players/players-db/mocks/players-db-handler";
 import { PlayersRatingRotatorHandlers } from "@players/players-rating-rotator/mocks/player-rating-rotator-handlers";
 import { PlayerStatsHandlers } from "@players/players-stats/mocks/player-stats-handler";
+import { PlayersStatsByGameHandlers } from "@players/players-stats/players-stats-by-game/mocks/players-stats-by-game-handler";
 
 export const handlers = [
   ...AdminDashboardMatchStatsHandlers,
@@ -22,4 +23,5 @@ export const handlers = [
   ...PlayersDBHandlers,
   ...PlayersRatingRotatorHandlers,
   ...PlayerStatsHandlers,
+  ...PlayersStatsByGameHandlers,
 ];
