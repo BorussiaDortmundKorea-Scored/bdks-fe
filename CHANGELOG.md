@@ -3,6 +3,28 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.5.1] - 2025-12-23 ~ 2025-12-26
+
+**Branch**: `bdks-v1.5.1-선수DB기능추가`
+
+### 추가
+
+- feat: 선수 DB 조회화면 기초 작업 (도메인 폴더 세팅, 선수정보RPC연결)
+- feat: 선수 DB 선수별 경기정보리스트 조회 RPC연결 및 와이어프레임작업
+
+### 변경
+
+- refactor: 로그아웃버튼 터치범위 개선
+- refactor: navigate함수 모듈화된 소스코드 미적용 되어있는 화면들 적용
+
+### 수정
+
+- style: 라이브경기 선수이미지 height,width 220px -> 300px
+
+### 제거
+
+---
+
 ## [1.4.5] - 2025-12-23
 
 **Branch**: `bdks-v1.4.5-css수정사항적용`

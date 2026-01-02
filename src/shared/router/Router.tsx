@@ -6,7 +6,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import NotFoundPage from "../pages/not-found-page";
-import PlayerStatsPage from "../pages/player/player-stats-page";
 
 import AdminCompetitionPage from "@admin/admin-competition/pages/admin-competition-page";
 import AdminDashboardPage from "@admin/admin-dashboard/admin-dashboard-page";
@@ -27,6 +26,8 @@ import DashboardPage from "@dashboard/pages/dashboard-page";
 
 import MatchesHistoryPlayersRatingPage from "@matches/matches-history/matches-history-players-rating/pages/matches-history-players-rating-page";
 import MatchesLastestPlayerRatingPage from "@matches/matches-lastest/matches-lastest-player-rating/pages/matches-lastest-player-rating-page";
+
+import PlayerStatsPage from "@players/players-stats/pages/player-stats-page";
 
 import { ROUTES } from "@shared/constants/routes";
 import PublicRoute from "@shared/provider/public-route";

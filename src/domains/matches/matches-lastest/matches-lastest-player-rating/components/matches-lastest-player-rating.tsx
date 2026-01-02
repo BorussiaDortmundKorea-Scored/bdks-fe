@@ -94,7 +94,7 @@ const MatchesLastestPlayerRating = () => {
               <img
                 src={playerRating.full_profile_image_url}
                 alt={playerRating.korean_name}
-                className="mx-auto h-[220px] w-[220px] rounded-lg object-cover"
+                className="mx-auto h-[300px] w-[300px] rounded-lg object-cover"
               />
               <div className="w-full text-center">
                 <h2 className="text-primary-100 text-yds-s2">{playerRating.korean_name}</h2>

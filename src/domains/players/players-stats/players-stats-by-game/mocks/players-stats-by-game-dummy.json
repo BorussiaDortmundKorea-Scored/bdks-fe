@@ -1,0 +1,29 @@
+[
+  {
+    "id": "200bbe4a-465c-4fac-bf71-403d3ffe7524",
+    "match_date": "2025-08-08",
+    "text_home_away": "HOME",
+    "round_name": "1R",
+    "season": "24-25",
+    "league_name": "분데스리가",
+    "opponent_name": "바이에른 뮌헨",
+    "goals": 1,
+    "assists": 1,
+    "avg_rating": 7.5,
+    "rating_count": 120
+  },
+  {
+    "id": "2be1b485-e421-414c-b94e-16caa0403020",
+    "match_date": "2025-08-15",
+    "text_home_away": "AWAY",
+    "round_name": "2R",
+    "season": "24-25",
+    "league_name": "분데스리가",
+    "opponent_name": "바이에른 뮌헨",
+    "goals": 0,
+    "assists": 2,
+    "avg_rating": 8.2,
+    "rating_count": 95
+  }
+]
+
