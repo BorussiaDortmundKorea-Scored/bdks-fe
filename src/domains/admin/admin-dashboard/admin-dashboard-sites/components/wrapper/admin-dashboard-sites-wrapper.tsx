@@ -9,7 +9,7 @@ interface IAdminDashboardSitesWrapper {
   children: React.ReactNode;
 }
 
-const AdminDashboardSitesWrapper: React.FC<IAdminDashboardSitesWrapper> = ({ children }) => {
+const AdminDashboardSitesWrapper = ({ children }: IAdminDashboardSitesWrapper) => {
   //SECTION HOOK호출 영역
   //!SECTION HOOK호출 영역
 
