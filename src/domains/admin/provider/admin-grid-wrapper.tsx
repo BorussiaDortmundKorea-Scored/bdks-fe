@@ -13,6 +13,7 @@ import { ROUTES } from "@shared/constants/routes";
 interface IAdminWrapper {
   children: React.ReactNode;
 }
+
 const adminMenus = [
   { id: "dashboard", label: "Dashboard", path: ROUTES.ADMIN_DASHBOARD, icon: ChartNoAxesCombined },
   { id: "player", label: "Players", path: ROUTES.ADMIN_PLAYER, icon: Users },
@@ -22,7 +23,7 @@ const adminMenus = [
   { id: "user", label: "Users", path: ROUTES.ADMIN_USER, icon: Users },
 ];
 
-const AdminGridWrapper: React.FC<IAdminWrapper> = ({ children }) => {
+const AdminGridWrapper = ({ children }: IAdminWrapper) => {
   //SECTION HOOK호출 영역
   const navigate = useNavigate();
 

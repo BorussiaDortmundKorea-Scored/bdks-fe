@@ -3,14 +3,10 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import React from "react";
-
 import { SITE_LINK_DATA } from "../constants/site-link-data";
 import AdminDashboardSitesWrapper from "./wrapper/admin-dashboard-sites-wrapper";
 
-interface IAdminDashboardSites {}
-
-const AdminDashboardSites: React.FC<IAdminDashboardSites> = () => {
+const AdminDashboardSites = () => {
   //SECTION HOOK호출 영역
 
   //!SECTION HOOK호출 영역
@@ -26,8 +22,12 @@ const AdminDashboardSites: React.FC<IAdminDashboardSites> = () => {
   return (
     <AdminDashboardSitesWrapper>
       {SITE_LINK_DATA.map((item) => (
-        <div className="cursor-pointer" key={item.id} onClick={() => window.open(item.link, "_blank")}>
-          {item.name}
+        <div
+          className="cursor-pointer sm:h-6 sm:w-6 md:h-9 md:w-9"
+          key={item.id}
+          onClick={() => window.open(item.link, "_blank")}
+        >
+          <img src={item.logo} alt={item.name} className="h-full w-full" />
         </div>
       ))}
     </AdminDashboardSitesWrapper>

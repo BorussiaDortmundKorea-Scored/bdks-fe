@@ -9,7 +9,7 @@ interface IAdminDashboardSitesWrapper {
   children: React.ReactNode;
 }
 
-const AdminDashboardSitesWrapper: React.FC<IAdminDashboardSitesWrapper> = ({ children }) => {
+const AdminDashboardSitesWrapper = ({ children }: IAdminDashboardSitesWrapper) => {
   //SECTION HOOK호출 영역
   //!SECTION HOOK호출 영역
 
@@ -23,7 +23,7 @@ const AdminDashboardSitesWrapper: React.FC<IAdminDashboardSitesWrapper> = ({ chi
 
   return (
     <div
-      className={`bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 md:col-start-4 md:col-end-7 md:row-start-3 md:row-end-5 flex h-full w-full flex-col justify-between`}
+      className={`bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 col-start-1 col-end-2 row-start-2 row-end-2 flex items-center justify-between md:col-start-4 md:col-end-7 md:row-start-2 md:row-end-3`}
     >
       {children}
     </div>

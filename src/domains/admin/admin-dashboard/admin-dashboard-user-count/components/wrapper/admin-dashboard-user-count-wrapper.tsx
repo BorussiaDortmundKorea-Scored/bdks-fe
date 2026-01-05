@@ -9,7 +9,7 @@ interface IAdminDashboardUserCountWrapper {
   children: React.ReactNode;
 }
 
-const AdminDashboardUserCountWrapper: React.FC<IAdminDashboardUserCountWrapper> = ({ children }) => {
+const AdminDashboardUserCountWrapper = ({ children }: IAdminDashboardUserCountWrapper) => {
   //SECTION HOOK호출 영역
 
   //!SECTION HOOK호출 영역
@@ -23,7 +23,7 @@ const AdminDashboardUserCountWrapper: React.FC<IAdminDashboardUserCountWrapper> 
   //!SECTION 메서드 영역
 
   return (
-    <div className="bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 md:col-start-1 md:col-end-3 md:row-start-2 md:row-end-3 flex h-full w-full flex-col justify-between">
+    <div className="bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 flex h-full w-full flex-col justify-between md:col-start-1 md:col-end-3 md:row-start-2 md:row-end-3">
       {children}
     </div>
   );

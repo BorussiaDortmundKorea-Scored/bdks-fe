@@ -16,6 +16,7 @@ import { useCreateMatch } from "@admin/admin-match/api/react-query-api/use-creat
 import { useDeleteMatch } from "@admin/admin-match/api/react-query-api/use-delete-match";
 import { useGetAllMatchesSuspense } from "@admin/admin-match/api/react-query-api/use-get-all-matches-suspense";
 import { useUpdateMatch } from "@admin/admin-match/api/react-query-api/use-update-match";
+import { convertLocalToUTC, convertUTCToLocal } from "@admin/admin-match/utils/datetime-utils";
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
 
 import { createAdminMatchLineupPath } from "@shared/constants/routes";
@@ -108,10 +109,10 @@ const AdminMatch = () => {
       formation: formData.formation || undefined,
       is_live: formData.is_live,
       round_name: formData.round_name || undefined,
-      match_start_time: formData.match_start_time,
-      second_half_start_time: formData.second_half_start_time,
-      first_half_end_time: formData.first_half_end_time,
-      second_half_end_time: formData.second_half_end_time,
+      match_start_time: convertLocalToUTC(formData.match_start_time),
+      second_half_start_time: convertLocalToUTC(formData.second_half_start_time),
+      first_half_end_time: convertLocalToUTC(formData.first_half_end_time),
+      second_half_end_time: convertLocalToUTC(formData.second_half_end_time),
     });
     setIsCreateModalOpen(false);
     resetFormData();
@@ -131,10 +132,10 @@ const AdminMatch = () => {
       formation: formData.formation || undefined,
       is_live: formData.is_live,
       round_name: formData.round_name || undefined,
-      match_start_time: formData.match_start_time,
-      second_half_start_time: formData.second_half_start_time,
-      first_half_end_time: formData.first_half_end_time,
-      second_half_end_time: formData.second_half_end_time,
+      match_start_time: convertLocalToUTC(formData.match_start_time),
+      second_half_start_time: convertLocalToUTC(formData.second_half_start_time),
+      first_half_end_time: convertLocalToUTC(formData.first_half_end_time),
+      second_half_end_time: convertLocalToUTC(formData.second_half_end_time),
     });
     setEditingMatch(null);
     resetFormData();
@@ -158,16 +159,10 @@ const AdminMatch = () => {
       formation: match.formation || "",
       is_live: match.is_live,
       round_name: match.round_name,
-      match_start_time: match.match_start_time ? new Date(match.match_start_time).toISOString().slice(0, 16) : "",
-      second_half_start_time: match.second_half_start_time
-        ? new Date(match.second_half_start_time).toISOString().slice(0, 16)
-        : "",
-      first_half_end_time: match.first_half_end_time
-        ? new Date(match.first_half_end_time).toISOString().slice(0, 16)
-        : "",
-      second_half_end_time: match.second_half_end_time
-        ? new Date(match.second_half_end_time).toISOString().slice(0, 16)
-        : "",
+      match_start_time: convertUTCToLocal(match.match_start_time),
+      second_half_start_time: convertUTCToLocal(match.second_half_start_time),
+      first_half_end_time: convertUTCToLocal(match.first_half_end_time),
+      second_half_end_time: convertUTCToLocal(match.second_half_end_time),
     });
   };
 
@@ -191,10 +186,6 @@ const AdminMatch = () => {
 
   const handleLineupManagement = (matchId: string) => {
     navigate(createAdminMatchLineupPath(matchId));
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("ko-KR");
   };
   //!SECTION 메서드 영역
 
@@ -232,7 +223,7 @@ const AdminMatch = () => {
         <TBody>
           {matches.map((match) => (
             <Tr key={match.id}>
-              <Td>{formatDate(match.match_date)}</Td>
+              <Td>{match.match_date}</Td>
               <Td>{match.competition_name}</Td>
               <Td>{match.opponent_team_name}</Td>
               <Td>{match.home_away === "HOME" ? "홈" : "어웨이"}</Td>

@@ -28,9 +28,6 @@ const AdminDashboardPage = () => {
       </ReactQueryBoundary>
       <AdminDashboardSites />
       <AdminDashboardHome />
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
     </AdminGridWrapper>
   );
 };
