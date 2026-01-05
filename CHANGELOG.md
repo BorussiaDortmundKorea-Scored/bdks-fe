@@ -3,6 +3,25 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.5.2] - 2026-01-05
+
+**Branch**: `bdks-v1.5.2-관리자기능수정`
+
+### 추가
+
+- feat: 개발관련 관리사이트 바로가기 컴포넌트 추가
+
+### 변경
+
+### 수정
+
+- fix: 경기시간 한국시간으로 유틸함수 만들어서 수정
+- refactor: React.FC대신 props를 사용하도록 개선
+
+### 제거
+
+---
+
 ## [1.5.1] - 2025-12-23 ~ 2025-12-26
 
 **Branch**: `bdks-v1.5.1-선수DB기능추가`
