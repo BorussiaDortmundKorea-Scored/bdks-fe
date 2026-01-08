@@ -40,14 +40,14 @@ const AdminMatch = () => {
   const handleOpenAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchAddModal onClose={onClose} />,
-      config: { size: "lg" },
+      config: { size: "sm" },
     });
   };
 
   const handleOpenEditModal = (match: IMatch) => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchEditModal match={match} onClose={onClose} />,
-      config: { size: "lg" },
+      config: { size: "sm" },
     });
   };
 

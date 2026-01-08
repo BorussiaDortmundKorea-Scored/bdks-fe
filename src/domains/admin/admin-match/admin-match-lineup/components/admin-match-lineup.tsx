@@ -43,23 +43,21 @@ const AdminMatchLineup = () => {
   const handleOpenAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchLineupAddModal matchId={matchId} onClose={onClose} />,
-      config: { size: "lg" },
+      config: { size: "sm" },
     });
   };
 
   const handleOpenEditModal = (lineup: IMatchLineup) => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchLineupEditModal matchId={matchId} lineup={lineup} onClose={onClose} />,
-      config: { size: "lg" },
+      config: { size: "sm" },
     });
   };
 
   const handleOpenSubstitutionModal = (lineup: IMatchLineup) => {
     if (lineup.lineup_type !== "STARTING") return;
     overlay.modalOpen({
-      content: (onClose) => (
-        <AdminMatchLineupSubstitutionModal matchId={matchId} lineup={lineup} onClose={onClose} />
-      ),
+      content: (onClose) => <AdminMatchLineupSubstitutionModal matchId={matchId} lineup={lineup} onClose={onClose} />,
       config: { size: "sm" },
     });
   };
