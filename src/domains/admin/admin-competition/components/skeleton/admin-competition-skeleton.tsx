@@ -1,16 +1,20 @@
+/**
+ * 작성자: KYD
+ * 기능: 대회 관리 스켈레톤 컴포넌트
+ * 프로세스 설명: 대회 데이터 로딩 중 표시되는 스켈레톤 화면
+ */
 import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 
 const AdminCompetitionSkeleton = () => {
   return (
     <div className="flex h-full w-full flex-col">
-      {/* 헤더 스켈레톤 */}
-      <div className="layout-header-height bg-background-primary relative flex w-full shrink-0 items-center">
-        <div className="h-6 w-6 animate-pulse rounded bg-gray-300"></div>
-        <div className="absolute left-1/2 h-8 w-32 -translate-x-1/2 animate-pulse rounded bg-gray-300"></div>
-        <div className="absolute right-4 h-10 w-24 animate-pulse rounded bg-gray-300"></div>
+      {/* 헤더 */}
+      <div className="flex w-full items-center justify-between p-4">
+        <div className="h-6 w-24 animate-pulse rounded bg-primary-100/20" />
+        <div className="h-10 w-28 animate-pulse rounded bg-primary-100/20" />
       </div>
 
-      {/* 테이블 스켈레톤 */}
+      {/* 스크롤 가능한 컨텐츠 영역 */}
       <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
         <THead>
           <Tr>
@@ -20,18 +24,18 @@ const AdminCompetitionSkeleton = () => {
           </Tr>
         </THead>
         <TBody>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {Array.from({ length: 10 }).map((_, index) => (
             <Tr key={index}>
               <Td>
-                <div className="h-4 w-32 animate-pulse rounded bg-gray-300"></div>
+                <div className="h-4 w-32 animate-pulse rounded bg-primary-100/20" />
               </Td>
               <Td>
-                <div className="h-4 w-20 animate-pulse rounded bg-gray-300"></div>
+                <div className="h-4 w-20 animate-pulse rounded bg-primary-100/20" />
               </Td>
               <Td>
-                <div className="flex gap-2">
-                  <div className="h-4 w-4 animate-pulse rounded bg-gray-300"></div>
-                  <div className="h-4 w-4 animate-pulse rounded bg-gray-300"></div>
+                <div className="flex items-center gap-3">
+                  <div className="h-4 w-4 animate-pulse rounded bg-primary-100/20" />
+                  <div className="h-4 w-4 animate-pulse rounded bg-primary-100/20" />
                 </div>
               </Td>
             </Tr>
