@@ -15,56 +15,54 @@ const AdminMatchLineupSkeleton = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <div className="scrollbar-hide border-primary-100 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
-        <Table scrollable={false} className="w-full">
-          <THead>
-            <Tr>
-              <Th>선수명</Th>
-              <Th>포지션</Th>
-              <Th>라인업</Th>
-              <Th>주장</Th>
-              <Th>교체</Th>
-              <Th>골/어시</Th>
-              <Th>카드</Th>
-              <Th>작업</Th>
-            </Tr>
-          </THead>
-          <TBody>
-            {Array.from({ length: 11 }).map((_, index) => (
-              <Tr key={index}>
-                <Td>
-                  <div className="bg-primary-100/20 h-4 w-32 animate-pulse rounded" />
-                </Td>
-                <Td>
-                  <div className="bg-primary-100/20 h-4 w-20 animate-pulse rounded" />
-                </Td>
-                <Td>
-                  <div className="bg-primary-100/20 h-4 w-12 animate-pulse rounded" />
-                </Td>
-                <Td>
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>선수명</Th>
+            <Th>포지션</Th>
+            <Th>라인업</Th>
+            <Th>주장</Th>
+            <Th>교체</Th>
+            <Th>골/어시</Th>
+            <Th>카드</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {Array.from({ length: 11 }).map((_, index) => (
+            <Tr key={index}>
+              <Td>
+                <div className="bg-primary-100/20 h-4 w-32 animate-pulse rounded" />
+              </Td>
+              <Td>
+                <div className="bg-primary-100/20 h-4 w-20 animate-pulse rounded" />
+              </Td>
+              <Td>
+                <div className="bg-primary-100/20 h-4 w-12 animate-pulse rounded" />
+              </Td>
+              <Td>
+                <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
+              </Td>
+              <Td>
+                <div className="bg-primary-100/20 h-4 w-20 animate-pulse rounded" />
+              </Td>
+              <Td>
+                <div className="bg-primary-100/20 h-4 w-16 animate-pulse rounded" />
+              </Td>
+              <Td>
+                <div className="bg-primary-100/20 h-4 w-12 animate-pulse rounded" />
+              </Td>
+              <Td>
+                <div className="flex items-center gap-3">
                   <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
-                </Td>
-                <Td>
-                  <div className="bg-primary-100/20 h-4 w-20 animate-pulse rounded" />
-                </Td>
-                <Td>
-                  <div className="bg-primary-100/20 h-4 w-16 animate-pulse rounded" />
-                </Td>
-                <Td>
-                  <div className="bg-primary-100/20 h-4 w-12 animate-pulse rounded" />
-                </Td>
-                <Td>
-                  <div className="flex items-center gap-3">
-                    <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
-                    <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
-                    <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
-                  </div>
-                </Td>
-              </Tr>
-            ))}
-          </TBody>
-        </Table>
-      </div>
+                  <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
+                  <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
     </div>
   );
 };
