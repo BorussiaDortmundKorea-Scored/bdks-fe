@@ -10,13 +10,19 @@
 ### 추가
 
 - feat: 개발관련 관리사이트 바로가기 컴포넌트 추가
+- feat: YD-UI Overlays 컴포넌트 사용을위한 APP에 provider감싸기
 
 ### 변경
+
+- chore: YD-UI v0.11.1 버전업그레이드
+- refactor: 관리자에서사용한기존모달YD-UI모달로전수교체
+- refactor: 관리자에서사용하는스켈레톤YD-UI테이블로전수교체
 
 ### 수정
 
 - fix: 경기시간 한국시간으로 유틸함수 만들어서 수정
 - refactor: React.FC대신 props를 사용하도록 개선
+- fix: 관리자 리팩토링후 모달사이즈조정
 
 ### 제거
 
