@@ -3,20 +3,18 @@
  * 기능: 경기 라인업 관리 컴포넌트 - 라인업 CRUD 기능
  * 프로세스 설명: 특정 경기의 라인업 목록 조회, 생성, 수정, 삭제 기능 제공
  */
-import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { Button } from "@youngduck/yd-ui";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { ArrowLeftRight, Edit, FolderPlus, Star, Trash2 } from "lucide-react";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
-import { useCreateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-create-match-lineup";
 import { useDeleteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-delete-match-lineup";
-import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
-import { useGetAllPositionsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-positions-suspense";
 import { useGetMatchLineupsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense";
-import { useSubstituteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-substitute-match-lineup";
-import { useUpdateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-update-match-lineup";
+import { AdminMatchLineupAddModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-add-modal";
+import { AdminMatchLineupEditModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-edit-modal";
+import { AdminMatchLineupSubstitutionModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-substitution-modal";
 
 const AdminMatchLineup = () => {
   //SECTION HOOK호출 영역
@@ -27,231 +25,42 @@ const AdminMatchLineup = () => {
   }
 
   const { data: lineups } = useGetMatchLineupsSuspense(matchId);
-  const { data: players } = useGetAllPlayersSuspense();
-  const { data: positions } = useGetAllPositionsSuspense();
-  const { mutateAsync: createLineup, isPending: isCreating } = useCreateMatchLineup(matchId);
-  const { mutateAsync: updateLineup, isPending: isUpdating } = useUpdateMatchLineup(matchId);
   const { mutateAsync: deleteLineup } = useDeleteMatchLineup(matchId);
-  const { mutateAsync: substituteLineup, isPending: isSubstituting } = useSubstituteMatchLineup(matchId);
+  const overlay = useOverlay();
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [editingLineup, setEditingLineup] = useState<IMatchLineup | null>(null);
-  const [substitutionTarget, setSubstitutionTarget] = useState<IMatchLineup | null>(null);
-  const [substitutionMinuteInput, setSubstitutionMinuteInput] = useState<number | "">("");
-  const [formData, setFormData] = useState({
-    player_id: "",
-    position_id: "",
-    lineup_type: "STARTING" as "STARTING" | "BENCH",
-    is_captain: false,
-    substitution_status: "NONE" as "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT",
-    substitution_minute: null as number | null,
-    substitution_partner_id: "",
-    yellow_cards: 0,
-    red_card_minute: null as number | null,
-    is_sent_off: false,
-    goals: 0,
-    assists: 0,
-  });
+
   //!SECTION 상태값 영역
 
-  //SECTION SelectBox 옵션/훅
-  const playerOptions = useMemo(
-    () =>
-      players.map((p) => ({
-        label: p.id,
-        value: `${p.korean_name || p.name}${p.jersey_number ? ` (${p.jersey_number}번)` : ""}`,
-      })),
-    [players],
-  );
-
-  const positionOptions = useMemo(
-    () => positions.map((pos) => ({ label: pos.id, value: `${pos.position_detail_name} (${pos.position_code})` })),
-    [positions],
-  );
-
-  const lineupTypeOptions = useMemo(
-    () => [
-      { label: "STARTING", value: "선발" },
-      { label: "BENCH", value: "벤치" },
-    ],
-    [],
-  );
-
-  const substitutionStatusOptions = useMemo(
-    () => [
-      { label: "NONE", value: "없음" },
-      { label: "SUBSTITUTED_IN", value: "교체투입" },
-      { label: "SUBSTITUTED_OUT", value: "교체아웃" },
-    ],
-    [],
-  );
-
-  const getPlayerValueById = (id: string) => playerOptions.find((o) => o.label === id)?.value;
-  const getPositionValueById = (id: string) => positionOptions.find((o) => o.label === id)?.value;
-
-  // 생성 모달 훅
-  const createPlayerHook = useSelectBox({ options: playerOptions, search: true });
-  const createPositionHook = useSelectBox({ options: positionOptions, search: true });
-  const createLineupTypeHook = useSelectBox({ options: lineupTypeOptions, defaultValue: "선발" });
-  const createSubStatusHook = useSelectBox({ options: substitutionStatusOptions, defaultValue: "없음" });
-  const createSubPartnerHook = useSelectBox({ options: playerOptions, search: true });
-
-  // 수정 모달 훅
-  const editPlayerHook = useSelectBox({
-    options: playerOptions,
-    search: true,
-    defaultValue: editingLineup ? getPlayerValueById(editingLineup.player_id) : undefined,
-  });
-  const editPositionHook = useSelectBox({
-    options: positionOptions,
-    search: true,
-    defaultValue:
-      editingLineup && editingLineup.position_id ? getPositionValueById(editingLineup.position_id) : undefined,
-  });
-  const editLineupTypeHook = useSelectBox({
-    options: lineupTypeOptions,
-    defaultValue: editingLineup ? (editingLineup.lineup_type === "STARTING" ? "선발" : "벤치") : undefined,
-  });
-  const editSubStatusHook = useSelectBox({
-    options: substitutionStatusOptions,
-    defaultValue: editingLineup
-      ? editingLineup.substitution_status === "NONE"
-        ? "없음"
-        : editingLineup.substitution_status === "SUBSTITUTED_IN"
-          ? "교체투입"
-          : "교체아웃"
-      : undefined,
-  });
-  const editSubPartnerHook = useSelectBox({
-    options: playerOptions,
-    search: true,
-    defaultValue:
-      editingLineup && editingLineup.substitution_partner_id
-        ? getPlayerValueById(editingLineup.substitution_partner_id)
-        : undefined,
-  });
-
-  const substitutionBenchPlayerHook = useSelectBox({
-    options: playerOptions,
-    search: true,
-  });
-  //!SECTION SelectBox 옵션/훅
-
   //SECTION 메서드 영역
-  const handleCreateLineup = async () => {
-    await createLineup({
-      match_id: matchId,
-      player_id: (createPlayerHook.label as string) || formData.player_id,
-      position_id: (createPositionHook.label as string) || undefined,
-      lineup_type: (createLineupTypeHook.label as "STARTING" | "BENCH") || formData.lineup_type,
-      is_captain: formData.is_captain,
-      substitution_status:
-        (createSubStatusHook.label as "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT") || formData.substitution_status,
-      substitution_minute: formData.substitution_minute || undefined,
-      substitution_partner_id: (createSubPartnerHook.label as string) || formData.substitution_partner_id || undefined,
-      yellow_cards: formData.yellow_cards,
-      red_card_minute: formData.red_card_minute || undefined,
-      is_sent_off: formData.is_sent_off,
-      goals: formData.goals,
-      assists: formData.assists,
-    });
-    setIsCreateModalOpen(false);
-    resetFormData();
-  };
-
-  const handleUpdateLineup = async () => {
-    if (!editingLineup) return;
-
-    await updateLineup({
-      id: editingLineup.id,
-      match_id: matchId,
-      player_id: (editPlayerHook.label as string) || formData.player_id || undefined,
-      position_id: (editPositionHook.label as string) || formData.position_id || undefined,
-      lineup_type: (editLineupTypeHook.label as "STARTING" | "BENCH") || formData.lineup_type,
-      is_captain: formData.is_captain,
-      substitution_status:
-        (editSubStatusHook.label as "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT") || formData.substitution_status,
-      substitution_minute: formData.substitution_minute || undefined,
-      substitution_partner_id: (editSubPartnerHook.label as string) || formData.substitution_partner_id || undefined,
-      yellow_cards: formData.yellow_cards,
-      red_card_minute: formData.red_card_minute || undefined,
-      is_sent_off: formData.is_sent_off,
-      goals: formData.goals,
-      assists: formData.assists,
-    });
-    setEditingLineup(null);
-    resetFormData();
-  };
-
-  const handleOpenSubstitutionModal = (lineup: IMatchLineup) => {
-    if (lineup.lineup_type !== "STARTING") return;
-    setSubstitutionTarget(lineup);
-    setSubstitutionMinuteInput("");
-  };
-
-  const handleConfirmSubstitution = async () => {
-    if (!substitutionTarget) return;
-    if (!substitutionMinuteInput || substitutionMinuteInput < 1 || substitutionMinuteInput > 120) {
-      alert("교체 시간은 1분 이상 120분 이하로 입력해주세요.");
-      return;
-    }
-
-    const partnerPlayerId = substitutionBenchPlayerHook.label as string | undefined;
-    if (!partnerPlayerId) {
-      alert("교체로 들어올 선수를 선택해주세요.");
-      return;
-    }
-
-    await substituteLineup({
-      lineup_id: substitutionTarget.id,
-      substitution_minute: substitutionMinuteInput,
-      partner_player_id: partnerPlayerId,
-    });
-
-    setSubstitutionTarget(null);
-    setSubstitutionMinuteInput("");
-  };
-
   const handleDeleteLineup = async (id: number) => {
     if (!confirm("정말로 이 라인업을 삭제하시겠습니까?")) return;
 
     await deleteLineup(id);
   };
 
-  const openEditModal = (lineup: IMatchLineup) => {
-    setEditingLineup(lineup);
-    setFormData({
-      player_id: lineup.player_id,
-      position_id: lineup.position_id || "",
-      lineup_type: lineup.lineup_type as "STARTING" | "BENCH",
-      is_captain: lineup.is_captain,
-      substitution_status: lineup.substitution_status as "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT",
-      substitution_minute: lineup.substitution_minute,
-      substitution_partner_id: lineup.substitution_partner_id || "",
-      yellow_cards: lineup.yellow_cards,
-      red_card_minute: lineup.red_card_minute,
-      is_sent_off: lineup.is_sent_off,
-      goals: lineup.goals,
-      assists: lineup.assists,
+  const handleOpenAddModal = () => {
+    overlay.modalOpen({
+      content: (onClose) => <AdminMatchLineupAddModal matchId={matchId} onClose={onClose} />,
+      config: { size: "lg" },
     });
   };
 
-  const resetFormData = () => {
-    setFormData({
-      player_id: "",
-      position_id: "",
-      lineup_type: "STARTING",
-      is_captain: false,
-      substitution_status: "NONE",
-      substitution_minute: null,
-      substitution_partner_id: "",
-      yellow_cards: 0,
-      red_card_minute: null,
-      is_sent_off: false,
-      goals: 0,
-      assists: 0,
+  const handleOpenEditModal = (lineup: IMatchLineup) => {
+    overlay.modalOpen({
+      content: (onClose) => <AdminMatchLineupEditModal matchId={matchId} lineup={lineup} onClose={onClose} />,
+      config: { size: "lg" },
+    });
+  };
+
+  const handleOpenSubstitutionModal = (lineup: IMatchLineup) => {
+    if (lineup.lineup_type !== "STARTING") return;
+    overlay.modalOpen({
+      content: (onClose) => (
+        <AdminMatchLineupSubstitutionModal matchId={matchId} lineup={lineup} onClose={onClose} />
+      ),
+      config: { size: "sm" },
     });
   };
 
@@ -284,7 +93,7 @@ const AdminMatchLineup = () => {
           variant="outlined"
           color="primary"
           size="md"
-          onClick={() => setIsCreateModalOpen(true)}
+          onClick={handleOpenAddModal}
           className="flex items-center gap-2"
           aria-label="새 라인업 추가"
         >
@@ -346,7 +155,7 @@ const AdminMatchLineup = () => {
                       </button>
                     )}
                     <button
-                      onClick={() => openEditModal(lineup)}
+                      onClick={() => handleOpenEditModal(lineup)}
                       className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
                       aria-label="수정"
                     >
@@ -366,347 +175,6 @@ const AdminMatchLineup = () => {
           </tbody>
         </table>
       </div>
-
-      {/* 생성 모달 */}
-      {isCreateModalOpen && (
-        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
-          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
-            <h2 className="text-yds-b1 text-primary-100">새 선수 추가</h2>
-            <div className="flex flex-col gap-4">
-              <div>
-                <label className="text-yds-b1 text-primary-100">선수 *</label>
-                <SelectBox size="full" selectBoxHook={createPlayerHook} />
-              </div>
-              <div>
-                <label className="text-yds-b1 text-primary-100">포지션</label>
-                <SelectBox size="full" selectBoxHook={createPositionHook} />
-              </div>
-              <div>
-                <label className="text-yds-b1 text-primary-100">라인업 타입 *</label>
-                <SelectBox size="full" selectBoxHook={createLineupTypeHook} />
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={formData.is_captain}
-                  onChange={(e) => setFormData({ ...formData, is_captain: e.target.checked })}
-                  className="mr-2"
-                />
-                <label className="text-primary-100 text-sm">주장</label>
-              </div>
-              <div>
-                <label className="text-yds-b1 text-primary-100">교체 상태</label>
-                <SelectBox size="full" selectBoxHook={createSubStatusHook} />
-              </div>
-              {(createSubStatusHook.label === "SUBSTITUTED_IN" || createSubStatusHook.label === "SUBSTITUTED_OUT") && (
-                <div>
-                  <label className="text-yds-b1 text-primary-100">교체 시간 (분)</label>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={120}
-                    value={formData.substitution_minute || ""}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, substitution_minute: parseInt(e.target.value) || null })
-                    }
-                    size="full"
-                    color="primary-100"
-                    placeholder="예: 67"
-                  />
-                  <div className="mt-3">
-                    <label className="text-yds-b1 text-primary-100">교체 대상 선수</label>
-                    <SelectBox size="full" selectBoxHook={createSubPartnerHook} />
-                  </div>
-                </div>
-              )}
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="text-yds-b1 text-primary-100">골</label>
-                  <Input
-                    type="number"
-                    min={0}
-                    value={formData.goals}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, goals: parseInt(e.target.value) || 0 })
-                    }
-                    size="full"
-                    color="primary-100"
-                    placeholder="0"
-                  />
-                </div>
-                <div>
-                  <label className="text-yds-b1 text-primary-100">어시스트</label>
-                  <Input
-                    type="number"
-                    min={0}
-                    value={formData.assists}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, assists: parseInt(e.target.value) || 0 })
-                    }
-                    size="full"
-                    color="primary-100"
-                    placeholder="0"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-yds-b1 text-primary-100">옐로우 카드</label>
-                <Input
-                  type="number"
-                  min={0}
-                  max={2}
-                  value={formData.yellow_cards}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, yellow_cards: parseInt(e.target.value) || 0 })
-                  }
-                  size="full"
-                  color="primary-100"
-                  placeholder="0"
-                />
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={formData.is_sent_off}
-                  onChange={(e) => setFormData({ ...formData, is_sent_off: e.target.checked })}
-                  className="mr-2"
-                />
-                <label className="text-primary-100 text-sm">퇴장</label>
-              </div>
-              {formData.is_sent_off && (
-                <div>
-                  <label className="text-yds-b1 text-primary-100">퇴장 시간 (분)</label>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={120}
-                    value={formData.red_card_minute || ""}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, red_card_minute: parseInt(e.target.value) || null })
-                    }
-                    size="full"
-                    color="primary-100"
-                    placeholder="예: 90"
-                  />
-                </div>
-              )}
-            </div>
-            <div className="mt-6 flex gap-2">
-              <Button
-                variant="outlined"
-                color="primary"
-                size="full"
-                onClick={() => {
-                  setIsCreateModalOpen(false);
-                  resetFormData();
-                }}
-              >
-                취소
-              </Button>
-              <Button variant="fill" color="primary" size="full" onClick={handleCreateLineup} disabled={isCreating}>
-                {isCreating ? "추가 중..." : "추가"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 수정 모달 */}
-      {editingLineup && (
-        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
-          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
-            <h2 className="text-yds-b1 text-primary-100">라인업 수정</h2>
-            <div className="flex flex-col gap-4">
-              <div>
-                <label className="text-yds-b1 text-primary-100">선수 *</label>
-                <SelectBox size="full" selectBoxHook={editPlayerHook} />
-              </div>
-              <div>
-                <label className="text-yds-b1 text-primary-100">포지션</label>
-                <SelectBox size="full" selectBoxHook={editPositionHook} />
-              </div>
-              <div>
-                <label className="text-yds-b1 text-primary-100">라인업 타입 *</label>
-                <SelectBox size="full" selectBoxHook={editLineupTypeHook} />
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={formData.is_captain}
-                  onChange={(e) => setFormData({ ...formData, is_captain: e.target.checked })}
-                  className="mr-2"
-                />
-                <label className="text-primary-100 text-sm">주장</label>
-              </div>
-              <div>
-                <label className="text-yds-b1 text-primary-100">교체 상태</label>
-                <SelectBox size="full" selectBoxHook={editSubStatusHook} />
-              </div>
-              {(editSubStatusHook.label === "SUBSTITUTED_IN" || editSubStatusHook.label === "SUBSTITUTED_OUT") && (
-                <div>
-                  <label className="text-yds-b1 text-primary-100">교체 시간 (분)</label>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={120}
-                    value={formData.substitution_minute || ""}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, substitution_minute: parseInt(e.target.value) || null })
-                    }
-                    size="full"
-                    color="primary-100"
-                    placeholder="예: 67"
-                  />
-                  <div className="mt-3">
-                    <label className="text-yds-b1 text-primary-100">교체 대상 선수</label>
-                    <SelectBox size="full" selectBoxHook={editSubPartnerHook} />
-                  </div>
-                </div>
-              )}
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="text-yds-b1 text-primary-100">골</label>
-                  <Input
-                    type="number"
-                    min={0}
-                    value={formData.goals}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, goals: parseInt(e.target.value) || 0 })
-                    }
-                    size="full"
-                    color="primary-100"
-                    placeholder="0"
-                  />
-                </div>
-                <div>
-                  <label className="text-yds-b1 text-primary-100">어시스트</label>
-                  <Input
-                    type="number"
-                    min={0}
-                    value={formData.assists}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, assists: parseInt(e.target.value) || 0 })
-                    }
-                    size="full"
-                    color="primary-100"
-                    placeholder="0"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-yds-b1 text-primary-100">옐로우 카드</label>
-                <Input
-                  type="number"
-                  min={0}
-                  max={2}
-                  value={formData.yellow_cards}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, yellow_cards: parseInt(e.target.value) || 0 })
-                  }
-                  size="full"
-                  color="primary-100"
-                  placeholder="0"
-                />
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={formData.is_sent_off}
-                  onChange={(e) => setFormData({ ...formData, is_sent_off: e.target.checked })}
-                  className="mr-2"
-                />
-                <label className="text-primary-100 text-sm">퇴장</label>
-              </div>
-              {formData.is_sent_off && (
-                <div>
-                  <label className="text-yds-b1 text-primary-100">퇴장 시간 (분)</label>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={120}
-                    value={formData.red_card_minute || ""}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, red_card_minute: parseInt(e.target.value) || null })
-                    }
-                    size="full"
-                    color="primary-100"
-                    placeholder="예: 90"
-                  />
-                </div>
-              )}
-            </div>
-            <div className="mt-6 flex gap-2">
-              <Button
-                variant="outlined"
-                color="primary"
-                size="full"
-                onClick={() => {
-                  setEditingLineup(null);
-                  resetFormData();
-                }}
-              >
-                취소
-              </Button>
-              <Button variant="fill" color="primary" size="full" onClick={handleUpdateLineup} disabled={isUpdating}>
-                {isUpdating ? "수정 중..." : "수정"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 교체 모달 */}
-      {substitutionTarget && (
-        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
-          <div className="bg-background-secondary flex w-96 flex-col gap-4 rounded-lg p-6">
-            <h2 className="text-yds-b1 text-primary-100">선수 교체</h2>
-            <p className="text-primary-200 text-sm">
-              {substitutionTarget.player_korean_name || substitutionTarget.player_name} 선수를 교체합니다.
-            </p>
-            <div>
-              <label className="text-yds-b1 text-primary-100">교체로 들어올 선수 *</label>
-              <SelectBox size="full" selectBoxHook={substitutionBenchPlayerHook} />
-            </div>
-            <div>
-              <label className="text-yds-b1 text-primary-100">교체 시간 (분)</label>
-              <Input
-                type="number"
-                min={1}
-                max={120}
-                value={substitutionMinuteInput}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setSubstitutionMinuteInput(e.target.value === "" ? "" : parseInt(e.target.value) || "")
-                }
-                size="full"
-                color="primary-100"
-                placeholder="예: 67"
-              />
-            </div>
-            <div className="mt-6 flex gap-2">
-              <Button
-                variant="outlined"
-                color="primary"
-                size="full"
-                onClick={() => {
-                  setSubstitutionTarget(null);
-                  setSubstitutionMinuteInput("");
-                }}
-              >
-                취소
-              </Button>
-              <Button
-                variant="fill"
-                color="primary"
-                size="full"
-                onClick={handleConfirmSubstitution}
-                disabled={isSubstituting}
-              >
-                {isSubstituting ? "교체 적용 중..." : "교체 적용"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

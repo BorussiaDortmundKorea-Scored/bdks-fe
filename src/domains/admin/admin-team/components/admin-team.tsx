@@ -3,7 +3,6 @@
  * 기능: 팀 관리 컴포넌트 - 팀 CRUD 기능
  * 프로세스 설명: 팀 목록 조회, 생성, 수정, 삭제 기능 제공
  */
-import { useState } from "react";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
@@ -115,7 +114,7 @@ const AdminTeam = () => {
           variant="outlined"
           color="primary"
           size="md"
-          onClick={() => setIsCreateModalOpen(true)}
+          onClick={handleOpenAddModal}
           className="flex items-center gap-2"
           aria-label="새 팀 추가"
         >
@@ -140,7 +139,7 @@ const AdminTeam = () => {
               <Td>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => openEditModal(team)}
+                    onClick={() => handleOpenEditModal(team)}
                     className="cursor-pointer text-indigo-500 hover:text-indigo-900"
                     aria-label="수정"
                   >
@@ -159,90 +158,6 @@ const AdminTeam = () => {
           ))}
         </TBody>
       </Table>
-
-      {/* 🔥 생성 모달 - yd-ui 컴포넌트들로 교체 */}
-      {isCreateModalOpen && (
-        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
-          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
-            <h2 className="text-yds-b1 text-primary-100">새 팀 추가</h2>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">팀명</label>
-                <Input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  placeholder="팀명을 입력하세요"
-                  size="full"
-                  color="primary-100"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">국가</label>
-                <SelectBox size="full" selectBoxHook={createCountrySelectHook} />
-              </div>
-            </div>
-            <div className="mt-6 flex gap-2">
-              <Button variant="outlined" color="primary" size="full" onClick={handleCreateModalClose}>
-                취소
-              </Button>
-              <Button
-                variant="fill"
-                color="primary"
-                size="full"
-                onClick={handleCreateTeam}
-                disabled={!formData.name || isCreating}
-              >
-                {isCreating ? "추가 중..." : "추가"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 🔥 수정 모달 - 생성 모달과 동일한 디자인 */}
-      {editingTeam && (
-        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
-          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
-            <h2 className="text-yds-b1 text-primary-100">팀 수정</h2>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">팀명</label>
-                <Input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  placeholder="팀명을 입력하세요"
-                  size="full"
-                  color="primary-100"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">국가</label>
-                <SelectBox size="full" selectBoxHook={editCountrySelectHook} />
-              </div>
-            </div>
-            <div className="mt-6 flex gap-2">
-              <Button variant="outlined" color="primary" size="full" onClick={handleEditModalClose}>
-                취소
-              </Button>
-              <Button
-                variant="fill"
-                color="primary"
-                size="full"
-                onClick={handleUpdateTeam}
-                disabled={!formData.name || isUpdating}
-              >
-                {isUpdating ? "수정 중..." : "수정"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

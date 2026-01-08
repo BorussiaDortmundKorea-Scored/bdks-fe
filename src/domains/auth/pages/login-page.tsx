@@ -21,7 +21,6 @@ const SIGNAL_IDUNA_PARK_IMAGE = `${SUPABASE_STORAGE_URL}/dortmund//iduna_park.pn
 
 const LoginPage = () => {
   //SECTION HOOK호출 영역
-
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
