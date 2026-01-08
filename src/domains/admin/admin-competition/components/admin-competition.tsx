@@ -3,74 +3,46 @@
  * 기능: 대회 관리 컴포넌트 - 대회 CRUD 기능
  * 프로세스 설명: 대회 목록 조회, 생성, 수정, 삭제 기능 제공
  */
-import { useState } from "react";
-
-import { Button, Input } from "@youngduck/yd-ui";
+import { Button } from "@youngduck/yd-ui";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { ICompetition } from "@admin/admin-competition/api/admin-competition-api";
-import { useCreateCompetition } from "@admin/admin-competition/api/react-query-api/use-create-competition";
 import { useDeleteCompetition } from "@admin/admin-competition/api/react-query-api/use-delete-competition";
 import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense";
-import { useUpdateCompetition } from "@admin/admin-competition/api/react-query-api/use-update-competition";
+import { AdminCompetitionAddModal } from "@admin/admin-competition/components/modal/admin-competition-add-modal";
+import { AdminCompetitionEditModal } from "@admin/admin-competition/components/modal/admin-competition-edit-modal";
 
 const AdminCompetition = () => {
   //SECTION HOOK호출 영역
   const { data: competitions } = useGetAllCompetitionsSuspense();
-  const { mutateAsync: createCompetition, isPending: isCreating } = useCreateCompetition();
-  const { mutateAsync: updateCompetition, isPending: isUpdating } = useUpdateCompetition();
   const { mutateAsync: deleteCompetition } = useDeleteCompetition();
+  const overlay = useOverlay();
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [editingCompetition, setEditingCompetition] = useState<ICompetition | null>(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    season: "",
-  });
+
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
-  const handleCreateCompetition = async () => {
-    await createCompetition({
-      name: formData.name,
-      season: formData.season,
-    });
-    setIsCreateModalOpen(false);
-    setFormData({
-      name: "",
-      season: "",
-    });
-  };
-
-  const handleUpdateCompetition = async () => {
-    if (!editingCompetition) return;
-
-    await updateCompetition({
-      id: editingCompetition.id,
-      name: formData.name || undefined,
-      season: formData.season || undefined,
-    });
-    setEditingCompetition(null);
-    setFormData({
-      name: "",
-      season: "",
-    });
-  };
-
   const handleDeleteCompetition = async (id: string) => {
     if (!confirm("정말로 이 대회를 삭제하시겠습니까?")) return;
 
     await deleteCompetition(id);
   };
 
-  const openEditModal = (competition: ICompetition) => {
-    setEditingCompetition(competition);
-    setFormData({
-      name: competition.name,
-      season: competition.season,
+  const handleOpenAddModal = () => {
+    overlay.modalOpen({
+      content: (onClose) => <AdminCompetitionAddModal onClose={onClose} />,
+      config: { size: "sm" },
+    });
+  };
+
+  const handleOpenEditModal = (competition: ICompetition) => {
+    overlay.modalOpen({
+      content: (onClose) => <AdminCompetitionEditModal competition={competition} onClose={onClose} />,
+      config: { size: "sm" },
     });
   };
   //!SECTION 메서드 영역
@@ -84,7 +56,7 @@ const AdminCompetition = () => {
           variant="outlined"
           color="primary"
           size="md"
-          onClick={() => setIsCreateModalOpen(true)}
+          onClick={handleOpenAddModal}
           className="flex items-center gap-2"
           aria-label="새 대회 추가"
         >
@@ -110,7 +82,7 @@ const AdminCompetition = () => {
               <Td>
                 <div className="flex items-center gap-3">
                   <button
-                    onClick={() => openEditModal(competition)}
+                    onClick={() => handleOpenEditModal(competition)}
                     className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
                     aria-label="수정"
                   >
@@ -129,108 +101,6 @@ const AdminCompetition = () => {
           ))}
         </TBody>
       </Table>
-
-      {/* 생성 모달 */}
-      {isCreateModalOpen && (
-        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
-          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
-            <h2 className="text-yds-b1 text-primary-100">새 대회 추가</h2>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">대회명</label>
-                <Input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  placeholder="대회명을 입력하세요"
-                  size="full"
-                  color="primary-100"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">시즌</label>
-                <Input
-                  type="text"
-                  value={formData.season}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, season: e.target.value })
-                  }
-                  placeholder="시즌을 입력하세요"
-                  size="full"
-                  color="primary-100"
-                />
-              </div>
-            </div>
-            <div className="mt-6 flex gap-2">
-              <Button variant="outlined" color="primary" size="full" onClick={() => setIsCreateModalOpen(false)}>
-                취소
-              </Button>
-              <Button
-                variant="fill"
-                color="primary"
-                size="full"
-                onClick={handleCreateCompetition}
-                disabled={!formData.name || !formData.season || isCreating}
-              >
-                {isCreating ? "추가 중..." : "추가"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 수정 모달 */}
-      {editingCompetition && (
-        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
-          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
-            <h2 className="text-yds-b1 text-primary-100">대회 수정</h2>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">대회명</label>
-                <Input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  placeholder="대회명을 입력하세요"
-                  size="full"
-                  color="primary-100"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">시즌</label>
-                <Input
-                  type="text"
-                  value={formData.season}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, season: e.target.value })
-                  }
-                  placeholder="시즌을 입력하세요"
-                  size="full"
-                  color="primary-100"
-                />
-              </div>
-            </div>
-            <div className="mt-6 flex gap-2">
-              <Button variant="outlined" color="primary" size="full" onClick={() => setEditingCompetition(null)}>
-                취소
-              </Button>
-              <Button
-                variant="fill"
-                color="primary"
-                size="full"
-                onClick={handleUpdateCompetition}
-                disabled={!formData.name || !formData.season || isUpdating}
-              >
-                {isUpdating ? "수정 중..." : "수정"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -3,106 +3,46 @@
  * 기능: 팀 관리 컴포넌트 - 팀 CRUD 기능
  * 프로세스 설명: 팀 목록 조회, 생성, 수정, 삭제 기능 제공
  */
-import { useState } from "react";
-
-import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { Button } from "@youngduck/yd-ui";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { ITeam } from "@admin/admin-team/api/admin-team-api";
-import { useCreateTeam } from "@admin/admin-team/api/react-query-api/use-create-team";
 import { useDeleteTeam } from "@admin/admin-team/api/react-query-api/use-delete-team";
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
-import { useUpdateTeam } from "@admin/admin-team/api/react-query-api/use-update-team";
-
-// 국가 옵션 데이터. 하드코딩중
-const countryOptions = [
-  { label: "독일", value: "독일" },
-  { label: "스페인", value: "스페인" },
-  { label: "이탈리아", value: "이탈리아" },
-  { label: "프랑스", value: "프랑스" },
-  { label: "영국", value: "영국" },
-  { label: "네덜란드", value: "네덜란드" },
-  { label: "포르투갈", value: "포르투갈" },
-];
+import { AdminTeamAddModal } from "@admin/admin-team/components/modal/admin-team-add-modal";
+import { AdminTeamEditModal } from "@admin/admin-team/components/modal/admin-team-edit-modal";
 
 const AdminTeam = () => {
   //SECTION HOOK호출 영역
   const { data: teams } = useGetAllTeamsSuspense();
-  const { mutateAsync: createTeam, isPending: isCreating } = useCreateTeam();
-  const { mutateAsync: updateTeam, isPending: isUpdating } = useUpdateTeam();
   const { mutateAsync: deleteTeam } = useDeleteTeam();
-
-  const createCountrySelectHook = useSelectBox({
-    options: countryOptions,
-    search: true,
-    defaultValue: "독일",
-  });
-
-  const editCountrySelectHook = useSelectBox({
-    options: countryOptions,
-    search: true,
-    defaultValue: "독일",
-  });
+  const overlay = useOverlay();
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [editingTeam, setEditingTeam] = useState<ITeam | null>(null);
-  const [formData, setFormData] = useState({
-    name: "",
-  });
+
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
-  const handleCreateTeam = async () => {
-    await createTeam({
-      name: formData.name,
-      country: createCountrySelectHook.value,
-    });
-    setIsCreateModalOpen(false);
-    setFormData({ name: "" });
-  };
-
-  const handleUpdateTeam = async () => {
-    if (!editingTeam) return;
-
-    await updateTeam({
-      id: editingTeam.id,
-      name: formData.name || undefined,
-      country: editCountrySelectHook.value,
-    });
-    setEditingTeam(null);
-    setFormData({ name: "" });
-  };
-
   const handleDeleteTeam = async (id: string) => {
     if (!confirm("정말로 이 팀을 삭제하시겠습니까?")) return;
     await deleteTeam(id);
   };
 
-  const openEditModal = (team: ITeam) => {
-    setEditingTeam(team);
-    setFormData({
-      name: team.name,
+  const handleOpenAddModal = () => {
+    overlay.modalOpen({
+      content: (onClose) => <AdminTeamAddModal onClose={onClose} />,
+      config: { size: "sm" },
     });
-    // SelectBox에 기존 값 설정
-    if (team.country) {
-      const countryOption = countryOptions.find((opt) => opt.value === team.country);
-      if (countryOption) {
-        editCountrySelectHook.handleClickOption(countryOption);
-      }
-    }
   };
 
-  const handleCreateModalClose = () => {
-    setIsCreateModalOpen(false);
-    setFormData({ name: "" });
-  };
-
-  const handleEditModalClose = () => {
-    setEditingTeam(null);
-    setFormData({ name: "" });
+  const handleOpenEditModal = (team: ITeam) => {
+    overlay.modalOpen({
+      content: (onClose) => <AdminTeamEditModal team={team} onClose={onClose} />,
+      config: { size: "sm" },
+    });
   };
   //!SECTION 메서드 영역
 
@@ -115,7 +55,7 @@ const AdminTeam = () => {
           variant="outlined"
           color="primary"
           size="md"
-          onClick={() => setIsCreateModalOpen(true)}
+          onClick={handleOpenAddModal}
           className="flex items-center gap-2"
           aria-label="새 팀 추가"
         >
@@ -138,17 +78,17 @@ const AdminTeam = () => {
               <Td>{team.name}</Td>
               <Td>{team.country || "-"}</Td>
               <Td>
-                <div className="flex gap-2">
+                <div className="flex items-center gap-3">
                   <button
-                    onClick={() => openEditModal(team)}
-                    className="cursor-pointer text-indigo-500 hover:text-indigo-900"
+                    onClick={() => handleOpenEditModal(team)}
+                    className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
                     aria-label="수정"
                   >
                     <Edit size={16} />
                   </button>
                   <button
                     onClick={() => handleDeleteTeam(team.id)}
-                    className="cursor-pointer text-red-600 hover:text-red-900"
+                    className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
                     aria-label="삭제"
                   >
                     <Trash2 size={16} />
@@ -159,90 +99,6 @@ const AdminTeam = () => {
           ))}
         </TBody>
       </Table>
-
-      {/* 🔥 생성 모달 - yd-ui 컴포넌트들로 교체 */}
-      {isCreateModalOpen && (
-        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
-          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
-            <h2 className="text-yds-b1 text-primary-100">새 팀 추가</h2>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">팀명</label>
-                <Input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  placeholder="팀명을 입력하세요"
-                  size="full"
-                  color="primary-100"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">국가</label>
-                <SelectBox size="full" selectBoxHook={createCountrySelectHook} />
-              </div>
-            </div>
-            <div className="mt-6 flex gap-2">
-              <Button variant="outlined" color="primary" size="full" onClick={handleCreateModalClose}>
-                취소
-              </Button>
-              <Button
-                variant="fill"
-                color="primary"
-                size="full"
-                onClick={handleCreateTeam}
-                disabled={!formData.name || isCreating}
-              >
-                {isCreating ? "추가 중..." : "추가"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 🔥 수정 모달 - 생성 모달과 동일한 디자인 */}
-      {editingTeam && (
-        <div className="bg-background-primary-layer fixed inset-0 z-50 flex items-center justify-center">
-          <div className="bg-background-secondary flex h-[90vh] w-96 flex-col gap-4 overflow-y-auto rounded-lg p-6">
-            <h2 className="text-yds-b1 text-primary-100">팀 수정</h2>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">팀명</label>
-                <Input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  placeholder="팀명을 입력하세요"
-                  size="full"
-                  color="primary-100"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-yds-b1 text-primary-100">국가</label>
-                <SelectBox size="full" selectBoxHook={editCountrySelectHook} />
-              </div>
-            </div>
-            <div className="mt-6 flex gap-2">
-              <Button variant="outlined" color="primary" size="full" onClick={handleEditModalClose}>
-                취소
-              </Button>
-              <Button
-                variant="fill"
-                color="primary"
-                size="full"
-                onClick={handleUpdateTeam}
-                disabled={!formData.name || isUpdating}
-              >
-                {isUpdating ? "수정 중..." : "수정"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
