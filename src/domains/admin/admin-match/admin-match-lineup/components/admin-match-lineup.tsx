@@ -14,6 +14,7 @@ import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/adm
 import { useDeleteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-delete-match-lineup";
 import { useGetMatchLineupsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense";
 import { AdminMatchLineupAddModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-add-modal";
+import { AdminMatchLineupBulkAddModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-bulk-add-modal";
 import { AdminMatchLineupEditModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-edit-modal";
 import { AdminMatchLineupSubstitutionModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-substitution-modal";
 
@@ -44,6 +45,13 @@ const AdminMatchLineup = () => {
   const handleOpenAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchLineupAddModal matchId={matchId} onClose={onClose} />,
+      config: { size: "sm" },
+    });
+  };
+
+  const handleOpenBulkAddModal = () => {
+    overlay.modalOpen({
+      content: (onClose) => <AdminMatchLineupBulkAddModal matchId={matchId} onClose={onClose} />,
       config: { size: "sm" },
     });
   };
@@ -88,17 +96,30 @@ const AdminMatchLineup = () => {
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between p-4">
         <h2 className="text-yds-s1 text-primary-100">라인업 관리</h2>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="md"
-          onClick={handleOpenAddModal}
-          className="flex items-center gap-2"
-          aria-label="새 라인업 추가"
-        >
-          <FolderPlus size={20} />
-          선수 추가
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outlined"
+            color="primary"
+            size="lg"
+            onClick={handleOpenBulkAddModal}
+            className="flex items-center gap-2"
+            aria-label="스타팅 명단등록"
+          >
+            <FolderPlus size={20} />
+            스타팅 명단등록
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="md"
+            onClick={handleOpenAddModal}
+            className="flex items-center gap-2"
+            aria-label="새 라인업 추가"
+          >
+            <FolderPlus size={20} />
+            선수 추가
+          </Button>
+        </div>
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
