@@ -85,6 +85,17 @@ export interface ISubstituteMatchLineupRequest {
   partner_player_id: string;
 }
 
+export interface IBulkCreateMatchLineupItem {
+  player_id: string;
+  position_id: string;
+  is_captain: boolean;
+}
+
+export interface IBulkCreateMatchLineupsRequest {
+  match_id: string;
+  lineups: IBulkCreateMatchLineupItem[];
+}
+
 // 특정 경기의 라인업 조회
 export const getMatchLineups = async (matchId: string): Promise<ApiResponse<IMatchLineup[]>> => {
   const { data, error } = (await supabase.rpc("get_match_lineups", {
@@ -181,4 +192,20 @@ export const getAllPositions = async (): Promise<ApiResponse<IPosition[]>> => {
     error: PostgrestError | null;
   };
   return { data: data as IPosition[], error: error as PostgrestError };
+};
+
+// 선발명단 일괄 생성
+export const bulkCreateMatchLineups = async (
+  payload: IBulkCreateMatchLineupsRequest,
+): Promise<ApiResponse<IMatchLineup[]>> => {
+  const { data, error } = (await supabase.rpc("bulk_insert_match_lineups", {
+    p_match_id: payload.match_id,
+    p_lineups: payload.lineups.map((lineup) => ({
+      player_id: lineup.player_id,
+      position_id: lineup.position_id,
+      is_captain: lineup.is_captain,
+    })),
+  })) as { data: IMatchLineup[]; error: PostgrestError | null };
+
+  return { data: data as IMatchLineup[], error: error as PostgrestError };
 };

@@ -3,6 +3,28 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.5.3] - 2026-01-12
+
+**Branch**: `bdks-v1.5.3-관리자기능편의성개선`
+
+### 추가
+
+- feat: 커밋시 pr 자동 changelog 등록기능 추가
+- feat: 관리자페이지 스타팅명단 일괄추가기능
+
+### 변경
+
+- chore: 자동화스크립트추가
+- test: 관리자페이지 테스트코드추가
+
+### 수정
+
+- fix: yd-ui table미반영화면적용
+
+### 제거
+
+---
+
 ## [1.5.2] - 2026-01-05
 
 **Branch**: `bdks-v1.5.2-관리자기능수정`

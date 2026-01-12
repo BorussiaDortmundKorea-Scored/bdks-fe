@@ -7,12 +7,14 @@ import { useParams } from "react-router-dom";
 
 import { Button } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
+import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { ArrowLeftRight, Edit, FolderPlus, Star, Trash2 } from "lucide-react";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 import { useDeleteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-delete-match-lineup";
 import { useGetMatchLineupsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense";
 import { AdminMatchLineupAddModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-add-modal";
+import { AdminMatchLineupBulkAddModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-bulk-add-modal";
 import { AdminMatchLineupEditModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-edit-modal";
 import { AdminMatchLineupSubstitutionModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-substitution-modal";
 
@@ -43,6 +45,13 @@ const AdminMatchLineup = () => {
   const handleOpenAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchLineupAddModal matchId={matchId} onClose={onClose} />,
+      config: { size: "sm" },
+    });
+  };
+
+  const handleOpenBulkAddModal = () => {
+    overlay.modalOpen({
+      content: (onClose) => <AdminMatchLineupBulkAddModal matchId={matchId} onClose={onClose} />,
       config: { size: "sm" },
     });
   };
@@ -87,92 +96,97 @@ const AdminMatchLineup = () => {
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between p-4">
         <h2 className="text-yds-s1 text-primary-100">라인업 관리</h2>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="md"
-          onClick={handleOpenAddModal}
-          className="flex items-center gap-2"
-          aria-label="새 라인업 추가"
-        >
-          <FolderPlus size={20} />
-          선수 추가
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outlined"
+            color="primary"
+            size="lg"
+            onClick={handleOpenBulkAddModal}
+            className="flex items-center gap-2"
+            aria-label="스타팅 명단등록"
+          >
+            <FolderPlus size={20} />
+            스타팅 명단등록
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="md"
+            onClick={handleOpenAddModal}
+            className="flex items-center gap-2"
+            aria-label="새 라인업 추가"
+          >
+            <FolderPlus size={20} />
+            선수 추가
+          </Button>
+        </div>
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <div className="scrollbar-hide border-primary-100 flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-lg border-2">
-        <table className="w-full">
-          <thead className="bg-background-primary text-primary-400 border-primary-100 text-yds-b1 border-b-2">
-            <tr className="h-12">
-              <th className="px-6 text-left uppercase">선수명</th>
-              <th className="px-6 text-left uppercase">포지션</th>
-              <th className="px-6 text-left uppercase">라인업</th>
-              <th className="px-6 text-left uppercase">주장</th>
-              <th className="px-6 text-left uppercase">교체</th>
-              <th className="px-6 text-left uppercase">골/어시</th>
-              <th className="px-6 text-left uppercase">카드</th>
-              <th className="px-6 text-left uppercase">작업</th>
-            </tr>
-          </thead>
-          <tbody className="bg-background-primary">
-            {lineups.map((lineup) => (
-              <tr key={lineup.id} className="hover:bg-primary-100/5 h-12">
-                <td className="text-primary-100 px-6 py-4 text-sm font-medium whitespace-nowrap">
-                  {lineup.player_korean_name || lineup.player_name}
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">
-                  {lineup.position_detail_name || "-"}
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">
-                  {getLineupTypeText(lineup.lineup_type)}
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">
-                  {lineup.is_captain && <Star size={16} className="text-yellow-500" />}
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">
-                  {getSubstitutionStatusText(lineup.substitution_status)}
-                  {lineup.substitution_minute && ` (${lineup.substitution_minute}')`}
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">
-                  {lineup.goals}골 / {lineup.assists}어시
-                </td>
-                <td className="text-primary-100 px-6 py-4 text-sm whitespace-nowrap">
-                  {lineup.yellow_cards > 0 && <span className="text-yellow-500">{lineup.yellow_cards}장</span>}
-                  {lineup.is_sent_off && <span className="ml-2 text-red-500">퇴장</span>}
-                </td>
-                <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                  <div className="flex items-center gap-3">
-                    {lineup.lineup_type === "STARTING" && (
-                      <button
-                        onClick={() => handleOpenSubstitutionModal(lineup)}
-                        className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
-                        aria-label="교체"
-                      >
-                        <ArrowLeftRight size={16} />
-                      </button>
-                    )}
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+        <THead>
+          <Tr>
+            <Th>선수명</Th>
+            <Th>포지션</Th>
+            <Th>라인업</Th>
+            <Th>주장</Th>
+            <Th>교체</Th>
+            <Th>골/어시</Th>
+            <Th>카드</Th>
+            <Th>작업</Th>
+          </Tr>
+        </THead>
+        <TBody>
+          {lineups.map((lineup) => (
+            <Tr key={lineup.id}>
+              <Td className="whitespace-nowrap">{lineup.player_korean_name || lineup.player_name}</Td>
+              <Td className="whitespace-nowrap">{lineup.position_detail_name || "-"}</Td>
+              <Td className="whitespace-nowrap">{getLineupTypeText(lineup.lineup_type)}</Td>
+              <Td className="whitespace-nowrap">
+                {lineup.is_captain && <Star size={16} className="text-yellow-500" />}
+              </Td>
+              <Td className="whitespace-nowrap">
+                {getSubstitutionStatusText(lineup.substitution_status)}
+                {lineup.substitution_minute && ` (${lineup.substitution_minute}')`}
+              </Td>
+              <Td className="whitespace-nowrap">
+                {lineup.goals}골 / {lineup.assists}어시
+              </Td>
+              <Td className="whitespace-nowrap">
+                {lineup.yellow_cards > 0 && <span className="text-yellow-500">{lineup.yellow_cards}장</span>}
+                {lineup.is_sent_off && <span className="ml-2 text-red-500">퇴장</span>}
+              </Td>
+              <Td className="whitespace-nowrap">
+                <div className="flex items-center gap-3">
+                  {lineup.lineup_type === "STARTING" && (
                     <button
-                      onClick={() => handleOpenEditModal(lineup)}
+                      onClick={() => handleOpenSubstitutionModal(lineup)}
                       className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
-                      aria-label="수정"
+                      aria-label="교체"
                     >
-                      <Edit size={16} />
+                      <ArrowLeftRight size={16} />
                     </button>
-                    <button
-                      onClick={() => handleDeleteLineup(lineup.id)}
-                      className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
-                      aria-label="삭제"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                  )}
+                  <button
+                    onClick={() => handleOpenEditModal(lineup)}
+                    className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
+                    aria-label="수정"
+                  >
+                    <Edit size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteLineup(lineup.id)}
+                    className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
+                    aria-label="삭제"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
     </div>
   );
 };

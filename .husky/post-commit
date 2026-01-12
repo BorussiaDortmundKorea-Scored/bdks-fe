@@ -1,0 +1,9 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# 커밋 메시지 가져오기
+COMMIT_MSG=$(git log -1 --pretty=%B)
+
+# CHANGELOG 자동 업데이트 (선택적)
+# 주석을 해제하면 커밋 후 자동으로 CHANGELOG에 추가됩니다
+npx pnpm run changelog "$COMMIT_MSG" || true

@@ -1,7 +1,7 @@
 {
   "name": "bdks-fe",
   "private": true,
-  "version": "1.5.2",
+  "version": "1.5.3",
   "type": "module",
   "scripts": {
     "dev:prod": "vite --mode prod --host",
@@ -20,7 +20,8 @@
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --exit-zero-on-changes",
     "check": "pnpm run lint && pnpm run type-check && pnpm run test && pnpm run build-storybook && pnpm run build:dev",
-    "check:quick": "pnpm run lint && pnpm run type-check && pnpm run test"
+    "check:quick": "pnpm run lint && pnpm run type-check && pnpm run test",
+    "changelog": "node scripts/update-changelog.js"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
