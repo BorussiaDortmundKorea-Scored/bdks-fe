@@ -111,4 +111,3 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
     </div>
   );
 };
-

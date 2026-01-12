@@ -7,7 +7,7 @@ import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 
 const AdminMatchLineupSkeleton = () => {
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full w-full flex-col" data-testid="admin-match-lineup-skeleton">
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between p-4">
         <div className="bg-primary-100/20 h-6 w-24 animate-pulse rounded" />

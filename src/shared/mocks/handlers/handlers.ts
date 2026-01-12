@@ -1,5 +1,6 @@
 import { AdminDashboardMatchStatsHandlers } from "@admin/admin-dashboard/admin-dashboard-match-stats/mocks/admin-dashboard-match-stats-handler";
 import { AdminDashboardUserCountHandlers } from "@admin/admin-dashboard/admin-dashboard-user-count/mocks/admin-dashboard-user-count-handler";
+import { AdminMatchLineupHandlers } from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-handler";
 import { AdminMatchLineupSubstitutionHandlers } from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-substitution-handler";
 
 import { MatchInfoHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/match-info-handler";
@@ -15,6 +16,7 @@ import { PlayersStatsByGameHandlers } from "@players/players-stats/players-stats
 export const handlers = [
   ...AdminDashboardMatchStatsHandlers,
   ...AdminDashboardUserCountHandlers,
+  ...AdminMatchLineupHandlers,
   ...AdminMatchLineupSubstitutionHandlers,
   ...MatchesHistoryHandlers,
   ...MatchesHistoryPlayersRatingHandlers,

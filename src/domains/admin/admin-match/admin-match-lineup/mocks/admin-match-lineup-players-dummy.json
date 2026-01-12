@@ -1,0 +1,35 @@
+[
+  {
+    "id": "test-player-uuid-1",
+    "name": "Marco Reus",
+    "korean_name": "마르코 로이스",
+    "jersey_number": 11,
+    "nationality": "GER",
+    "full_profile_image_url": "https://example.com/full_reus.png",
+    "head_profile_image_url": "https://example.com/head_reus.png",
+    "created_at": "2026-01-01T00:00:00Z",
+    "updated_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "test-player-uuid-2",
+    "name": "Felix Nmecha",
+    "korean_name": "펠릭스 은메차",
+    "jersey_number": 8,
+    "nationality": "GER",
+    "full_profile_image_url": "https://example.com/full_nmecha.png",
+    "head_profile_image_url": "https://example.com/head_nmecha.png",
+    "created_at": "2026-01-01T00:00:00Z",
+    "updated_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "test-player-uuid-3",
+    "name": "Gregor Kobel",
+    "korean_name": "그레고르 코벨",
+    "jersey_number": 1,
+    "nationality": "SUI",
+    "full_profile_image_url": "https://example.com/full_kobel.png",
+    "head_profile_image_url": "https://example.com/head_kobel.png",
+    "created_at": "2026-01-01T00:00:00Z",
+    "updated_at": "2026-01-01T00:00:00Z"
+  }
+]

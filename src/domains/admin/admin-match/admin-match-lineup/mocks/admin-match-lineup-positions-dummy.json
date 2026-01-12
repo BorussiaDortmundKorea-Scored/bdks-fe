@@ -1,0 +1,30 @@
+[
+  {
+    "id": "test-position-uuid-1",
+    "position_code": "GK",
+    "sort_order": 1,
+    "position_detail_name": "GK",
+    "line_number": 1
+  },
+  {
+    "id": "test-position-uuid-2",
+    "position_code": "DF",
+    "sort_order": 2,
+    "position_detail_name": "CB",
+    "line_number": 2
+  },
+  {
+    "id": "test-position-uuid-3",
+    "position_code": "MF",
+    "sort_order": 3,
+    "position_detail_name": "CAM",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-4",
+    "position_code": "FW",
+    "sort_order": 4,
+    "position_detail_name": "ST",
+    "line_number": 4
+  }
+]

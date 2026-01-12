@@ -7,7 +7,10 @@ import { AlertTriangle } from "lucide-react";
 
 const AdminMatchLineupErrorFallback = () => {
   return (
-    <div className="bg-background-primary flex h-full w-full flex-col items-center justify-center gap-4">
+    <div
+      className="bg-background-primary flex h-full w-full flex-col items-center justify-center gap-4"
+      data-testid="admin-match-lineup-error-fallback"
+    >
       <AlertTriangle size={64} className="text-red-500" />
       <div className="text-center">
         <h2 className="text-primary-400 mb-2 text-xl font-bold">라인업 데이터를 불러올 수 없습니다</h2>
