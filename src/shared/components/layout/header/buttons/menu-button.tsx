@@ -1,42 +1,24 @@
 /**
  * 작성자: KYD
- * 기능:
- * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
+ * 기능: 헤더 메뉴 버튼 컴포넌트
+ * 프로세스 설명: 메뉴 버튼 클릭 시 네비게이션 메뉴 표시
  */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-import { Coffee, Menu, Settings } from "lucide-react";
+import { Menu } from "lucide-react";
 
-import { useAuth } from "@auth/contexts/AuthContext";
-
-import { LogoutButton } from "@shared/components/layout/header/buttons";
-import { ROUTES } from "@shared/constants/routes";
+import { useNavigationItems } from "@shared/hooks/use-navigation-items";
 
 const MenuButton = () => {
   //SECTION HOOK호출 영역
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const { profile, signOut } = useAuth();
-  const navigate = useNavigate();
-  const isAdmin = Boolean(profile?.is_admin);
+  const { items } = useNavigationItems("top-menu");
   //!SECTION HOOK호출 영역
 
   //SECTION 메서드 영역
-  const handleBlankNaverCafe = () => {
-    window.open(ROUTES.NAVER_CAFE, "_blank");
-  };
-
-  const handleGoAdminDashboard = () => {
-    navigate(ROUTES.ADMIN_DASHBOARD);
+  const handleItemClick = (onClick: () => void) => {
+    onClick();
     setIsMenuOpen(false);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await signOut();
-    } catch {
-      alert("로그아웃 중 오류가 발생했습니다.");
-    }
   };
   //!SECTION 메서드 영역
 
@@ -51,18 +33,18 @@ const MenuButton = () => {
       {isMenuOpen && (
         <div className="bg-background-primary fixed top-15 right-0 left-0 z-10 h-auto w-full px-5 py-5 text-white">
           <ul className="flex flex-col gap-4">
-            <li className="flex cursor-pointer items-center gap-2" onClick={handleBlankNaverCafe}>
-              <Coffee size={24} className="text-primary-100" /> 네이버 카페 바로가기
-            </li>
-            <li className="flex cursor-pointer items-center gap-2" onClick={handleLogout}>
-              <LogoutButton /> 로그아웃 하기
-            </li>
-            {isAdmin && (
-              <li className="flex cursor-pointer items-center gap-2" onClick={handleGoAdminDashboard}>
-                <Settings size={24} className="text-primary-100" />
-                관리자 페이지 이동하기
-              </li>
-            )}
+            {items.map((item) => {
+              const Icon = item.icon;
+              return (
+                <li
+                  key={item.id}
+                  className="flex cursor-pointer items-center gap-2"
+                  onClick={() => handleItemClick(item.onClick)}
+                >
+                  <Icon size={24} className="text-primary-100" /> {item.label}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
