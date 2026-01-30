@@ -16,6 +16,7 @@ import AdminTeamPage from "@admin/admin-team/pages/admin-team-page";
 import AdminUserPage from "@admin/admin-user/pages/admin-user-page";
 import AdminRoute from "@admin/provider/admin-route";
 
+import AuthInformationPage from "@auth/auth-info/auth-information-page";
 import AuthProfilePage from "@auth/auth-profile/pages/auth-profile-page";
 import AuthProfileRoute from "@auth/auth-profile/provider/auth-profile-route";
 import { AuthProvider } from "@auth/contexts/AuthContext";
@@ -49,6 +50,9 @@ const Router = () => {
 
           {/* 어스 라우트 - 로그인 O + 닉네임 설정O 사용자만 접근 */}
           <Route element={<AuthRoute />}>
+            {/* 내 정보 */}
+            <Route path={ROUTES.MY_INFO} element={<AuthInformationPage />} />
+
             {/* 메인 대시보드 */}
             <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
 

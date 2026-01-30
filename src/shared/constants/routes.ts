@@ -12,6 +12,9 @@ export const ROUTES = {
   // 인증 프로필
   AUTH_PROFILE: "/auth/profile",
 
+  // 내 정보
+  MY_INFO: "/myInfo",
+
   // 메인
   DASHBOARD: "/dashboard",
 
