@@ -11,21 +11,10 @@ import { Button, Input } from "@youngduck/yd-ui";
 
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
 
-interface IAuthProfile {}
-
-const AuthProfile: React.FC<IAuthProfile> = () => {
+const AuthProfile = () => {
   //SECTION HOOK호출 영역
   const [nickname, setNickname] = useState("");
   const { mutateAsync: createAuthProfile, isPending: isCreateAuthProfileLoading } = useCreateAuthProfile();
-  // const genderSelectHook = useSelectBox({
-  //   options: [
-  //     { label: "001", value: "남자" },
-  //     { label: "002", value: "여자" },
-  //     { label: "003", value: "기타" },
-  //   ],
-  //   search: true,
-  //   defaultValue: "기타",
-  // });
 
   const trimNickname = (nickname: string) => {
     return nickname.trim();
