@@ -3,6 +3,26 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.5.4] - 2026-02-06
+
+**Branch**: `bdks-v1.5.4-내정보페이지기능개발`
+
+### 추가
+- feat: 내정보페이지 기능 추가
+- feat: 내정보 페이지 추가
+- feat: 네비게이터 메뉴이동 팩토리패턴으로 제작
+- feat: dashboard페이지 아래네비게이션바추가
+
+
+### 변경
+- refactor: 불필요한console제거
+
+### 수정
+
+
+### 제거
+
+---
 ## [1.5.3] - 2026-01-12
 
 **Branch**: `bdks-v1.5.3-관리자기능편의성개선`

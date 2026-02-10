@@ -36,41 +36,30 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleAuthStateChange = (event: string, currentSession: Session | null) => {
-    console.log("인증 상태 변경:", event, currentSession);
-
     if (event === "SIGNED_IN" && currentSession) {
       setUser(currentSession.user);
       setSession(currentSession);
       // 프로필 정보 로드
       void loadProfile(currentSession.user.id);
       // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 저장 불필요
-      console.log("로그인 성공! Session:", currentSession);
     } else if (event === "SIGNED_OUT") {
       setUser(null);
       setSession(null);
       setProfile(null);
       // React Query 캐시 정리
       queryClient.clear();
-      console.log("로그아웃 완료 - 쿼리 캐시 정리됨");
     }
 
     setIsLoading(false);
   };
 
   const signOut = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error("로그아웃 오류:", error);
-        throw error;
-      }
-      // React Query 캐시 정리
-      queryClient.clear();
-      console.log("로그아웃 완료 - 쿼리 캐시 정리됨");
-    } catch (err) {
-      console.error("로그아웃 예외:", err);
-      throw err;
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      throw error;
     }
+    // React Query 캐시 정리
+    queryClient.clear();
   };
 
   const loadProfile = async (userId: string) => {
@@ -78,14 +67,12 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).maybeSingle();
 
       if (error) {
-        console.error("프로필 조회 오류:", error);
         setProfile(null);
         return;
       }
 
       setProfile((data as IProfile) ?? null);
-    } catch (err) {
-      console.error("프로필 조회 예외:", err);
+    } catch {
       setProfile(null);
     }
   };
@@ -104,7 +91,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       const { data, error } = await supabase.rpc("delete_user_account");
 
       if (error) {
-        console.error("회원탈퇴 RPC 오류:", error);
         return {
           success: false,
           error: "회원탈퇴 중 오류가 발생했습니다.",
@@ -122,13 +108,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       // 성공 시 로그아웃 처리
       await signOut();
 
-      console.log("회원탈퇴 완료");
       return {
         success: true,
         message: data.message || "회원탈퇴가 완료되었습니다.",
       };
-    } catch (err) {
-      console.error("회원탈퇴 예외:", err);
+    } catch {
       return {
         success: false,
         error: "회원탈퇴 중 예상치 못한 오류가 발생했습니다.",
@@ -140,33 +124,18 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     // OAuth 콜백 처리 - URL 해시에서 access_token 추출 및 세션 설정
     const handleOAuthCallback = async () => {
       if (window.location.hash.includes("access_token")) {
-        console.log("OAuth 콜백 처리 시작");
-
         const hash = window.location.hash.substring(1);
         const params = new URLSearchParams(hash);
         const accessToken = params.get("access_token");
         const refreshToken = params.get("refresh_token");
 
-        console.log("URL 파라미터:", { accessToken: !!accessToken, refreshToken: !!refreshToken });
-
         if (accessToken && refreshToken) {
-          try {
-            const { data, error } = await supabase.auth.setSession({
-              access_token: accessToken,
-              refresh_token: refreshToken,
-            });
+          await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
 
-            if (error) {
-              console.error("OAuth 세션 설정 오류:", error);
-            } else if (data.session) {
-              console.log("OAuth 로그인 성공:", data.session.user.email);
-              // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 저장 불필요
-              // 해시 제거 (URL 깔끔하게)
-              window.location.hash = "";
-            }
-          } catch (err) {
-            console.error("OAuth 콜백 처리 예외:", err);
-          }
+          window.history.replaceState(null, "", window.location.pathname + window.location.search);
         }
       }
     };
@@ -180,7 +149,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         } = await supabase.auth.getSession();
 
         if (error) {
-          console.error("초기 세션 확인 오류:", error);
           setIsLoading(false);
           return;
         }
@@ -191,8 +159,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
           // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 저장 불필요
           await loadProfile(session.user.id);
         }
-      } catch (err) {
-        console.error("초기 세션 확인 예외:", err);
+      } catch {
+        // 초기 세션 확인 예외 무시
       } finally {
         setIsLoading(false);
       }

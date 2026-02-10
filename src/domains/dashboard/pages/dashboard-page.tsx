@@ -11,9 +11,11 @@ import PlayerDbSkeleton from "@players/players-db/components/skeleton/players-db
 
 import { MenuButton } from "@shared/components/layout/header/buttons";
 import Header from "@shared/components/layout/header/header";
+import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
 import CustomHelmet from "@shared/components/seo/custom-helmet";
 import { usePageTransition } from "@shared/hooks/use-page-transition";
-import LayoutWithHeader from "@shared/provider/layout-with-header";
+
+import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
@@ -36,7 +38,7 @@ const DashboardPage = () => {
       />
       <div className="bdks-container" ref={pageRef}>
         <Header options={options} />
-        <LayoutWithHeader>
+        <LayoutWithHeaderFooter>
           <ReactQueryBoundary skeleton={<MatchesLastestSkeleton />} errorFallback={MatchesLastestErrorFallback}>
             <MatchesLastest />
           </ReactQueryBoundary>
@@ -46,7 +48,8 @@ const DashboardPage = () => {
           <ReactQueryBoundary skeleton={<PlayerDbSkeleton />} errorFallback={PlayerDbErrorFallback}>
             <PlayerDb />
           </ReactQueryBoundary>
-        </LayoutWithHeader>
+        </LayoutWithHeaderFooter>
+        <BottomNavigationBar />
       </div>
     </>
   );

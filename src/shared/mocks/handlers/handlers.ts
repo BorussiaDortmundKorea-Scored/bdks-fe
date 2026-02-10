@@ -3,6 +3,8 @@ import { AdminDashboardUserCountHandlers } from "@admin/admin-dashboard/admin-da
 import { AdminMatchLineupHandlers } from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-handler";
 import { AdminMatchLineupSubstitutionHandlers } from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-substitution-handler";
 
+import { AuthInfoPointCardHandlers } from "@auth/auth-info/auth-info-point-card/mocks/auth-info-point-card-handler";
+
 import { MatchInfoHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/match-info-handler";
 import { MatchesHistoryPlayersRatingHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/matches-history-players-rating-handler";
 import { MatchesHistoryHandlers } from "@matches/matches-history/mocks/matches-history-handler";
@@ -18,6 +20,7 @@ export const handlers = [
   ...AdminDashboardUserCountHandlers,
   ...AdminMatchLineupHandlers,
   ...AdminMatchLineupSubstitutionHandlers,
+  ...AuthInfoPointCardHandlers,
   ...MatchesHistoryHandlers,
   ...MatchesHistoryPlayersRatingHandlers,
   ...MatchInfoHandlers,

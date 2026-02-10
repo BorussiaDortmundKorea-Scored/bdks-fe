@@ -9,6 +9,7 @@ export interface IProfile {
   created_at: string;
   updated_at: string;
   is_admin: boolean;
+  points: number;
 }
 
 export interface ICreateProfileRequest {
