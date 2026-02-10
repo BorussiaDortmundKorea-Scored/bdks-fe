@@ -8,7 +8,6 @@ export const usePageTransition = () => {
 
   useGSAP(
     () => {
-      console.log("페이지 진입");
       if (pageRef.current) {
         // 페이지 진입 애니메이션
         gsap.fromTo(
