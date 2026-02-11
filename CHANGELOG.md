@@ -3,6 +3,23 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.5.5] - 2026-02-11
+
+**Branch**: `bdks-v1.5.5-관리자대시보드유저유형분석기능추가`
+
+### 추가
+- feat: 유저유형분석대시보드추가
+- docs: v1.5.5작업내용문서
+
+### 변경
+- style: 파이차트 라벨 크기조정
+
+### 수정
+
+
+### 제거
+
+---
 ## [1.5.4] - 2026-02-06
 
 **Branch**: `bdks-v1.5.4-내정보페이지기능개발`
