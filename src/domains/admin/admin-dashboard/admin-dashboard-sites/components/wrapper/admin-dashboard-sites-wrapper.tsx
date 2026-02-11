@@ -23,7 +23,7 @@ const AdminDashboardSitesWrapper = ({ children }: IAdminDashboardSitesWrapper) =
 
   return (
     <div
-      className={`bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 col-start-1 col-end-2 row-start-2 row-end-2 flex items-center justify-between md:col-start-4 md:col-end-7 md:row-start-2 md:row-end-3`}
+      className="bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 col-start-1 col-end-2 row-start-2 row-end-2 flex items-center md:col-start-6 md:col-end-9 md:row-start-2 md:row-end-3"
     >
       {children}
     </div>
