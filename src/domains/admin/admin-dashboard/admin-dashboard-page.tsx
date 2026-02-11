@@ -10,8 +10,11 @@ import AdminDashboardMatchStatsSkeleton from "./admin-dashboard-match-stats/comp
 import AdminDashboardSites from "./admin-dashboard-sites/components/admin-dashboard-sites";
 import AdminDashboardUserCountError from "./admin-dashboard-user-count/components/error/admin-dashboard-user-count-error";
 import AdminDashboardUserCountSkeleton from "./admin-dashboard-user-count/components/skeleton/admin-dashboard-user-count-skeleton";
+import AdminDashboardUserLoginTypeError from "./admin-dashboard-user-login-type/components/error/admin-dashboard-user-login-type-error";
+import AdminDashboardUserLoginTypeSkeleton from "./admin-dashboard-user-login-type/components/skeleton/admin-dashboard-user-login-type-skeleton";
 
 import AdminDashboardUserCount from "@admin/admin-dashboard/admin-dashboard-user-count/components/admin-dashboard-user-count";
+import AdminDashboardUserLoginType from "@admin/admin-dashboard/admin-dashboard-user-login-type/components/admin-dashboard-user-login-type";
 import AdminGridWrapper from "@admin/provider/admin-grid-wrapper";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
@@ -25,6 +28,12 @@ const AdminDashboardPage = () => {
       </ReactQueryBoundary>
       <ReactQueryBoundary skeleton={<AdminDashboardMatchStatsSkeleton />} errorFallback={AdminDashboardMatchStatsError}>
         <AdminDashboardMatchStats />
+      </ReactQueryBoundary>
+      <ReactQueryBoundary
+        skeleton={<AdminDashboardUserLoginTypeSkeleton />}
+        errorFallback={AdminDashboardUserLoginTypeError}
+      >
+        <AdminDashboardUserLoginType />
       </ReactQueryBoundary>
       <AdminDashboardSites />
       <AdminDashboardHome />

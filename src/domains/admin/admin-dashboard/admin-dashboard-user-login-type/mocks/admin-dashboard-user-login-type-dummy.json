@@ -1,0 +1,4 @@
+[
+  { "provider": "kakao", "count": 5 },
+  { "provider": "anonymous", "count": 3 }
+]
