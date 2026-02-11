@@ -21,7 +21,8 @@
     "chromatic": "npx chromatic --exit-zero-on-changes",
     "check": "pnpm run lint && pnpm run type-check && pnpm run test && pnpm run build-storybook && pnpm run build:dev",
     "check:quick": "pnpm run lint && pnpm run type-check && pnpm run test",
-    "changelog": "node scripts/update-changelog.js"
+    "changelog": "node scripts/update-changelog.js",
+    "release": "node scripts/auto-release.js"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
