@@ -1,5 +1,6 @@
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 
+export const BDKS_LOGO = `${SUPABASE_STORAGE_URL}/asset/logo.png`;
 export const GITHUB_LOGO = `${SUPABASE_STORAGE_URL}/asset/admin/github.png`;
 export const SENTRY_LOGO = `${SUPABASE_STORAGE_URL}/asset/admin/sentry.png`;
 export const STORYBOOK_LOGO = `${SUPABASE_STORAGE_URL}/asset/admin/storybook.png`;
@@ -7,6 +8,12 @@ export const SUPABASE_LOGO = `${SUPABASE_STORAGE_URL}/asset/admin/supabase.png`;
 export const VERCEL_LOGO = `${SUPABASE_STORAGE_URL}/asset/admin/vercel.png`;
 
 export const SITE_LINK_DATA = [
+  {
+    id: 0,
+    name: "home",
+    logo: BDKS_LOGO,
+    internalPath: "/dashboard",
+  },
   {
     id: 1,
     link: "https://github.com/BorussiaDortmundKorea-Scored/bdks-fe",
