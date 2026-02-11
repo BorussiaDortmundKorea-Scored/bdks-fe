@@ -9,6 +9,7 @@
 
 ### 추가
 - docs: v1.5.6작업내용문서
+- feat: git tag release 자동화기능 추가
 
 ### 변경
 - refactor: 사이트모음 중앙집중화
