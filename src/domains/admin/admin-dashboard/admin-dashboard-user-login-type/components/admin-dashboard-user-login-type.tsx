@@ -44,7 +44,8 @@ const AdminDashboardUserLoginType = () => {
         labels: {
           color: "#FFFFFF",
           font: { size: 14, },
-          padding: 12,
+          padding: 16,
+          pointStyle: "rect",
           usePointStyle: true,
         },
       },
