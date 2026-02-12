@@ -22,6 +22,19 @@ export interface IMatch {
   second_half_end_time: Date;
 }
 
+export interface IBulkCreateMatchItem {
+  competition_id: string;
+  opponent_team_id: string;
+  match_date: string;
+  home_away: "HOME" | "AWAY";
+  match_start_time: string;
+  round_name?: string;
+}
+
+export interface IBulkCreateMatchesRequest {
+  matches: IBulkCreateMatchItem[];
+}
+
 export interface ICreateMatchRequest {
   competition_id: string;
   opponent_team_id: string;
@@ -120,4 +133,17 @@ export const deleteMatch = async (id: string): Promise<ApiResponse<boolean>> => 
   })) as { data: boolean; error: PostgrestError | null };
 
   return { data: data as boolean, error: error as PostgrestError };
+};
+
+export const bulkCreateMatches = async (
+  payload: IBulkCreateMatchesRequest,
+): Promise<ApiResponse<IMatch[]>> => {
+  const { data, error } = (await supabase.rpc("bulk_insert_matches", {
+    p_matches: payload.matches,
+  })) as { data: IMatch[]; error: PostgrestError | null };
+
+  return {
+    data: data as IMatch[],
+    error: error as PostgrestError,
+  };
 };

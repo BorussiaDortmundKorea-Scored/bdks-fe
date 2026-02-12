@@ -14,6 +14,7 @@ import type { IMatch } from "@admin/admin-match/api/admin-match-api";
 import { useDeleteMatch } from "@admin/admin-match/api/react-query-api/use-delete-match";
 import { useGetAllMatchesSuspense } from "@admin/admin-match/api/react-query-api/use-get-all-matches-suspense";
 import { AdminMatchAddModal } from "@admin/admin-match/components/modal/admin-match-add-modal";
+import { AdminMatchBulkAddModal } from "@admin/admin-match/components/modal/admin-match-bulk-add-modal";
 import { AdminMatchEditModal } from "@admin/admin-match/components/modal/admin-match-edit-modal";
 
 import { createAdminMatchLineupPath } from "@shared/constants/routes";
@@ -44,6 +45,13 @@ const AdminMatch = () => {
     });
   };
 
+  const handleOpenBulkAddModal = () => {
+    overlay.modalOpen({
+      content: (onClose) => <AdminMatchBulkAddModal onClose={onClose} />,
+      config: { size: "lg" },
+    });
+  };
+
   const handleOpenEditModal = (match: IMatch) => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchEditModal match={match} onClose={onClose} />,
@@ -61,17 +69,38 @@ const AdminMatch = () => {
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between p-4">
         <h2 className="text-yds-s1 text-primary-100">경기 관리</h2>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="md"
-          onClick={handleOpenAddModal}
-          className="flex items-center gap-2"
-          aria-label="새 경기 추가"
-        >
-          <FolderPlus size={20} />
-          경기 추가
-        </Button>
+        <div className="md:hidden">
+          <button
+            type="button"
+            onClick={handleOpenAddModal}
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-primary-100 text-primary-100"
+            aria-label="새 경기 추가"
+          >
+            <FolderPlus size={16} />
+          </button>
+        </div>
+        <div className="hidden md:flex items-center gap-2">
+          <Button
+            variant="outlined"
+            color="primary"
+            size="md"
+            onClick={handleOpenAddModal}
+            className="flex items-center gap-2"
+            aria-label="새 경기 추가"
+          >
+            경기 추가
+          </Button>
+          <Button
+            variant="fill"
+            color="primary"
+            size="lg"
+            onClick={handleOpenBulkAddModal}
+            className="flex items-center gap-2"
+            aria-label="경기 일괄 추가"
+          >
+            경기 일괄 추가
+          </Button>
+        </div>
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
