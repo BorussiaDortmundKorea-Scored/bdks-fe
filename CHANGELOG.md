@@ -3,6 +3,23 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.5.7] - 2026-02-12
+
+**Branch**: `bdks-v1.5.7-관리기능재정비`
+
+### 추가
+- feat: 시즌경기 대량으로 일괄추가하는기능추가
+- feat: 라인업관리 뒤로가기버튼 추가
+
+### 변경
+
+### 수정
+
+
+### 제거
+
+---
+
 ## [1.5.6] - 2026-02-11
 
 **Branch**: `bdks-v1.5.6-관리자대시보드리팩토링`
