@@ -68,7 +68,8 @@ describe("AdminMatchLineup 컴포넌트 기능 테스트", () => {
     renderWithQueryClient(["/admin/match/uuid/lineup"]);
 
     // 선수 추가 버튼 찾기
-    const addButton = await screen.findByLabelText("새 라인업 추가");
+    const addButtons = await screen.findAllByLabelText("새 라인업 추가");
+    const addButton = addButtons[0];
     expect(addButton).toBeInTheDocument();
 
     // 버튼 클릭

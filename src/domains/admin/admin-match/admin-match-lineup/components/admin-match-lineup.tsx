@@ -3,12 +3,12 @@
  * 기능: 경기 라인업 관리 컴포넌트 - 라인업 CRUD 기능
  * 프로세스 설명: 특정 경기의 라인업 목록 조회, 생성, 수정, 삭제 기능 제공
  */
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
-import { ArrowLeftRight, Edit, FolderPlus, Star, Trash2 } from "lucide-react";
+import { ArrowLeft, ArrowLeftRight, Edit, FolderPlus, Star, Trash2 } from "lucide-react";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 import { useDeleteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-delete-match-lineup";
@@ -17,9 +17,11 @@ import { AdminMatchLineupAddModal } from "@admin/admin-match/admin-match-lineup/
 import { AdminMatchLineupBulkAddModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-bulk-add-modal";
 import { AdminMatchLineupEditModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-edit-modal";
 import { AdminMatchLineupSubstitutionModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-substitution-modal";
+import { ROUTES } from "@shared/constants/routes";
 
 const AdminMatchLineup = () => {
   //SECTION HOOK호출 영역
+  const navigate = useNavigate();
   const { matchId } = useParams<{ matchId: string }>();
 
   if (!matchId) {
@@ -36,6 +38,10 @@ const AdminMatchLineup = () => {
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
+  const handleBackToMatchList = () => {
+    navigate(ROUTES.ADMIN_MATCH);
+  };
+
   const handleDeleteLineup = async (id: number) => {
     if (!confirm("정말로 이 라인업을 삭제하시겠습니까?")) return;
 
@@ -95,8 +101,30 @@ const AdminMatchLineup = () => {
     <div className="flex h-full w-full flex-col">
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between p-4">
-        <h2 className="text-yds-s1 text-primary-100">라인업 관리</h2>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleBackToMatchList}
+            className="flex h-8 w-8 items-center justify-center text-primary-100"
+            aria-label="경기 목록으로 이동"
+          >
+            <ArrowLeft size={24} />
+          </button>
+          <h2 className="text-yds-s1 text-primary-100">라인업 관리</h2>
+        </div>
+        {/* 모바일: 선수 추가 아이콘만 노출 */}
+        <div className="md:hidden">
+          <button
+            type="button"
+            onClick={handleOpenAddModal}
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-primary-100 text-primary-100"
+            aria-label="새 라인업 추가"
+          >
+            <FolderPlus size={16} />
+          </button>
+        </div>
+        {/* 데스크탑: 스타팅 명단등록 + 선수 추가 버튼 노출 */}
+        <div className="hidden md:flex items-center gap-2">
           <Button
             variant="outlined"
             color="primary"
