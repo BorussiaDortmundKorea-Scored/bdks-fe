@@ -7,7 +7,7 @@ import {
   type IMatchesLastestPlayer,
 } from "@matches/matches-lastest/api/matches-lastest-api";
 import MatchesLastestWrapper from "@matches/matches-lastest/components/wrapper/matches-lastest-wrapper";
-import { getDisplayTime } from "@matches/utils/match-time-utils";
+import CurrentMatchTime from "@shared/components/match/current-match-time";
 
 import { createMatchPlayerRatingsPath } from "@shared/constants/routes";
 
@@ -27,19 +27,6 @@ const MatchesLastest = () => {
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-  const KST_MATCH_START_TIME = new Date(information.match_start_time);
-  const KST_FIRST_HALF_END_TIME = new Date(information.first_half_end_time);
-  const KST_SECOND_HALF_START_TIME = new Date(information.second_half_start_time);
-  const KST_SECOND_HALF_END_TIME = new Date(information.second_half_end_time);
-  const KST_CURRENT_TIME = new Date();
-
-  const displayTime = getDisplayTime(
-    KST_MATCH_START_TIME,
-    KST_FIRST_HALF_END_TIME,
-    KST_SECOND_HALF_START_TIME,
-    KST_SECOND_HALF_END_TIME,
-    KST_CURRENT_TIME,
-  );
 
   //!SECTION 상태값 영역
 
@@ -60,7 +47,13 @@ const MatchesLastest = () => {
               {information.season} {information.league_name} {information.round_name}
             </div>
           </div>
-          <div className="text-md text-primary-100 shrink-0 font-semibold">{displayTime}</div>
+          <CurrentMatchTime
+            match_start_time={information.match_start_time}
+            first_half_end_time={information.first_half_end_time}
+            second_half_start_time={information.second_half_start_time}
+            second_half_end_time={information.second_half_end_time}
+            className="text-md text-primary-100 shrink-0 font-semibold"
+          />
         </div>
         {/* 하단부 : 포메이션 렌더링 */}
         <div className="flex h-auto w-full flex-1 flex-col justify-between py-4">

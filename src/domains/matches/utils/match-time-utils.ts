@@ -86,15 +86,67 @@ export const getDisplayTime = (
     now,
   );
 
+  // 초 계산
+  let seconds = 0;
+  if (status === MATCH_STATUS.FIRST_HALF) {
+    const totalSeconds = Math.floor((now.getTime() - matchStartTime.getTime()) / 1000);
+    seconds = totalSeconds % 60;
+  } else if (status === MATCH_STATUS.SECOND_HALF) {
+    const totalSeconds = Math.floor((now.getTime() - secondHalfStartTime.getTime()) / 1000);
+    seconds = totalSeconds % 60;
+  }
+
+  const secondsText = seconds.toString().padStart(2, "0");
+
   // 45분 넘어가면 추가시간 표시
   if (currentTime > 45) {
     const extraTime = currentTime - 45;
-    return status === MATCH_STATUS.FIRST_HALF ? `전반 ${45}+${extraTime}'` : `후반 ${45}+${extraTime}'`;
+    return status === MATCH_STATUS.FIRST_HALF
+      ? `전반 ${45}+${extraTime}분 ${secondsText}초`
+      : `후반 ${45}+${extraTime}분 ${secondsText}초`;
   }
 
-  return status === MATCH_STATUS.FIRST_HALF ? `전반 ${currentTime}'` : `후반 ${currentTime}'`;
+  return status === MATCH_STATUS.FIRST_HALF
+    ? `전반 ${currentTime}분 ${secondsText}초`
+    : `후반 ${currentTime}분 ${secondsText}초`;
 };
 
 export const isMatchLive = (status: MatchStatus): boolean => {
   return status === MATCH_STATUS.FIRST_HALF || status === MATCH_STATUS.SECOND_HALF;
+};
+
+/**
+ * 경기 시간 표시 문자열에서 초를 제거하고 분만 반환
+ * "전반 30분 45초" -> "전반 30'"
+ * "전반 45+3분 45초" -> "전반 45+3'"
+ * "후반 12분 30초" -> "후반 12'"
+ */
+export const parseMinuteFromDisplayTime = (displayTime: string): string => {
+  // 경기 전, 전반 종료, 경기 종료는 그대로 반환
+  if (
+    displayTime === MATCH_DISPLAY_TEXT.NOT_STARTED ||
+    displayTime === MATCH_DISPLAY_TEXT.HALF_TIME ||
+    displayTime === MATCH_DISPLAY_TEXT.FULL_TIME
+  ) {
+    return displayTime;
+  }
+
+  // "전반 30분 45초" 또는 "후반 12분 30초" 형식에서 초 제거
+  // "전반 45+3분 45초" 또는 "후반 45+5분 30초" 형식도 처리
+  const minutePattern = /^(전반|후반)\s+(\d+)(?:\+(\d+))?분\s+\d+초$/;
+  const match = displayTime.match(minutePattern);
+
+  if (match) {
+    const half = match[1]; // "전반" 또는 "후반"
+    const baseMinute = match[2]; // 기본 분
+    const extraMinute = match[3]; // 추가 시간 (있을 경우)
+
+    if (extraMinute) {
+      return `${half} ${baseMinute}+${extraMinute}'`;
+    }
+    return `${half} ${baseMinute}'`;
+  }
+
+  // 패턴이 맞지 않으면 원본 반환 (안전장치)
+  return displayTime;
 };

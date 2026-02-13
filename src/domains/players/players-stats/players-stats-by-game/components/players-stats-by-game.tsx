@@ -6,6 +6,10 @@
 import { useState } from "react";
 
 import { useGetPlayersStatsByGame } from "@players/players-stats/players-stats-by-game/api/react-query-api/use-get-players-stats-by-game";
+import PlayerRatingByMatchDetailChart from "./player-rating-by-match-detail-chart";
+import PlayersStatsByGameError from "./error/players-stats-by-game-error";
+import PlayerRatingByMatchDetailChartSkeleton from "./skeleton/player-rating-by-match-detail-chart-skeleton";
+import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 interface PlayersStatsByGameProps {
   playerId: string;
@@ -34,27 +38,28 @@ const PlayersStatsByGame = ({ playerId }: PlayersStatsByGameProps) => {
           {/* 경기 정보 헤더 */}
           <button
             onClick={() => handleToggleMatch(match.id)}
-            className="flex w-full items-center justify-between"
+            className="flex w-full cursor-pointer items-center justify-between"
             type="button"
           >
             <div className="flex flex-col items-start gap-1">
               <div className="flex items-center gap-2">
-                <span className="text-yds-s2 text-primary-100">{match.league_name}</span>
+                <span className="text-yds-s3 text-primary-100">{match.league_name}</span>
                 <span className="text-yds-s3 text-gray-400">{match.season}</span>
+                <span className="text-yds-s3 text-gray-400">
+                  {match.text_home_away === "HOME" ? "홈" : "원정"}
+                </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-yds-s1 font-semibold text-white">
-                  {match.text_home_away === "HOME" ? "홈" : "원정"} vs {match.opponent_name}
-                </span>
+                <span className="text-yds-s2 font-semibold text-white">{match.opponent_name}</span>
                 {match.round_name && <span className="text-yds-s3 text-gray-400">{match.round_name}</span>}
               </div>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex flex-col items-end gap-1">
-                <div className="text-yds-s2 text-white">
-                  {match.goals}골 {match.assists}어시
+                <div className="text-yds-s3 text-white">
+                  {match.goals}골 {match.assists}도움
                 </div>
-                <div className="text-yds-s1 text-primary-100 font-semibold">{match.avg_rating.toFixed(1)}점</div>
+                <div className="text-yds-s2 text-primary-100 font-semibold">{match.avg_rating.toFixed(1)}점</div>
               </div>
               <svg
                 className={`h-5 w-5 text-gray-400 transition-transform ${
@@ -72,8 +77,12 @@ const PlayersStatsByGame = ({ playerId }: PlayersStatsByGameProps) => {
           {/* 확장된 세부 차트 영역 */}
           {expandedMatchId === match.id && (
             <div className="mt-4 border-t border-gray-700 pt-4">
-              {/* TODO: 여기에 해당 경기의 세부 차트 컴포넌트 추가 */}
-              <div className="text-yds-s2 text-gray-400">경기 세부 차트 영역 (추가 예정)</div>
+              <ReactQueryBoundary
+                skeleton={<PlayerRatingByMatchDetailChartSkeleton />}
+                errorFallback={PlayersStatsByGameError}
+              >
+                <PlayerRatingByMatchDetailChart matchId={match.id} playerId={playerId} />
+              </ReactQueryBoundary>
             </div>
           )}
         </div>
