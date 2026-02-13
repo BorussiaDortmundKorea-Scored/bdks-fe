@@ -12,8 +12,9 @@ import { useRealtimeMatchPlayerRating } from "../api/react-query-api/use-realtim
 import RatingGaugeInput from "../rating-gauge-input/components/rating-gauge-input";
 import type { IInsertPlayerRatingRequest } from "../types";
 import { Button } from "@youngduck/yd-ui";
+import CurrentMatchTime from "@shared/components/match/current-match-time";
 
-import { getDisplayTime } from "@matches/utils/match-time-utils";
+import { getDisplayTime, parseMinuteFromDisplayTime } from "@matches/utils/match-time-utils";
 
 // import { Camera } from "lucide-react";
 
@@ -38,14 +39,6 @@ const MatchesLastestPlayerRating = () => {
     setSelectedRating(rating);
   };
 
-  const currentMatchTime = getDisplayTime(
-    new Date(playerRating.match_start_time),
-    new Date(playerRating.first_half_end_time),
-    new Date(playerRating.second_half_start_time),
-    new Date(playerRating.second_half_end_time),
-    new Date(),
-  );
-
   const handleInsertMatchPlayerRating = async () => {
     const realTimeMatchTime = getDisplayTime(
       new Date(playerRating.match_start_time),
@@ -54,18 +47,22 @@ const MatchesLastestPlayerRating = () => {
       new Date(playerRating.second_half_end_time),
       new Date(), // 현재 시간으로 실시간 계산
     );
+
+    // 초를 제거하고 분만 추출
+    const minuteForApi = parseMinuteFromDisplayTime(realTimeMatchTime);
+
     try {
       // 실시간 경기 시간 계산 (추가시간 포함)
       const request: IInsertPlayerRatingRequest = {
         match_id: matchId!,
         player_id: playerId!,
-        minute: realTimeMatchTime, // "전반 45+3'" 또는 "후반 12'" 형태
+        minute: minuteForApi, // "전반 45+3'" 또는 "후반 12'" 형태
         rating: selectedRating,
       };
 
       await insertMatchPlayerRating(request);
     } catch {
-      alert("해당 시간에 평점을 입력했습니다. 같은 시간에는 한번만 평점을 입력할 수 있어요");
+      alert("해당 시간에 평점을 입력했습니다. 같은 분에는 평점을 한번만 입력할 수 있어요");
     }
   };
   //!SECTION 메서드 영역
@@ -83,7 +80,13 @@ const MatchesLastestPlayerRating = () => {
                   <div className="flex gap-2">
                     {playerRating.season} {playerRating.league_name} {playerRating.round_name}
                   </div>
-                  <div className="text-yds-b2 text-primary-100">{currentMatchTime}</div>
+                  <CurrentMatchTime
+                    match_start_time={playerRating.match_start_time}
+                    first_half_end_time={playerRating.first_half_end_time}
+                    second_half_start_time={playerRating.second_half_start_time}
+                    second_half_end_time={playerRating.second_half_end_time}
+                    className="text-yds-b2 text-primary-100"
+                  />
                 </div>
               </div>
               {/* TODO: 카메라 버튼 기능 제공예정 */}
