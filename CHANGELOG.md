@@ -3,6 +3,24 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.5.8] - 2026-02-13
+
+**Branch**: `bdks-v1.5.8-선수경기별평점조회기능추가`
+
+### 추가
+- feat: 선수경기별평점조회기능추가
+
+### 변경
+- refactor: 경기시간표시초까지포함및리렌더링최적화
+- docs: v1.5.8작업내용문서
+
+### 수정
+
+
+### 제거
+- revert: 선수경기별평점조회더미차트제거
+
+---
 ## [1.5.7] - 2026-02-12
 
 **Branch**: `bdks-v1.5.7-관리기능재정비`
