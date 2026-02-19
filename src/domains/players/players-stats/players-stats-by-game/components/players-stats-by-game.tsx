@@ -45,14 +45,16 @@ const PlayersStatsByGame = ({ playerId }: PlayersStatsByGameProps) => {
               <div className="flex items-center gap-2">
                 <span className="text-yds-s3 text-primary-100">{match.league_name}</span>
                 <span className="text-yds-s3 text-gray-400">{match.season}</span>
-                <span className="text-yds-s3 text-gray-400">
-                  {match.text_home_away === "HOME" ? "홈" : "원정"}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-yds-s2 font-semibold text-white">{match.opponent_name}</span>
+                
                 {match.round_name && <span className="text-yds-s3 text-gray-400">{match.round_name}</span>}
+             
               </div>
+              <div className="flex items-end gap-2">
+                <span className="text-yds-s2 font-semibold text-white">{match.opponent_name}</span>
+                <span className="text-yds-c1m text-gray-400">
+                  {match.text_home_away}
+                </span>
+             </div>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex flex-col items-end gap-1">

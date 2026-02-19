@@ -3,6 +3,25 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.5.9] - 2026-02-19
+
+**Branch**: `bdks-v1.5.9-선수경기별평점조회기능수정`
+
+### 추가
+- feat: 차트null데이터부분연결하는옵션추가
+
+### 변경
+- style: 차트불필요한여백제거
+- style: 경기별평점토글컴포넌트텍스트배치수정
+- docs: v1.5.9작업내용문서
+
+### 수정
+
+
+### 제거
+
+---
+
 ## [1.5.8] - 2026-02-13
 
 **Branch**: `bdks-v1.5.8-선수경기별평점조회기능추가`

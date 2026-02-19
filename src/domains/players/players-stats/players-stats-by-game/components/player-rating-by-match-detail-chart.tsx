@@ -72,9 +72,10 @@ const PlayerRatingByMatchDetailChart = ({ matchId, playerId }: PlayerRatingByMat
         borderColor: CHART_COLORS.myRatingBorder,
         backgroundColor: CHART_COLORS.myRating,
         tension: 0.1,
+        spanGaps:true
       },
       {
-        label: "보루센들의 평점",
+        label: "보루센 평점",
         data: allMinutes.map((minute) => {
           const rating = otherRatings.find((r) => r.minute === minute);
           return rating ? rating.avg_rating : null;
@@ -82,12 +83,17 @@ const PlayerRatingByMatchDetailChart = ({ matchId, playerId }: PlayerRatingByMat
         borderColor: CHART_COLORS.otherRatingBorder,
         backgroundColor: CHART_COLORS.otherRating,
         tension: 0.1,
+        spanGaps:true
       },
     ],
   };
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: { top: 0, right: 0, bottom: 0, left: 0 },
+    },
     plugins: {
       legend: {
         display: true,
