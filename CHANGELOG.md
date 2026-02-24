@@ -3,6 +3,25 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.1] - 2026-02-24
+
+**Branch**: `bdks-v1.6.1-GA4를통한지표산출기능세팅`
+
+### 추가
+- feat: ga4 페이지뷰조회기능추가
+- feat: ga4 이벤트등록용 공통훅 제작
+- feat: ga4를통한로그인유형지표등록
+- docs: v1.6.1작업내용문서
+
+### 변경
+- build: react-ga4라이브러리설치
+
+### 수정
+
+
+### 제거
+
+---
 ## [1.5.9] - 2026-02-19
 
 **Branch**: `bdks-v1.5.9-선수경기별평점조회기능수정`
