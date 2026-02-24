@@ -4,13 +4,22 @@ import React from "react";
 import useKakaoLogin from "@auth/hooks/useKakaoLogin";
 
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
+import { GA4_CATEGORIES, GA4_EVENTS, GA4_LOGIN_METHODS } from "@shared/constants/analytics";
+import { useGa4Event } from "@shared/hooks/use-ga4-event";
 
 const KAKAO_LOGIN_BUTTON_IMAGE = `${SUPABASE_STORAGE_URL}/asset//kakao_login_logo.png`;
 
 const KakaoLoginButton: React.FC = () => {
   const { signinWithKakao, isLoading } = useKakaoLogin();
+  const { trackEvent } = useGa4Event();
 
   const handleKakaoLogin = async () => {
+    trackEvent({
+      action: GA4_EVENTS.LOGIN_ATTEMPT,
+      category: GA4_CATEGORIES.AUTH,
+      label: GA4_LOGIN_METHODS.KAKAO,
+    });
+
     const result = await signinWithKakao();
 
     if (!result.success) {
