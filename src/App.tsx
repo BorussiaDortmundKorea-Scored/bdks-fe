@@ -3,11 +3,20 @@ import { HelmetProvider } from "react-helmet-async";
 import * as Sentry from "@sentry/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ReactGA from "react-ga4";
 import { OvelayProvider } from "@youngduck/yd-ui/Overlays";
 
 import { queryClient } from "@shared/provider/query-client";
 import Router from "@shared/router/Router";
 
+// GA4 초기화 PROD 환경에서만 작동
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+
+if (GA_MEASUREMENT_ID) {
+  ReactGA.initialize(GA_MEASUREMENT_ID);
+}
+
+// Sentry 초기화
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN,
   sendDefaultPii: true,

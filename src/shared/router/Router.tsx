@@ -33,9 +33,12 @@ import PlayerStatsPage from "@players/players-stats/pages/player-stats-page";
 import { ROUTES } from "@shared/constants/routes";
 import PublicRoute from "@shared/provider/public-route";
 
+import Ga4PageViewTracker from "./ga4-page-view-tracker";
+
 const Router = () => {
   return (
     <BrowserRouter>
+      <Ga4PageViewTracker />
       <AuthProvider>
         <Routes>
           {/* 퍼블릭 라우트 - 로그인하지 않은 사용자만 접근 */}
