@@ -18,7 +18,7 @@ const BottomNavigationBar = () => {
         return (
           <button
             key={item.id}
-            className="flex h-full flex-1 cursor-pointer items-center justify-center transition-colors "
+            className="flex h-full flex-1 flex-col cursor-pointer items-center justify-center gap-1 "
             onClick={item.onClick}
             aria-label={item.id}
           >
@@ -26,6 +26,9 @@ const BottomNavigationBar = () => {
               size={24}
               className='text-primary-100'
             />
+            <span className="text-white text-yds-c1m">
+             {item.label}
+            </span>
           </button>
         );
       })}

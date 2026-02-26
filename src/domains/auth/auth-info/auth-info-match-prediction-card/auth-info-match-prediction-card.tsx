@@ -16,7 +16,7 @@ const AuthInfoMatchPredictionCard = () => {
     >
       <div className="flex flex-col gap-2">
         <h2 className="text-yds-s2 text-white">승부 예측</h2>
-        <p className="text-yds-c1m text-primary-100">승부 예측 결과 확인</p>
+        <p className="text-yds-c1m text-primary-100">승부 예측 확인</p>
       </div>
       <div className="flex justify-end">
         <div className="bg-background-forth flex h-8 w-8 items-center justify-center rounded-full">
