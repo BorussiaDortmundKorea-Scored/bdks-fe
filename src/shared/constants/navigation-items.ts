@@ -21,7 +21,7 @@ export interface NavigationItem {
   id: string;
   icon: LucideIcon;
   path?: string;
-  label?: string;
+  label: string;
   type: NavigationItemType;
   requiresAdmin?: boolean;
   onClick: (deps: NavigationItemDeps) => () => void;
@@ -53,7 +53,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
     id: "naverCafe-bottom",
     icon: Coffee,
     path: ROUTES.NAVER_CAFE,
-    label: "네이버 카페 바로가기",
+    label: "카페",
     type: "bottom-nav-bar",
     onClick: () => () => {
       window.open(ROUTES.NAVER_CAFE, "_blank");
