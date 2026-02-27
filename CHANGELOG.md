@@ -17,6 +17,8 @@
 - refactor: 바로가기 아이콘 중복되는 래퍼classname 제거
 - style: 아래네비게이션바label추가및바로가기워딩수정
 - test: 관람체크용화면 get prc 테스트코드작성
+- refactor: 코드리뷰반영-테스트코드에서console출력제거
+- refactor: 코드리뷰반영-onclick단이후에 pointer-cursor추가하도록
 
 ### 수정
 - fix: navigation item 라벨 타입 옵셔널로 타입지정된 부분 필수로 수정
