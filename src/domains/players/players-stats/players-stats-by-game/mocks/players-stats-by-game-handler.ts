@@ -4,8 +4,7 @@ import PlayersStatsByGameDummy from "@players/players-stats/players-stats-by-gam
 
 export const PlayersStatsByGameHandlers = [
   // Supabase RPC URL 패턴을 더 정확하게 가로채기
-  http.post("*/rest/v1/rpc/get_player_stats_by_game", ({ request }) => {
-    console.log("MSW: RPC 요청 가로챔!", request.url);
+  http.post("*/rest/v1/rpc/get_player_stats_by_game", () => {
     return HttpResponse.json(PlayersStatsByGameDummy);
   }),
 ];
