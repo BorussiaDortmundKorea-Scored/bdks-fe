@@ -5,6 +5,7 @@ export interface ITeam {
   id: string;
   name: string;
   country: string | null;
+  logo_image_url: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -12,12 +13,14 @@ export interface ITeam {
 export interface ICreateTeamRequest {
   name: string;
   country?: string;
+  logoImageUrl?: string;
 }
 
 export interface IUpdateTeamRequest {
   id: string;
   name?: string;
   country?: string;
+  logoImageUrl?: string;
 }
 
 // 모든 팀 조회
@@ -31,6 +34,7 @@ export const createTeam = async (team: ICreateTeamRequest): Promise<ApiResponse<
   const { data, error } = (await supabase.rpc("insert_team", {
     team_name: team.name,
     team_country: team.country,
+    team_logo_image_url: team.logoImageUrl,
   })) as { data: ITeam; error: PostgrestError | null };
 
   return {
@@ -45,6 +49,7 @@ export const updateTeam = async (team: IUpdateTeamRequest): Promise<ApiResponse<
     p_team_id: team.id,
     p_team_name: team.name,
     p_team_country: team.country,
+    p_team_logo_image_url: team.logoImageUrl,
   })) as { data: ITeam; error: PostgrestError | null };
 
   return {

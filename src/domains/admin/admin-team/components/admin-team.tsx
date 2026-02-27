@@ -68,6 +68,7 @@ const AdminTeam = () => {
         <THead>
           <Tr>
             <Th>팀명</Th>
+            <Th>로고</Th>
             <Th>국가</Th>
             <Th>작업</Th>
           </Tr>
@@ -76,6 +77,17 @@ const AdminTeam = () => {
           {teams.map((team) => (
             <Tr key={team.id}>
               <Td>{team.name}</Td>
+              <Td>
+                {team.logo_image_url ? (
+                  <img
+                    src={team.logo_image_url}
+                    alt={`${team.name} 로고`}
+                    className="h-30 w-30 rounded-md object-contain"
+                  />
+                ) : (
+                  "-"
+                )}
+              </Td>
               <Td>{team.country || "-"}</Td>
               <Td>
                 <div className="flex items-center gap-3">
