@@ -1,0 +1,27 @@
+[
+  {
+    "id": "11111111-1111-1111-1111-111111111111",
+    "match_date": "2025-08-01",
+    "home_away": "HOME",
+    "round_name": "1R",
+    "competition_name": "분데스리가",
+    "season": "24-25",
+    "opponent_team_name": "바이에른 뮌헨",
+    "opponent_team_logo_image_url": "https://example.com/logo-bayern.png",
+    "is_live": false,
+    "status": "PAST"
+  },
+  {
+    "id": "22222222-2222-2222-2222-222222222222",
+    "match_date": "2025-08-10",
+    "home_away": "AWAY",
+    "round_name": "2R",
+    "competition_name": "분데스리가",
+    "season": "24-25",
+    "opponent_team_name": "RB 라이프치히",
+    "opponent_team_logo_image_url": "https://example.com/logo-rb.png",
+    "is_live": false,
+    "status": "UPCOMING"
+  }
+]
+
