@@ -42,7 +42,7 @@ const AttendanceCheck = () => {
                     </span>
                   </div>
                 </div>
-                <div className="rounded-lg bg-[#e9be11] px-3 py-2 text-center text-yds-c1m shrink-0 cursor-pointer">
+                <div className="rounded-lg bg-[#e9be11] px-3 py-2 text-center text-yds-c1m shrink-0">
                   {match.status === "TODAY" ? "오늘 경기" : "예정"}
                 </div>
               </li>
@@ -85,7 +85,7 @@ const AttendanceCheck = () => {
                     </span>
                   </div>
                 </div>
-                <div className="rounded-lg bg-[#e9be11] px-3 py-2 text-center text-yds-c1m shrink-0 cursor-pointer">
+                <div className="rounded-lg bg-[#e9be11] px-3 py-2 text-center text-yds-c1m shrink-0">
                   관람체크
                 </div>
               </li>
