@@ -40,6 +40,7 @@ export const AdminTeamEditModal = ({ team, onClose }: IAdminTeamEditModal) => {
   //SECTION 상태값 영역
   const [formData, setFormData] = useState({
     name: "",
+    logoImageUrl: "",
   });
   //!SECTION 상태값 영역
 
@@ -47,6 +48,7 @@ export const AdminTeamEditModal = ({ team, onClose }: IAdminTeamEditModal) => {
   useEffect(() => {
     setFormData({
       name: team.name,
+      logoImageUrl: team.logo_image_url ?? "",
     });
 
     // SelectBox에 기존 값 설정
@@ -63,12 +65,13 @@ export const AdminTeamEditModal = ({ team, onClose }: IAdminTeamEditModal) => {
       id: team.id,
       name: formData.name || undefined,
       country: editCountrySelectHook.value,
+      logoImageUrl: formData.logoImageUrl || undefined,
     });
     handleClose();
   };
 
   const handleClose = () => {
-    setFormData({ name: "" });
+    setFormData({ name: "", logoImageUrl: "" });
     onClose();
   };
   //!SECTION 메서드 영역
@@ -86,6 +89,19 @@ export const AdminTeamEditModal = ({ team, onClose }: IAdminTeamEditModal) => {
               setFormData({ ...formData, name: e.target.value })
             }
             placeholder="팀명을 입력하세요"
+            size="full"
+            color="primary-100"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-yds-b1 text-primary-100">로고 이미지 URL</label>
+          <Input
+            type="text"
+            value={formData.logoImageUrl}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFormData({ ...formData, logoImageUrl: e.target.value })
+            }
+            placeholder="예: https://... 또는 /storage/path"
             size="full"
             color="primary-100"
           />

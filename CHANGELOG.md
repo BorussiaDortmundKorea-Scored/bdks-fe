@@ -3,6 +3,31 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.2] - 2026-02-26
+
+**Branch**: `bdks-v1.6.2-내정보화면관람체크기능추가`
+
+### 추가
+- feat: 관람체크용경기리스트조회화면제작
+- feat: 관람체크용 주소 중앙집중경로에등록
+- feat: 팀 db스키마 이미지url 컬럼 추가
+- docs: v1.6.2작업내용문서
+
+### 변경
+- refactor: 바로가기 아이콘 중복되는 래퍼classname 제거
+- style: 아래네비게이션바label추가및바로가기워딩수정
+- test: 관람체크용화면 get prc 테스트코드작성
+- refactor: 코드리뷰반영-테스트코드에서console출력제거
+- refactor: 코드리뷰반영-onclick단이후에 pointer-cursor추가하도록
+
+### 수정
+- fix: navigation item 라벨 타입 옵셔널로 타입지정된 부분 필수로 수정
+
+
+### 제거
+
+---
+
 ## [1.6.1] - 2026-02-24
 
 **Branch**: `bdks-v1.6.1-GA4를통한지표산출기능세팅`

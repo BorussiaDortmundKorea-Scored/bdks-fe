@@ -16,6 +16,7 @@ import AdminTeamPage from "@admin/admin-team/pages/admin-team-page";
 import AdminUserPage from "@admin/admin-user/pages/admin-user-page";
 import AdminRoute from "@admin/provider/admin-route";
 
+import AttendanceCheckPage from "@auth/auth-info/auth-info-quick-links/attendance-check/pages/attendance-check-page";
 import AuthInformationPage from "@auth/auth-info/auth-information-page";
 import AuthProfilePage from "@auth/auth-profile/pages/auth-profile-page";
 import AuthProfileRoute from "@auth/auth-profile/provider/auth-profile-route";
@@ -55,6 +56,7 @@ const Router = () => {
           <Route element={<AuthRoute />}>
             {/* 내 정보 */}
             <Route path={ROUTES.MY_INFO} element={<AuthInformationPage />} />
+            <Route path={ROUTES.ATTENDANCE_CHECK} element={<AttendanceCheckPage />} />
 
             {/* 메인 대시보드 */}
             <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
