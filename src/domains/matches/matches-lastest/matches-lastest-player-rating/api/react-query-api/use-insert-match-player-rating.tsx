@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { insertPlayerRating } from "@matches/matches-lastest/matches-lastest-player-rating/api/matches-lastest-player-rating-api";
 import { MATCHES_LASTEST_PLAYER_RATING_QUERY_KEYS } from "@matches/matches-lastest/matches-lastest-player-rating/api/react-query-api/matches-lastest-player-rating-query-keys";
+import { MATCHES_LASTEST_QUERY_KEYS } from "@matches/matches-lastest/api/react-query-api/matches-lastest-query-key";
 
 export const useInsertMatchPlayerRating = () => {
   const queryClient = useQueryClient();
@@ -22,6 +23,10 @@ export const useInsertMatchPlayerRating = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [MATCHES_LASTEST_PLAYER_RATING_QUERY_KEYS.MATCH_PLAYER_RATING],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_LIVE_FORMATION],
       });
     },
   });
