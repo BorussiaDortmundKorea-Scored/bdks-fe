@@ -1,7 +1,11 @@
+import { useInsertViewingCheck } from "@auth/auth-info/auth-info-quick-links/viewing-check/api/react-query-api/use-insert-viewing-check";
 import { useGetViewingMatches } from "@auth/auth-info/auth-info-quick-links/viewing-check/api/react-query-api/use-get-viewing-matches";
+import { useAuth } from "@auth/contexts/AuthContext";
 
 const ViewingCheck = () => {
   const { data: matches } = useGetViewingMatches();
+  const { user } = useAuth();
+  const { mutate: mutateViewingCheck, isPending: isViewingCheckPending } = useInsertViewingCheck(user!.id);
 
   const pastMatches = matches.filter((match) => match.status === "PAST");
   const todayMatches = matches.filter((match) => match.status === "TODAY");
@@ -43,9 +47,14 @@ const ViewingCheck = () => {
                     </span>
                   </div>
                 </div>
-                <div className="shrink-0 cursor-pointer rounded-lg bg-[#e9be11] px-3 py-2 text-center text-yds-c1m">
-                  관람체크
-                </div>
+                <button
+                  type="button"
+                  disabled={isViewingCheckPending || match.has_viewing_check}
+                  onClick={() => mutateViewingCheck(match.id)}
+                  className="shrink-0 rounded-lg bg-[#e9be11] px-3 py-2 text-center text-yds-c1m disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {match.has_viewing_check ? "관람완료" : "관람체크"}
+                </button>
               </li>
             ))}
           </ul>
