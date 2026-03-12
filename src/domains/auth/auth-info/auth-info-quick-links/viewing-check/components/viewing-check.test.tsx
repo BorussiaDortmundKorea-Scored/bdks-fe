@@ -36,6 +36,18 @@ describe("ViewingCheck", () => {
     // 더미 데이터 기준으로 상대 팀 이름이 노출되는지 확인
     expect(await screen.findByText(/바이에른 뮌헨/)).toBeInTheDocument();
     expect(await screen.findByText(/RB 라이프치히/)).toBeInTheDocument();
+
+    // 섹션 헤더가 모두 노출되는지 확인
+    expect(screen.getByText("오늘 경기")).toBeInTheDocument();
+    expect(screen.getByText("다가오는 경기")).toBeInTheDocument();
+    expect(screen.getByText("지난 경기")).toBeInTheDocument();
+
+    // 버튼/배지 텍스트가 요구사항에 맞게 노출되는지 확인
+    expect(screen.getAllByText("관람체크").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("알람신청")).toBeInTheDocument();
+    // 지난 경기: 관람완료/미관람 노출
+    expect(screen.getByText("관람완료")).toBeInTheDocument();
+    expect(screen.getByText("미관람")).toBeInTheDocument();
   });
 
   it("RPC 에러가 발생하면 에러 폴백을 렌더링한다", async () => {
@@ -50,3 +62,4 @@ describe("ViewingCheck", () => {
     expect(await screen.findByTestId("viewing-check-error")).toBeInTheDocument();
   });
 });
+
