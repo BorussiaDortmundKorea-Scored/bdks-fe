@@ -24,6 +24,7 @@ const AdminMatchSkeleton = () => {
             <Th>홈/어웨이</Th>
             <Th>스코어</Th>
             <Th>라운드</Th>
+            <Th>라이브</Th>
             <Th>작업</Th>
           </Tr>
         </THead>
@@ -47,6 +48,9 @@ const AdminMatchSkeleton = () => {
               </Td>
               <Td>
                 <div className="bg-primary-100/20 h-4 w-20 animate-pulse rounded" />
+              </Td>
+              <Td>
+                <div className="bg-primary-100/20 h-4 w-16 animate-pulse rounded" />
               </Td>
               <Td>
                 <div className="flex items-center gap-3">

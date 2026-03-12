@@ -113,6 +113,7 @@ const AdminMatch = () => {
             <Th>홈/어웨이</Th>
             <Th>스코어</Th>
             <Th>라운드</Th>
+            <Th>라이브</Th>
             <Th>작업</Th>
           </Tr>
         </THead>
@@ -127,6 +128,17 @@ const AdminMatch = () => {
                 {match.our_score} : {match.opponent_score}
               </Td>
               <Td>{match.round_name}</Td>
+              <Td>
+                {match.is_live ? (
+                  <span className="rounded-full bg-green-500/20 px-2 py-1 text-yds-c1m text-green-400">
+                    라이브
+                  </span>
+                ) : (
+                  <span className="rounded-full bg-primary-100/10 px-2 py-1 text-yds-c1m text-primary-60">
+                    -
+                  </span>
+                )}
+              </Td>
               <Td>
                 <div className="flex items-center gap-3">
                   <button
