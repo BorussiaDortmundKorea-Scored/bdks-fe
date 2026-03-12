@@ -14,6 +14,8 @@ export interface IViewingMatch {
   opponent_team_logo_image_url: string | null;
   is_live: boolean;
   status: ViewingMatchStatus;
+  /** 지난 경기 관람체크 여부. true: 관람완료, false: 미관람 */
+  has_viewing_check: boolean;
 }
 
 export const getViewingMatches = async (): Promise<ApiResponse<IViewingMatch[]>> => {
