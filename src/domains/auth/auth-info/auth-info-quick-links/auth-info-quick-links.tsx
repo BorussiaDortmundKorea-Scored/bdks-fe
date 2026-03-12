@@ -23,10 +23,10 @@ const quickLinks = [
     onClick: () => alert("선수 화면은 준비 중입니다."),
   },
   {
-    id: "attendance-check",
+    id: "viewing-check",
     IconComponent: CheckCircle,
-    label: "출석",
-    path: ROUTES.ATTENDANCE_CHECK,
+    label: "관람",
+    path: ROUTES.VIEWING_CHECK,
   },
 ];
 

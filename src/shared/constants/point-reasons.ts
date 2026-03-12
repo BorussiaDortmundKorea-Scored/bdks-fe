@@ -5,7 +5,7 @@
  */
 
 export const POINT_REASONS = {
-  ATTENDANCE_CHECK: "ATTENDANCE_CHECK",
+  VIEWING_CHECK: "VIEWING_CHECK",
 } as const;
 
 export type PointReason = (typeof POINT_REASONS)[keyof typeof POINT_REASONS];

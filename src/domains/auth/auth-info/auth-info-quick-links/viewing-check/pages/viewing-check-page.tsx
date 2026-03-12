@@ -1,7 +1,7 @@
 /**
  * 작성자: KYD
- * 기능: 출석체크 페이지
- * 프로세스 설명: 내 정보 > 바로가기 출석 버튼 진입 페이지
+ * 기능: 관람체크 페이지
+ * 프로세스 설명: 내 정보 > 바로가기 관람 버튼 진입 페이지
  */
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
 
@@ -11,23 +11,23 @@ import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigat
 import { usePageTransition } from "@shared/hooks/use-page-transition";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
-import AttendanceCheck from "@auth/auth-info/auth-info-quick-links/attendance-check/components/attendance-check";
-import AttendanceCheckErrorFallback from "@auth/auth-info/auth-info-quick-links/attendance-check/components/error/attendance-check-error-fallback";
-import AttendanceCheckSkeleton from "@auth/auth-info/auth-info-quick-links/attendance-check/components/skeleton/attendance-check-skeleton";
+import ViewingCheck from "@auth/auth-info/auth-info-quick-links/viewing-check/components/viewing-check";
+import ViewingCheckErrorFallback from "@auth/auth-info/auth-info-quick-links/viewing-check/components/error/viewing-check-error-fallback";
+import ViewingCheckSkeleton from "@auth/auth-info/auth-info-quick-links/viewing-check/components/skeleton/viewing-check-skeleton";
 
 const options = {
   leftIcon: <BackButton />,
 };
 
-const AttendanceCheckPage = () => {
+const ViewingCheckPage = () => {
   const { pageRef } = usePageTransition();
 
   return (
     <div className="bdks-container" ref={pageRef}>
       <Header options={options} />
       <LayoutWithHeaderFooter>
-        <ReactQueryBoundary skeleton={<AttendanceCheckSkeleton />} errorFallback={AttendanceCheckErrorFallback}>
-          <AttendanceCheck />
+        <ReactQueryBoundary skeleton={<ViewingCheckSkeleton />} errorFallback={ViewingCheckErrorFallback}>
+          <ViewingCheck />
         </ReactQueryBoundary>
       </LayoutWithHeaderFooter>
       <BottomNavigationBar />
@@ -35,4 +35,4 @@ const AttendanceCheckPage = () => {
   );
 };
 
-export default AttendanceCheckPage;
+export default ViewingCheckPage;
