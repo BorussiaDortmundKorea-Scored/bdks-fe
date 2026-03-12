@@ -14,7 +14,7 @@ export const ROUTES = {
 
   // 내 정보
   MY_INFO: "/myInfo",
-  ATTENDANCE_CHECK: "/myInfo/attendance",
+  VIEWING_CHECK: "/myInfo/viewing",
 
   // 메인
   DASHBOARD: "/dashboard",

@@ -2,9 +2,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 
-import AttendanceCheck from "@auth/auth-info/auth-info-quick-links/attendance-check/components/attendance-check";
-import AttendanceCheckErrorFallback from "@auth/auth-info/auth-info-quick-links/attendance-check/components/error/attendance-check-error-fallback";
-import AttendanceCheckSkeleton from "@auth/auth-info/auth-info-quick-links/attendance-check/components/skeleton/attendance-check-skeleton";
+import ViewingCheck from "@auth/auth-info/auth-info-quick-links/viewing-check/components/viewing-check";
+import ViewingCheckErrorFallback from "@auth/auth-info/auth-info-quick-links/viewing-check/components/error/viewing-check-error-fallback";
+import ViewingCheckSkeleton from "@auth/auth-info/auth-info-quick-links/viewing-check/components/skeleton/viewing-check-skeleton";
 import { server } from "@shared/mocks/server";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
@@ -15,8 +15,8 @@ const renderWithQueryClient = () => {
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <ReactQueryBoundary skeleton={<AttendanceCheckSkeleton />} errorFallback={AttendanceCheckErrorFallback}>
-        <AttendanceCheck />
+      <ReactQueryBoundary skeleton={<ViewingCheckSkeleton />} errorFallback={ViewingCheckErrorFallback}>
+        <ViewingCheck />
       </ReactQueryBoundary>
     </QueryClientProvider>,
   );
@@ -24,12 +24,12 @@ const renderWithQueryClient = () => {
 
 const waitForLoadingComplete = async () => {
   await waitFor(() => {
-    expect(screen.queryByTestId("attendance-check-skeleton")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("viewing-check-skeleton")).not.toBeInTheDocument();
   });
 };
 
-describe("AttendanceCheck", () => {
-  it("RPC get_attendance_matches 결과를 화면에 렌더링한다", async () => {
+describe("ViewingCheck", () => {
+  it("RPC get_viewing_matches 결과를 화면에 렌더링한다", async () => {
     renderWithQueryClient();
     await waitForLoadingComplete();
 
@@ -40,13 +40,13 @@ describe("AttendanceCheck", () => {
 
   it("RPC 에러가 발생하면 에러 폴백을 렌더링한다", async () => {
     server.use(
-      http.post("*/rest/v1/rpc/get_attendance_matches", () => {
+      http.post("*/rest/v1/rpc/get_viewing_matches", () => {
         return HttpResponse.json({ message: "error" }, { status: 500 });
       }),
     );
 
     renderWithQueryClient();
 
-    expect(await screen.findByTestId("attendance-check-error")).toBeInTheDocument();
+    expect(await screen.findByTestId("viewing-check-error")).toBeInTheDocument();
   });
 });

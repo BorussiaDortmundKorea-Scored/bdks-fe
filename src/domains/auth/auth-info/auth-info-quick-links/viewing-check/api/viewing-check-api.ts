@@ -1,9 +1,9 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
 
-export type AttendanceMatchStatus = "PAST" | "TODAY" | "UPCOMING";
+export type ViewingMatchStatus = "PAST" | "TODAY" | "UPCOMING";
 
-export interface IAttendanceMatch {
+export interface IViewingMatch {
   id: string;
   match_date: string;
   home_away: "HOME" | "AWAY";
@@ -13,15 +13,14 @@ export interface IAttendanceMatch {
   opponent_team_name: string;
   opponent_team_logo_image_url: string | null;
   is_live: boolean;
-  status: AttendanceMatchStatus;
+  status: ViewingMatchStatus;
 }
 
-export const getAttendanceMatches = async (): Promise<ApiResponse<IAttendanceMatch[]>> => {
-  const { data, error } = (await supabase.rpc("get_attendance_matches")) as {
-    data: IAttendanceMatch[];
+export const getViewingMatches = async (): Promise<ApiResponse<IViewingMatch[]>> => {
+  const { data, error } = (await supabase.rpc("get_viewing_matches")) as {
+    data: IViewingMatch[];
     error: PostgrestError | null;
   };
 
-  return { data: data as IAttendanceMatch[], error: error as PostgrestError };
+  return { data: data as IViewingMatch[], error: error as PostgrestError };
 };
-

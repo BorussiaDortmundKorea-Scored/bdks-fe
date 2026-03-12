@@ -1,7 +1,7 @@
-import { useGetAttendanceMatches } from "@auth/auth-info/auth-info-quick-links/attendance-check/api/react-query-api/use-get-attendance-matches";
+import { useGetViewingMatches } from "@auth/auth-info/auth-info-quick-links/viewing-check/api/react-query-api/use-get-viewing-matches";
 
-const AttendanceCheck = () => {
-  const { data: matches } = useGetAttendanceMatches();
+const ViewingCheck = () => {
+  const { data: matches } = useGetViewingMatches();
 
   const pastMatches = matches.filter((match) => match.status === "PAST");
   const upcomingMatches = matches.filter((match) => match.status === "TODAY" || match.status === "UPCOMING");
@@ -97,5 +97,4 @@ const AttendanceCheck = () => {
   );
 };
 
-export default AttendanceCheck;
-
+export default ViewingCheck;

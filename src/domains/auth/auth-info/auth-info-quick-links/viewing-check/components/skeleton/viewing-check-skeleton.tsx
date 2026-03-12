@@ -1,9 +1,9 @@
-const AttendanceCheckSkeleton = () => {
+const ViewingCheckSkeleton = () => {
   const skeletonItems = Array.from({ length: 3 }, (_, index) => index);
 
   return (
     <div
-      data-testid="attendance-check-skeleton"
+      data-testid="viewing-check-skeleton"
       className="mt-4 flex w-full flex-col gap-3"
     >
       <ul className="flex flex-col gap-2">
@@ -27,5 +27,4 @@ const AttendanceCheckSkeleton = () => {
   );
 };
 
-export default AttendanceCheckSkeleton;
-
+export default ViewingCheckSkeleton;
