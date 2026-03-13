@@ -35,7 +35,7 @@ import { ROUTES } from "@shared/constants/routes";
 import PublicRoute from "@shared/provider/public-route";
 
 import Ga4PageViewTracker from "./ga4-page-view-tracker";
-import AuthInfoDevContactPage from "@auth/auth-info/auth-info-dev-contact/pages/auth-info-dev-contact-page";
+import AuthInfoDevContactPage from "@auth/auth-info/auth-info-quick-links/auth-info-dev-contact/pages/auth-info-dev-contact-page";
 
 const Router = () => {
   return (
