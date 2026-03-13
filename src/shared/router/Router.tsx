@@ -35,6 +35,7 @@ import { ROUTES } from "@shared/constants/routes";
 import PublicRoute from "@shared/provider/public-route";
 
 import Ga4PageViewTracker from "./ga4-page-view-tracker";
+import AuthInfoDevContactPage from "@auth/auth-info/auth-info-dev-contact/pages/auth-info-dev-contact-page";
 
 const Router = () => {
   return (
@@ -67,6 +68,7 @@ const Router = () => {
             {/* 경기 관련 */}
             <Route path={ROUTES.MATCH_RATINGS} element={<MatchesHistoryPlayersRatingPage />} />
             <Route path={ROUTES.MATCH_PLAYER_RATINGS} element={<MatchesLastestPlayerRatingPage />} />
+            <Route path={ROUTES.DEV_CONTACT} element={<AuthInfoDevContactPage />} />
 
             {/* 관리자 전용 라우트 */}
             <Route element={<AdminRoute />}>
