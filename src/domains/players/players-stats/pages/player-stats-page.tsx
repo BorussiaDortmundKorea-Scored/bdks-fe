@@ -13,8 +13,9 @@ import PlayersStatsByGameSkeleton from "@players/players-stats/players-stats-by-
 import BackButton from "@shared/components/layout/header/buttons/back-button";
 import Header from "@shared/components/layout/header/header";
 import { usePageTransition } from "@shared/hooks/use-page-transition";
-import LayoutWithHeader from "@shared/provider/layout-with-header";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
+import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
+import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
 
 
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
@@ -40,7 +41,7 @@ const PlayerStatsPage = () => {
   return (
     <div className="bdks-container" ref={pageRef}>
       <Header options={headerOptions} />
-      <LayoutWithHeader>
+      <LayoutWithHeaderFooter>
         {/* 선수 이미지 영역 */}
         <div className="flex flex-col items-start gap-3">
           <img
@@ -56,7 +57,8 @@ const PlayerStatsPage = () => {
         <ReactQueryBoundary skeleton={<PlayersStatsByGameSkeleton />} errorFallback={PlayersStatsByGameError}>
           <PlayersStatsByGame playerId={playerId} />
         </ReactQueryBoundary>
-      </LayoutWithHeader>
+      </LayoutWithHeaderFooter>
+      <BottomNavigationBar />
     </div>
   );
 };
