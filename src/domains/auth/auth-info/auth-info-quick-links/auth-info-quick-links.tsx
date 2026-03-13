@@ -4,29 +4,23 @@
  */
 import { useNavigate } from "react-router-dom";
 
-import { Calendar, CheckCircle, Users } from "lucide-react";
+import { CheckCircle, Mail } from "lucide-react";
 
 import AuthInfoQuickLinkButton from "../auth-info-quick-link-button/auth-info-quick-link-button";
 import { ROUTES } from "@shared/constants/routes";
 
 const quickLinks = [
   {
-    id: "match-schedule",
-    IconComponent: Calendar,
-    label: "경기",
-    onClick: () => alert("경기 화면은 준비 중입니다."),
-  },
-  {
-    id: "player-stats",
-    IconComponent: Users,
-    label: "선수",
-    onClick: () => alert("선수 화면은 준비 중입니다."),
-  },
-  {
     id: "viewing-check",
     IconComponent: CheckCircle,
     label: "관람",
     path: ROUTES.VIEWING_CHECK,
+  },
+  {
+    id: "dev-contact",
+    IconComponent: Mail,
+    label: "문의",
+    path: ROUTES.DEV_CONTACT,
   },
 ];
 
@@ -42,7 +36,7 @@ const AuthInfoQuickLinks = () => {
             key={link.id}
             IconComponent={link.IconComponent}
             label={link.label}
-            onClick={"path" in link && link.path ? () => navigate(link.path) : link.onClick}
+            onClick={() => navigate(link.path)}
           />
         ))}
       </div>
