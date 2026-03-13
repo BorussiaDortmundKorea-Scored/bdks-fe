@@ -3,6 +3,7 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
+import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
 import MatchesHistoryPlayersRatingErrorFallback from "../components/error/matches-history-players-rating-error-fallback";
 import MatchesHistoryPlayersRating from "../components/matches-history-players-rating";
 import MatchesHistoryPlayersRatingSkeleton from "../components/skeleton/matches-history-players-rating-skeleton";
@@ -10,7 +11,7 @@ import MatchesHistoryPlayersRatingSkeleton from "../components/skeleton/matches-
 import BackButton from "@shared/components/layout/header/buttons/back-button";
 import Header from "@shared/components/layout/header/header";
 import { usePageTransition } from "@shared/hooks/use-page-transition";
-import LayoutWithHeader from "@shared/provider/layout-with-header";
+import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 const options = {
@@ -34,14 +35,15 @@ const MatchesHistoryPlayersRatingPage = () => {
   return (
     <div className="bdks-container" ref={pageRef}>
       <Header options={options} />
-      <LayoutWithHeader>
+      <LayoutWithHeaderFooter>
         <ReactQueryBoundary
           skeleton={<MatchesHistoryPlayersRatingSkeleton />}
           errorFallback={MatchesHistoryPlayersRatingErrorFallback}
         >
           <MatchesHistoryPlayersRating />
         </ReactQueryBoundary>
-      </LayoutWithHeader>
+      </LayoutWithHeaderFooter>
+      <BottomNavigationBar />
     </div>
   );
 };

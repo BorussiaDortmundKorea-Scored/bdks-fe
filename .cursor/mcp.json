@@ -6,7 +6,7 @@
         "-y",
         "@supabase/mcp-server-supabase@latest",
         "--access-token",
-        "sbp_6cde4922584c78484fa2c95368c6c0f34f44629c"
+        "토큰마스킹"
       ]
     }
   }

@@ -3,6 +3,31 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.4] - 2026-03-13
+
+**Branch**: `bdks-v1.6.4-emailjs를통한메일전송기능추가`
+
+### 추가
+- feat: 문의화면 route주소 등록
+- feat: emailjs전송컴포넌트기능제작
+- docs: v1.6.4작업내용문서
+
+### 변경
+- build: emailjs/browser라이브러리설치(nodemailer는 node환경의 서버가필요)
+- test: emailjs전송컴포넌트기능테스트코드추가
+- style: 최근경기,선수DB 하단네비게이션바추가
+
+### 수정
+- fix: 미사용 링크들 제거
+- fix: 익명로그인시 닉네임설정화면에서 로그아웃 미작동오류수정
+- fix: 이전에사용하던토큰파기및마스킹처리
+- fix: pr_template수정
+
+
+### 제거
+
+---
+
 ## [1.6.3] - 2026-03-12
 
 **Branch**: `bdks-v1.6.3-내정보화면관람체크기능고도화`

@@ -11,7 +11,7 @@ const QUICK_LINK_ICON_WRAPPER_CLASS =
 interface AuthInfoQuickLinkButtonProps {
   IconComponent: LucideIcon;
   label: string;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const AuthInfoQuickLinkButton = ({ IconComponent, label, onClick }: AuthInfoQuickLinkButtonProps) => {

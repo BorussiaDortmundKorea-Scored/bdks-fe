@@ -1,7 +1,7 @@
 {
   "name": "bdks-fe",
   "private": true,
-  "version": "1.6.3",
+  "version": "1.6.4",
   "type": "module",
   "scripts": {
     "dev:prod": "vite --mode prod --host",
@@ -25,6 +25,7 @@
     "release": "node scripts/auto-release.js"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@gsap/react": "^2.1.2",
     "@sentry/react": "^10.20.0",
     "@supabase/supabase-js": "^2.50.3",
