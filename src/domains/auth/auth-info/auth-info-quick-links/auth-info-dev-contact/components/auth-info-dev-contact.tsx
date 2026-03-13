@@ -112,7 +112,7 @@ const AuthInfoDevContact = () => {
         )}
         {result === "error" && (
           <p className="text-yds-c1m text-red-400">
-            메일 전송에 실패했습니다. 잠시 후 다시 시도하거나, 직접 메일로 보내 주세요. (dudejr5839@naver.com)
+            메일 전송에 실패했습니다. 잠시 후 다시 시도해주세요
           </p>
         )}
       </LayoutWithHeaderFooter>
