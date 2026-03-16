@@ -34,7 +34,7 @@ export const createTeam = async (team: ICreateTeamRequest): Promise<ApiResponse<
   const { data, error } = (await supabase.rpc("insert_team", {
     team_name: team.name,
     team_country: team.country,
-    team_logo_image_url: team.logoImageUrl,
+    team_logo_image_url: team.logoImageUrl ?? null,
   })) as { data: ITeam; error: PostgrestError | null };
 
   return {
@@ -49,7 +49,7 @@ export const updateTeam = async (team: IUpdateTeamRequest): Promise<ApiResponse<
     p_team_id: team.id,
     p_team_name: team.name,
     p_team_country: team.country,
-    p_team_logo_image_url: team.logoImageUrl,
+    p_team_logo_image_url: team.logoImageUrl ?? null,
   })) as { data: ITeam; error: PostgrestError | null };
 
   return {
