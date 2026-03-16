@@ -1,5 +1,6 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
 
 export interface IMatchesHistoryPlayersRating {
   korean_name: string;
@@ -8,10 +9,10 @@ export interface IMatchesHistoryPlayersRating {
   line_number: number;
   avg_rating: number;
   rating_count: number;
-  lineup_type: string;
+  lineup_type: LineupType;
   goals: number;
   assists: number;
-  substitution_status: "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT";
+  substitution_status: SubstitutionStatus;
   substitution_minute: number | null;
   yellow_cards: number;
   red_card_minute: number | null;

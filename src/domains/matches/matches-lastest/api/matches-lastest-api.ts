@@ -1,5 +1,6 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
 
 export interface IMatchesLastestPlayer {
   player_id: string; // UUID 타입
@@ -9,9 +10,9 @@ export interface IMatchesLastestPlayer {
   position_sort_order: number;
   line_number: 0 | 1 | 2 | 3 | 4 | 5; // SMALLINT 타입
   position_detail_name: string;
-  lineup_type: string; // VARCHAR(20) 타입
+  lineup_type: LineupType;
   is_captain: boolean;
-  substitution_status: string; // VARCHAR(20) 타입
+  substitution_status: SubstitutionStatus;
   substitution_partner_name: string | null;
   yellow_cards: number;
   is_sent_off: boolean;

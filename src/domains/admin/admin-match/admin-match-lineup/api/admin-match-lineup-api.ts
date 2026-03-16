@@ -1,14 +1,15 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
 
 export interface IMatchLineup {
   id: number;
   match_id: string;
   player_id: string;
   position_id: string | null;
-  lineup_type: string;
+  lineup_type: LineupType;
   is_captain: boolean;
-  substitution_status: string;
+  substitution_status: SubstitutionStatus;
   substitution_minute: number | null;
   substitution_partner_id: string | null;
   yellow_cards: number;
@@ -28,9 +29,9 @@ export interface ICreateMatchLineupRequest {
   match_id: string;
   player_id: string;
   position_id?: string;
-  lineup_type?: string;
+  lineup_type?: LineupType;
   is_captain?: boolean;
-  substitution_status?: string;
+  substitution_status?: SubstitutionStatus;
   substitution_minute?: number;
   substitution_partner_id?: string;
   yellow_cards?: number;
@@ -45,9 +46,9 @@ export interface IUpdateMatchLineupRequest {
   match_id?: string;
   player_id?: string;
   position_id?: string;
-  lineup_type?: string;
+  lineup_type?: LineupType;
   is_captain?: boolean;
-  substitution_status?: string;
+  substitution_status?: SubstitutionStatus;
   substitution_minute?: number;
   substitution_partner_id?: string;
   yellow_cards?: number;

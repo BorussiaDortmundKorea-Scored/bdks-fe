@@ -1,3 +1,5 @@
+import { type LineupType } from "@shared/types/match-lineup.types";
+
 // 도메인 엔티티 타입들
 export interface IMatchPlayerRating {
   korean_name: string;
@@ -6,7 +8,7 @@ export interface IMatchPlayerRating {
   line_number: number;
   avg_rating: number;
   rating_count: number;
-  lineup_type: string;
+  lineup_type: LineupType;
   player_id: string;
   match_id: string;
   round_name: string;
