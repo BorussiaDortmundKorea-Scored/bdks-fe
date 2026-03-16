@@ -1,24 +1,14 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type ICompetitionEntity } from "@shared/types/entities/competition.entity";
 
-export interface ICompetition {
-  id: string;
-  name: string;
-  season: string;
-  created_at: string;
-  updated_at: string;
-}
+export type ICompetition = ICompetitionEntity;
 
-export interface ICreateCompetitionRequest {
-  name: string;
-  season: string;
-}
+export type ICreateCompetitionRequest = Pick<ICompetitionEntity, "name" | "season">;
 
-export interface IUpdateCompetitionRequest {
-  id: string;
-  name?: string;
-  season?: string;
-}
+export type IUpdateCompetitionRequest =
+  Pick<ICompetitionEntity, "id"> &
+  Partial<Omit<ICompetitionEntity, "id" | "created_at" | "updated_at">>;
 
 // 모든 대회 조회
 export const getAllCompetitions = async (): Promise<ApiResponse<ICompetition[]>> => {

@@ -1,9 +1,9 @@
-import type { IProfile } from "@auth/auth-profile/api/auth-profile-api";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type IProfileEntity } from "@shared/types/entities/profile.entity";
 
 /** RPC get_profile_with_points 반환 타입. COALESCE로 항상 0 이상 정수 */
-export type IProfilePoints = Pick<IProfile, "points">;
+export type IProfilePoints = Pick<IProfileEntity, "points">;
 
 /**
  * 포인트 카드용 보유 포인트만 조회 (RPC에서 COALESCE(points,0) 적용)

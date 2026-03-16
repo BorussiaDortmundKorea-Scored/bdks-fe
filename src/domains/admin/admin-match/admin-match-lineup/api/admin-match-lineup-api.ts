@@ -1,84 +1,29 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
-import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
+import { type IMatchLineupEntity } from "@shared/types/entities/match-lineup.entity";
+import { type IPlayerEntity } from "@shared/types/entities/player.entity";
+import { type IPositionEntity } from "@shared/types/entities/position.entity";
 
-export interface IMatchLineup {
-  id: number;
-  match_id: string;
-  player_id: string;
-  position_id: string | null;
-  lineup_type: LineupType;
-  is_captain: boolean;
-  substitution_status: SubstitutionStatus;
-  substitution_minute: number | null;
-  substitution_partner_id: string | null;
-  yellow_cards: number;
-  red_card_minute: number | null;
-  is_sent_off: boolean;
-  goals: number;
-  assists: number;
-  created_at: string;
-  updated_at: string;
+export type IMatchLineup = IMatchLineupEntity & {
   player_name: string;
   player_korean_name: string;
   position_code: string | null;
   position_detail_name: string | null;
-}
+};
 
-export interface ICreateMatchLineupRequest {
-  match_id: string;
-  player_id: string;
-  position_id?: string;
-  lineup_type?: LineupType;
-  is_captain?: boolean;
-  substitution_status?: SubstitutionStatus;
-  substitution_minute?: number;
-  substitution_partner_id?: string;
-  yellow_cards?: number;
-  red_card_minute?: number;
-  is_sent_off?: boolean;
-  goals?: number;
-  assists?: number;
-}
+export type ICreateMatchLineupRequest =
+  Pick<IMatchLineupEntity, "match_id" | "player_id"> &
+  Partial<Omit<IMatchLineupEntity, "id" | "match_id" | "player_id" | "created_at" | "updated_at">>;
 
-export interface IUpdateMatchLineupRequest {
-  id: number;
-  match_id?: string;
-  player_id?: string;
-  position_id?: string;
-  lineup_type?: LineupType;
-  is_captain?: boolean;
-  substitution_status?: SubstitutionStatus;
-  substitution_minute?: number;
-  substitution_partner_id?: string;
-  yellow_cards?: number;
-  red_card_minute?: number;
-  is_sent_off?: boolean;
-  goals?: number;
-  assists?: number;
-}
+export type IUpdateMatchLineupRequest =
+  Pick<IMatchLineupEntity, "id"> &
+  Partial<Omit<IMatchLineupEntity, "id" | "created_at" | "updated_at">>;
 
 // 선수 목록 조회 (라인업에서 선택하기 위한)
-export interface IPlayer {
-  id: string;
-  name: string;
-  korean_name: string;
-  jersey_number: number;
-  nationality: string;
-  full_profile_image_url: string;
-  head_profile_image_url: string;
-  created_at: string;
-  updated_at: string;
-}
+export type IPlayer = IPlayerEntity;
 
 // 포지션 목록 조회
-export interface IPosition {
-  id: string;
-  position_code: string;
-  sort_order: number;
-  position_detail_name: string;
-  line_number: number;
-}
+export type IPosition = IPositionEntity;
 
 export interface ISubstituteMatchLineupRequest {
   lineup_id: number;

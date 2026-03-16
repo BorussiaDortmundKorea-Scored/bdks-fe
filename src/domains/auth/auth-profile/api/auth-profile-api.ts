@@ -1,21 +1,13 @@
 // src/domains/auth/auth-profile/api/auth-profile-api.ts
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type IProfileEntity } from "@shared/types/entities/profile.entity";
 
-export interface IProfile {
-  id: string;
-  nickname: string;
-  favorite_player?: string;
-  created_at: string;
-  updated_at: string;
-  is_admin: boolean;
-  points: number;
-}
+export type IProfile = IProfileEntity;
 
-export interface ICreateProfileRequest {
-  nickname: string;
-  favorite_player?: string; // 🔥 nationality 대신 favorite_player
-}
+export type ICreateProfileRequest =
+  Pick<IProfileEntity, "nickname"> &
+  Partial<Pick<IProfileEntity, "favorite_player">>;
 
 // 프로필 생성
 export const createProfile = async (profile: ICreateProfileRequest): Promise<ApiResponse<IProfile>> => {

@@ -1,26 +1,11 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type IMatchEntity } from "@shared/types/entities/match.entity";
 
-export interface IMatch {
-  id: string;
-  competition_id: string;
-  opponent_team_id: string;
-  match_date: string;
-  home_away: string;
-  our_score: number;
-  opponent_score: number;
-  created_at: Date;
-  updated_at: Date;
-  formation: string | null;
-  is_live: boolean;
-  round_name: string;
+export type IMatch = IMatchEntity & {
   competition_name: string;
   opponent_team_name: string;
-  match_start_time: Date;
-  second_half_start_time: Date;
-  first_half_end_time: Date;
-  second_half_end_time: Date;
-}
+};
 
 export interface IBulkCreateMatchItem {
   competition_id: string;
