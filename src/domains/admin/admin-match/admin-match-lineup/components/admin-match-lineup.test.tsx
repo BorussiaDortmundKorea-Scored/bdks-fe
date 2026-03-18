@@ -6,7 +6,7 @@ import AdminMatchLineupSkeleton from "./skeleton/admin-match-lineup-skeleton";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { OvelayProvider } from "@youngduck/yd-ui/Overlays";
+import { OverlayProvider } from "@youngduck/yd-ui/Overlays";
 import { HttpResponse, http } from "msw";
 import { describe, expect, it } from "vitest";
 
@@ -20,13 +20,13 @@ const renderWithQueryClient = (initialEntries: string[]) => {
   return render(
     <MemoryRouter initialEntries={initialEntries}>
       <QueryClientProvider client={queryClient}>
-        <OvelayProvider>
+        <OverlayProvider>
           <ReactQueryBoundary skeleton={<AdminMatchLineupSkeleton />} errorFallback={AdminMatchLineupErrorFallback}>
             <Routes>
               <Route path="/admin/match/:matchId/lineup" element={<AdminMatchLineup />} />
             </Routes>
           </ReactQueryBoundary>
-        </OvelayProvider>
+        </OverlayProvider>
       </QueryClientProvider>
     </MemoryRouter>,
   );

@@ -6,7 +6,7 @@ import type { LucideIcon } from "lucide-react";
 
 const QUICK_LINK_ICON_SIZE = 20;
 const QUICK_LINK_ICON_WRAPPER_CLASS =
-  "bg-background-forth relative flex h-8 w-8 items-center justify-center rounded-full";
+  "bg-background-fourth relative flex h-8 w-8 items-center justify-center rounded-full";
 
 interface AuthInfoQuickLinkButtonProps {
   IconComponent: LucideIcon;

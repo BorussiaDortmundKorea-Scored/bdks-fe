@@ -19,7 +19,7 @@ const AuthInfoMatchPredictionCard = () => {
         <p className="text-yds-c1m text-primary-100">승부 예측 확인</p>
       </div>
       <div className="flex justify-end">
-        <div className="bg-background-forth flex h-8 w-8 items-center justify-center rounded-full">
+        <div className="bg-background-fourth flex h-8 w-8 items-center justify-center rounded-full">
           <CreditCard size={24} className="text-primary-100" />
         </div>
       </div>
