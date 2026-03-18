@@ -13,11 +13,14 @@
 ### 변경
 - refactor: LineupType, SubstitutionStatus 컬럼 type으로 중앙화
 - refactor: db 스키마 타입 entity기반 utility type으로 중앙화
+- build: yd-ui v0.13.2버전업그레이드
+- docs: 클로드코드스킬에 yd-ui사용방법추가
 
 ### 수정
 - fix: team insert/update rpc 오버로드 모호성 에러 수정
 - fix: player update rpc 파라미터 통일
 - fix: 토큰노출로인한파기후새토큰환경변수등록
+- fix: yd-ui-0.13.2버전업그레이드 반영
 
 ### 제거
 
