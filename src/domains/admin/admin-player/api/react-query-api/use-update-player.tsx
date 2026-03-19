@@ -19,7 +19,6 @@ export function useUpdatePlayer() {
       });
     },
     onError: (error: Error) => {
-      console.error("Failed to update player:", error);
       alert(`선수 수정 실패: ${error.message}`);
     },
   });

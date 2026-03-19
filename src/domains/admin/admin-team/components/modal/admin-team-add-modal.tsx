@@ -38,7 +38,7 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
   //SECTION 상태값 영역
   const [formData, setFormData] = useState({
     name: "",
-    logoImageUrl: "",
+    logo_image_url: "",
   });
   //!SECTION 상태값 영역
 
@@ -47,13 +47,13 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
     await createTeam({
       name: formData.name,
       country: createCountrySelectHook.value,
-      logoImageUrl: formData.logoImageUrl || undefined,
+      logo_image_url: formData.logo_image_url || undefined,
     });
     handleClose();
   };
 
   const handleClose = () => {
-    setFormData({ name: "", logoImageUrl: "" });
+    setFormData({ name: "", logo_image_url: "" });
     onClose();
   };
   //!SECTION 메서드 영역
@@ -79,9 +79,9 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
           <label className="text-yds-b1 text-primary-100">로고 이미지 URL</label>
           <Input
             type="text"
-            value={formData.logoImageUrl}
+            value={formData.logo_image_url}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({ ...formData, logoImageUrl: e.target.value })
+              setFormData({ ...formData, logo_image_url: e.target.value })
             }
             placeholder="예: https://... 또는 /storage/path"
             size="full"

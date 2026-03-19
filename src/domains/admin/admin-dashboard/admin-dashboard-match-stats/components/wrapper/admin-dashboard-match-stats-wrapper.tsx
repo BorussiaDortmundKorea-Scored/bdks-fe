@@ -4,7 +4,7 @@
  */
 const AdminDashboardMatchStatsWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="card-navy-50 bg-background-tertiary md:col-start-1 md:col-end-7 md:row-start-5 md:row-end-8 h-full w-full overflow-hidden">
+    <div className="bg-background-tertiary text-primary-100 card-navy-50 flex h-full w-full flex-col justify-center md:col-start-1 md:col-end-7 md:row-start-5 md:row-end-8">
       {children}
     </div>
   );

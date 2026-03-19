@@ -15,18 +15,14 @@ const AuthRoute = () => {
     const checkProfile = async () => {
       if (!user) return;
 
-      try {
         const { data, error } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle();
 
         if (error) {
-          console.error("프로필 조회 오류:", error);
           return;
         }
 
         setHasProfile(!!data);
-      } catch (err) {
-        console.error("프로필 조회 예외:", err);
-      }
+      
     };
 
     checkProfile();

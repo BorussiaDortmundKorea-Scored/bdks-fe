@@ -3,6 +3,30 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.5] - 2026-03-16
+
+**Branch**: `bdks-v1.6.5-관리자페이지재정비`
+
+### 추가
+- docs: v1.6.5작업내용문서
+
+### 변경
+- refactor: LineupType, SubstitutionStatus 컬럼 type으로 중앙화
+- refactor: db 스키마 타입 entity기반 utility type으로 중앙화
+- build: yd-ui v0.13.2버전업그레이드
+- docs: 클로드코드스킬에 yd-ui사용방법추가
+- style: 대시보드차트디자인통일
+
+### 수정
+- fix: team insert/update rpc 오버로드 모호성 에러 수정
+- fix: player update rpc 파라미터 통일
+- fix: 토큰노출로인한파기후새토큰환경변수등록
+- fix: yd-ui-0.13.2버전업그레이드 반영
+- fix: lint-staged추가를 통한 안티패턴제재강화및적용
+
+### 제거
+
+---
 ## [1.6.4] - 2026-03-13
 
 **Branch**: `bdks-v1.6.4-emailjs를통한메일전송기능추가`

@@ -1,27 +1,16 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type ITeamEntity } from "@shared/types/entities/team.entity";
 
-export interface ITeam {
-  id: string;
-  name: string;
-  country: string | null;
-  logo_image_url: string | null;
-  created_at: string;
-  updated_at: string;
-}
+export type ITeam = ITeamEntity;
 
-export interface ICreateTeamRequest {
-  name: string;
-  country?: string;
-  logoImageUrl?: string;
-}
+export type ICreateTeamRequest =
+  Pick<ITeamEntity, "name"> &
+  Partial<Omit<ITeamEntity, "id" | "name" | "created_at" | "updated_at">>;
 
-export interface IUpdateTeamRequest {
-  id: string;
-  name?: string;
-  country?: string;
-  logoImageUrl?: string;
-}
+export type IUpdateTeamRequest =
+  Pick<ITeamEntity, "id"> &
+  Partial<Omit<ITeamEntity, "id" | "created_at" | "updated_at">>;
 
 // 모든 팀 조회
 export const getAllTeams = async (): Promise<ApiResponse<ITeam[]>> => {
@@ -34,7 +23,7 @@ export const createTeam = async (team: ICreateTeamRequest): Promise<ApiResponse<
   const { data, error } = (await supabase.rpc("insert_team", {
     team_name: team.name,
     team_country: team.country,
-    team_logo_image_url: team.logoImageUrl,
+    team_logo_image_url: team.logo_image_url ?? null,
   })) as { data: ITeam; error: PostgrestError | null };
 
   return {
@@ -49,7 +38,7 @@ export const updateTeam = async (team: IUpdateTeamRequest): Promise<ApiResponse<
     p_team_id: team.id,
     p_team_name: team.name,
     p_team_country: team.country,
-    p_team_logo_image_url: team.logoImageUrl,
+    p_team_logo_image_url: team.logo_image_url ?? null,
   })) as { data: ITeam; error: PostgrestError | null };
 
   return {

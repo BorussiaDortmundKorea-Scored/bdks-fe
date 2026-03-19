@@ -11,6 +11,8 @@ import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/adm
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
 import { useGetAllPositionsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-positions-suspense";
 import { useUpdateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-update-match-lineup";
+import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
+import { type IMatchLineupEntity } from "@shared/types/entities/match-lineup.entity";
 
 interface IAdminMatchLineupEditModal {
   matchId: string;
@@ -26,16 +28,16 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Pick<IMatchLineupEntity, "player_id" | "position_id" | "lineup_type" | "is_captain" | "substitution_status" | "substitution_minute" | "substitution_partner_id" | "yellow_cards" | "red_card_minute" | "is_sent_off" | "goals" | "assists">>({
     player_id: "",
     position_id: "",
-    lineup_type: "STARTING" as "STARTING" | "BENCH",
-    is_captain: false,
-    substitution_status: "NONE" as "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT",
-    substitution_minute: null as number | null,
+    lineup_type: "STARTING",
+    is_captain: false ,
+    substitution_status: "NONE",
+    substitution_minute: null,
     substitution_partner_id: "",
     yellow_cards: 0,
-    red_card_minute: null as number | null,
+    red_card_minute: null,
     is_sent_off: false,
     goals: 0,
     assists: 0,
@@ -113,9 +115,9 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
     setFormData({
       player_id: lineup.player_id,
       position_id: lineup.position_id || "",
-      lineup_type: lineup.lineup_type as "STARTING" | "BENCH",
+      lineup_type: lineup.lineup_type,
       is_captain: lineup.is_captain,
-      substitution_status: lineup.substitution_status as "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT",
+      substitution_status: lineup.substitution_status,
       substitution_minute: lineup.substitution_minute,
       substitution_partner_id: lineup.substitution_partner_id || "",
       yellow_cards: lineup.yellow_cards,
@@ -132,10 +134,10 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
       match_id: matchId,
       player_id: (editPlayerHook.label as string) || formData.player_id || undefined,
       position_id: (editPositionHook.label as string) || formData.position_id || undefined,
-      lineup_type: (editLineupTypeHook.label as "STARTING" | "BENCH") || formData.lineup_type,
+      lineup_type: (editLineupTypeHook.label as LineupType) || formData.lineup_type,
       is_captain: formData.is_captain,
       substitution_status:
-        (editSubStatusHook.label as "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT") || formData.substitution_status,
+        (editSubStatusHook.label as SubstitutionStatus) || formData.substitution_status,
       substitution_minute: formData.substitution_minute || undefined,
       substitution_partner_id: (editSubPartnerHook.label as string) || formData.substitution_partner_id || undefined,
       yellow_cards: formData.yellow_cards,
@@ -185,7 +187,7 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
         <div className="flex items-center">
           <input
             type="checkbox"
-            checked={formData.is_captain}
+            checked={formData.is_captain || false}
             onChange={(e) => setFormData({ ...formData, is_captain: e.target.checked })}
             className="mr-2"
           />
@@ -264,7 +266,7 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
         <div className="flex items-center">
           <input
             type="checkbox"
-            checked={formData.is_sent_off}
+            checked={formData.is_sent_off || false}
             onChange={(e) => setFormData({ ...formData, is_sent_off: e.target.checked })}
             className="mr-2"
           />

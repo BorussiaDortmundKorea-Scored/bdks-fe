@@ -118,7 +118,6 @@ export const Loading: Story = {
       handlers: [
         // 글로벌 핸들러를 덮어쓰기 위해 더 구체적인 패턴 사용
         http.post("*/rest/v1/rpc/get_match_single_player_rating", async () => {
-          console.log("MSW: 로딩 상태 시뮬레이션");
           await new Promise((resolve) => setTimeout(resolve, 999999)); // 무한 로딩
           return HttpResponse.json({});
         }),
@@ -140,7 +139,6 @@ export const Error: Story = {
       handlers: [
         // 글로벌 핸들러를 덮어쓰기 위해 더 구체적인 패턴 사용
         http.post("*/rest/v1/rpc/get_match_single_player_rating", () => {
-          console.log("MSW: 에러 상태 시뮬레이션");
           return new HttpResponse(null, { status: 500 });
         }),
       ],
@@ -160,7 +158,6 @@ export const RatingSuccess: Story = {
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_match_single_player_rating", () => {
-          console.log("MSW: 선수 정보 조회 성공");
           return HttpResponse.json({
             korean_name: "김영덕",
             full_profile_image_url:
@@ -185,10 +182,7 @@ export const RatingSuccess: Story = {
           });
         }),
         http.post("*/rest/v1/rpc/insert_player_rating", async ({ request }) => {
-          console.log("MSW: 평점 입력 성공 시뮬레이션");
           const body = (await request.json()) as { p_rating: number; p_minute: string };
-          console.log("MSW: 평점 입력 요청:", body);
-
           // 성공 응답
           return HttpResponse.json({
             id: "rating-789",
@@ -240,7 +234,6 @@ export const RatingDuplicateError: Story = {
           });
         }),
         http.post("*/rest/v1/rpc/insert_player_rating", () => {
-          console.log("MSW: 중복 평점 입력 에러 시뮬레이션");
           return new HttpResponse(null, {
             status: 400,
             statusText: "Bad Request",

@@ -1,36 +1,16 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type IPlayerEntity } from "@shared/types/entities/player.entity";
 
-export interface IPlayer {
-  id: string;
-  name: string;
-  korean_name: string | null;
-  jersey_number: number | null;
-  nationality: string | null;
-  full_profile_image_url: string | null;
-  head_profile_image_url: string | null;
-  created_at: string;
-  updated_at: string;
-}
+export type IPlayer = IPlayerEntity;
 
-export interface ICreatePlayerRequest {
-  name: string;
-  korean_name?: string;
-  jersey_number?: number;
-  nationality?: string;
-  full_profile_image_url?: string;
-  head_profile_image_url?: string;
-}
+export type ICreatePlayerRequest =
+  Pick<IPlayerEntity, "name"> &
+  Partial<Omit<IPlayerEntity, "id" | "name" | "created_at" | "updated_at">>;
 
-export interface IUpdatePlayerRequest {
-  id: string;
-  name?: string;
-  korean_name?: string;
-  jersey_number?: number;
-  nationality?: string;
-  full_profile_image_url?: string;
-  head_profile_image_url?: string;
-}
+export type IUpdatePlayerRequest =
+  Pick<IPlayerEntity, "id"> &
+  Partial<Omit<IPlayerEntity, "id" | "created_at" | "updated_at">>;
 
 // 모든 선수 조회
 export const getAllPlayers = async (): Promise<ApiResponse<IPlayer[]>> => {
@@ -63,7 +43,7 @@ export const updatePlayer = async (player: IUpdatePlayerRequest): Promise<ApiRes
     p_player_jersey_number: player.jersey_number,
     p_player_nationality: player.nationality,
     p_player_full_profile_image_url: player.full_profile_image_url,
-    player_head_profile_image_url: player.head_profile_image_url,
+    p_player_head_profile_image_url: player.head_profile_image_url,
   });
 
   return {

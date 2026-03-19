@@ -9,6 +9,7 @@ import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
 import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense";
 import type { IMatch } from "@admin/admin-match/api/admin-match-api";
+import { type IMatchEntity } from "@shared/types/entities/match.entity";
 import { useUpdateMatch } from "@admin/admin-match/api/react-query-api/use-update-match";
 import { convertLocalToUTC, convertUTCToLocal } from "@admin/admin-match/utils/datetime-utils";
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
@@ -26,11 +27,11 @@ export const AdminMatchEditModal = ({ match, onClose }: IAdminMatchEditModal) =>
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Pick<IMatchEntity, "competition_id" | "opponent_team_id" | "match_date" | "home_away" | "our_score" | "opponent_score" | "formation" | "is_live" | "round_name" | "match_start_time" | "second_half_start_time" | "first_half_end_time" | "second_half_end_time">>({
     competition_id: "",
     opponent_team_id: "",
     match_date: "",
-    home_away: "HOME" as "HOME" | "AWAY",
+    home_away: "HOME",
     our_score: 0,
     opponent_score: 0,
     formation: "",
@@ -88,7 +89,7 @@ export const AdminMatchEditModal = ({ match, onClose }: IAdminMatchEditModal) =>
       competition_id: match.competition_id,
       opponent_team_id: match.opponent_team_id,
       match_date: match.match_date,
-      home_away: match.home_away as "HOME" | "AWAY",
+      home_away: match.home_away,
       our_score: match.our_score,
       opponent_score: match.opponent_score,
       formation: match.formation || "",
@@ -108,15 +109,15 @@ export const AdminMatchEditModal = ({ match, onClose }: IAdminMatchEditModal) =>
       opponent_team_id: editTeamHook.label || formData.opponent_team_id || undefined,
       match_date: formData.match_date || undefined,
       home_away: (editHomeAwayHook.label as "HOME" | "AWAY") || formData.home_away,
-      our_score: formData.our_score,
-      opponent_score: formData.opponent_score,
+      our_score: formData.our_score ?? undefined,
+      opponent_score: formData.opponent_score ?? undefined,
       formation: formData.formation || undefined,
-      is_live: formData.is_live,
+      is_live: formData.is_live ?? undefined,
       round_name: formData.round_name || undefined,
-      match_start_time: convertLocalToUTC(formData.match_start_time),
-      second_half_start_time: convertLocalToUTC(formData.second_half_start_time),
-      first_half_end_time: convertLocalToUTC(formData.first_half_end_time),
-      second_half_end_time: convertLocalToUTC(formData.second_half_end_time),
+      match_start_time: convertLocalToUTC(formData.match_start_time ?? ""),
+      second_half_start_time: convertLocalToUTC(formData.second_half_start_time ?? ""),
+      first_half_end_time: convertLocalToUTC(formData.first_half_end_time ?? ""),
+      second_half_end_time: convertLocalToUTC(formData.second_half_end_time ?? ""),
     });
     handleClose();
   };
@@ -282,7 +283,7 @@ export const AdminMatchEditModal = ({ match, onClose }: IAdminMatchEditModal) =>
         <div className="flex items-center">
           <input
             type="checkbox"
-            checked={formData.is_live}
+            checked={formData.is_live ?? false}
             onChange={(e) => setFormData({ ...formData, is_live: e.target.checked })}
             className="mr-2"
           />

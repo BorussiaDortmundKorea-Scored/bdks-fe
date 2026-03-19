@@ -1,7 +1,7 @@
 {
   "name": "bdks-fe",
   "private": true,
-  "version": "1.6.4",
+  "version": "1.6.5",
   "type": "module",
   "scripts": {
     "dev:prod": "vite --mode prod --host",
@@ -10,6 +10,7 @@
     "build:dev": "tsc -b && vite build --mode dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "lint-staged": "lint-staged",
     "test": "vitest run",
     "test:watch": "vitest --watch --ui",
     "test:coverage": "vitest run --coverage",
@@ -32,10 +33,11 @@
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
-    "@youngduck/yd-ui": "^0.11.1",
+    "@youngduck/yd-ui": "^0.13.2",
     "axios": "^1.10.0",
     "chart.js": "^4.5.1",
     "gsap": "^3.13.0",
+    "lint-staged": "^16.4.0",
     "lucide-react": "^0.541.0",
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.0",
@@ -91,6 +93,11 @@
     "vite": "^7.0.0",
     "vite-plugin-sitemap": "^0.8.2",
     "vitest": "^3.2.4"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "pnpm exec eslint --fix"
+    ]
   },
   "msw": {
     "workerDirectory": [

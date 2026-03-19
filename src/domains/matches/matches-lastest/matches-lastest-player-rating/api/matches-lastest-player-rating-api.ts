@@ -51,7 +51,6 @@ export const insertPlayerRating = async (
       action: "INSERT",
     };
 
-    try {
       // 개별 선수 채널 (기존 - 개별 선수 화면용)
       const playerChannelName = `match-${request.match_id}-player-${request.player_id}`;
       await supabase.channel(playerChannelName).send({
@@ -67,9 +66,7 @@ export const insertPlayerRating = async (
         event: "player_rating_updated", // 이벤트명 다르게 설정
         payload,
       });
-    } catch (broadcastError) {
-      console.error("브로드캐스트 전송 실패:", broadcastError);
-    }
+    
   }
 
   return {

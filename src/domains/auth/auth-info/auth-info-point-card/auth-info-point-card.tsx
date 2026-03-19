@@ -22,7 +22,7 @@ const AuthInfoPointCard = () => {
       </div>
       <div className="flex justify-end">
         <p
-          className="bg-background-forth flex h-8 w-auto items-center justify-center rounded-full px-2"
+          className="bg-background-fourth flex h-8 w-auto items-center justify-center rounded-full px-2"
           data-testid="auth-info-point-card-points"
         >
           {displayPoints}p

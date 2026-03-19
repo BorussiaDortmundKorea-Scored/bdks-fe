@@ -56,7 +56,6 @@ export const Loading: Story = {
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_match_single_player_rating", async () => {
-          console.log("MSW: 로딩 상태 시뮬레이션");
           await new Promise((resolve) => setTimeout(resolve, 999999)); // 무한 로딩
           return HttpResponse.json({});
         }),
@@ -71,7 +70,6 @@ export const Error: Story = {
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_match_single_player_rating", () => {
-          console.log("MSW: 에러 상태 시뮬레이션");
           return new HttpResponse(null, { status: 500 });
         }),
       ],
@@ -199,7 +197,6 @@ export const SubmittingRating: Story = {
           });
         }),
         http.post("*/rest/v1/rpc/insert_player_rating", async () => {
-          console.log("MSW: 평점 입력 지연 시뮬레이션");
           await new Promise((resolve) => setTimeout(resolve, 999999)); // 무한 로딩
           return HttpResponse.json({});
         }),
@@ -238,7 +235,6 @@ export const RatingDuplicateError: Story = {
           });
         }),
         http.post("*/rest/v1/rpc/insert_player_rating", () => {
-          console.log("MSW: 중복 평점 입력 에러 시뮬레이션");
           return new HttpResponse(null, {
             status: 400,
             statusText: "Bad Request",

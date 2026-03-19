@@ -8,6 +8,7 @@ import AdminDashboardMatchStatsWrapper from "./wrapper/admin-dashboard-match-sta
 const AdminDashboardMatchStats = () => {
   return (
     <AdminDashboardMatchStatsWrapper>
+      <h2 className="text-yds-s2">평점 입력 현황</h2>
       <AdminDashboardMatchStatsChart />
     </AdminDashboardMatchStatsWrapper>
   );

@@ -1,16 +1,11 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type IProfileEntity } from "@shared/types/entities/profile.entity";
 
-export interface IUser {
-  id: string;
-  nickname: string;
-  favorite_player: string | null;
-  created_at: string;
-  updated_at: string;
-  is_admin: boolean;
+export type IUser = Omit<IProfileEntity, "points"> & {
   email?: string | null;
   last_sign_in_at?: string | null;
-}
+};
 
 export interface IDeleteUserResponse {
   success: boolean;

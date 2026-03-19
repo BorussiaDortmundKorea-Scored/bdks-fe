@@ -10,6 +10,7 @@ import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 import { useCreateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-create-match-lineup";
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
 import { useGetAllPositionsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-positions-suspense";
+import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
 
 interface IAdminMatchLineupAddModal {
   matchId: string;
@@ -27,9 +28,9 @@ export const AdminMatchLineupAddModal = ({ matchId, onClose }: IAdminMatchLineup
   const [formData, setFormData] = useState({
     player_id: "",
     position_id: "",
-    lineup_type: "STARTING" as "STARTING" | "BENCH",
+    lineup_type: "STARTING" as LineupType,
     is_captain: false,
-    substitution_status: "NONE" as "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT",
+    substitution_status: "NONE" as SubstitutionStatus,
     substitution_minute: null as number | null,
     substitution_partner_id: "",
     yellow_cards: 0,
@@ -85,10 +86,10 @@ export const AdminMatchLineupAddModal = ({ matchId, onClose }: IAdminMatchLineup
       match_id: matchId,
       player_id: (createPlayerHook.label as string) || formData.player_id,
       position_id: (createPositionHook.label as string) || undefined,
-      lineup_type: (createLineupTypeHook.label as "STARTING" | "BENCH") || formData.lineup_type,
+      lineup_type: (createLineupTypeHook.label as LineupType) || formData.lineup_type,
       is_captain: formData.is_captain,
       substitution_status:
-        (createSubStatusHook.label as "NONE" | "SUBSTITUTED_IN" | "SUBSTITUTED_OUT") || formData.substitution_status,
+        (createSubStatusHook.label as SubstitutionStatus) || formData.substitution_status,
       substitution_minute: formData.substitution_minute || undefined,
       substitution_partner_id: (createSubPartnerHook.label as string) || formData.substitution_partner_id || undefined,
       yellow_cards: formData.yellow_cards,

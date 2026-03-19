@@ -19,7 +19,7 @@ const AuthInfoProfileCard = () => {
         <p className="text-yds-c1m text-primary-100">내 정보 확인 및 수정</p>
       </div>
       <div className="flex justify-end">
-        <div className="bg-background-forth flex h-8 w-8 items-center justify-center rounded-full">
+        <div className="bg-background-fourth flex h-8 w-8 items-center justify-center rounded-full">
           <User size={24} className="text-primary-100" />
         </div>
       </div>

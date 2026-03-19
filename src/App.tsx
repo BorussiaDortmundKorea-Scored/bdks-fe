@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ReactGA from "react-ga4";
-import { OvelayProvider } from "@youngduck/yd-ui/Overlays";
+import { OverlayProvider } from "@youngduck/yd-ui/Overlays";
 
 import { queryClient } from "@shared/provider/query-client";
 import Router from "@shared/router/Router";
@@ -37,10 +37,10 @@ const App = () => {
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <OvelayProvider>
+        <OverlayProvider>
           <Router />
           <ReactQueryDevtools initialIsOpen={false} />
-        </OvelayProvider>
+        </OverlayProvider>
       </QueryClientProvider>
     </HelmetProvider>
   );
