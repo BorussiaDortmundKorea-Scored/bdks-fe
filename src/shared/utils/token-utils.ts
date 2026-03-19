@@ -28,7 +28,6 @@ export const getAccessTokenFromSupabaseToken = (): string | null => {
     );
 
     if (supabaseKeys.length === 0) {
-      console.warn("Supabase auth-token을 찾을 수 없습니다.");
       return null;
     }
 
@@ -36,14 +35,12 @@ export const getAccessTokenFromSupabaseToken = (): string | null => {
     const tokenData = localStorage.getItem(supabaseKey);
 
     if (!tokenData) {
-      console.warn("Supabase 토큰 데이터가 없습니다.");
       return null;
     }
 
     const parsedToken: SupabaseTokenData = JSON.parse(tokenData);
     return parsedToken.access_token;
-  } catch (error) {
-    console.error("Supabase 토큰 파싱 오류:", error);
+  } catch {
     return null;
   }
 };
@@ -66,8 +63,7 @@ export const getRefreshTokenFromSupabaseToken = (): string | null => {
 
     const parsedToken: SupabaseTokenData = JSON.parse(tokenData);
     return parsedToken.refresh_token;
-  } catch (error) {
-    console.error("Supabase 토큰 파싱 오류:", error);
+  } catch {
     return null;
   }
 };
@@ -90,8 +86,7 @@ export const getTokenExpiryFromSupabaseToken = (): number | null => {
 
     const parsedToken: SupabaseTokenData = JSON.parse(tokenData);
     return parsedToken.expires_at;
-  } catch (error) {
-    console.error("Supabase 토큰 파싱 오류:", error);
+  } catch {
     return null;
   }
 };

@@ -27,8 +27,7 @@ const DeleteAccountButton = () => {
         alert(result.error || "회원탈퇴 중 오류가 발생했습니다.");
         setShowConfirm(false);
       }
-    } catch (error) {
-      console.error("회원탈퇴 오류:", error);
+    } catch {
       alert("회원탈퇴 중 오류가 발생했습니다.");
       setShowConfirm(false);
     } finally {

@@ -20,7 +20,6 @@ const useKakaoLogin = () => {
       const baseUrl = import.meta.env.VITE_BASE_URL;
       const redirectUrl = `${baseUrl}/dashboard`;
 
-      console.log("카카오 로그인 리다이렉트 URL:", redirectUrl);
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "kakao",
@@ -33,7 +32,6 @@ const useKakaoLogin = () => {
       });
 
       if (error) {
-        console.error("카카오 로그인 오류:", error);
         return {
           success: false,
           error: `카카오 로그인 중 문제가 발생했습니다: ${error.message}`,
@@ -44,8 +42,7 @@ const useKakaoLogin = () => {
       return {
         success: true,
       };
-    } catch (err) {
-      console.error("카카오 로그인 예외:", err);
+    } catch {
       return {
         success: false,
         error: "카카오 로그인 중 예상치 못한 오류가 발생했습니다.",
@@ -64,7 +61,6 @@ const useKakaoLogin = () => {
       } = await supabase.auth.getSession();
 
       if (error) {
-        console.error("세션 확인 오류:", error);
         return null;
       }
 
@@ -74,8 +70,7 @@ const useKakaoLogin = () => {
       }
 
       return null;
-    } catch (err) {
-      console.error("세션 확인 예외:", err);
+    } catch {
       return null;
     }
   };
@@ -86,14 +81,12 @@ const useKakaoLogin = () => {
       const { error } = await supabase.auth.signOut();
 
       if (error) {
-        console.error("로그아웃 오류:", error);
         return false;
       }
 
       // Supabase가 자동으로 sb-xxx-auth-token을 관리하므로 별도 제거 불필요
       return true;
-    } catch (err) {
-      console.error("로그아웃 예외:", err);
+    } catch {
       return false;
     }
   };

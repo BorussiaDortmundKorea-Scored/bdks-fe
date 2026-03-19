@@ -78,12 +78,10 @@ export const Loading: Story = {
       handlers: [
         // 글로벌 핸들러를 덮어쓰기 위해 더 구체적인 패턴 사용
         http.post("*/rest/v1/rpc/get_matches_player_ratings", async () => {
-          console.log("MSW: 로딩 상태 시뮬레이션");
           await new Promise((resolve) => setTimeout(resolve, 999999)); // 무한 로딩
           return HttpResponse.json({});
         }),
         http.post("*/rest/v1/rpc/get_match_info", async () => {
-          console.log("MSW: 매치 정보 로딩 상태 시뮬레이션");
           await new Promise((resolve) => setTimeout(resolve, 999999)); // 무한 로딩
           return HttpResponse.json({});
         }),
@@ -99,11 +97,9 @@ export const Error: Story = {
       handlers: [
         // 글로벌 핸들러를 덮어쓰기 위해 더 구체적인 패턴 사용
         http.post("*/rest/v1/rpc/get_matches_player_ratings", () => {
-          console.log("MSW: 에러 상태 시뮬레이션");
           return new HttpResponse(null, { status: 500 });
         }),
         http.post("*/rest/v1/rpc/get_match_info", () => {
-          console.log("MSW: 매치 정보 에러 상태 시뮬레이션");
           return new HttpResponse(null, { status: 500 });
         }),
       ],

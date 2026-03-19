@@ -19,7 +19,6 @@ export function useCreatePlayer() {
       });
     },
     onError: (error: Error) => {
-      console.error("Failed to create player:", error);
       alert(`선수 생성 실패: ${error.message}`);
     },
   });

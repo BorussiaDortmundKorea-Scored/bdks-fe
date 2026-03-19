@@ -19,7 +19,6 @@ export function useDeletePlayer() {
       });
     },
     onError: (error: Error) => {
-      console.error("Failed to delete player:", error);
       alert(`선수 삭제 실패: ${error.message}`);
     },
   });

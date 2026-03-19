@@ -33,7 +33,7 @@ export default tseslint.config(
       rules: {
         ...reactHooks.configs.recommended.rules,
         "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-
+        'no-console': 'warn',
         // React Query 관련 규칙
         "@tanstack/query/exhaustive-deps": "error",
         "@tanstack/query/no-rest-destructuring": "warn",

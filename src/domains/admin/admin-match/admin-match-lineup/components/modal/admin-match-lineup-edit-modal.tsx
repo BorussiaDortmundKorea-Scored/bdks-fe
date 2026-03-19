@@ -126,7 +126,6 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
       goals: lineup.goals,
       assists: lineup.assists,
     });
-    console.log(lineup,'언제');
   }, [lineup]);
 
   const handleUpdateLineup = async () => {

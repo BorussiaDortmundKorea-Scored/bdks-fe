@@ -7,8 +7,7 @@ import { HttpResponse, http } from "msw";
 import AdminMatchLineupSubstitutionDummy from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-substitution-dummy.json";
 
 export const AdminMatchLineupSubstitutionHandlers = [
-  http.post("*/rest/v1/rpc/substitute_match_lineup", ({ request }) => {
-    console.log("MSW: RPC 요청 가로챔! substitute_match_lineup", request.url);
+  http.post("*/rest/v1/rpc/substitute_match_lineup", () => {
     return HttpResponse.json(AdminMatchLineupSubstitutionDummy.success);
   }),
 ];

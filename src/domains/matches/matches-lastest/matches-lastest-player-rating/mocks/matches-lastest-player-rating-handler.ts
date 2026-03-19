@@ -17,15 +17,12 @@ const mockInsertResponse = {
 export const matchesLastestPlayerRatingHandlers = [
   // 특정 경기의 특정 선수 평점 조회
   http.post("*/rest/v1/rpc/get_match_single_player_rating", () => {
-    console.log("MSW: get_match_single_player_rating 호출됨");
     return HttpResponse.json(MatchesLastestPlayerRatingDummy);
   }),
 
   // 평점 입력
   http.post("*/rest/v1/rpc/insert_player_rating", async ({ request }) => {
-    console.log("MSW: insert_player_rating 호출됨");
-    const body = await request.json();
-    console.log("MSW: 평점 입력 요청 데이터:", body);
+    await request.json();
 
     // 성공 응답 시뮬레이션
     return HttpResponse.json(mockInsertResponse);
@@ -33,7 +30,6 @@ export const matchesLastestPlayerRatingHandlers = [
 
   // 사용자의 특정 선수에 대한 모든 평점 조회
   http.post("*/rest/v1/rpc/get_user_player_ratings", () => {
-    console.log("MSW: get_user_player_ratings 호출됨");
     return HttpResponse.json({
       ratings: [
         {

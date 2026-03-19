@@ -44,8 +44,7 @@ const AdminUser = () => {
       } else {
         alert(result.error || "사용자 탈퇴 중 오류가 발생했습니다.");
       }
-    } catch (error) {
-      console.error("사용자 탈퇴 오류:", error);
+    } catch {
       alert("사용자 탈퇴 중 오류가 발생했습니다.");
     } finally {
       setDeletingUserId(null);

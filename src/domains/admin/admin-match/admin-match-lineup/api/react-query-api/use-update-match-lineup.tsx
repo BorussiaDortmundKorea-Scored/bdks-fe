@@ -21,8 +21,7 @@ export const useUpdateMatchLineup = (matchId: string) => {
         queryKey: ADMIN_MATCH_LINEUP_QUERY_KEYS.list(matchId),
       });
     },
-    onError: (error) => {
-      console.error("라인업 수정 실패:", error);
+    onError: () => {
     },
   });
 };
