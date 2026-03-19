@@ -54,7 +54,7 @@ const PlayersDb = () => {
             onClick={() => handlePlayerClick(item.id)}
             className="flex w-[105px] shrink-0 flex-col items-center gap-[16px] hover:cursor-pointer"
           >
-            <img src={item.head_profile_image_url} alt={item.korean_name} className="h-[80px] w-[80px] object-cover" />
+            <img src={item.head_profile_image_url ?? undefined} alt={item.korean_name ?? undefined} className="h-[80px] w-[80px] object-cover" />
             <div className="flex flex-col items-center gap-[2px]">
               <div className="text-sm text-white">{item.korean_name}</div>
               <div className="text-primary-100 text-xs">

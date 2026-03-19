@@ -174,14 +174,14 @@ const AdminMatchLineup = () => {
                 {lineup.is_captain && <Star size={16} className="text-yellow-500" />}
               </Td>
               <Td className="whitespace-nowrap">
-                {getSubstitutionStatusText(lineup.substitution_status)}
+                {getSubstitutionStatusText(lineup.substitution_status ?? "")}
                 {lineup.substitution_minute && ` (${lineup.substitution_minute}')`}
               </Td>
               <Td className="whitespace-nowrap">
                 {lineup.goals}골 / {lineup.assists}어시
               </Td>
               <Td className="whitespace-nowrap">
-                {lineup.yellow_cards > 0 && <span className="text-yellow-500">{lineup.yellow_cards}장</span>}
+                {(lineup.yellow_cards ?? 0) > 0 && <span className="text-yellow-500">{lineup.yellow_cards}장</span>}
                 {lineup.is_sent_off && <span className="ml-2 text-red-500">퇴장</span>}
               </Td>
               <Td className="whitespace-nowrap">
