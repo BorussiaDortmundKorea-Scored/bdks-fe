@@ -6,13 +6,17 @@
 import { Bar } from "react-chartjs-2";
 
 import { useGetMatchStats } from "../api/react-query-api/use-get-match-stats";
-import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from "chart.js";
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, type TooltipItem } from "chart.js";
 
 // Chart.js 필수 요소 등록
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+const CHART_MIN_WIDTH_PX = 360;
+const BAR_GROUP_WIDTH_PX = 90;
+
 const AdminDashboardMatchStatsChart = () => {
   const matchStats = useGetMatchStats();
+  const chartMinWidthPx = Math.max(CHART_MIN_WIDTH_PX, matchStats.length * BAR_GROUP_WIDTH_PX);
 
   // 차트 데이터 구성
   const chartData = {
@@ -29,7 +33,7 @@ const AdminDashboardMatchStatsChart = () => {
         borderColor: "rgba(255, 205, 0, 1)",
         borderWidth: 2,
         borderRadius: 4,
-        barThickness: 40,
+        barThickness: 20,
       },
       {
         label: "총 평점 개수",
@@ -38,7 +42,7 @@ const AdminDashboardMatchStatsChart = () => {
         borderColor: "rgba(0, 0, 0, 1)",
         borderWidth: 2,
         borderRadius: 4,
-        barThickness: 40,
+        barThickness: 20,
       },
     ],
   };
@@ -57,25 +61,11 @@ const AdminDashboardMatchStatsChart = () => {
         labels: {
           color: "#FFFFFF",
           font: {
-            size: 13,
-            weight: "bold" as const,
+            size: 14,
           },
-          padding: 15,
+          padding: 16,
           usePointStyle: true,
           pointStyle: "rect",
-        },
-      },
-      title: {
-        display: true,
-        text: "최근 10경기 평점 통계",
-        color: "#FFCD00",
-        font: {
-          size: 18,
-          weight: "bold" as const,
-        },
-        padding: {
-          top: 10,
-          bottom: 20,
         },
       },
       tooltip: {
@@ -95,14 +85,14 @@ const AdminDashboardMatchStatsChart = () => {
           size: 13,
         },
         callbacks: {
-          title: (context: any) => {
-            // 툴팁에 전체 경기명 표시
-            const index = context[0].dataIndex;
-            return matchStats[index]?.match_name || "";
+          title: (items: TooltipItem<"bar">[]) => {
+            const index = items[0]?.dataIndex;
+            if (index == null) return "";
+            return matchStats[index]?.match_name ?? "";
           },
-          label: (context: any) => {
-            const label = context.dataset.label || "";
-            const value = context.parsed.y;
+          label: (item: TooltipItem<"bar">) => {
+            const label = item.dataset.label ?? "";
+            const value = item.parsed.y;
             return `${label}: ${value}명`;
           },
         },
@@ -116,9 +106,7 @@ const AdminDashboardMatchStatsChart = () => {
           font: {
             size: 11,
           },
-          maxRotation: 45,
-          minRotation: 45,
-          autoSkip: false,
+          autoSkip: true,
         },
         grid: {
           display: false,
@@ -132,8 +120,11 @@ const AdminDashboardMatchStatsChart = () => {
           font: {
             size: 12,
           },
-          callback: function (value: any) {
-            return value.toLocaleString() + "명";
+          callback: (value: string | number) => {
+            if (typeof value === "number") return `${value.toLocaleString()}명`;
+            const parsed = Number(value);
+            if (Number.isNaN(parsed)) return `${value}명`;
+            return `${parsed.toLocaleString()}명`;
           },
         },
         grid: {
@@ -144,8 +135,10 @@ const AdminDashboardMatchStatsChart = () => {
   };
 
   return (
-    <div className="h-[300px] w-full p-4 md:h-full md:w-full">
-      <Bar data={chartData} options={chartOptions} />
+    <div className="h-[240px] w-full overflow-x-auto md:overflow-visible md:w-full">
+      <div className="h-full w-full md:min-w-0" style={{ minWidth: chartMinWidthPx }}>
+        <Bar data={chartData} options={chartOptions} />
+      </div>
     </div>
   );
 };
