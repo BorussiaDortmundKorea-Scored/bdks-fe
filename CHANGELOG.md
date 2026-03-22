@@ -11,6 +11,8 @@
 
 ### 변경
 - refactor: alert호출 yd-ui toast로전환
+- refactor: confirm호출 yd-ui ConfirmDialog로전환
+- docs: v1.6.6작업내용문서
 
 ### 수정
 
