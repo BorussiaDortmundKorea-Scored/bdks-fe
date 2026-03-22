@@ -6,6 +6,7 @@
 import { useMemo, useState } from "react";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense";
 import { useBulkCreateMatches } from "@admin/admin-match/api/react-query-api/use-bulk-create-matches";
@@ -32,6 +33,7 @@ export const AdminMatchBulkAddModal = ({ onClose }: IAdminMatchBulkAddModalProps
   const { data: competitions } = useGetAllCompetitionsSuspense();
   const { data: teams } = useGetAllTeamsSuspense();
   const { mutateAsync: bulkCreateMatches, isPending: isCreating } = useBulkCreateMatches();
+  const { toast } = useOverlay();
   //!SECTION HOOK 호출
 
   //SECTION 상태값
@@ -192,7 +194,7 @@ export const AdminMatchBulkAddModal = ({ onClose }: IAdminMatchBulkAddModalProps
       .filter((item) => item !== null);
 
     if (payload.length === 0) {
-      alert("최소 1경기 이상 필수 값(대회, 상대팀, 경기일, 경기 시작 시간)을 채워주세요.");
+      toast({ content: "최소 1경기 이상 필수 값(대회, 상대팀, 경기일, 경기 시작 시간)을 채워주세요." });
       return;
     }
 

@@ -3,10 +3,14 @@
  * 기능: 마이페이지 메인 카드 - 티어메이커
  */
 import { Settings } from "lucide-react";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 const AuthInfoTierMakerCard = () => {
+  const { toast } = useOverlay();
   const handleClick = () => {
-    alert("티어메이커 화면은 준비 중입니다.");
+    toast({
+      content: "티어메이커 화면은 준비 중입니다.",
+    });
   };
 
   return (

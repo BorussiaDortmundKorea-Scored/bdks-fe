@@ -1,3 +1,4 @@
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { deletePlayer } from "@admin/admin-player/api/admin-player-api";
@@ -7,6 +8,7 @@ import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 
 export function useDeletePlayer() {
   const queryClient = useQueryClient();
+  const { toast } = useOverlay();
 
   const mutation = useMutation({
     mutationFn: async (id: string): Promise<boolean> => {
@@ -19,7 +21,7 @@ export function useDeletePlayer() {
       });
     },
     onError: (error: Error) => {
-      alert(`선수 삭제 실패: ${error.message}`);
+      toast({ content: `선수 삭제 실패: ${error.message}` });
     },
   });
 

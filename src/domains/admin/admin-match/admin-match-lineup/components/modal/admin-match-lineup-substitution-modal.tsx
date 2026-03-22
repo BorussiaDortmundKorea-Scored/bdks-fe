@@ -6,6 +6,7 @@
 import { useMemo, useState } from "react";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
@@ -21,6 +22,7 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
   //SECTION HOOK호출 영역
   const { data: players } = useGetAllPlayersSuspense();
   const { mutateAsync: substituteLineup, isPending: isSubstituting } = useSubstituteMatchLineup(matchId);
+  const { toast } = useOverlay();
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
@@ -46,13 +48,13 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
   //SECTION 메서드 영역
   const handleConfirmSubstitution = async () => {
     if (!substitutionMinuteInput || substitutionMinuteInput < 1 || substitutionMinuteInput > 120) {
-      alert("교체 시간은 1분 이상 120분 이하로 입력해주세요.");
+      toast({ content: "교체 시간은 1분 이상 120분 이하로 입력해주세요." });
       return;
     }
 
     const partnerPlayerId = substitutionBenchPlayerHook.label as string | undefined;
     if (!partnerPlayerId) {
-      alert("교체로 들어올 선수를 선택해주세요.");
+      toast({ content: "교체로 들어올 선수를 선택해주세요." });
       return;
     }
 

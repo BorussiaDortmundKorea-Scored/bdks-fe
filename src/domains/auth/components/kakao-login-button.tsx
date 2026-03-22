@@ -2,6 +2,7 @@
 import React from "react";
 
 import useKakaoLogin from "@auth/hooks/useKakaoLogin";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 import { GA4_CATEGORIES, GA4_EVENTS, GA4_LOGIN_METHODS } from "@shared/constants/analytics";
@@ -12,6 +13,7 @@ const KAKAO_LOGIN_BUTTON_IMAGE = `${SUPABASE_STORAGE_URL}/asset//kakao_login_log
 const KakaoLoginButton: React.FC = () => {
   const { signinWithKakao, isLoading } = useKakaoLogin();
   const { trackEvent } = useGa4Event();
+  const { toast } = useOverlay();
 
   const handleKakaoLogin = async () => {
     trackEvent({
@@ -23,7 +25,7 @@ const KakaoLoginButton: React.FC = () => {
     const result = await signinWithKakao();
 
     if (!result.success) {
-      alert(result.error);
+      toast({ content: result.error });
     }
     // 성공 시 리다이렉트되므로 여기서는 별도 처리 불필요
   };

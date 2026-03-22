@@ -4,9 +4,12 @@
  */
 import { CreditCard } from "lucide-react";
 
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
+
 const AuthInfoMatchPredictionCard = () => {
+  const { toast } = useOverlay();
   const handleClick = () => {
-    alert("승부 예측 화면은 준비 중입니다.");
+    toast({ content: "승부 예측 화면은 준비 중입니다." });
   };
 
   return (

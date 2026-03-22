@@ -5,6 +5,7 @@
  */
 import { useState } from "react";
 
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Trash2 } from "lucide-react";
 
@@ -16,6 +17,7 @@ const AdminUser = () => {
   //SECTION HOOK호출 영역
   const { data: users } = useGetAllUsersSuspense();
   const { mutateAsync: deleteUser, isPending: isDeleting } = useDeleteUser();
+  const { toast } = useOverlay();
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
@@ -25,7 +27,7 @@ const AdminUser = () => {
   //SECTION 메서드 영역
   const handleDeleteUser = async (user: IUser) => {
     if (user.is_admin) {
-      alert("관리자는 탈퇴시킬 수 없습니다.");
+      toast({ content: "관리자는 탈퇴시킬 수 없습니다." });
       return;
     }
 
@@ -40,12 +42,12 @@ const AdminUser = () => {
       const result = await deleteUser(user.id);
 
       if (result.success) {
-        alert(result.message || "사용자 탈퇴가 완료되었습니다.");
+        toast({ content: result.message || "사용자 탈퇴가 완료되었습니다." });
       } else {
-        alert(result.error || "사용자 탈퇴 중 오류가 발생했습니다.");
+        toast({ content: result.error || "사용자 탈퇴 중 오류가 발생했습니다." });
       }
     } catch {
-      alert("사용자 탈퇴 중 오류가 발생했습니다.");
+      toast({ content: "사용자 탈퇴 중 오류가 발생했습니다." });
     } finally {
       setDeletingUserId(null);
     }

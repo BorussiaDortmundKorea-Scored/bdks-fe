@@ -1,3 +1,4 @@
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { type IPlayer, type IUpdatePlayerRequest, updatePlayer } from "@admin/admin-player/api/admin-player-api";
@@ -7,6 +8,7 @@ import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 
 export function useUpdatePlayer() {
   const queryClient = useQueryClient();
+  const { toast } = useOverlay();
 
   const mutation = useMutation({
     mutationFn: async (player: IUpdatePlayerRequest): Promise<IPlayer> => {
@@ -19,7 +21,7 @@ export function useUpdatePlayer() {
       });
     },
     onError: (error: Error) => {
-      alert(`선수 수정 실패: ${error.message}`);
+      toast({ content: `선수 수정 실패: ${error.message}` });
     },
   });
 

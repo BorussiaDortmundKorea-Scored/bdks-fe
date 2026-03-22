@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { type ICreateProfileRequest, type IProfile, createProfile } from "@auth/auth-profile/api/auth-profile-api";
@@ -11,6 +12,7 @@ import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 export function useCreateAuthProfile() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { toast } = useOverlay();
   const mutation = useMutation({
     mutationFn: async (player: ICreateProfileRequest): Promise<IProfile> => {
       const response = await createProfile(player);
@@ -23,7 +25,7 @@ export function useCreateAuthProfile() {
       navigate(ROUTES.DASHBOARD, { replace: true });
     },
     onError: () => {
-      alert(`이미 등록된 닉네임이에요`);
+      toast({ content: "이미 등록된 닉네임이에요" });
     },
   });
 
