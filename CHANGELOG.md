@@ -3,6 +3,20 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.6] - 2026-03-23
+
+**Branch**: `bdks-v1.6.6-yd-ui-overlays업데이트반영`
+
+### 추가
+
+### 변경
+- refactor: alert호출 yd-ui toast로전환
+
+### 수정
+
+### 제거
+
+---
 ## [1.6.5] - 2026-03-16
 
 **Branch**: `bdks-v1.6.5-관리자페이지재정비`
