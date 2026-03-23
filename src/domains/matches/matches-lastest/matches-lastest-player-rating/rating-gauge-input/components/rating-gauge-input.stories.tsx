@@ -4,7 +4,7 @@ import RatingGaugeInput from "./rating-gauge-input";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof RatingGaugeInput> = {
-  title: "Matches/RatingGaugeInput",
+  title: "Matches/MatchesLastest/RatingGaugeInput",
   component: RatingGaugeInput,
   parameters: {
     docs: {

@@ -12,7 +12,7 @@ const mockAuthValue = {
 };
 
 const meta: Meta<typeof AuthInfoDevContact> = {
-  title: "Auth/AuthInfoDevContact",
+  title: "Auth/AuthInfo/AuthInfoDevContact",
   component: AuthInfoDevContact,
   decorators: [
     (Story) => (

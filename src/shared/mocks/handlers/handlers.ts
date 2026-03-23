@@ -10,11 +10,13 @@ import { ViewingCheckHandlers } from "@auth/auth-info/auth-info-quick-links/view
 import { MatchInfoHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/match-info-handler";
 import { MatchesHistoryPlayersRatingHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/matches-history-players-rating-handler";
 import { MatchesHistoryHandlers } from "@matches/matches-history/mocks/matches-history-handler";
+import { MatchesLastestHandlers } from "@matches/matches-lastest/mocks/matches-lastest-handler";
 import { matchesLastestPlayerRatingHandlers } from "@matches/matches-lastest/matches-lastest-player-rating/mocks/matches-lastest-player-rating-handler";
 
 import { PlayersDBHandlers } from "@players/players-db/mocks/players-db-handler";
 import { PlayersRatingRotatorHandlers } from "@players/players-rating-rotator/mocks/player-rating-rotator-handlers";
 import { PlayerStatsHandlers } from "@players/players-stats/mocks/player-stats-handler";
+import { PlayerRatingByMatchDetailHandlers } from "@players/players-stats/players-stats-by-game/mocks/player-rating-by-match-detail-handler";
 import { PlayersStatsByGameHandlers } from "@players/players-stats/players-stats-by-game/mocks/players-stats-by-game-handler";
 
 export const handlers = [
@@ -28,9 +30,11 @@ export const handlers = [
   ...MatchesHistoryHandlers,
   ...MatchesHistoryPlayersRatingHandlers,
   ...MatchInfoHandlers,
+  ...MatchesLastestHandlers,
   ...matchesLastestPlayerRatingHandlers,
   ...PlayersDBHandlers,
   ...PlayersRatingRotatorHandlers,
   ...PlayerStatsHandlers,
+  ...PlayerRatingByMatchDetailHandlers,
   ...PlayersStatsByGameHandlers,
 ];

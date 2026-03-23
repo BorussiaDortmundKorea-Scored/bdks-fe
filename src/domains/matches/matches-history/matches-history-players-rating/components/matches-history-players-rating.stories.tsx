@@ -1,27 +1,19 @@
-import MatchesHistoryPlayersRatingErrorFallback from "../components/error/matches-history-players-rating-error-fallback";
-import MatchesHistoryPlayersRatingSkeleton from "../components/skeleton/matches-history-players-rating-skeleton";
-import MatchesHistoryPlayersRatingPage from "./matches-history-players-rating-page";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
-import { reactRouterParameters, withRouter } from "storybook-addon-remix-react-router";
 
-import { AuthContext } from "@auth/contexts/AuthContext";
+import MatchesHistoryPlayersRatingErrorFallback from "@matches/matches-history/matches-history-players-rating/components/error/matches-history-players-rating-error-fallback";
+import MatchesHistoryPlayersRating from "@matches/matches-history/matches-history-players-rating/components/matches-history-players-rating";
+import MatchesHistoryPlayersRatingSkeleton from "@matches/matches-history/matches-history-players-rating/components/skeleton/matches-history-players-rating-skeleton";
+
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
-const mockAuthValue = {
-  user: { id: "mock-user-id", email: "user@example.com", is_anonymous: false } as never,
-  session: null,
-  profile: null,
-  signOut: async () => {},
-  deleteAccount: async () => ({ success: true }),
-};
-
-const meta: Meta<typeof MatchesHistoryPlayersRatingPage> = {
-  title: "Matches/MatchesHistory/PlayersRatingPage",
-  component: MatchesHistoryPlayersRatingPage,
+const meta: Meta<typeof MatchesHistoryPlayersRating> = {
+  title: "Matches/MatchesHistory/PlayersRating",
+  component: MatchesHistoryPlayersRating,
   decorators: [
-    withRouter,
     (Story) => {
       const queryClient = new QueryClient({
         defaultOptions: {
@@ -36,16 +28,18 @@ const meta: Meta<typeof MatchesHistoryPlayersRatingPage> = {
         },
       });
       return (
-        <AuthContext.Provider value={mockAuthValue}>
+        <MemoryRouter initialEntries={["/match/match-001/ratings"]}>
           <QueryClientProvider client={queryClient}>
             <ReactQueryBoundary
               skeleton={<MatchesHistoryPlayersRatingSkeleton />}
               errorFallback={MatchesHistoryPlayersRatingErrorFallback}
             >
-              <Story />
+              <Routes>
+                <Route path="/match/:matchId/ratings" element={<Story />} />
+              </Routes>
             </ReactQueryBoundary>
           </QueryClientProvider>
-        </AuthContext.Provider>
+        </MemoryRouter>
       );
     },
   ],
@@ -53,41 +47,18 @@ const meta: Meta<typeof MatchesHistoryPlayersRatingPage> = {
 
 export default meta;
 
-type Story = StoryObj<typeof MatchesHistoryPlayersRatingPage>;
-
-const defaultRouterParams = {
-  reactRouter: reactRouterParameters({
-    location: {
-      pathParams: { matchId: "match-456" },
-    },
-    routing: { path: "/match/:matchId/ratings" },
-  }),
-};
+type Story = StoryObj<typeof MatchesHistoryPlayersRating>;
 
 export const Iphone5: Story = {
-  parameters: { ...defaultRouterParams },
   globals: { viewport: { value: "iphone5", isRotated: false } },
 };
 
 export const Iphone12: Story = {
-  parameters: { ...defaultRouterParams },
   globals: { viewport: { value: "iphone12", isRotated: false } },
 };
 
-export const GalaxyS24: Story = {
-  parameters: { ...defaultRouterParams },
-  globals: { viewport: { value: "GalaxyS24", isRotated: false } },
-};
-
-export const GalaxyS24Plus: Story = {
-  parameters: { ...defaultRouterParams },
-  globals: { viewport: { value: "GalaxyS24Plus", isRotated: false } },
-};
-
-// 로딩 상태: MSW에서 지연시간 추가
 export const Loading: Story = {
   parameters: {
-    ...defaultRouterParams,
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_matches_player_ratings", async () => {
@@ -103,10 +74,8 @@ export const Loading: Story = {
   },
 };
 
-// 에러 상태: MSW에서 에러 응답
 export const Error: Story = {
   parameters: {
-    ...defaultRouterParams,
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_matches_player_ratings", () => {
