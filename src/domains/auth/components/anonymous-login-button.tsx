@@ -2,12 +2,14 @@
 import React from "react";
 import useAnonymousLogin from "@auth/hooks/useAnonymousLogin";
 import { Button } from "@youngduck/yd-ui";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { GA4_CATEGORIES, GA4_EVENTS, GA4_LOGIN_METHODS } from "@shared/constants/analytics";
 import { useGa4Event } from "@shared/hooks/use-ga4-event";
 
 const AnonymousLoginButton: React.FC = () => {
   const { signinAnonymously, isLoading } = useAnonymousLogin();
   const { trackEvent } = useGa4Event();
+  const { toast } = useOverlay();
 
   const handleAnonymousLogin = async () => {
     trackEvent({
@@ -19,7 +21,7 @@ const AnonymousLoginButton: React.FC = () => {
     const result = await signinAnonymously();
 
     if (!result.success) {
-      alert(result.error);
+      toast({ content: result.error });
     }
     // 성공 시 AuthContext에서 자동으로 대시보드로 리다이렉트됨
   };

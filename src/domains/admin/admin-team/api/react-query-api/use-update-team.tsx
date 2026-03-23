@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import { type IUpdateTeamRequest, updateTeam } from "@admin/admin-team/api/admin-team-api";
 import { ADMIN_TEAM_QUERY_KEYS } from "@admin/admin-team/api/react-query-api/admin-team-query-keys";
@@ -7,6 +8,7 @@ import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 
 export function useUpdateTeam() {
   const queryClient = useQueryClient();
+  const { toast } = useOverlay();
 
   return useMutation({
     mutationFn: async (team: IUpdateTeamRequest) => {
@@ -17,6 +19,10 @@ export function useUpdateTeam() {
       queryClient.invalidateQueries({
         queryKey: [ADMIN_TEAM_QUERY_KEYS.ALL_TEAMS],
       });
+      toast({ content: "팀 수정을 성공했어요" });
+    },
+    onError: () => {
+      toast({ content: "팀 수정에 실패했어요" });
     },
   });
 }

@@ -4,9 +4,12 @@
  */
 import { User } from "lucide-react";
 
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
+
 const AuthInfoProfileCard = () => {
+  const { toast } = useOverlay();
   const handleClick = () => {
-    alert("프로필 화면은 준비 중입니다.");
+    toast({ content: "프로필 화면은 준비 중입니다." });
   };
 
   return (

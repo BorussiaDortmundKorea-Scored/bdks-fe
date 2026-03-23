@@ -4,12 +4,10 @@ import { type ITeamEntity } from "@shared/types/entities/team.entity";
 
 export type ITeam = ITeamEntity;
 
-export type ICreateTeamRequest =
-  Pick<ITeamEntity, "name"> &
+export type ICreateTeamRequest = Pick<ITeamEntity, "name"> &
   Partial<Omit<ITeamEntity, "id" | "name" | "created_at" | "updated_at">>;
 
-export type IUpdateTeamRequest =
-  Pick<ITeamEntity, "id"> &
+export type IUpdateTeamRequest = Pick<ITeamEntity, "id"> &
   Partial<Omit<ITeamEntity, "id" | "created_at" | "updated_at">>;
 
 // 모든 팀 조회

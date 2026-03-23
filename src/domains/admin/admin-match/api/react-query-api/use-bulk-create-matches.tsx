@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import {
   type IBulkCreateMatchesRequest,
@@ -10,6 +11,7 @@ import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 
 export const useBulkCreateMatches = () => {
   const queryClient = useQueryClient();
+  const { toast } = useOverlay();
 
   return useMutation({
     mutationFn: async (payload: IBulkCreateMatchesRequest) => {
@@ -20,6 +22,10 @@ export const useBulkCreateMatches = () => {
       queryClient.invalidateQueries({
         queryKey: ADMIN_MATCH_QUERY_KEYS.lists(),
       });
+      toast({ content: "경기 일괄 생성을 성공했어요" });
+    },
+    onError: () => {
+      toast({ content: "경기 일괄 생성에 실패했어요" });
     },
   });
 };

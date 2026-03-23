@@ -12,6 +12,7 @@ import { useRealtimeMatchPlayerRating } from "../api/react-query-api/use-realtim
 import RatingGaugeInput from "../rating-gauge-input/components/rating-gauge-input";
 import type { IInsertPlayerRatingRequest } from "../types";
 import { Button } from "@youngduck/yd-ui";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import CurrentMatchTime from "@shared/components/match/current-match-time";
 
 import { getDisplayTime, parseMinuteFromDisplayTime } from "@matches/utils/match-time-utils";
@@ -24,6 +25,7 @@ const MatchesLastestPlayerRating = () => {
   //SECTION HOOK호출 영역
   const { matchId, playerId } = useParams();
   const [selectedRating, setSelectedRating] = useState<number>(6.0);
+  const { toast } = useOverlay();
 
   // broadcast 방식 실시간 구독이 포함된 훅 사용
   const { data: playerRating } = useRealtimeMatchPlayerRating({
@@ -62,7 +64,7 @@ const MatchesLastestPlayerRating = () => {
 
       await insertMatchPlayerRating(request);
     } catch {
-      alert("해당 시간에 평점을 입력했습니다. 같은 분에는 평점을 한번만 입력할 수 있어요");
+      toast({ content: "해당 시간에 평점을 입력했습니다. 같은 분에는 평점을 한번만 입력할 수 있어요" });
     }
   };
   //!SECTION 메서드 영역

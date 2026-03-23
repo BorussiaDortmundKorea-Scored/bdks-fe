@@ -1,7 +1,11 @@
+
+
+
 // src/domains/auth/components/delete-account-button.tsx
 import { useState } from "react";
 
 import { Button } from "@youngduck/yd-ui";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import { useAuth } from "@auth/contexts/AuthContext";
 
@@ -9,6 +13,7 @@ const DeleteAccountButton = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const { deleteAccount } = useAuth();
+  const { toast } = useOverlay();
 
   const handleDeleteAccount = async () => {
     if (!showConfirm) {
@@ -21,14 +26,14 @@ const DeleteAccountButton = () => {
       const result = await deleteAccount();
 
       if (result.success) {
-        alert(result.message || "회원탈퇴가 완료되었습니다.");
+        toast({ content: result.message || "회원탈퇴가 완료되었습니다." });
         // 성공 시 AuthContext에서 자동으로 로그아웃 처리됨
       } else {
-        alert(result.error || "회원탈퇴 중 오류가 발생했습니다.");
+        toast({ content: result.error || "회원탈퇴 중 오류가 발생했습니다." });
         setShowConfirm(false);
       }
     } catch {
-      alert("회원탈퇴 중 오류가 발생했습니다.");
+      toast({ content: "회원탈퇴 중 오류가 발생했습니다." });
       setShowConfirm(false);
     } finally {
       setIsDeleting(false);

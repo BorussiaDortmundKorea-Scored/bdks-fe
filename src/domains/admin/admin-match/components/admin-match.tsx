@@ -32,10 +32,13 @@ const AdminMatch = () => {
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
-  const handleDeleteMatch = async (id: string) => {
-    if (!confirm("정말로 이 경기를 삭제하시겠습니까?")) return;
-
-    await deleteMatch(id);
+  const handleDeleteMatch = (id: string) => {
+    overlay.confirmDialog({
+      title: "정말로 이 경기를 삭제하시겠습니까?",
+      onConfirm: async () => {
+        await deleteMatch(id);
+      },
+    });
   };
 
   const handleOpenAddModal = () => {

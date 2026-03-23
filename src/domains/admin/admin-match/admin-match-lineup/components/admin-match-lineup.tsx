@@ -42,10 +42,13 @@ const AdminMatchLineup = () => {
     navigate(ROUTES.ADMIN_MATCH);
   };
 
-  const handleDeleteLineup = async (id: number) => {
-    if (!confirm("정말로 이 라인업을 삭제하시겠습니까?")) return;
-
-    await deleteLineup(id);
+  const handleDeleteLineup = (id: number) => {
+    overlay.confirmDialog({
+      title: "정말로 이 라인업을 삭제하시겠습니까?",
+      onConfirm: async () => {
+        await deleteLineup(id);
+      },
+    });
   };
 
   const handleOpenAddModal = () => {

@@ -14,6 +14,7 @@ export type NavigationItemType = "top-menu" | "bottom-nav-bar";
 export interface NavigationItemDeps {
   navigate: (path: string) => void;
   signOut: () => Promise<void>;
+  toast: (data: { content: string; duration?: number }) => void;
 }
 
 // Factory Pattern을 활용하여 네비게이션 아이템 생성
@@ -79,7 +80,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
       try {
         await deps.signOut();
       } catch {
-        alert("로그아웃 중 오류가 발생했습니다.");
+        deps.toast({ content: "로그아웃 중 오류가 발생했습니다." });
       }
     },
   },

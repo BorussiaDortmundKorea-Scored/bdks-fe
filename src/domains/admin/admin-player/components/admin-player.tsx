@@ -26,10 +26,13 @@ const AdminPlayer = () => {
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
-  const handleDeletePlayer = async (id: string) => {
-    if (!confirm("정말로 이 선수를 삭제하시겠습니까?")) return;
-
-    await deletePlayer(id);
+  const handleDeletePlayer = (id: string) => {
+    overlay.confirmDialog({
+      title: "정말로 이 선수를 삭제하시겠습니까?",
+      onConfirm: async () => {
+        await deletePlayer(id);
+      },
+    });
   };
 
   const handleOpenAddModal = () => {

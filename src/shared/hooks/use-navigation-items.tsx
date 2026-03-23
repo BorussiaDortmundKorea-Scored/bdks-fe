@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import type { LucideIcon } from "lucide-react";
 
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
+
 import { useAuth } from "@auth/contexts/AuthContext";
 
 import { NAVIGATION_ITEMS, type NavigationItemType } from "@shared/constants/navigation-items";
@@ -26,6 +28,7 @@ export const useNavigationItems = (type: NavigationItemType) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { profile, signOut } = useAuth();
+  const { toast } = useOverlay();
   const isAdmin = Boolean(profile?.is_admin);
   //!SECTION HOOK호출 영역
 
@@ -60,7 +63,7 @@ export const useNavigationItems = (type: NavigationItemType) => {
     path: item.path,
     label: item.label,
     isActive: item.path ? isActive(item.path) : false,
-    onClick: item.onClick({ navigate, signOut }),
+    onClick: item.onClick({ navigate, signOut, toast }),
   }));
   //!SECTION 상태값 영역
 

@@ -6,6 +6,7 @@
 import { useMemo, useState } from "react";
 
 import { Button, CheckBox, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import { useBulkCreateMatchLineups } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-bulk-create-match-lineups";
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
@@ -27,6 +28,7 @@ export const AdminMatchLineupBulkAddModal = ({ matchId, onClose }: IAdminMatchLi
   const { data: players } = useGetAllPlayersSuspense();
   const { data: positions } = useGetAllPositionsSuspense();
   const { mutateAsync: bulkCreateLineups, isPending: isCreating } = useBulkCreateMatchLineups(matchId);
+  const { toast } = useOverlay();
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
@@ -121,12 +123,12 @@ export const AdminMatchLineupBulkAddModal = ({ matchId, onClose }: IAdminMatchLi
     const validSelections = currentSelections.filter((sel) => sel.player_id && sel.position_id);
 
     if (validSelections.length === 0) {
-      alert("최소 1명의 선수를 선택해주세요.");
+      toast({ content: "최소 1명의 선수를 선택해주세요." });
       return;
     }
 
     if (validSelections.length > 11) {
-      alert("선발명단은 최대 11명까지 가능합니다.");
+      toast({ content: "선발명단은 최대 11명까지 가능합니다." });
       return;
     }
 
@@ -134,7 +136,7 @@ export const AdminMatchLineupBulkAddModal = ({ matchId, onClose }: IAdminMatchLi
     const playerIds = validSelections.map((sel) => sel.player_id);
     const uniquePlayerIds = new Set(playerIds);
     if (playerIds.length !== uniquePlayerIds.size) {
-      alert("중복된 선수가 선택되었습니다.");
+      toast({ content: "중복된 선수가 선택되었습니다." });
       return;
     }
 
