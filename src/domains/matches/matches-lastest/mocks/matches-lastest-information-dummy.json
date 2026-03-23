@@ -1,0 +1,12 @@
+{
+  "match_id": "match-001",
+  "opponent_name": "바이에른 뮌헨",
+  "league_name": "분데스리가",
+  "season": "25-26",
+  "home_away": "HOME",
+  "round_name": "27R",
+  "match_start_time": "2025-01-15T19:00:00Z",
+  "first_half_end_time": "2025-01-15T19:45:00Z",
+  "second_half_start_time": "2025-01-15T20:00:00Z",
+  "second_half_end_time": "2025-01-15T20:45:00Z"
+}

@@ -6,10 +6,19 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 import { reactRouterParameters, withRouter } from "storybook-addon-remix-react-router";
 
+import { AuthContext } from "@auth/contexts/AuthContext";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
+const mockAuthValue = {
+  user: { id: "mock-user-id", email: "user@example.com", is_anonymous: false } as never,
+  session: null,
+  profile: null,
+  signOut: async () => {},
+  deleteAccount: async () => ({ success: true }),
+};
+
 const meta: Meta<typeof MatchesLastestPlayerRatingPage> = {
-  title: "Matches/MatchesLastestPlayerRatingPage",
+  title: "Matches/MatchesLastest/PlayerRatingPage",
   component: MatchesLastestPlayerRatingPage,
   decorators: [
     withRouter,
@@ -27,14 +36,16 @@ const meta: Meta<typeof MatchesLastestPlayerRatingPage> = {
         },
       });
       return (
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryBoundary
-            skeleton={<MatchesLastestPlayerRatingSkeleton />}
-            errorFallback={MatchesLastestPlayerRatingErrorFallback}
-          >
-            <Story />
-          </ReactQueryBoundary>
-        </QueryClientProvider>
+        <AuthContext.Provider value={mockAuthValue}>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryBoundary
+              skeleton={<MatchesLastestPlayerRatingSkeleton />}
+              errorFallback={MatchesLastestPlayerRatingErrorFallback}
+            >
+              <Story />
+            </ReactQueryBoundary>
+          </QueryClientProvider>
+        </AuthContext.Provider>
       );
     },
   ],

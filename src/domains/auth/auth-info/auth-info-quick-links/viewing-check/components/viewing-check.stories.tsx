@@ -17,7 +17,7 @@ const mockAuthValue = {
 };
 
 const meta: Meta<typeof ViewingCheck> = {
-  title: "Auth/ViewingCheck",
+  title: "Auth/AuthInfo/ViewingCheck",
   component: ViewingCheck,
   decorators: [
     (Story) => {

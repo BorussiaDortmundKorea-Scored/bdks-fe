@@ -48,14 +48,16 @@ export function useGetLatestMatchDatas() {
     const matchId = informationResult.data.match_id;
     const allPlayersChannelName = `match-${matchId}-all-players`;
 
+    const invalidateFormation = () => {
+      queryClient.invalidateQueries({
+        queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_LIVE_FORMATION],
+      });
+    };
+
     const channel = supabase
       .channel(allPlayersChannelName)
-      .on("broadcast", { event: "player_rating_updated" }, () => {
-        // 전체 선수 데이터 무효화 및 재조회
-        queryClient.invalidateQueries({
-          queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_LIVE_FORMATION],
-        });
-      })
+      .on("broadcast", { event: "player_rating_updated" }, invalidateFormation)
+      .on("broadcast", { event: "lineup_updated" }, invalidateFormation)
       .subscribe();
 
     return () => {
@@ -65,7 +67,6 @@ export function useGetLatestMatchDatas() {
 
   // 선발과 후보 분리
   const startingPlayers = formationResult.data.filter((player) => player.is_playing);
-  const benchPlayers = formationResult.data.filter((player) => !player.is_playing);
 
   // 선발 선수들을 라인별로 그룹화
   const playingMembers = startingPlayers.reduce(
@@ -80,22 +81,15 @@ export function useGetLatestMatchDatas() {
     {} as Record<number, IMatchesLastestPlayer[]>,
   );
 
-  // 후보 선수들을 라인별로 그룹화
-  const notPlayingMembers = benchPlayers.reduce(
-    (acc, player) => {
-      const lineNumber = player.line_number;
-      if (!acc[lineNumber]) {
-        acc[lineNumber] = [];
-      }
-      acc[lineNumber].push(player);
-      return acc;
-    },
-    {} as Record<number, IMatchesLastestPlayer[]>,
-  );
+  // 교체 명단: 출전후 교체 + 비출전
+  const notPlayingPlayers = formationResult.data.filter((player) => !player.is_playing);
+  const substitutedOutPlayers = notPlayingPlayers.filter((player) => player.substitution_status === "SUBSTITUTED_OUT");
+  const unusedPlayers = notPlayingPlayers.filter((player) => player.substitution_status === "NONE");
 
   return {
     playingMembers, // 현재 뛰고 있는 선수들 (1-5선)
-    notPlayingMembers, // 후보 선수들
+    substitutedOutPlayers, // 교체로 빠진 선수들
+    unusedPlayers, // 미출전 선수들
     information: informationResult.data as IMatchesLastestInformation,
   };
 }

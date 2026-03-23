@@ -9,7 +9,7 @@ import { HttpResponse, http } from "msw";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 const meta: Meta<typeof MatchesLastestPlayerRating> = {
-  title: "Matches/MatchesLastestPlayerRating",
+  title: "Matches/MatchesLastest/PlayerRating",
   component: MatchesLastestPlayerRating,
   decorators: [
     (Story) => {
