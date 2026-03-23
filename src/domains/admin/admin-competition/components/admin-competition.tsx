@@ -26,10 +26,13 @@ const AdminCompetition = () => {
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
-  const handleDeleteCompetition = async (id: string) => {
-    if (!confirm("정말로 이 대회를 삭제하시겠습니까?")) return;
-
-    await deleteCompetition(id);
+  const handleDeleteCompetition = (id: string) => {
+    overlay.confirmDialog({
+      title: "정말로 이 대회를 삭제하시겠습니까?",
+      onConfirm: async () => {
+        await deleteCompetition(id);
+      },
+    });
   };
 
   const handleOpenAddModal = () => {

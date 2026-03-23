@@ -17,7 +17,7 @@ const AdminUser = () => {
   //SECTION HOOK호출 영역
   const { data: users } = useGetAllUsersSuspense();
   const { mutateAsync: deleteUser, isPending: isDeleting } = useDeleteUser();
-  const { toast } = useOverlay();
+  const { toast, confirmDialog } = useOverlay();
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
@@ -25,32 +25,32 @@ const AdminUser = () => {
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
-  const handleDeleteUser = async (user: IUser) => {
+  const handleDeleteUser = (user: IUser) => {
     if (user.is_admin) {
       toast({ content: "관리자는 탈퇴시킬 수 없습니다." });
       return;
     }
 
-    if (
-      !confirm(`정말로 "${user.nickname}" 사용자를 탈퇴시키시겠습니까?\n모든 데이터가 삭제되며 복구할 수 없습니다.`)
-    ) {
-      return;
-    }
+    confirmDialog({
+      title: `정말로 "${user.nickname}" 사용자를 탈퇴시키시겠습니까?`,
+      description: "모든 데이터가 삭제되며 복구할 수 없습니다.",
+      onConfirm: async () => {
+        setDeletingUserId(user.id);
+        try {
+          const result = await deleteUser(user.id);
 
-    setDeletingUserId(user.id);
-    try {
-      const result = await deleteUser(user.id);
-
-      if (result.success) {
-        toast({ content: result.message || "사용자 탈퇴가 완료되었습니다." });
-      } else {
-        toast({ content: result.error || "사용자 탈퇴 중 오류가 발생했습니다." });
-      }
-    } catch {
-      toast({ content: "사용자 탈퇴 중 오류가 발생했습니다." });
-    } finally {
-      setDeletingUserId(null);
-    }
+          if (result.success) {
+            toast({ content: result.message || "사용자 탈퇴가 완료되었습니다." });
+          } else {
+            toast({ content: result.error || "사용자 탈퇴 중 오류가 발생했습니다." });
+          }
+        } catch {
+          toast({ content: "사용자 탈퇴 중 오류가 발생했습니다." });
+        } finally {
+          setDeletingUserId(null);
+        }
+      },
+    });
   };
 
   const formatDate = (dateString: string) => {

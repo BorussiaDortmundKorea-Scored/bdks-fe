@@ -26,9 +26,13 @@ const AdminTeam = () => {
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
-  const handleDeleteTeam = async (id: string) => {
-    if (!confirm("정말로 이 팀을 삭제하시겠습니까?")) return;
-    await deleteTeam(id);
+  const handleDeleteTeam = (id: string) => {
+    overlay.confirmDialog({
+      title: "정말로 이 팀을 삭제하시겠습니까?",
+      onConfirm: async () => {
+        await deleteTeam(id);
+      },
+    });
   };
 
   const handleOpenAddModal = () => {
