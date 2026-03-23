@@ -21,9 +21,9 @@ const MatchesLastestWrapper = ({ children }: { children: React.ReactNode }) => {
   //!SECTION 메서드 영역
 
   return (
-    <section className="relative w-full aspect-[2/3]">
+    <section className="relative aspect-2/3 w-full">
       <ImageWithSkeleton src={YELLOW_WALL_IMAGE} skeleton={<SkeletonComponent />}>
-        {({ src }) => <img src={src} alt="yellow wall" className="w-full h-full object-cover" />}
+        {({ src }) => <img src={src} alt="yellow wall" className="h-full w-full object-cover" />}
       </ImageWithSkeleton>
       <div className="absolute inset-0 flex items-center justify-center p-2">{children}</div>
     </section>
@@ -31,7 +31,7 @@ const MatchesLastestWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 const SkeletonComponent = () => {
-  return <div className="w-full h-full"></div>;
+  return <div className="h-full w-full"></div>;
 };
 
 export default MatchesLastestWrapper;

@@ -143,7 +143,7 @@ const PlayerCard = ({
         <img src={player.profile_image_url} alt={player.player_name} className="h-full w-full object-cover" />
 
         {/* 그림자 오버레이 */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/80" />
       </div>
 
       {/* 평점 오버레이 - 실시간 애니메이션 추가 */}
