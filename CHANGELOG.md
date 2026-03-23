@@ -3,6 +3,26 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.7] - 2026-03-23
+
+**Branch**: `bdks-v1.6.7-대시보드화면고도화`
+
+### 추가
+- feat: 선발,교체 토글버튼 추가 및 교체명단제공
+- feat: 선수교체발생시 소켓통신으로 화면갱신
+- feat: 미출전 선수 평점입력 불가능하게 방어 및 toast알람처리
+
+### 변경
+- refactor: tailwind lint 권장 스타일링 적용
+- refactor: skeleton 디자인 수정
+- test: dashboard페이지들 테스트,스토리북코드 일괄추가
+
+### 수정
+
+### 제거
+
+---
+
 ## [1.6.6] - 2026-03-23
 
 **Branch**: `bdks-v1.6.6-yd-ui-overlays업데이트반영`
