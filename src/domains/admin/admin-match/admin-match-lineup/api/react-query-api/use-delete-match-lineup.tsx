@@ -21,8 +21,8 @@ export const useDeleteMatchLineup = (matchId: string) => {
       });
       toast({ content: "라인업 삭제를 성공했어요" });
     },
-    onError: (error: Error) => {
-      toast({ content: `라인업 삭제 실패: ${error.message}` });
+    onError: () => {
+      toast({ content: "라인업 삭제에 실패했어요" });
     },
   });
 };

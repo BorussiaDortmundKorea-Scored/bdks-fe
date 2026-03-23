@@ -21,8 +21,8 @@ export function useDeletePlayer() {
       });
       toast({ content: "선수 삭제를 성공했어요" });
     },
-    onError: (error: Error) => {
-      toast({ content: `선수 삭제 실패: ${error.message}` });
+    onError: () => {
+      toast({ content: "선수 삭제에 실패했어요" });
     },
   });
 

@@ -19,9 +19,10 @@ export function useUpdatePlayer() {
       queryClient.invalidateQueries({
         queryKey: [ADMIN_PLAYER_QUERY_KEYS.ALL_PLAYERS],
       });
+      toast({ content: "선수 수정을 성공했어요" });
     },
-    onError: (error: Error) => {
-      toast({ content: `선수 수정 실패: ${error.message}` });
+    onError: () => {
+      toast({ content: "선수 수정에 실패했어요" });
     },
   });
 

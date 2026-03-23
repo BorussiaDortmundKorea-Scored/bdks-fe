@@ -19,9 +19,10 @@ export function useCreatePlayer() {
       queryClient.invalidateQueries({
         queryKey: [ADMIN_PLAYER_QUERY_KEYS.ALL_PLAYERS],
       });
+      toast({ content: "선수 생성을 성공했어요" });
     },
-    onError: (error: Error) => {
-      toast({ content: `선수 생성 실패: ${error.message}` });
+    onError: () => {
+      toast({ content: "선수 생성에 실패했어요" });
     },
   });
 

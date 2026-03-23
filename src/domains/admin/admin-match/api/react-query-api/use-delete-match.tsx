@@ -21,8 +21,8 @@ export const useDeleteMatch = () => {
       });
       toast({ content: "경기 삭제를 성공했어요" });
     },
-    onError: (error: Error) => {
-      toast({ content: `경기 삭제 실패: ${error.message}` });
+    onError: () => {
+      toast({ content: "경기 삭제에 실패했어요" });
     },
   });
 };

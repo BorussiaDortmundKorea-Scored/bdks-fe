@@ -37,15 +37,7 @@ const AdminUser = () => {
       onConfirm: async () => {
         setDeletingUserId(user.id);
         try {
-          const result = await deleteUser(user.id);
-
-          if (result.success) {
-            toast({ content: result.message || "사용자 탈퇴가 완료되었습니다." });
-          } else {
-            toast({ content: result.error || "사용자 탈퇴 중 오류가 발생했습니다." });
-          }
-        } catch {
-          toast({ content: "사용자 탈퇴 중 오류가 발생했습니다." });
+          await deleteUser(user.id);
         } finally {
           setDeletingUserId(null);
         }
