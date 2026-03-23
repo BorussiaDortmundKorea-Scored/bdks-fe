@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useGetLatestMatchDatas } from "../api/react-query-api/use-get-lastest-match-datas";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import {
   type IMatchesLastestInformation,
@@ -127,8 +128,13 @@ const PlayerCard = ({
   information: IMatchesLastestInformation;
 }) => {
   const navigate = useNavigate();
+  const { toast } = useOverlay();
 
   const handleClick = () => {
+    if (player.lineup_type === "BENCH" && player.substitution_status !== "SUBSTITUTED_IN") {
+      toast({ content: `미출전 선수는 평점을 입력할 수 없어요` });
+      return;
+    }
     navigate(createMatchPlayerRatingsPath(information.match_id, player.player_id));
   };
 
