@@ -48,14 +48,16 @@ export function useGetLatestMatchDatas() {
     const matchId = informationResult.data.match_id;
     const allPlayersChannelName = `match-${matchId}-all-players`;
 
+    const invalidateFormation = () => {
+      queryClient.invalidateQueries({
+        queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_LIVE_FORMATION],
+      });
+    };
+
     const channel = supabase
       .channel(allPlayersChannelName)
-      .on("broadcast", { event: "player_rating_updated" }, () => {
-        // 전체 선수 데이터 무효화 및 재조회
-        queryClient.invalidateQueries({
-          queryKey: [MATCHES_LASTEST_QUERY_KEYS.LATEST_MATCH_LIVE_FORMATION],
-        });
-      })
+      .on("broadcast", { event: "player_rating_updated" }, invalidateFormation)
+      .on("broadcast", { event: "lineup_updated" }, invalidateFormation)
       .subscribe();
 
     return () => {
