@@ -24,6 +24,7 @@ import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 const AdminDashboardPage = () => {
   return (
     <AdminGridWrapper>
+      <AdminDashboardSites />
       <ReactQueryBoundary skeleton={<AdminDashboardUserCountSkeleton />} errorFallback={AdminDashboardUserCountError}>
         <AdminDashboardUserCount />
       </ReactQueryBoundary>
@@ -33,16 +34,15 @@ const AdminDashboardPage = () => {
       >
         <AdminDashboardDeletedUsers />
       </ReactQueryBoundary>
-      <ReactQueryBoundary skeleton={<AdminDashboardMatchStatsSkeleton />} errorFallback={AdminDashboardMatchStatsError}>
-        <AdminDashboardMatchStats />
-      </ReactQueryBoundary>
       <ReactQueryBoundary
         skeleton={<AdminDashboardUserLoginTypeSkeleton />}
         errorFallback={AdminDashboardUserLoginTypeError}
       >
         <AdminDashboardUserLoginType />
       </ReactQueryBoundary>
-      <AdminDashboardSites />
+      <ReactQueryBoundary skeleton={<AdminDashboardMatchStatsSkeleton />} errorFallback={AdminDashboardMatchStatsError}>
+        <AdminDashboardMatchStats />
+      </ReactQueryBoundary>
     </AdminGridWrapper>
   );
 };

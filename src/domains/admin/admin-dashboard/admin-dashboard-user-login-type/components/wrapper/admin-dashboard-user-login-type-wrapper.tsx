@@ -10,7 +10,7 @@ interface IAdminDashboardUserLoginTypeWrapper {
 
 const AdminDashboardUserLoginTypeWrapper = ({ children }: IAdminDashboardUserLoginTypeWrapper) => {
   return (
-    <div className="bg-background-tertiary text-primary-100 card-navy-50 flex h-full w-full flex-col justify-center md:col-start-1 md:col-end-4 md:row-start-3 md:row-end-5">
+    <div className="bg-background-tertiary text-primary-100 card-navy-50 flex h-full w-full flex-col justify-center md:col-start-1 md:col-end-4 md:row-start-2 md:row-end-4">
       {children}
     </div>
   );

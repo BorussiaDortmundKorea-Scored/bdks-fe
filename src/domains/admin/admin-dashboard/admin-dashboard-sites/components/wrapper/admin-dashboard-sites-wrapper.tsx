@@ -22,9 +22,7 @@ const AdminDashboardSitesWrapper = ({ children }: IAdminDashboardSitesWrapper) =
   //!SECTION 메서드 영역
 
   return (
-    <div
-      className="bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 col-start-1 col-end-2 row-start-2 row-end-2 flex items-center md:col-start-6 md:col-end-9 md:row-start-2 md:row-end-3"
-    >
+    <div className="bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 flex items-center md:col-start-5 md:col-end-9 md:row-start-1 md:row-end-2">
       {children}
     </div>
   );
