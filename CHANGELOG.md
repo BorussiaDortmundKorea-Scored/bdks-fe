@@ -3,16 +3,37 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.8] - 2026-03-24
+
+**Branch**: `bdks-v1.6.8-내정보화면고도화`
+
+### 추가
+- feat: 클로드코드 convention, 3d-icon프롬프트생성규칙 스킬추가
+- feat: 바로가기 UI리뉴얼 및 회원탈퇴 추가
+- feat: 관리자페이지에 탈퇴회원대시보드조회기능추가
+
+### 변경
+- style: 관리자페이지 grid위치조정
+
+### 수정
+- fix: 신규회원가입시 내정보 닉네임 안뜨는현상 수정
+
+### 제거
+
+---
+
 ## [1.6.7] - 2026-03-23
 
 **Branch**: `bdks-v1.6.7-대시보드화면고도화`
 
 ### 추가
+
 - feat: 선발,교체 토글버튼 추가 및 교체명단제공
 - feat: 선수교체발생시 소켓통신으로 화면갱신
 - feat: 미출전 선수 평점입력 불가능하게 방어 및 toast알람처리
 
 ### 변경
+
 - refactor: tailwind lint 권장 스타일링 적용
 - refactor: skeleton 디자인 수정
 - test: dashboard페이지들 테스트,스토리북코드 일괄추가
