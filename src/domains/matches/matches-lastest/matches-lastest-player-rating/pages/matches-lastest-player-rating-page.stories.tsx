@@ -7,15 +7,9 @@ import { HttpResponse, http } from "msw";
 import { reactRouterParameters, withRouter } from "storybook-addon-remix-react-router";
 
 import { AuthContext } from "@auth/contexts/AuthContext";
-import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
-const mockAuthValue = {
-  user: { id: "mock-user-id", email: "user@example.com", is_anonymous: false } as never,
-  session: null,
-  profile: null,
-  signOut: async () => {},
-  deleteAccount: async () => ({ success: true }),
-};
+import { storybookKakaoAuthMock } from "@shared/mocks/constants/storybook-auth-mock-data";
+import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 const meta: Meta<typeof MatchesLastestPlayerRatingPage> = {
   title: "Matches/MatchesLastest/PlayerRatingPage",
@@ -36,7 +30,7 @@ const meta: Meta<typeof MatchesLastestPlayerRatingPage> = {
         },
       });
       return (
-        <AuthContext.Provider value={mockAuthValue}>
+        <AuthContext.Provider value={storybookKakaoAuthMock}>
           <QueryClientProvider client={queryClient}>
             <ReactQueryBoundary
               skeleton={<MatchesLastestPlayerRatingSkeleton />}

@@ -1,20 +1,14 @@
-import ViewingCheck from "./viewing-check";
 import ViewingCheckErrorFallback from "./error/viewing-check-error-fallback";
 import ViewingCheckSkeleton from "./skeleton/viewing-check-skeleton";
+import ViewingCheck from "./viewing-check";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import { AuthContext } from "@auth/contexts/AuthContext";
-import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
-const mockAuthValue = {
-  user: { id: "카카오id여", email: "user@example.com", is_anonymous: false } as never,
-  session: null,
-  profile: null,
-  signOut: async () => {},
-  deleteAccount: async () => ({ success: true }),
-};
+import { storybookKakaoAuthMock } from "@shared/mocks/constants/storybook-auth-mock-data";
+import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 const meta: Meta<typeof ViewingCheck> = {
   title: "Auth/AuthInfo/ViewingCheck",
@@ -35,7 +29,7 @@ const meta: Meta<typeof ViewingCheck> = {
       });
 
       return (
-        <AuthContext.Provider value={mockAuthValue}>
+        <AuthContext.Provider value={storybookKakaoAuthMock}>
           <QueryClientProvider client={queryClient}>
             <ReactQueryBoundary skeleton={<ViewingCheckSkeleton />} errorFallback={ViewingCheckErrorFallback}>
               <div className="bdks-container bg-background-primary px-4 py-6">
@@ -146,4 +140,3 @@ export const Loading: Story = {
     },
   },
 };
-
