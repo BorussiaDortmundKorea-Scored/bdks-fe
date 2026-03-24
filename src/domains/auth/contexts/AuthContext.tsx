@@ -21,6 +21,7 @@ interface AuthContextType {
   profile: IProfile | null;
   signOut: () => Promise<void>;
   deleteAccount: () => Promise<DeleteAccountResult>;
+  refreshProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -188,12 +189,19 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     );
   }
 
+  const refreshProfile = async () => {
+    if (user) {
+      await loadProfile(user.id);
+    }
+  };
+
   const value = {
     user,
     session,
     profile,
     signOut,
     deleteAccount,
+    refreshProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
