@@ -3,19 +3,39 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.9] - 2026-03-24
+
+**Branch**: `bdks-v1.6.9-정적OG등록및검색키워드개선`
+
+### 추가
+
+### 변경
+
+### 수정
+
+- fix: 구글 검색 키워드 개선
+- fix: 카카오톡에서 OG미리보기 미노출 수정-정적OG추가
+
+### 제거
+
+---
+
 ## [1.6.8] - 2026-03-24
 
 **Branch**: `bdks-v1.6.8-내정보화면고도화`
 
 ### 추가
+
 - feat: 클로드코드 convention, 3d-icon프롬프트생성규칙 스킬추가
 - feat: 바로가기 UI리뉴얼 및 회원탈퇴 추가
 - feat: 관리자페이지에 탈퇴회원대시보드조회기능추가
 
 ### 변경
+
 - style: 관리자페이지 grid위치조정
 
 ### 수정
+
 - fix: 신규회원가입시 내정보 닉네임 안뜨는현상 수정
 
 ### 제거
