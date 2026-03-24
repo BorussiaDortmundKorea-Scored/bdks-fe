@@ -1,14 +1,13 @@
+import AuthInfoDevContact from "./auth-info-dev-contact";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import AuthInfoDevContact from "./auth-info-dev-contact";
 import { AuthContext } from "@auth/contexts/AuthContext";
 
+import { storybookKakaoAuthMock } from "@shared/mocks/constants/storybook-auth-mock-data";
+
 const mockAuthValue = {
-  user: { id: "카카오id여", email: "user@example.com", is_anonymous: false } as never,
-  session: null,
+  ...storybookKakaoAuthMock,
   profile: { nickname: "테스트유저" } as never,
-  signOut: async () => {},
-  deleteAccount: async () => ({ success: true }),
 };
 
 const meta: Meta<typeof AuthInfoDevContact> = {

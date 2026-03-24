@@ -10,15 +10,8 @@ import PlayersDbErrorFallback from "@players/players-db/components/error/players
 import PlayersDb from "@players/players-db/components/players-db";
 import PlayersDbSkeleton from "@players/players-db/components/skeleton/players-db-skeleton";
 
+import { storybookKakaoAuthMock } from "@shared/mocks/constants/storybook-auth-mock-data";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-
-const mockAuthValue = {
-  user: { id: "mock-user-id", email: "user@example.com", is_anonymous: false } as never,
-  session: null,
-  profile: null,
-  signOut: async () => {},
-  deleteAccount: async () => ({ success: true }),
-};
 
 const meta: Meta<typeof PlayersDb> = {
   title: "Players/PlayersDb",
@@ -39,7 +32,7 @@ const meta: Meta<typeof PlayersDb> = {
       });
       return (
         <BrowserRouter>
-          <AuthContext.Provider value={mockAuthValue}>
+          <AuthContext.Provider value={storybookKakaoAuthMock}>
             <QueryClientProvider client={queryClient}>
               <ReactQueryBoundary skeleton={<PlayersDbSkeleton />} errorFallback={PlayersDbErrorFallback}>
                 <Story />
