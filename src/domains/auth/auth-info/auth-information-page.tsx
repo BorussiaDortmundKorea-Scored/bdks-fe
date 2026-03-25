@@ -1,17 +1,14 @@
 /**
  * 작성자: KYD
  * 기능: 마이페이지 - 사용자 정보 및 주요 기능 제공
- * 프로세스 설명: 사용자 인사말, 메인 카드(프로필/예약/설정/결제), 빠른 링크, 프로모션 배너로 구성
+ * 프로세스 설명: 프로필 섹션(아바타/닉네임/포인트), 빠른 링크로 구성
  */
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 import AuthInfoProfileCard from "./auth-info-profile-card/auth-info-profile-card";
-import AuthInfoPointCard from "./auth-info-point-card/auth-info-point-card";
-import AuthInfoPointCardErrorFallback from "./auth-info-point-card/error/auth-info-point-card-error-fallback";
-import AuthInfoPointCardSkeleton from "./auth-info-point-card/skeleton/auth-info-point-card-skeleton";
-import AuthInfoTierMakerCard from "./auth-info-tier-maker-card/auth-info-tier-maker-card";
-import AuthInfoMatchPredictionCard from "./auth-info-match-prediction-card/auth-info-match-prediction-card";
+import AuthInfoProfileCardErrorFallback from "./auth-info-profile-card/error/auth-info-profile-card-error-fallback";
+import AuthInfoProfileCardSkeleton from "./auth-info-profile-card/skeleton/auth-info-profile-card-skeleton";
 import AuthInfoGreeting from "./auth-info-greeting/auth-info-greeting";
 import AuthInfoQuickLinks from "./auth-info-quick-links/auth-info-quick-links";
 
@@ -33,23 +30,16 @@ const AuthInformationPage = () => {
     <div className="bdks-container" ref={pageRef}>
       <Header options={options} />
       <LayoutWithHeaderFooter>
-        <div className="flex w-full flex-col gap-4">
+        <div className="flex w-full flex-col gap-6">
           {/* 인사말 섹션 */}
           <AuthInfoGreeting />
-          {/* 메인 카드 섹션 */}
-          <div>
-            <div className="grid h-[280px] w-full grid-cols-5 grid-rows-7 gap-4">
-              <AuthInfoProfileCard />
-              <ReactQueryBoundary
-                skeleton={<AuthInfoPointCardSkeleton />}
-                errorFallback={AuthInfoPointCardErrorFallback}
-              >
-                <AuthInfoPointCard />
-              </ReactQueryBoundary>
-              <AuthInfoTierMakerCard />
-              <AuthInfoMatchPredictionCard />
-            </div>
-          </div>
+          {/* 프로필 섹션 */}
+          <ReactQueryBoundary
+            skeleton={<AuthInfoProfileCardSkeleton />}
+            errorFallback={AuthInfoProfileCardErrorFallback}
+          >
+            <AuthInfoProfileCard />
+          </ReactQueryBoundary>
           {/* 빠른 링크 섹션 */}
           <AuthInfoQuickLinks />
         </div>

@@ -4,7 +4,7 @@ import { AdminDashboardUserLoginTypeHandlers } from "@admin/admin-dashboard/admi
 import { AdminMatchLineupHandlers } from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-handler";
 import { AdminMatchLineupSubstitutionHandlers } from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-substitution-handler";
 
-import { AuthInfoPointCardHandlers } from "@auth/auth-info/auth-info-point-card/mocks/auth-info-point-card-handler";
+import { AuthInfoProfileCardHandlers } from "@auth/auth-info/auth-info-profile-card/mocks/auth-info-profile-card-handler";
 import { ViewingCheckHandlers } from "@auth/auth-info/auth-info-quick-links/viewing-check/mocks/viewing-check-handler";
 
 import { MatchInfoHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/match-info-handler";
@@ -25,7 +25,7 @@ export const handlers = [
   ...AdminDashboardUserLoginTypeHandlers,
   ...AdminMatchLineupHandlers,
   ...AdminMatchLineupSubstitutionHandlers,
-  ...AuthInfoPointCardHandlers,
+  ...AuthInfoProfileCardHandlers,
   ...ViewingCheckHandlers,
   ...MatchesHistoryHandlers,
   ...MatchesHistoryPlayersRatingHandlers,

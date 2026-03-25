@@ -3,9 +3,9 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import { vi } from "vitest";
 
-import AuthInfoPointCard from "./auth-info-point-card";
-import AuthInfoPointCardErrorFallback from "./error/auth-info-point-card-error-fallback";
-import AuthInfoPointCardSkeleton from "./skeleton/auth-info-point-card-skeleton";
+import AuthInfoProfileCard from "./auth-info-profile-card";
+import AuthInfoProfileCardErrorFallback from "./error/auth-info-profile-card-error-fallback";
+import AuthInfoProfileCardSkeleton from "./skeleton/auth-info-profile-card-skeleton";
 
 import { getAnonymousUserAuthMock, getKakaoUserAuthMock } from "@shared/mocks/constants/user-mock-data";
 import { server } from "@shared/mocks/server";
@@ -27,8 +27,8 @@ const renderWithQueryClient = (component: React.ReactElement) => {
   return render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryBoundary
-        skeleton={<AuthInfoPointCardSkeleton />}
-        errorFallback={AuthInfoPointCardErrorFallback}
+        skeleton={<AuthInfoProfileCardSkeleton />}
+        errorFallback={AuthInfoProfileCardErrorFallback}
       >
         {component}
       </ReactQueryBoundary>
@@ -38,24 +38,24 @@ const renderWithQueryClient = (component: React.ReactElement) => {
 
 const waitForLoadingComplete = async () => {
   await waitFor(() => {
-    expect(screen.queryByTestId("auth-info-point-card-skeleton")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("auth-info-profile-card-skeleton")).not.toBeInTheDocument();
   });
 };
 
-describe("AuthInfoPointCard", () => {
+describe("AuthInfoProfileCard", () => {
   it("카카오 로그인 유저일 때 가지고 있는 보유 포인트를 표시한다", async () => {
     mockUseAuth.mockReturnValue(getKakaoUserAuthMock());
 
     server.use(
-      http.post("*/rest/v1/rpc/get_profile_with_points", () => {
-        return HttpResponse.json({ points: 500 });
+      http.post("*/rest/v1/rpc/get_profile_summary", () => {
+        return HttpResponse.json({ points: 500, favorite_player_image_url: null });
       }),
     );
 
-    renderWithQueryClient(<AuthInfoPointCard />);
+    renderWithQueryClient(<AuthInfoProfileCard />);
     await waitForLoadingComplete();
 
-    expect(await screen.findByTestId("auth-info-point-card-points")).toHaveTextContent("500p");
+    expect(await screen.findByTestId("auth-info-profile-card-points")).toHaveTextContent("500p");
   });
 
   it("익명 로그인 유저일 때는 항상 0p를 표시한다", async () => {
@@ -63,14 +63,14 @@ describe("AuthInfoPointCard", () => {
 
     // 익명 사용자는 포인트 얻는 행위를 할 수 없음
     server.use(
-      http.post("*/rest/v1/rpc/get_profile_with_points", () => {
+      http.post("*/rest/v1/rpc/get_profile_summary", () => {
         return HttpResponse.json(null);
       }),
     );
 
-    renderWithQueryClient(<AuthInfoPointCard />);
+    renderWithQueryClient(<AuthInfoProfileCard />);
     await waitForLoadingComplete();
 
-    expect(await screen.findByTestId("auth-info-point-card-points")).toHaveTextContent("0p");
+    expect(await screen.findByTestId("auth-info-profile-card-points")).toHaveTextContent("0p");
   });
 });
