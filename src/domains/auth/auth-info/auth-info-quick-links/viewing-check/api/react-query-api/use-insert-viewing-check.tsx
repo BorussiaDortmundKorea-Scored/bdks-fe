@@ -18,7 +18,7 @@ export const useInsertViewingCheck = (userId: string) => {
         queryKey: [VIEWING_CHECK_QUERY_KEYS.VIEWING_MATCHES],
       });
       queryClient.invalidateQueries({
-        queryKey: [AUTH_INFO_PROFILE_CARD_QUERY_KEYS.PROFILE, userId],
+        queryKey: [AUTH_INFO_PROFILE_CARD_QUERY_KEYS.SUMMARY, userId],
       });
     },
   });
