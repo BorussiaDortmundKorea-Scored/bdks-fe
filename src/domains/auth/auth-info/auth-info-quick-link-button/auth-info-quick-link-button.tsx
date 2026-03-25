@@ -15,7 +15,7 @@ const AuthInfoQuickLinkButton = ({ iconSrc, label, onClick }: AuthInfoQuickLinkB
       className="flex h-26 w-26 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg"
       onClick={onClick}
     >
-      <div className="bg-background-fourth flex h-18 w-18 justify-center rounded-full">
+      <div className="bg-background-fourth flex h-18 w-18 justify-center rounded-full ring-2 ring-(--color-secondary-50)">
         <img src={iconSrc} alt={label} className="h-18 w-18" />
       </div>
       <span className="text-yds-b2 text-center whitespace-pre-line text-white">{label}</span>

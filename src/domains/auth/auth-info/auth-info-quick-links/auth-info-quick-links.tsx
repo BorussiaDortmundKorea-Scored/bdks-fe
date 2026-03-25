@@ -54,6 +54,26 @@ const AuthInfoQuickLinks = () => {
           onClick={() => navigate(ROUTES.VIEWING_CHECK)}
         />
         <AuthInfoQuickLinkButton
+          iconSrc={`${ICON_BASE}/tier-maker.png`}
+          label="티어메이커"
+          onClick={() => toast({ content: "티어메이커 화면은 준비중이에요" })}
+        />
+        <AuthInfoQuickLinkButton
+          iconSrc={`${ICON_BASE}/best-eleven.png`}
+          label="베스트 일레븐"
+          onClick={() => toast({ content: "베스트 일레븐 화면은 시즌말 오픈예정이에요" })}
+        />
+        <AuthInfoQuickLinkButton
+          iconSrc={`${ICON_BASE}/announcement.png`}
+          label="공지사항"
+          onClick={() => toast({ content: "공지사항 화면은 준비중이에요" })}
+        />
+        <AuthInfoQuickLinkButton
+          iconSrc={`${ICON_BASE}/user-ranking.png`}
+          label="유저 랭킹"
+          onClick={() => toast({ content: "유저 랭킹 화면은 준비중이에요" })}
+        />
+        <AuthInfoQuickLinkButton
           iconSrc={`${ICON_BASE}/dev-contact.png`}
           label="개발자 문의"
           onClick={() => navigate(ROUTES.DEV_CONTACT)}
