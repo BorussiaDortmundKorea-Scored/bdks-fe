@@ -4,6 +4,8 @@
  */
 import { useNavigate } from "react-router-dom";
 
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
+
 import { useGetProfileSummarySuspense } from "@auth/auth-info/auth-info-profile-card/api/react-query-api/use-get-profile";
 import { useAuth } from "@auth/contexts/AuthContext";
 
@@ -15,6 +17,7 @@ const DEFAULT_PROFILE_IMAGE = `${SUPABASE_STORAGE_URL}/players/head/head_brandt.
 const AuthInfoProfileCard = () => {
   //SECTION HOOK호출 영역
   const navigate = useNavigate();
+  const { toast } = useOverlay();
   const { user, profile } = useAuth();
   const profileSummary = useGetProfileSummarySuspense(user!.id);
   //!SECTION HOOK호출 영역
@@ -41,7 +44,13 @@ const AuthInfoProfileCard = () => {
           </p>
           <button
             className="text-yds-c1m cursor-pointer rounded-full bg-(--color-primary-400) px-3 py-1 text-(--color-secondary-400)"
-            onClick={() => navigate(ROUTES.EDIT_PROFILE)}
+            onClick={() => {
+              if (user?.is_anonymous) {
+                toast({ content: "익명 로그인 유저는 이용할 수 없어요" });
+                return;
+              }
+              navigate(ROUTES.EDIT_PROFILE);
+            }}
           >
             프로필 수정
           </button>
