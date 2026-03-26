@@ -25,7 +25,14 @@ src/
 │   │       ├── query-keys.ts          # 쿼리 키 상수
 │   │       ├── use-get-*.tsx          # Query 훅
 │   │       └── use-mutate-*.tsx       # Mutation 훅
-│   ├── components/                    # 도메인 컴포넌트
+│   ├── components/
+│   │   ├── {domain}.tsx               # 본체 컴포넌트
+│   │   ├── wrapper/
+│   │   │   └── {domain}-wrapper.tsx   # ReactQueryBoundary 래퍼
+│   │   ├── error/
+│   │   │   └── {domain}-error-fallback.tsx
+│   │   └── skeleton/
+│   │       └── {domain}-skeleton.tsx
 │   ├── mocks/                         # MSW 핸들러
 │   └── {domain}-page.tsx             # 페이지 컴포넌트
 ├── shared/                     # 공유 모듈
@@ -63,6 +70,7 @@ src/
 - Query 훅: `use-get-*.tsx` (예: `use-get-all-competitions.tsx`)
 - Mutation 훅: `use-mutate-*.tsx`
 - 쿼리 키: `*-query-key.ts` 또는 `*-query-keys.ts`
+- Wrapper: `*-wrapper.tsx` (예: `viewing-check-wrapper.tsx`)
 - 에러 폴백: `*-error-fallback.tsx`
 - 스켈레톤: `*-skeleton.tsx`
 - 모달: `*-modal.tsx`
@@ -170,6 +178,43 @@ export const useGetAllCompetitionsSuspense = () => {
 
 ## UI 패턴
 
+- **Wrapper 패턴**: `*-wrapper.tsx`는 `children` prop을 받는 공통 레이아웃 쉘. 본체/스켈레톤/에러 컴포넌트가 모두 동일한 wrapper를 사용하여 일관된 레이아웃을 보장. 페이지에서는 `ReactQueryBoundary`로 직접 감싸기.
+
+```tsx
+// components/wrapper/{domain}-wrapper.tsx — 공통 레이아웃 쉘
+const DomainWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <section className="text-primary-100 w-full">
+      <h2 className="mb-4 text-[22px] font-bold">제목</h2>
+      {children}
+    </section>
+  );
+};
+
+// components/{domain}.tsx — 본체 컴포넌트
+const Domain = () => {
+  const { data } = useGetData();
+  return <DomainWrapper>{/* 데이터 기반 UI */}</DomainWrapper>;
+};
+
+// components/skeleton/{domain}-skeleton.tsx
+const DomainSkeleton = () => {
+  return <DomainWrapper>{/* 스켈레톤 UI */}</DomainWrapper>;
+};
+
+// components/error/{domain}-error-fallback.tsx
+const DomainErrorFallback = () => {
+  return <DomainWrapper>{/* 에러 메시지 */}</DomainWrapper>;
+};
+
+// pages/{domain}-page.tsx — ReactQueryBoundary 직접 사용
+<LayoutWithHeaderFooter>
+  <ReactQueryBoundary skeleton={<DomainSkeleton />} errorFallback={DomainErrorFallback}>
+    <Domain />
+  </ReactQueryBoundary>
+</LayoutWithHeaderFooter>
+```
+
 - **모달/토스트**: `@youngduck/yd-ui`의 `useOverlay()` 훅
 - **에러 바운더리**: `ReactQueryBoundary` (Suspense + ErrorBoundary 통합)
 - **스켈레톤 로딩**: 도메인별 `*-skeleton.tsx` 컴포넌트
@@ -190,14 +235,23 @@ export const useGetAllCompetitionsSuspense = () => {
 - import 자동 정렬 (`@trivago/prettier-plugin-sort-imports`)
 - Tailwind 클래스 자동 정렬 (`prettier-plugin-tailwindcss`)
 
+## 테스팅
+
+- **Vitest** (jsdom 환경) + **Testing Library**
+- **MSW**로 Supabase RPC 엔드포인트 모킹
+- 도메인별 `mocks/` 폴더에 핸들러 정의
+- `src/shared/mocks/handlers/handlers.ts`에서 핸들러 통합
+- **Storybook**으로 컴포넌트 문서화 및 시각적 테스트
+
 ## 새 도메인 기능 추가 시 체크리스트
 
 1. `src/domains/{domain}/` 폴더 생성
 2. API 함수 작성 (`api/{domain}-api.ts`)
 3. Query Key 정의 (`api/react-query-api/query-keys.ts`)
 4. Query/Mutation 훅 작성 (`api/react-query-api/use-get-*.tsx`, `use-mutate-*.tsx`)
-5. 페이지 컴포넌트 (`{domain}-page.tsx`) + `CustomHelmet` SEO
-6. `ReactQueryBoundary`로 Suspense/Error 래핑 + 스켈레톤 컴포넌트
-7. 라우트 추가 (`shared/constants/routes.ts` + 라우터 설정)
-8. MSW 핸들러 작성 (`mocks/{domain}-handler.ts`)
-9. 필요 시 Storybook 스토리 작성
+5. Wrapper 컴포넌트 작성 (`components/wrapper/{domain}-wrapper.tsx`) — children 기반 레이아웃 쉘
+6. 본체/스켈레톤/에러 컴포넌트 모두 Wrapper로 감싸기
+7. 페이지 컴포넌트 (`{domain}-page.tsx`) + `CustomHelmet` SEO + `ReactQueryBoundary` 직접 사용
+8. 라우트 추가 (`shared/constants/routes.ts` + 라우터 설정)
+9. MSW 핸들러 작성 (`mocks/{domain}-handler.ts`)
+10. 필요 시 Storybook 스토리 작성
