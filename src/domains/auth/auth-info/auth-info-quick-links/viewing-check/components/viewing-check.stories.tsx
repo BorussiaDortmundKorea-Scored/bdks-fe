@@ -47,7 +47,7 @@ export default meta;
 
 type Story = StoryObj<typeof ViewingCheck>;
 
-// 기본 스토리 - 과거/다가오는 경기가 함께 있는 경우
+// 기본 스토리 - 다양한 상태의 경기가 섞여 있는 도감
 export const Default: Story = {
   parameters: {
     viewport: {
@@ -56,25 +56,94 @@ export const Default: Story = {
   },
 };
 
-// 다가오는 경기가 없는 경우
-export const OnlyPastMatches: Story = {
+// 많은 경기가 있는 도감
+export const ManyMatches: Story = {
   parameters: {
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_viewing_matches", () => {
           return HttpResponse.json([
             {
-              id: "33333333-3333-3333-3333-333333333333",
+              id: "11111111-1111-1111-1111-111111111111",
               match_date: "2025-07-20",
               home_away: "HOME",
-              round_name: "34R",
+              round_name: "1R",
               competition_name: "분데스리가",
               season: "24-25",
-              opponent_team_name: "FC 쾰른",
-              opponent_team_logo_image_url: "https://example.com/logo-koeln.png",
+              opponent_team_name: "유벤투스",
+              opponent_team_logo_image_url:
+                "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_juventus.png",
               is_live: false,
               status: "PAST",
               has_viewing_check: true,
+            },
+            {
+              id: "22222222-2222-2222-2222-222222222222",
+              match_date: "2025-07-25",
+              home_away: "AWAY",
+              round_name: "2R",
+              competition_name: "분데스리가",
+              season: "24-25",
+              opponent_team_name: "RB 라이프치히",
+              opponent_team_logo_image_url:
+                "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_bochum.png",
+              is_live: false,
+              status: "PAST",
+              has_viewing_check: true,
+            },
+            {
+              id: "33333333-3333-3333-3333-333333333333",
+              match_date: "2025-08-01",
+              home_away: "HOME",
+              round_name: "3R",
+              competition_name: "분데스리가",
+              season: "24-25",
+              opponent_team_name: "바이에른 뮌헨",
+              opponent_team_logo_image_url:
+                "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_bayern.png",
+              is_live: false,
+              status: "PAST",
+              has_viewing_check: false,
+            },
+            {
+              id: "44444444-4444-4444-4444-444444444444",
+              match_date: "2025-08-05",
+              home_away: "AWAY",
+              round_name: "4R",
+              competition_name: "분데스리가",
+              season: "24-25",
+              opponent_team_name: "VfL 볼프스부르크",
+              opponent_team_logo_image_url:
+                "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_wolfsburg.png",
+              is_live: false,
+              status: "PAST",
+              has_viewing_check: true,
+            },
+            {
+              id: "55555555-5555-5555-5555-555555555555",
+              match_date: "2025-08-10",
+              home_away: "HOME",
+              round_name: "5R",
+              competition_name: "분데스리가",
+              season: "24-25",
+              opponent_team_name: "FC 쾰른",
+              opponent_team_logo_image_url: null,
+              is_live: false,
+              status: "TODAY",
+              has_viewing_check: false,
+            },
+            {
+              id: "66666666-6666-6666-6666-666666666666",
+              match_date: "2025-08-08",
+              home_away: "AWAY",
+              round_name: "6R",
+              competition_name: "분데스리가",
+              season: "24-25",
+              opponent_team_name: "샬케 04",
+              opponent_team_logo_image_url: null,
+              is_live: false,
+              status: "PAST",
+              has_viewing_check: false,
             },
           ]);
         }),
@@ -86,25 +155,54 @@ export const OnlyPastMatches: Story = {
   },
 };
 
-// 지난 경기가 없는 경우
-export const OnlyUpcomingMatches: Story = {
+// 모든 경기 관람 완료
+export const AllViewed: Story = {
   parameters: {
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_viewing_matches", () => {
           return HttpResponse.json([
             {
-              id: "55555555-5555-5555-5555-555555555555",
-              match_date: "2025-09-01",
+              id: "11111111-1111-1111-1111-111111111111",
+              match_date: "2025-07-20",
               home_away: "HOME",
               round_name: "1R",
-              competition_name: "DFB 포칼",
-              season: "25-26",
-              opponent_team_name: "샬케 04",
-              opponent_team_logo_image_url: "https://example.com/logo-schalke.png",
+              competition_name: "분데스리가",
+              season: "24-25",
+              opponent_team_name: "유벤투스",
+              opponent_team_logo_image_url:
+                "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_juventus.png",
               is_live: false,
-              status: "UPCOMING",
-              has_viewing_check: false,
+              status: "PAST",
+              has_viewing_check: true,
+            },
+            {
+              id: "22222222-2222-2222-2222-222222222222",
+              match_date: "2025-07-25",
+              home_away: "AWAY",
+              round_name: "2R",
+              competition_name: "분데스리가",
+              season: "24-25",
+              opponent_team_name: "RB 라이프치히",
+              opponent_team_logo_image_url:
+                "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_bochum.png",
+              is_live: false,
+              status: "PAST",
+              has_viewing_check: true,
+            },
+            {
+              id: "33333333-3333-3333-3333-333333333333",
+              match_date: "2025-08-01",
+              home_away: "HOME",
+              round_name: "3R",
+              competition_name: "분데스리가",
+              season: "24-25",
+              opponent_team_name: "바이에른 뮌헨",
+              opponent_team_logo_image_url:
+                "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_bayern.png",
+              is_live: false,
+              status: "PAST",
+              has_viewing_check: true,
             },
           ]);
         }),

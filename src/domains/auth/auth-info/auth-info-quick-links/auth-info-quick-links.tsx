@@ -50,7 +50,7 @@ const AuthInfoQuickLinks = () => {
       <div className="scrollbar-hide-x flex gap-3 overflow-x-scroll select-none">
         <AuthInfoQuickLinkButton
           iconSrc={`${ICON_BASE}/viewing-check.png`}
-          label="관람 체크"
+          label="직관 띠부띠부씰"
           onClick={() => navigate(ROUTES.VIEWING_CHECK)}
         />
         <AuthInfoQuickLinkButton
