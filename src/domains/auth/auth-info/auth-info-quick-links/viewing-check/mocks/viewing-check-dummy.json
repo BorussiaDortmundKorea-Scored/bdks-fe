@@ -37,18 +37,5 @@
     "is_live": false,
     "status": "TODAY",
     "has_viewing_check": false
-  },
-  {
-    "id": "33333333-3333-3333-3333-333333333333",
-    "match_date": "2025-08-15",
-    "home_away": "HOME",
-    "round_name": "34R",
-    "competition_name": "분데스리가",
-    "season": "24-25",
-    "opponent_team_name": "바이에른 뮌헨",
-    "opponent_team_logo_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_bayern.png",
-    "is_live": false,
-    "status": "UPCOMING",
-    "has_viewing_check": false
   }
 ]

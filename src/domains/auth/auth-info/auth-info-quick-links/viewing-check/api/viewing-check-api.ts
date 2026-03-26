@@ -1,7 +1,7 @@
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
 
-export type ViewingMatchStatus = "PAST" | "TODAY" | "UPCOMING";
+export type ViewingMatchStatus = "PAST" | "TODAY";
 
 export interface IViewingMatch {
   id: string;
