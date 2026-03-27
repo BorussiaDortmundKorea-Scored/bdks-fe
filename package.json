@@ -34,7 +34,6 @@
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
     "@youngduck/yd-ui": "^0.14.1",
-    "axios": "^1.10.0",
     "chart.js": "^4.5.1",
     "gsap": "^3.13.0",
     "lint-staged": "^16.4.0",
