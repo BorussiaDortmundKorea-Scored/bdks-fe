@@ -64,6 +64,20 @@ export default defineConfig({
       },
     ],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom", "react-router-dom"],
+          supabase: ["@supabase/supabase-js"],
+          sentry: ["@sentry/react"],
+          gsap: ["gsap", "@gsap/react"],
+          "react-query": ["@tanstack/react-query"],
+          chart: ["chart.js", "react-chartjs-2"],
+        },
+      },
+    },
+  },
   resolve: {
     alias: [
       { find: "@admin", replacement: path.resolve(__dirname, "src/domains/admin") },
