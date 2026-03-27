@@ -3,14 +3,36 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.12] - 2026-03-27
+
+**Branch**: `bkds-v1.6.12-s3경로수정및미사용코드제거`
+
+### 추가
+
+### 변경
+- build: vite-bundle-visializer설치및세팅
+- refactor: react lazy 기반 코드스플리팅
+- refactor: vite manualchunks로 라이브러리 청크분리
+
+### 수정
+- fix: s3경로 오타수정
+
+### 제거
+- revert: 미사용 코드제거
+- revert: axios 라이브러리 미사용제거
+
+---
+
 ## [1.6.11] - 2026-03-25
 
 **Branch**: `bdks-v1.6.11-관람체크ui변경`
 
 ### 추가
+
 - feat: 관람체크 UI 띠부씰 스타일로 변경
 
 ### 변경
+
 - test: 띠부실 테스트코드,스토리북 추가
 - docs: 클로드코드스킬 간소화
 
