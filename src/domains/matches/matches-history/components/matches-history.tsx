@@ -13,7 +13,7 @@ import { createMatchRatingsPath } from "@shared/constants/routes";
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
-const CARD_SECTION_IMAGE = `${SUPABASE_STORAGE_URL}/dortmund//card_section.png`;
+const CARD_SECTION_IMAGE = `${SUPABASE_STORAGE_URL}/dortmund/card_section.png`;
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 
 const MatchesHistory = () => {

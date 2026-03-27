@@ -16,7 +16,7 @@ import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
-const SIGNAL_IDUNA_PARK_IMAGE = `${SUPABASE_STORAGE_URL}/dortmund//iduna_park.png`;
+const SIGNAL_IDUNA_PARK_IMAGE = `${SUPABASE_STORAGE_URL}/dortmund/iduna_park.png`;
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 
 const LoginPage = () => {

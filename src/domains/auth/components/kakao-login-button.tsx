@@ -1,14 +1,15 @@
 // src/shared/components/KakaoLoginButton.tsx
 import React from "react";
 
-import useKakaoLogin from "@auth/hooks/useKakaoLogin";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
-import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
+import useKakaoLogin from "@auth/hooks/useKakaoLogin";
+
 import { GA4_CATEGORIES, GA4_EVENTS, GA4_LOGIN_METHODS } from "@shared/constants/analytics";
+import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 import { useGa4Event } from "@shared/hooks/use-ga4-event";
 
-const KAKAO_LOGIN_BUTTON_IMAGE = `${SUPABASE_STORAGE_URL}/asset//kakao_login_logo.png`;
+const KAKAO_LOGIN_BUTTON_IMAGE = `${SUPABASE_STORAGE_URL}/asset/kakao_login_logo.png`;
 
 const KakaoLoginButton: React.FC = () => {
   const { signinWithKakao, isLoading } = useKakaoLogin();
