@@ -102,13 +102,13 @@ const MatchesLastest = () => {
       {/* 포메이션 뷰 타입 토글 버튼 */}
       <div className="bg-background-secondary-layer absolute right-4 bottom-4 z-10 flex overflow-hidden rounded-full shadow-lg backdrop-blur-sm">
         <button
-          className={`text-yds-c1m px-3 py-1.5 transition-colors ${viewType === "PLAY" ? "bg-primary-400 text-primary-400" : "text-white"}`}
+          className={`text-yds-c1m px-3 py-1.5 transition-colors ${viewType === "PLAY" ? "text-primary-400" : "text-white"}`}
           onClick={() => setViewType("PLAY")}
         >
           선발
         </button>
         <button
-          className={`text-yds-c1m px-3 py-1.5 transition-colors ${viewType === "NOT_PLAY" ? "bg-primary-400 text-primary-400" : "text-white"}`}
+          className={`text-yds-c1m px-3 py-1.5 transition-colors ${viewType === "NOT_PLAY" ? "text-primary-400" : "text-white"}`}
           onClick={() => setViewType("NOT_PLAY")}
         >
           교체

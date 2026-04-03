@@ -3,6 +3,7 @@
  * 기능: 마이페이지 빠른 링크 섹션
  */
 import { useNavigate } from "react-router-dom";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 import AuthInfoQuickLinkButton from "../auth-info-quick-link-button/auth-info-quick-link-button";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
@@ -47,7 +48,7 @@ const AuthInfoQuickLinks = () => {
   return (
     <>
       <h2 className="text-yds-s2 text-primary-100">바로가기</h2>
-      <div className="scrollbar-hide-x flex gap-3 overflow-x-scroll select-none">
+      <ScrollContainer horizontal vertical={false} hideScrollbars className="flex gap-3 select-none">
         <AuthInfoQuickLinkButton
           iconSrc={`${ICON_BASE}/viewing-check.png`}
           label="직관 띠부띠부씰"
@@ -83,7 +84,7 @@ const AuthInfoQuickLinks = () => {
           label="회원 탈퇴"
           onClick={handleDeleteAccount}
         />
-      </div>
+      </ScrollContainer>
     </>
   );
 };
