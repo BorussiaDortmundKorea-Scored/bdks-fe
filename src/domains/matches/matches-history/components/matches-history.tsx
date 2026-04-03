@@ -3,8 +3,8 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 import { useGetAllFinishMatchLists } from "../api/react-query-api/use-get-all-finish-match-lists";
 import MatchesHistoryWrapper from "./wrapper/matches-history-wrapper";
@@ -20,36 +20,23 @@ const MatchesHistory = () => {
   //SECTION HOOK호출 영역
   const finishMatchLists = useGetAllFinishMatchLists();
   const navigate = useNavigate();
-  const scrollContainerRef = useRef<HTMLUListElement>(null);
 
   //!SECTION HOOK호출 영역
-
-  //SECTION 상태값 영역
-
-  //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
   const handleMatchCardClick = (matchId: string) => {
     navigate(createMatchRatingsPath(matchId));
   };
 
-  //SECTION 드래그/휠 스크롤 핸들러 영역
-  const handleWheel: React.WheelEventHandler<HTMLUListElement> = (event) => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    const canScrollHorizontally = container.scrollWidth > container.clientWidth;
-    if (!canScrollHorizontally) return;
-    container.scrollLeft += event.deltaY;
-  };
-  //!SECTION 드래그/휠 스크롤 핸들러 영역
-
   return (
     <MatchesHistoryWrapper>
       {/* 가로 스크롤 컨테이너 */}
-      <ul
-        ref={scrollContainerRef}
-        onWheel={handleWheel}
-        className={`scrollbar-hide-x flex w-full flex-row gap-5 overflow-x-scroll select-none`}
+      <ScrollContainer
+        component={"ul"}
+        horizontal
+        vertical={false}
+        hideScrollbars
+        className={`flex w-full flex-row gap-5 select-none`}
       >
         {finishMatchLists.map((match) => (
           <li
@@ -68,7 +55,7 @@ const MatchesHistory = () => {
             </div>
           </li>
         ))}
-      </ul>
+      </ScrollContainer>
     </MatchesHistoryWrapper>
   );
 };

@@ -3,8 +3,8 @@
  * 기능: 관리자 대시보드 - 홈 이동 + 사이트 링크, 가로 스크롤(휠)
  * 프로세스 설명: SITE_LINK_DATA 기준으로 한 줄 배치, internalPath는 내부 이동, link는 외부 링크. 가로 넘침 시 휠로 가로 스크롤
  */
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 import { SITE_LINK_DATA } from "../constants/site-link-data";
 import AdminDashboardSitesWrapper from "./wrapper/admin-dashboard-sites-wrapper";
@@ -14,22 +14,14 @@ const LINK_BUTTON_CLASS =
 
 const AdminDashboardSites = () => {
   const navigate = useNavigate();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const handleWheel: React.WheelEventHandler<HTMLDivElement> = (event) => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    const canScrollHorizontally = container.scrollWidth > container.clientWidth;
-    if (!canScrollHorizontally) return;
-    container.scrollLeft += event.deltaY;
-  };
 
   return (
     <AdminDashboardSitesWrapper>
-      <div
-        ref={scrollContainerRef}
-        onWheel={handleWheel}
-        className="scrollbar-hide-x flex w-full flex-row items-center gap-4 overflow-x-auto overflow-y-hidden select-none"
+      <ScrollContainer
+        horizontal
+        vertical={false}
+        hideScrollbars
+        className="flex w-full flex-row items-center gap-4 select-none"
       >
         {SITE_LINK_DATA.map((item) => {
           const isInternal = "internalPath" in item && item.internalPath;
@@ -61,7 +53,7 @@ const AdminDashboardSites = () => {
             </a>
           );
         })}
-      </div>
+      </ScrollContainer>
     </AdminDashboardSitesWrapper>
   );
 };

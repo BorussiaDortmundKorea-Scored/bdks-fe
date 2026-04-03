@@ -1,7 +1,7 @@
 {
   "name": "bdks-fe",
   "private": true,
-  "version": "1.6.12",
+  "version": "1.6.13",
   "type": "module",
   "scripts": {
     "dev:prod": "vite --mode prod --host",
@@ -45,6 +45,7 @@
     "react-ga4": "^2.1.0",
     "react-helmet-async": "^2.0.5",
     "react-image": "^4.1.0",
+    "react-indiana-drag-scroll": "^2.2.1",
     "react-router-dom": "^7.6.3",
     "tailwindcss": "^4.1.11",
     "zustand": "^5.0.6"
