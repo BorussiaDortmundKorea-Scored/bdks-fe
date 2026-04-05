@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Chips } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
-import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
+import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2, Users } from "lucide-react";
 
 import type { IMatch } from "@admin/admin-match/api/admin-match-api";
@@ -77,13 +77,13 @@ const AdminMatch = () => {
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-primary-100 text-primary-100"
+            className="border-primary-100 text-primary-100 flex h-8 w-8 items-center justify-center rounded-md border"
             aria-label="새 경기 추가"
           >
             <FolderPlus size={16} />
           </button>
         </div>
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden items-center gap-2 md:flex">
           <Button
             variant="outlined"
             color="primary"
@@ -108,11 +108,22 @@ const AdminMatch = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+      <Table scrollable={true} className="md:w-[1200px]" scrollClassName="h-[760px] w-full md:w-[911px]">
+        <ColGroup>
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+        </ColGroup>
         <THead>
           <Tr>
             <Th>경기일</Th>
-            <Th>시작 시간 (KST)</Th>
+            <Th>시작 시간 (한국기준)</Th>
             <Th>대회</Th>
             <Th>상대팀</Th>
             <Th>홈/어웨이</Th>
@@ -135,7 +146,13 @@ const AdminMatch = () => {
               </Td>
               <Td>{match.round_name}</Td>
               <Td>
-                {match.is_live ? <Chips variant="fill" color="primary">라이브</Chips> : "-"}
+                {match.is_live ? (
+                  <Chips variant="fill" color="primary">
+                    라이브
+                  </Chips>
+                ) : (
+                  "-"
+                )}
               </Td>
               <Td>
                 <div className="flex items-center gap-3">

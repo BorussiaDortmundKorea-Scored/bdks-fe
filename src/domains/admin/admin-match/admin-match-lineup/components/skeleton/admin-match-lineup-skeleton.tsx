@@ -15,7 +15,7 @@ const AdminMatchLineupSkeleton = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
         <THead>
           <Tr>
             <Th>선수명</Th>

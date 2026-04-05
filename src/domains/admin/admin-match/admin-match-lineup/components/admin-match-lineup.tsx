@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
-import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
+import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { ArrowLeft, ArrowLeftRight, Edit, FolderPlus, Star, Trash2 } from "lucide-react";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
@@ -154,7 +154,17 @@ const AdminMatchLineup = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
+        <ColGroup>
+          <Col className="w-[120px]" />
+          <Col className="w-[100px]" />
+          <Col className="w-[80px]" />
+          <Col className="w-[60px]" />
+          <Col className="w-[120px]" />
+          <Col className="w-[100px]" />
+          <Col className="w-[100px]" />
+          <Col className="w-[120px]" />
+        </ColGroup>
         <THead>
           <Tr>
             <Th>선수명</Th>

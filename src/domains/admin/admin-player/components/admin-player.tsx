@@ -5,7 +5,7 @@
  */
 import { Button } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
-import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
+import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2 } from "lucide-react";
 
 import type { IPlayer } from "@admin/admin-player/api/admin-player-api";
@@ -66,7 +66,14 @@ const AdminPlayer = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
+        <ColGroup>
+          <Col className="w-[180px]" />
+          <Col className="w-[120px]" />
+          <Col className="w-[80px]" />
+          <Col className="w-[120px]" />
+          <Col className="w-[100px]" />
+        </ColGroup>
         <THead>
           <Tr>
             <Th>영문 이름</Th>

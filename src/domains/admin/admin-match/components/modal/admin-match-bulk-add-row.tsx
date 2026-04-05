@@ -75,15 +75,15 @@ const AdminMatchBulkAddRow = ({
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-yds-b2 mb-1 block text-primary-100">대회 *</label>
+          <label className="text-yds-b2 text-primary-100 mb-1 block">대회 *</label>
           <SelectBox size="full" selectBoxHook={competitionHook} />
         </div>
         <div>
-          <label className="text-yds-b2 mb-1 block text-primary-100">상대팀 *</label>
+          <label className="text-yds-b2 text-primary-100 mb-1 block">상대팀 *</label>
           <SelectBox size="full" selectBoxHook={teamHook} />
         </div>
         <div>
-          <label className="text-yds-b2 mb-1 block text-primary-100">경기 시작 시간 (KST) *</label>
+          <label className="text-yds-b2 text-primary-100 mb-1 block">경기 시작 시간 (한국기준) *</label>
           <Input
             type="datetime-local"
             value={row.match_start_time}
@@ -94,17 +94,15 @@ const AdminMatchBulkAddRow = ({
             color="primary-100"
           />
           {row.match_start_time && (
-            <p className="mt-1 text-yds-c1m text-primary-60">
-              경기일: {extractKSTDateFromLocal(row.match_start_time)}
-            </p>
+            <p className="text-yds-c1m text-primary-60 mt-1">경기일: {extractKSTDateFromLocal(row.match_start_time)}</p>
           )}
         </div>
         <div>
-          <label className="text-yds-b2 mb-1 block text-primary-100">홈/어웨이 *</label>
+          <label className="text-yds-b2 text-primary-100 mb-1 block">홈/어웨이 *</label>
           <SelectBox size="full" selectBoxHook={homeAwayHook} />
         </div>
         <div>
-          <label className="text-yds-b2 mb-1 block text-primary-100">라운드명</label>
+          <label className="text-yds-b2 text-primary-100 mb-1 block">라운드명</label>
           <Input
             type="text"
             value={row.round_name}
