@@ -16,6 +16,7 @@ import { useGetAllMatchesSuspense } from "@admin/admin-match/api/react-query-api
 import { AdminMatchAddModal } from "@admin/admin-match/components/modal/admin-match-add-modal";
 import { AdminMatchBulkAddModal } from "@admin/admin-match/components/modal/admin-match-bulk-add-modal";
 import { AdminMatchEditModal } from "@admin/admin-match/components/modal/admin-match-edit-modal";
+import { convertUTCToLocal } from "@admin/admin-match/utils/datetime-utils";
 
 import { createAdminMatchLineupPath } from "@shared/constants/routes";
 
@@ -111,6 +112,7 @@ const AdminMatch = () => {
         <THead>
           <Tr>
             <Th>경기일</Th>
+            <Th>시작 시간 (KST)</Th>
             <Th>대회</Th>
             <Th>상대팀</Th>
             <Th>홈/어웨이</Th>
@@ -124,6 +126,7 @@ const AdminMatch = () => {
           {matches.map((match) => (
             <Tr key={match.id}>
               <Td>{match.match_date}</Td>
+              <Td>{match.match_start_time ? convertUTCToLocal(match.match_start_time).replace("T", " ") : "-"}</Td>
               <Td>{match.competition_name}</Td>
               <Td>{match.opponent_team_name}</Td>
               <Td>{match.home_away === "HOME" ? "홈" : "어웨이"}</Td>
