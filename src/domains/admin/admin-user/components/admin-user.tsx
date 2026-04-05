@@ -5,6 +5,7 @@
  */
 import { useState } from "react";
 
+import { Chips } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Trash2 } from "lucide-react";
@@ -85,13 +86,9 @@ const AdminUser = () => {
               <Td>{user.email || "익명 사용자"}</Td>
               <Td>
                 {user.is_admin ? (
-                  <span className="rounded-full bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-400">
-                    관리자
-                  </span>
+                  <Chips variant="fill" color="primary">관리자</Chips>
                 ) : (
-                  <span className="text-primary-100 rounded-full bg-blue-500/20 px-2 py-1 text-xs font-medium">
-                    일반
-                  </span>
+                  <Chips variant="outlined" color="primary">일반</Chips>
                 )}
               </Td>
               <Td>{formatDate(user.created_at)}</Td>

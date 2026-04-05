@@ -5,7 +5,7 @@
  */
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@youngduck/yd-ui";
+import { Button, Chips } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2, Users } from "lucide-react";
@@ -135,15 +135,7 @@ const AdminMatch = () => {
               </Td>
               <Td>{match.round_name}</Td>
               <Td>
-                {match.is_live ? (
-                  <span className="rounded-full bg-green-500/20 px-2 py-1 text-yds-c1m text-green-400">
-                    라이브
-                  </span>
-                ) : (
-                  <span className="rounded-full bg-primary-100/10 px-2 py-1 text-yds-c1m text-primary-60">
-                    -
-                  </span>
-                )}
+                {match.is_live ? <Chips variant="fill" color="primary">라이브</Chips> : "-"}
               </Td>
               <Td>
                 <div className="flex items-center gap-3">
