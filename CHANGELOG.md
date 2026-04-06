@@ -3,23 +3,46 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.6.14] - 2026-04-05
+
+**Branch**: `bkds-v1.6.14-관리기능편의성패치`
+
+### 추가
+
+### 변경
+- refactor: 경기시간값4개에서시작시간1개로자동산출
+- test: 시간계싼함수 테스트케이스추가
+- style: table상태표시 yd-ui chips컴포넌트로일괄변경
+- style: 관리자테이블들 가로세로스크롤옵션추가
+
+### 수정
+- fix: 데스크탑에서 화면오버플로우되는현상 수정
+
+### 제거
+
+---
+
 ## [1.6.13] - 2026-04-03
 
 **Branch**: `bkds-v1.6.13-분데스리가28R전편의성패치`
 
 ### 추가
+
 - feat: 회원가입시 최애선수 선택 추가
 - feat: 가로스크롤 기능 라이브러리 일괄적용
 
 ### 변경
+
 - build: 드래그,스크롤라이브러리설치 추후 자체라이브러리로대체예정
 
 ### 수정
 
 ### 제거
+
 - 정상운영을위한 가로스크롤 라이브러리 임시사용. 추후 yd-ui라이브러리에 직접 구축하여 대체예정
 
 ---
+
 ## [1.6.12] - 2026-03-27
 
 **Branch**: `bkds-v1.6.12-s3경로수정및미사용코드제거`
@@ -27,14 +50,17 @@
 ### 추가
 
 ### 변경
+
 - build: vite-bundle-visializer설치및세팅
 - refactor: react lazy 기반 코드스플리팅
 - refactor: vite manualchunks로 라이브러리 청크분리
 
 ### 수정
+
 - fix: s3경로 오타수정
 
 ### 제거
+
 - revert: 미사용 코드제거
 - revert: axios 라이브러리 미사용제거
 
