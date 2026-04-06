@@ -5,9 +5,9 @@
  */
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@youngduck/yd-ui";
+import { Button, Chips } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
-import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
+import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, FolderPlus, Trash2, Users } from "lucide-react";
 
 import type { IMatch } from "@admin/admin-match/api/admin-match-api";
@@ -16,6 +16,7 @@ import { useGetAllMatchesSuspense } from "@admin/admin-match/api/react-query-api
 import { AdminMatchAddModal } from "@admin/admin-match/components/modal/admin-match-add-modal";
 import { AdminMatchBulkAddModal } from "@admin/admin-match/components/modal/admin-match-bulk-add-modal";
 import { AdminMatchEditModal } from "@admin/admin-match/components/modal/admin-match-edit-modal";
+import { convertUTCToLocal } from "@admin/admin-match/utils/datetime-utils";
 
 import { createAdminMatchLineupPath } from "@shared/constants/routes";
 
@@ -76,13 +77,13 @@ const AdminMatch = () => {
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-primary-100 text-primary-100"
+            className="border-primary-100 text-primary-100 flex h-8 w-8 items-center justify-center rounded-md border"
             aria-label="새 경기 추가"
           >
             <FolderPlus size={16} />
           </button>
         </div>
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden items-center gap-2 md:flex">
           <Button
             variant="outlined"
             color="primary"
@@ -107,10 +108,22 @@ const AdminMatch = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+      <Table scrollable={true} className="md:w-[1200px]" scrollClassName="h-[760px] w-full md:w-[911px]">
+        <ColGroup>
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+          <Col className="w-auto" />
+        </ColGroup>
         <THead>
           <Tr>
             <Th>경기일</Th>
+            <Th>시작 시간 (한국기준)</Th>
             <Th>대회</Th>
             <Th>상대팀</Th>
             <Th>홈/어웨이</Th>
@@ -124,6 +137,7 @@ const AdminMatch = () => {
           {matches.map((match) => (
             <Tr key={match.id}>
               <Td>{match.match_date}</Td>
+              <Td>{match.match_start_time ? convertUTCToLocal(match.match_start_time).replace("T", " ") : "-"}</Td>
               <Td>{match.competition_name}</Td>
               <Td>{match.opponent_team_name}</Td>
               <Td>{match.home_away === "HOME" ? "홈" : "어웨이"}</Td>
@@ -133,13 +147,11 @@ const AdminMatch = () => {
               <Td>{match.round_name}</Td>
               <Td>
                 {match.is_live ? (
-                  <span className="rounded-full bg-green-500/20 px-2 py-1 text-yds-c1m text-green-400">
+                  <Chips variant="fill" color="primary">
                     라이브
-                  </span>
+                  </Chips>
                 ) : (
-                  <span className="rounded-full bg-primary-100/10 px-2 py-1 text-yds-c1m text-primary-60">
-                    -
-                  </span>
+                  "-"
                 )}
               </Td>
               <Td>

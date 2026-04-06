@@ -5,8 +5,9 @@
  */
 import { useState } from "react";
 
+import { Chips } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
-import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
+import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Trash2 } from "lucide-react";
 
 import type { IUser } from "@admin/admin-user/api/admin-user-api";
@@ -67,7 +68,15 @@ const AdminUser = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full">
+      <Table scrollable={true} className="md:w-[1200px]" scrollClassName="h-[760px] w-full md:w-[911px]">
+        <ColGroup>
+          <Col className="w-[120px]" />
+          <Col className="w-[200px]" />
+          <Col className="w-[100px]" />
+          <Col className="w-[180px]" />
+          <Col className="w-[180px]" />
+          <Col className="w-[80px]" />
+        </ColGroup>
         <THead>
           <Tr>
             <Th>닉네임</Th>
@@ -85,13 +94,13 @@ const AdminUser = () => {
               <Td>{user.email || "익명 사용자"}</Td>
               <Td>
                 {user.is_admin ? (
-                  <span className="rounded-full bg-yellow-500/20 px-2 py-1 text-xs font-medium text-yellow-400">
+                  <Chips variant="fill" color="primary">
                     관리자
-                  </span>
+                  </Chips>
                 ) : (
-                  <span className="text-primary-100 rounded-full bg-blue-500/20 px-2 py-1 text-xs font-medium">
+                  <Chips variant="outlined" color="primary">
                     일반
-                  </span>
+                  </Chips>
                 )}
               </Td>
               <Td>{formatDate(user.created_at)}</Td>

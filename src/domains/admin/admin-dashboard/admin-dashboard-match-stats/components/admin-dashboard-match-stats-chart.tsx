@@ -135,8 +135,8 @@ const AdminDashboardMatchStatsChart = () => {
   };
 
   return (
-    <div className="h-[240px] w-full overflow-x-auto md:overflow-visible md:w-full">
-      <div className="h-full w-full md:min-w-0" style={{ minWidth: chartMinWidthPx }}>
+    <div className="h-[240px] w-full overflow-x-auto">
+      <div className="h-full" style={{ minWidth: chartMinWidthPx }}>
         <Bar data={chartData} options={chartOptions} />
       </div>
     </div>
