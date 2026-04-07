@@ -2,8 +2,8 @@
  * 작성자: KYD
  * 기능: 마이페이지 빠른 링크 섹션
  */
-import { useNavigate } from "react-router-dom";
 import ScrollContainer from "react-indiana-drag-scroll";
+import { useNavigate } from "react-router-dom";
 
 import AuthInfoQuickLinkButton from "../auth-info-quick-link-button/auth-info-quick-link-button";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
@@ -55,6 +55,11 @@ const AuthInfoQuickLinks = () => {
           onClick={() => navigate(ROUTES.VIEWING_CHECK)}
         />
         <AuthInfoQuickLinkButton
+          iconSrc={`${ICON_BASE}/user-ranking.png`}
+          label="유저 랭킹"
+          onClick={() => navigate(ROUTES.USER_RANKING)}
+        />
+        <AuthInfoQuickLinkButton
           iconSrc={`${ICON_BASE}/tier-maker.png`}
           label="티어메이커"
           onClick={() => toast({ content: "티어메이커 화면은 준비중이에요" })}
@@ -68,11 +73,6 @@ const AuthInfoQuickLinks = () => {
           iconSrc={`${ICON_BASE}/announcement.png`}
           label="공지사항"
           onClick={() => toast({ content: "공지사항 화면은 준비중이에요" })}
-        />
-        <AuthInfoQuickLinkButton
-          iconSrc={`${ICON_BASE}/user-ranking.png`}
-          label="유저 랭킹"
-          onClick={() => toast({ content: "유저 랭킹 화면은 준비중이에요" })}
         />
         <AuthInfoQuickLinkButton
           iconSrc={`${ICON_BASE}/dev-contact.png`}

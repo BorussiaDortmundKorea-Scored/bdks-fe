@@ -16,6 +16,7 @@ export const ROUTES = {
   MY_INFO: "/myInfo",
   EDIT_PROFILE: "/myInfo/editProfile",
   VIEWING_CHECK: "/myInfo/viewing",
+  USER_RANKING: "/myInfo/userRanking",
   DEV_CONTACT: "/myInfo/devContact",
 
   // 메인
