@@ -26,17 +26,3 @@ export const getViewingMatches = async (): Promise<ApiResponse<IViewingMatch[]>>
 
   return { data: data as IViewingMatch[], error: error as PostgrestError };
 };
-
-export const insertViewingCheck = async (matchId: string): Promise<ApiResponse<boolean>> => {
-  const { data, error } = (await supabase.rpc("insert_viewing_check", {
-    p_match_id: matchId,
-  })) as {
-    data: boolean | null;
-    error: PostgrestError | null;
-  };
-
-  return {
-    data: (data ?? false) as boolean,
-    error: error as PostgrestError,
-  };
-};

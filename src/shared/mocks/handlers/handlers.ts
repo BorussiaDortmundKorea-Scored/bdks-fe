@@ -5,6 +5,7 @@ import { AdminMatchLineupHandlers } from "@admin/admin-match/admin-match-lineup/
 import { AdminMatchLineupSubstitutionHandlers } from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-substitution-handler";
 
 import { AuthInfoProfileCardHandlers } from "@auth/auth-info/auth-info-profile-card/mocks/auth-info-profile-card-handler";
+import { UserRankingHandlers } from "@auth/auth-info/auth-info-quick-links/user-ranking/mocks/user-ranking-handler";
 import { ViewingCheckHandlers } from "@auth/auth-info/auth-info-quick-links/viewing-check/mocks/viewing-check-handler";
 
 import { MatchInfoHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/match-info-handler";
@@ -26,6 +27,7 @@ export const handlers = [
   ...AdminMatchLineupHandlers,
   ...AdminMatchLineupSubstitutionHandlers,
   ...AuthInfoProfileCardHandlers,
+  ...UserRankingHandlers,
   ...ViewingCheckHandlers,
   ...MatchesHistoryHandlers,
   ...MatchesHistoryPlayersRatingHandlers,

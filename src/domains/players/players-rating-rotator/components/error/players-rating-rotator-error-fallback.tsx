@@ -1,27 +1,14 @@
 import PlayersRatingRotatorWrapper from "../wrapper/players-rating-rotator-wrapper";
 
-/**
- * 작성자: KYD
- * 기능:
- * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
- */
+import { API_ERROR_LOGO } from "@shared/constants/supabse-storage";
 
 const PlayerRatingRotatorErrorFallback = () => {
-  //SECTION HOOK호출 영역
-
-  //!SECTION HOOK호출 영역
-
-  //SECTION 상태값 영역
-
-  //!SECTION 상태값 영역
-
-  //SECTION 메서드 영역
-
-  //!SECTION 메서드 영역
-
   return (
     <PlayersRatingRotatorWrapper>
-      <div className="flex w-full items-center justify-center">보루센 평점을 일시적으로 가져오지 못했습니다.</div>
+      <div className="flex w-full flex-col items-center justify-center gap-3 py-6 text-yds-c1m text-primary-100">
+        <img src={API_ERROR_LOGO} alt="에러" className="h-16 w-16" />
+        보루센 평점을 일시적으로 가져오지 못했습니다.
+      </div>
     </PlayersRatingRotatorWrapper>
   );
 };

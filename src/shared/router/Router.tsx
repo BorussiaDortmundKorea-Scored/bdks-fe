@@ -32,6 +32,7 @@ const AuthProfilePage = lazy(() => import("@auth/auth-profile/pages/auth-profile
 const AuthInformationPage = lazy(() => import("@auth/auth-info/auth-information-page"));
 const AuthInfoEditProfilePage = lazy(() => import("@auth/auth-info/auth-info-edit-profile/pages/auth-info-edit-profile-page"));
 const ViewingCheckPage = lazy(() => import("@auth/auth-info/auth-info-quick-links/viewing-check/pages/viewing-check-page"));
+const UserRankingPage = lazy(() => import("@auth/auth-info/auth-info-quick-links/user-ranking/pages/user-ranking-page"));
 const AuthInfoDevContactPage = lazy(() => import("@auth/auth-info/auth-info-quick-links/auth-info-dev-contact/pages/auth-info-dev-contact-page"));
 
 // 경기 관련
@@ -74,6 +75,7 @@ const Router = () => {
             <Route path={ROUTES.MY_INFO} element={<AuthInformationPage />} />
             <Route path={ROUTES.EDIT_PROFILE} element={<AuthInfoEditProfilePage />} />
             <Route path={ROUTES.VIEWING_CHECK} element={<ViewingCheckPage />} />
+            <Route path={ROUTES.USER_RANKING} element={<UserRankingPage />} />
 
             {/* 메인 대시보드 */}
             <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />

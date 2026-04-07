@@ -1,26 +1,17 @@
-/**
- * 작성자: KYD
- * 기능:
- * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
- */
 import PlayerDbWrapper from "@players/players-db/components/wrapper/players-db-wrapper";
 
+import { API_ERROR_LOGO } from "@shared/constants/supabse-storage";
+
 const PlayersDbErrorFallback = () => {
-  //SECTION HOOK호출 영역
-
-  //!SECTION HOOK호출 영역
-
-  //SECTION 상태값 영역
-
-  //!SECTION 상태값 영역
-
-  //SECTION 메서드 영역
-
-  //!SECTION 메서드 영역
-
   return (
     <PlayerDbWrapper>
-      <div data-testid="player-db-error-fallback">에러발생</div>
+      <div
+        data-testid="player-db-error-fallback"
+        className="flex w-full flex-col items-center justify-center gap-3 py-6 text-yds-c1m text-primary-100"
+      >
+        <img src={API_ERROR_LOGO} alt="에러" className="h-16 w-16" />
+        선수 정보를 불러오지 못했습니다.
+      </div>
     </PlayerDbWrapper>
   );
 };

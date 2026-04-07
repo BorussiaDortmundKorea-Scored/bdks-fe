@@ -5,7 +5,9 @@
  */
 import { useNavigate } from "react-router-dom";
 
-import { AlertTriangle, ArrowLeft, RefreshCw } from "lucide-react";
+import { ArrowLeft, RefreshCw } from "lucide-react";
+
+import { API_ERROR_LOGO } from "@shared/constants/supabse-storage";
 
 interface AdminPlayerErrorFallbackProps {
   error: Error;
@@ -38,7 +40,7 @@ const AdminPlayerErrorFallback = ({ error, resetErrorBoundary }: AdminPlayerErro
         <div className="flex items-center justify-center flex-1">
           <div className="text-center">
             <div className="flex justify-center mb-4">
-              <AlertTriangle size={64} className="text-red-500" />
+              <img src={API_ERROR_LOGO} alt="에러" className="h-16 w-16" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">데이터를 불러오는 중 오류가 발생했습니다</h2>
             <p className="text-gray-600 mb-6 max-w-md">
