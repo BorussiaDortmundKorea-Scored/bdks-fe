@@ -89,7 +89,7 @@ describe("선수 누적평점 컴포넌트 렌더링 테스트", () => {
     );
 
     renderWithQueryClient(<PlayersDb />);
-    const errorElement = await screen.findByText("에러발생");
+    const errorElement = await screen.findByText("선수 정보를 불러오지 못했습니다.");
     expect(errorElement).toBeInTheDocument();
   });
 

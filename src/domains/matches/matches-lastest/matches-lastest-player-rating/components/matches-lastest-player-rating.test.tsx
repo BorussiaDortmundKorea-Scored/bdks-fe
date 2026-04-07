@@ -90,7 +90,7 @@ describe("실시간 평점 입력 컴포넌트 렌더링 테스트", () => {
 
     renderWithQueryClient(<MatchesLastestPlayerRating />);
     await waitFor(() => {
-      expect(screen.getByText("에러")).toBeInTheDocument();
+      expect(screen.getByText("평점 정보를 불러오지 못했습니다.")).toBeInTheDocument();
     });
   });
 });
