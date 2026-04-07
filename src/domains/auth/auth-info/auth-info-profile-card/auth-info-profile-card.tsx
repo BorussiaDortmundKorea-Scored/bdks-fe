@@ -24,7 +24,6 @@ const AuthInfoProfileCard = () => {
 
   //SECTION 상태값 영역
   const userName = profile?.nickname || user?.email?.split("@")[0] || "회원";
-  const displayPoints = profileSummary ? profileSummary.points : 0;
   const profileImage = profileSummary?.favorite_player_image_url ?? DEFAULT_PROFILE_IMAGE;
   //!SECTION 상태값 영역
 
@@ -36,12 +35,6 @@ const AuthInfoProfileCard = () => {
       <div className="flex flex-col items-center gap-1">
         <h2 className="text-yds-s1 text-white">{userName}</h2>
         <div className="flex items-center gap-2">
-          <p
-            className="text-yds-c1m bg-background-fourth text-primary-100 rounded-full px-3 py-1"
-            data-testid="auth-info-profile-card-points"
-          >
-            보유 포인트 {displayPoints}p
-          </p>
           <button
             className="text-yds-c1m cursor-pointer rounded-full bg-(--color-primary-400) px-3 py-1 text-(--color-secondary-400)"
             onClick={() => {
