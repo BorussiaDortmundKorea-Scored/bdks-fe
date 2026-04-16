@@ -157,7 +157,7 @@ describe("선수 누적평점 DB 컴포넌트 기능 테스트", () => {
     mockAnonymousUser();
     await renderAndWaitForLoad(<PlayersDb />);
 
-    const scrollContainer = screen.getByRole("list");
+    const scrollContainer = screen.getByTestId("scroll-container");
 
     fireEvent.scroll(scrollContainer, {
       target: { scrollLeft: 100 },

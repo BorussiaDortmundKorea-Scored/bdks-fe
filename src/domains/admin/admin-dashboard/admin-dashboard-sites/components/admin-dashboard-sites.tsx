@@ -4,7 +4,7 @@
  * 프로세스 설명: SITE_LINK_DATA 기준으로 한 줄 배치, internalPath는 내부 이동, link는 외부 링크. 가로 넘침 시 휠로 가로 스크롤
  */
 import { useNavigate } from "react-router-dom";
-import ScrollContainer from "react-indiana-drag-scroll";
+import { HorizonDragScroll } from "@youngduck/yd-ui/HorizonDragScroll";
 
 import { SITE_LINK_DATA } from "../constants/site-link-data";
 import AdminDashboardSitesWrapper from "./wrapper/admin-dashboard-sites-wrapper";
@@ -17,12 +17,7 @@ const AdminDashboardSites = () => {
 
   return (
     <AdminDashboardSitesWrapper>
-      <ScrollContainer
-        horizontal
-        vertical={false}
-        hideScrollbars
-        className="flex w-full flex-row items-center gap-4 select-none"
-      >
+      <HorizonDragScroll className="w-full items-center gap-4">
         {SITE_LINK_DATA.map((item) => {
           const isInternal = "internalPath" in item && item.internalPath;
           if (isInternal) {
@@ -53,7 +48,7 @@ const AdminDashboardSites = () => {
             </a>
           );
         })}
-      </ScrollContainer>
+      </HorizonDragScroll>
     </AdminDashboardSitesWrapper>
   );
 };

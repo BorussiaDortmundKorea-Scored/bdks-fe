@@ -4,7 +4,8 @@
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
 import { useNavigate } from "react-router-dom";
-import ScrollContainer from "react-indiana-drag-scroll";
+
+import { HorizonDragScroll } from "@youngduck/yd-ui/HorizonDragScroll";
 
 import { useAuth } from "@auth/contexts/AuthContext";
 
@@ -31,20 +32,18 @@ const PlayersDb = () => {
   return (
     <PlayersDbWrapper>
       {/* 가로 스크롤 컨테이너 */}
-      <ScrollContainer
-        component={"ul"}
-        horizontal
-        vertical={false}
-        hideScrollbars
-        className={`flex w-full flex-row gap-[8px] select-none`}
-      >
+      <HorizonDragScroll className="w-full gap-1" data-testid="scroll-container">
         {PlayersDbWithMyRating.map((item) => (
           <li
             key={item.id}
             onClick={() => handlePlayerClick(item.id)}
             className="flex w-[105px] shrink-0 flex-col items-center gap-[16px] hover:cursor-pointer"
           >
-            <img src={item.head_profile_image_url ?? undefined} alt={item.korean_name ?? undefined} className="h-[80px] w-[80px] object-cover" />
+            <img
+              src={item.head_profile_image_url ?? undefined}
+              alt={item.korean_name ?? undefined}
+              className="h-[80px] w-[80px] object-cover"
+            />
             <div className="flex flex-col items-center gap-[2px]">
               <div className="text-sm text-white">{item.korean_name}</div>
               <div className="text-primary-100 text-xs">
@@ -59,7 +58,7 @@ const PlayersDb = () => {
             </div>
           </li>
         ))}
-      </ScrollContainer>
+      </HorizonDragScroll>
     </PlayersDbWrapper>
   );
 };

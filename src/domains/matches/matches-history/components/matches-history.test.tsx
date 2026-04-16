@@ -54,7 +54,7 @@ describe("최근 경기 컴포넌트 기능 테스트", () => {
       expect(screen.queryByTestId("matches-history-skeleton")).not.toBeInTheDocument();
     });
 
-    const scrollContainer = screen.getByRole("list");
+    const scrollContainer = screen.getByTestId("scroll-container");
 
     fireEvent.scroll(scrollContainer, {
       target: { scrollLeft: 100 },
