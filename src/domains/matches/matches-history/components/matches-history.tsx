@@ -4,10 +4,10 @@
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
 import { useNavigate } from "react-router-dom";
-import ScrollContainer from "react-indiana-drag-scroll";
 
 import { useGetAllFinishMatchLists } from "../api/react-query-api/use-get-all-finish-match-lists";
 import MatchesHistoryWrapper from "./wrapper/matches-history-wrapper";
+import { HorizonDragScroll } from "@youngduck/yd-ui/HorizonDragScroll";
 
 import { createMatchRatingsPath } from "@shared/constants/routes";
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
@@ -31,13 +31,7 @@ const MatchesHistory = () => {
   return (
     <MatchesHistoryWrapper>
       {/* 가로 스크롤 컨테이너 */}
-      <ScrollContainer
-        component={"ul"}
-        horizontal
-        vertical={false}
-        hideScrollbars
-        className={`flex w-full flex-row gap-5 select-none`}
-      >
+      <HorizonDragScroll className="w-full gap-5" data-testid="scroll-container">
         {finishMatchLists.map((match) => (
           <li
             key={match.id}
@@ -55,7 +49,7 @@ const MatchesHistory = () => {
             </div>
           </li>
         ))}
-      </ScrollContainer>
+      </HorizonDragScroll>
     </MatchesHistoryWrapper>
   );
 };
