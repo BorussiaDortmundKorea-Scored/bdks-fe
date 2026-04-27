@@ -3,6 +3,23 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.8.1] - 2026-04-24
+
+**Branch**: `bkds-v1.8.1-폰트셀프호스팅및FOUT개선`
+
+### 추가
+
+### 변경
+- perf: 신라문화체 CDN호출 에서 셀프호스팅변경및WOFF2확장자로교체
+- perf: wanted-sans-import제거
+
+### 수정
+- fix: quick-links-button들width크기조정
+
+### 제거
+
+---
+
 ## [1.7.2] - 2026-04-16
 
 **Branch**: `bkds-v1.7.2-가로스크롤기능yd-ui컴포넌트로교체`
@@ -10,9 +27,11 @@
 > v1.6.13에서 임시로 라이브러리로 사용하던 기능 자체 기능으로 구축하여 적용
 
 ### 추가
+
 - feat: 가로스크롤기능yd-ui의 HorizonDragScroll컴포넌트로일괄교체
 
 ### 변경
+
 - build: yd-ui라이브러리v0.16.1업데이트
 
 ### 수정
