@@ -21,7 +21,11 @@ const BackButton = () => {
 
   //!SECTION 메서드 영역
 
-  return <ArrowLeft onClick={() => navigate(-1)} size={24} className="text-primary-100 cursor-pointer" />;
+  return (
+    <button onClick={() => navigate(-1)} aria-label="뒤로가기" className="flex cursor-pointer">
+      <ArrowLeft size={24} className="text-primary-100" />
+    </button>
+  );
 };
 
 export default BackButton;
