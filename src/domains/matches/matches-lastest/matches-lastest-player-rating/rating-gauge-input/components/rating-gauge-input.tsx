@@ -64,6 +64,26 @@ const RatingGaugeInput = ({ value: externalValue, onChangeEnd, disabled }: Ratin
 
   const { isDragging, handleMouseDown, handleTouchStart } = useDragGesture(handleDragMove, handleDragEnd, disabled);
 
+  // 키보드 조작 (ArrowLeft/Right로 STEP 단위 조절)
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (disabled) return;
+
+      let newValue = externalValue;
+      if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+        newValue = Math.min(externalValue + RATING_STEP, RATING_MAX);
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+        newValue = Math.max(externalValue - RATING_STEP, RATING_MIN);
+      } else {
+        return;
+      }
+
+      e.preventDefault();
+      onChangeEnd(newValue);
+    },
+    [disabled, externalValue, onChangeEnd],
+  );
+
   // 클릭 시 즉시 값 변경
   const handleGaugeClick = useCallback(
     (e: React.MouseEvent) => {
@@ -90,10 +110,18 @@ const RatingGaugeInput = ({ value: externalValue, onChangeEnd, disabled }: Ratin
       <div className="py-2">
         <div
           ref={gaugeRef}
+          role="slider"
+          aria-label="평점 입력"
+          aria-valuemin={RATING_MIN}
+          aria-valuemax={RATING_MAX}
+          aria-valuenow={displayValue}
+          aria-valuetext={`${displayValue.toFixed(1)}점`}
+          tabIndex={disabled ? -1 : 0}
           className={`relative h-2 w-full rounded-full bg-gray-600 transition-opacity select-none ${
             disabled ? "cursor-not-allowed opacity-50" : isDragging ? "cursor-grabbing" : "cursor-grab"
           }`}
           onClick={handleGaugeClick}
+          onKeyDown={handleKeyDown}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
         >
