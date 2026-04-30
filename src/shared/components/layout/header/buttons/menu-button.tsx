@@ -24,24 +24,27 @@ const MenuButton = () => {
 
   return (
     <>
-      <Menu
-        size={24}
-        className="text-primary-100 cursor-pointer"
-        aria-label="메뉴"
+      <button
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-      />
+        aria-label="메뉴"
+        aria-expanded={isMenuOpen}
+        className="flex cursor-pointer"
+      >
+        <Menu size={24} className="text-primary-100" />
+      </button>
       {isMenuOpen && (
         <div className="bg-background-primary fixed top-15 right-0 left-0 z-10 h-auto w-full px-5 py-5 text-white">
           <ul className="flex flex-col gap-4">
             {items.map((item) => {
               const Icon = item.icon;
               return (
-                <li
-                  key={item.id}
-                  className="flex cursor-pointer items-center gap-2"
-                  onClick={() => handleItemClick(item.onClick)}
-                >
-                  <Icon size={24} className="text-primary-100" /> {item.label}
+                <li key={item.id}>
+                  <button
+                    className="flex w-full cursor-pointer items-center gap-2"
+                    onClick={() => handleItemClick(item.onClick)}
+                  >
+                    <Icon size={24} className="text-primary-100" /> {item.label}
+                  </button>
                 </li>
               );
             })}

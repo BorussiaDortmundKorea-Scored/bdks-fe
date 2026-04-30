@@ -1,7 +1,7 @@
 {
   "name": "bdks-fe",
   "private": true,
-  "version": "1.8.1",
+  "version": "1.8.2",
   "type": "module",
   "scripts": {
     "dev:prod": "vite --mode prod --host",
@@ -33,7 +33,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
-    "@youngduck/yd-ui": "^0.16.1",
+    "@youngduck/yd-ui": "^0.17.1",
     "chart.js": "^4.5.1",
     "gsap": "^3.13.0",
     "lint-staged": "^16.4.0",

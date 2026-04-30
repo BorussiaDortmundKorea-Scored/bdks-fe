@@ -46,6 +46,13 @@ body {
   font-family: var(--font-yds-wanted);
 }
 
+/* 포커스 아웃라인 통일 (키보드 탐색 시만 표시) */
+:focus-visible {
+  outline: 2px solid var(--color-primary-100);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 @layer components {
   .bdks-container {
     @apply relative mx-auto flex h-dvh w-[clamp(320px,100vw,450px)] flex-col items-center justify-start px-4;

@@ -3,7 +3,7 @@
  * 기능: 선수 DB 컴포넌트 - 가로 스크롤 형태의 선수 카드 목록
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { HorizonDragScroll } from "@youngduck/yd-ui/HorizonDragScroll";
 
@@ -16,29 +16,22 @@ import { createPlayerStatsPath } from "@shared/constants/routes";
 
 const PlayersDb = () => {
   //SECTION HOOK,상태값 영역
-  const navigate = useNavigate();
   const { user } = useAuth();
   const PlayersDbWithMyRating = useGetPlayersDbWithMyRatings(user!.id);
 
   //!SECTION HOOK,상태값 영역
 
   //SECTION 메서드 영역
-  const handlePlayerClick = (playerId: string) => {
-    navigate(createPlayerStatsPath(playerId));
-  };
 
   //!SECTION 메서드 영역
 
   return (
     <PlayersDbWrapper>
       {/* 가로 스크롤 컨테이너 */}
-      <HorizonDragScroll className="w-full gap-1" data-testid="scroll-container">
+      <HorizonDragScroll as="ul" className="w-full gap-1" data-testid="scroll-container">
         {PlayersDbWithMyRating.map((item) => (
-          <li
-            key={item.id}
-            onClick={() => handlePlayerClick(item.id)}
-            className="flex w-[105px] shrink-0 flex-col items-center gap-[16px] hover:cursor-pointer"
-          >
+          <li key={item.id} className="w-[105px] shrink-0">
+            <Link to={createPlayerStatsPath(item.id)} className="flex w-full flex-col items-center gap-[16px] hover:cursor-pointer">
             <img
               src={item.head_profile_image_url ?? undefined}
               alt={item.korean_name ?? undefined}
@@ -56,6 +49,7 @@ const PlayersDb = () => {
                 </span>
               </div>
             </div>
+            </Link>
           </li>
         ))}
       </HorizonDragScroll>

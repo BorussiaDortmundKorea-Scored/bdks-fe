@@ -17,10 +17,6 @@ interface AdminPlayerErrorFallbackProps {
 const AdminPlayerErrorFallback = ({ error, resetErrorBoundary }: AdminPlayerErrorFallbackProps) => {
   const navigate = useNavigate();
 
-  const handleRetry = () => {
-    resetErrorBoundary();
-  };
-
   const handleGoBack = () => {
     navigate(-1);
   };
@@ -29,7 +25,9 @@ const AdminPlayerErrorFallback = ({ error, resetErrorBoundary }: AdminPlayerErro
     <div className="w-full flex flex-col h-full">
       {/* 고정된 헤더 */}
       <header className="w-full flex layout-header-height items-center relative shrink-0 bg-background-primary z-10">
-        <ArrowLeft size={24} className="text-primary-400 cursor-pointer" onClick={handleGoBack} aria-label="뒤로가기" />
+        <button onClick={handleGoBack} aria-label="뒤로가기" className="flex cursor-pointer">
+          <ArrowLeft size={24} className="text-primary-400" />
+        </button>
         <h1 className="text-primary-400 font-shilla-culture absolute left-1/2 -translate-x-1/2 text-2xl font-bold">
           선수 관리
         </h1>
@@ -48,7 +46,7 @@ const AdminPlayerErrorFallback = ({ error, resetErrorBoundary }: AdminPlayerErro
             </p>
             <div className="flex gap-3 justify-center">
               <button
-                onClick={handleRetry}
+                onClick={resetErrorBoundary}
                 className="flex items-center gap-2 px-4 py-2 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors"
               >
                 <RefreshCw size={16} />
