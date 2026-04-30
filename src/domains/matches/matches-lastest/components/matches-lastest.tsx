@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useGetLatestMatchDatas } from "../api/react-query-api/use-get-lastest-match-datas";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
@@ -127,21 +127,24 @@ const PlayerCard = ({
   player: IMatchesLastestPlayer;
   information: IMatchesLastestInformation;
 }) => {
-  const navigate = useNavigate();
   const { toast } = useOverlay();
 
-  const handleClick = () => {
-    if (player.lineup_type === "BENCH" && player.substitution_status !== "SUBSTITUTED_IN") {
+  const isUnplayedPlayer = player.lineup_type === "BENCH" && player.substitution_status !== "SUBSTITUTED_IN";
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isUnplayedPlayer) {
+      e.preventDefault();
       toast({ content: `미출전 선수는 평점을 입력할 수 없어요` });
-      return;
     }
-    navigate(createMatchPlayerRatingsPath(information.match_id, player.player_id));
   };
 
   return (
-    <div
+    <Link
+      to={createMatchPlayerRatingsPath(information.match_id, player.player_id)}
       className="xs:w-[52px] xs:h-[52px] relative shrink-0 cursor-pointer sm:h-[60px] sm:w-[60px] md:h-[66px] md:w-[66px]"
       onClick={handleClick}
+      aria-disabled={isUnplayedPlayer}
+      aria-label={`${player.player_name} 평점 입력`}
     >
       {/* 선수 이미지 컨테이너 */}
       <div className="border-primary-400 relative h-full w-full overflow-hidden rounded-full border-2 shadow-lg">
@@ -156,6 +159,6 @@ const PlayerCard = ({
       <div className="border-primary-400 absolute -right-1 -bottom-1 flex h-7 w-7 items-center justify-center rounded-full border-2 bg-black shadow-lg">
         <span className="text-xs font-bold text-white transition-all duration-300 ease-out">{player.avg_rating}</span>
       </div>
-    </div>
+    </Link>
   );
 };
