@@ -3,6 +3,32 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.8.2] - 2026-04-29
+
+**Branch**: `bkds-v1.8.2-접근성개선`
+
+> yd-ui라이브러리v0.17.1내용:ui접근성패치
+
+### 추가
+
+- feat: focus공통css등록
+
+### 변경
+
+- build: yd-ui라이브러리v0.17.1업데이트
+
+- refactor: onClick-navigate조합대신Link로접근성개선
+- refactor: 평점입력기능키보드로단위조절제공
+- refactor: svg대신button에onclick위임하여접근성개선
+
+### 수정
+
+- fix: svg에이벤트연결한거를button태그로래핑키보드접근성개선
+
+### 제거
+
+---
+
 ## [1.8.1] - 2026-04-24
 
 **Branch**: `bkds-v1.8.1-폰트셀프호스팅및FOUT개선`
@@ -10,10 +36,12 @@
 ### 추가
 
 ### 변경
+
 - perf: 신라문화체 CDN호출 에서 셀프호스팅변경및WOFF2확장자로교체
 - perf: wanted-sans-import제거
 
 ### 수정
+
 - fix: quick-links-button들width크기조정
 
 ### 제거
