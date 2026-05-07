@@ -3,6 +3,23 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.8.3] - 2026-05-07
+
+**Branch**: `bkds-v1.8.3-폰트최적화`
+
+### 추가
+
+### 변경
+- perf: 폰트서브셋처리및확장자woff2변경
+
+- docs: v1.8.3작업내용문서
+
+### 수정
+
+### 제거
+
+---
+
 ## [1.8.2] - 2026-04-29
 
 **Branch**: `bkds-v1.8.2-접근성개선`
