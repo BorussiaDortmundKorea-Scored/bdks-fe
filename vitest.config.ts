@@ -22,6 +22,8 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: ["./src/setupTests.js"],
+    // 단위/컴포넌트 테스트만 대상 (Playwright e2e/**는 `pnpm test:e2e`로 별도 실행)
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],

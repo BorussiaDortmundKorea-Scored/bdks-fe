@@ -23,7 +23,10 @@
     "check": "pnpm run lint && pnpm run type-check && pnpm run test && pnpm run build-storybook && pnpm run build:dev",
     "check:quick": "pnpm run lint && pnpm run type-check && pnpm run test",
     "changelog": "node scripts/update-changelog.js",
-    "release": "node scripts/auto-release.js"
+    "release": "node scripts/auto-release.js",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -53,6 +56,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "4.0.1",
     "@eslint/js": "^9.29.0",
+    "@playwright/test": "^1.59.1",
     "@storybook/addon-a11y": "9.0.16",
     "@storybook/addon-docs": "9.0.16",
     "@storybook/addon-onboarding": "9.0.16",
