@@ -3,6 +3,26 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.8.4] - 2026-08-10
+
+**Branch**: `bdks-v1.8.4-대회시즌정규화및드롭다운적용`
+
+> 대회명·시즌 자유입력을 마스터 테이블로 정규화하고 어드민 입력을 드롭다운으로 교체
+
+### 추가
+- feat: 대회 관련 조회 HOOK 추가
+- feat: SUPABASE STORAGE 경로 백업 이원화로 인한 URL 경로변경
+
+### 변경
+- refactor: 대회 관련 정규화한 테이블에 맞게 CRUD 수정 및 드롭다운 컴포넌트적용
+- chore: e2e테스트 playwright라이브러리 설치 및 세팅
+
+### 수정
+
+### 제거
+
+---
+
 ## [1.8.3] - 2026-05-07
 
 **Branch**: `bkds-v1.8.3-폰트최적화`
