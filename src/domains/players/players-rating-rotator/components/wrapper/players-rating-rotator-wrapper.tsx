@@ -4,6 +4,6 @@
  * 프로세스 설명:
  */
 const PlayersRatingRotatorWrapper = ({ children }: { children: React.ReactNode }) => {
-  return <div className="relative w-[clamp(320px,100vw,500px)] overflow-hidden p-4 text-lg text-white">{children}</div>;
+  return <div data-testid="players-rating-rotator" className="relative w-[clamp(320px,100vw,500px)] overflow-hidden p-4 text-lg text-white">{children}</div>;
 };
 export default PlayersRatingRotatorWrapper;
