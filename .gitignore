@@ -36,3 +36,10 @@ pnpm-workspace.yaml
 
 # 번들 분석
 stats.html
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
