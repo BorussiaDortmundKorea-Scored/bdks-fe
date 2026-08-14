@@ -1,24 +1,14 @@
 /**
  * 작성자: KYD
  * 기능: 팀 추가 모달 컴포넌트
- * 프로세스 설명: 팀 추가 폼을 모달로 표시
+ * 프로세스 설명: 팀 추가 폼을 모달로 표시. 국가는 countries 마스터(관리자 국가 관리)에서 로드
  */
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
+import { useGetAllCountriesSuspense } from "@admin/admin-country/api/react-query-api/use-get-all-countries-suspense";
 import { useCreateTeam } from "@admin/admin-team/api/react-query-api/use-create-team";
-
-// 국가 옵션 데이터. 하드코딩중
-const countryOptions = [
-  { label: "독일", value: "독일" },
-  { label: "스페인", value: "스페인" },
-  { label: "이탈리아", value: "이탈리아" },
-  { label: "프랑스", value: "프랑스" },
-  { label: "영국", value: "영국" },
-  { label: "네덜란드", value: "네덜란드" },
-  { label: "포르투갈", value: "포르투갈" },
-];
 
 interface IAdminTeamAddModal {
   onClose: () => void;
@@ -27,12 +17,14 @@ interface IAdminTeamAddModal {
 export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
   //SECTION HOOK호출 영역
   const { mutateAsync: createTeam, isPending: isCreating } = useCreateTeam();
+  const { data: countries } = useGetAllCountriesSuspense();
 
-  const createCountrySelectHook = useSelectBox({
-    options: countryOptions,
-    search: true,
-    defaultValue: "독일",
-  });
+  // SelectBox 규칙: value=표시명, label=실제 id값
+  const countryOptions = useMemo(
+    () => countries.map((country) => ({ label: country.id, value: country.name })),
+    [countries],
+  );
+  const createCountrySelectHook = useSelectBox({ options: countryOptions, search: true });
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
@@ -46,7 +38,7 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
   const handleCreateTeam = async () => {
     await createTeam({
       name: formData.name,
-      country: createCountrySelectHook.value,
+      country_id: createCountrySelectHook.label || null,
       logo_image_url: formData.logo_image_url || undefined,
     });
     handleClose();
@@ -90,7 +82,7 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-yds-b1 text-primary-100">국가</label>
-          <SelectBox size="full" selectBoxHook={createCountrySelectHook} />
+          <SelectBox size="full" selectBoxHook={createCountrySelectHook} label="국가 선택" />
         </div>
       </div>
       <div className="mt-6 flex gap-2">
@@ -110,4 +102,3 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
     </div>
   );
 };
-

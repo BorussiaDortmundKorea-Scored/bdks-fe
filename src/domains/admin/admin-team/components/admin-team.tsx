@@ -98,7 +98,7 @@ const AdminTeam = () => {
                   "-"
                 )}
               </Td>
-              <Td>{team.country || "-"}</Td>
+              <Td>{team.country_name || "-"}</Td>
               <Td>
                 <div className="flex items-center gap-3">
                   <button

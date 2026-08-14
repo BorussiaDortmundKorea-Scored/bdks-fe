@@ -2,7 +2,8 @@ import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
 import { type ITeamEntity } from "@shared/types/entities/team.entity";
 
-export type ITeam = ITeamEntity;
+// 조회 뷰: get_all_teams는 countries 조인으로 country_name을 함께 반환
+export type ITeam = ITeamEntity & { country_name: string | null };
 
 export type ICreateTeamRequest = Pick<ITeamEntity, "name"> &
   Partial<Omit<ITeamEntity, "id" | "name" | "created_at" | "updated_at">>;
@@ -20,7 +21,7 @@ export const getAllTeams = async (): Promise<ApiResponse<ITeam[]>> => {
 export const createTeam = async (team: ICreateTeamRequest): Promise<ApiResponse<ITeam>> => {
   const { data, error } = (await supabase.rpc("insert_team", {
     team_name: team.name,
-    team_country: team.country,
+    team_country_id: team.country_id ?? null,
     team_logo_image_url: team.logo_image_url ?? null,
   })) as { data: ITeam; error: PostgrestError | null };
 
@@ -35,7 +36,7 @@ export const updateTeam = async (team: IUpdateTeamRequest): Promise<ApiResponse<
   const { data, error } = (await supabase.rpc("update_team", {
     p_team_id: team.id,
     p_team_name: team.name,
-    p_team_country: team.country,
+    p_team_country_id: team.country_id ?? null,
     p_team_logo_image_url: team.logo_image_url ?? null,
   })) as { data: ITeam; error: PostgrestError | null };
 
