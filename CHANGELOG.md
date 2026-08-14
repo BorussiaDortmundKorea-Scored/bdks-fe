@@ -3,6 +3,25 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.8.6] - 2026-08-14
+
+**Branch**: `bdks-v1.8.6-팀국가정규화및국가관리`
+
+> 팀 국가를 countries 마스터 테이블로 정규화(FK)하고 어드민 국가 관리 화면 및 드롭다운 연동 추가
+
+### 추가
+- feat: 국가 엔터티 및 CRUD 추가
+- feat: 국가 관리 어드민 화면 라우팅 경로 추가
+
+### 변경
+- refactor: 팀테이블의 국가컬럼을 FK로 정규화 및 드롭다운 연동
+
+### 수정
+
+### 제거
+
+---
+
 ## [1.8.5] - 2026-08-14
 
 **Branch**: `bdks-v1.8.5-선수이적시장기능구현`
