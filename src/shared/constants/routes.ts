@@ -37,6 +37,7 @@ export const ROUTES = {
   ADMIN_MATCH: "/admin/match",
   ADMIN_MATCH_LINEUP: "/admin/match/:matchId/lineup",
   ADMIN_TEAM: "/admin/team",
+  ADMIN_COUNTRY: "/admin/country",
   ADMIN_COMPETITION: "/admin/competition",
   ADMIN_TRANSFER: "/admin/transfer",
 

@@ -52,6 +52,7 @@ const AdminPlayerPage = lazy(() => import("@admin/admin-player/pages/admin-playe
 const AdminMatchPage = lazy(() => import("@admin/admin-match/pages/admin-match-page"));
 const AdminMatchLineupPage = lazy(() => import("@admin/admin-match/admin-match-lineup/pages/admin-match-lineup-page"));
 const AdminTeamPage = lazy(() => import("@admin/admin-team/pages/admin-team-page"));
+const AdminCountryPage = lazy(() => import("@admin/admin-country/pages/admin-country-page"));
 const AdminCompetitionPage = lazy(() => import("@admin/admin-competition/pages/admin-competition-page"));
 const AdminTransferPage = lazy(() => import("@admin/admin-transfer/pages/admin-transfer-page"));
 //!SECTION Lazy Loading 페이지 - 청크 분할
@@ -101,6 +102,7 @@ const Router = () => {
               <Route path={ROUTES.ADMIN_MATCH} element={<AdminMatchPage />} />
               <Route path={ROUTES.ADMIN_MATCH_LINEUP} element={<AdminMatchLineupPage />} />
               <Route path={ROUTES.ADMIN_TEAM} element={<AdminTeamPage />} />
+              <Route path={ROUTES.ADMIN_COUNTRY} element={<AdminCountryPage />} />
               <Route path={ROUTES.ADMIN_COMPETITION} element={<AdminCompetitionPage />} />
               <Route path={ROUTES.ADMIN_TRANSFER} element={<AdminTransferPage />} />
             </Route>
