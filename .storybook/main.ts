@@ -17,7 +17,9 @@ const config: StorybookConfig = {
   },
   env: (config) => ({
     ...config,
-    VITE_SUPABASE_URL: "https://dummy.supabase.co",
+    // 스토리북 표시용: 공개 스토리지 에셋(에러로고·3d아이콘 등)이 실제로 로드되도록 실 URL 사용
+    // (RPC/DB 호출은 MSW로 모킹되므로 실 백엔드에는 접근하지 않음. 공개 버킷 읽기 전용)
+    VITE_SUPABASE_URL: "https://abxgeyabzwzrorecsjcd.supabase.co",
     VITE_SUPABASE_ANON_KEY: "dummy-key",
   }),
   viteFinal: async (config) => {
