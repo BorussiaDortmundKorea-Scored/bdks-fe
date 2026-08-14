@@ -60,6 +60,11 @@ const AuthInfoQuickLinks = () => {
           onClick={() => navigate(ROUTES.USER_RANKING)}
         />
         <AuthInfoQuickLinkButton
+          iconSrc={`${ICON_BASE}/transfer-market.png`}
+          label="선수 이적시장"
+          onClick={() => navigate(ROUTES.TRANSFER_MARKET)}
+        />
+        <AuthInfoQuickLinkButton
           iconSrc={`${ICON_BASE}/tier-maker.png`}
           label="티어메이커"
           onClick={() => toast({ content: "티어메이커 화면은 준비중이에요" })}

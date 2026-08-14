@@ -17,6 +17,7 @@ export const ROUTES = {
   EDIT_PROFILE: "/myInfo/editProfile",
   VIEWING_CHECK: "/myInfo/viewing",
   USER_RANKING: "/myInfo/userRanking",
+  TRANSFER_MARKET: "/myInfo/transferMarket",
   DEV_CONTACT: "/myInfo/devContact",
 
   // 메인
@@ -37,6 +38,7 @@ export const ROUTES = {
   ADMIN_MATCH_LINEUP: "/admin/match/:matchId/lineup",
   ADMIN_TEAM: "/admin/team",
   ADMIN_COMPETITION: "/admin/competition",
+  ADMIN_TRANSFER: "/admin/transfer",
 
   // 카페
   NAVER_CAFE: "https://cafe.naver.com/greendkxc9",

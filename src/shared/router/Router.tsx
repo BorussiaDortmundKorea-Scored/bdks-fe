@@ -33,6 +33,9 @@ const AuthInformationPage = lazy(() => import("@auth/auth-info/auth-information-
 const AuthInfoEditProfilePage = lazy(() => import("@auth/auth-info/auth-info-edit-profile/pages/auth-info-edit-profile-page"));
 const ViewingCheckPage = lazy(() => import("@auth/auth-info/auth-info-quick-links/viewing-check/pages/viewing-check-page"));
 const UserRankingPage = lazy(() => import("@auth/auth-info/auth-info-quick-links/user-ranking/pages/user-ranking-page"));
+const TransferMarketPage = lazy(
+  () => import("@auth/auth-info/auth-info-quick-links/transfer-market/pages/transfer-market-page"),
+);
 const AuthInfoDevContactPage = lazy(() => import("@auth/auth-info/auth-info-quick-links/auth-info-dev-contact/pages/auth-info-dev-contact-page"));
 
 // 경기 관련
@@ -50,6 +53,7 @@ const AdminMatchPage = lazy(() => import("@admin/admin-match/pages/admin-match-p
 const AdminMatchLineupPage = lazy(() => import("@admin/admin-match/admin-match-lineup/pages/admin-match-lineup-page"));
 const AdminTeamPage = lazy(() => import("@admin/admin-team/pages/admin-team-page"));
 const AdminCompetitionPage = lazy(() => import("@admin/admin-competition/pages/admin-competition-page"));
+const AdminTransferPage = lazy(() => import("@admin/admin-transfer/pages/admin-transfer-page"));
 //!SECTION Lazy Loading 페이지 - 청크 분할
 
 const Router = () => {
@@ -76,6 +80,7 @@ const Router = () => {
             <Route path={ROUTES.EDIT_PROFILE} element={<AuthInfoEditProfilePage />} />
             <Route path={ROUTES.VIEWING_CHECK} element={<ViewingCheckPage />} />
             <Route path={ROUTES.USER_RANKING} element={<UserRankingPage />} />
+            <Route path={ROUTES.TRANSFER_MARKET} element={<TransferMarketPage />} />
 
             {/* 메인 대시보드 */}
             <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
@@ -97,6 +102,7 @@ const Router = () => {
               <Route path={ROUTES.ADMIN_MATCH_LINEUP} element={<AdminMatchLineupPage />} />
               <Route path={ROUTES.ADMIN_TEAM} element={<AdminTeamPage />} />
               <Route path={ROUTES.ADMIN_COMPETITION} element={<AdminCompetitionPage />} />
+              <Route path={ROUTES.ADMIN_TRANSFER} element={<AdminTransferPage />} />
             </Route>
           </Route>
 
