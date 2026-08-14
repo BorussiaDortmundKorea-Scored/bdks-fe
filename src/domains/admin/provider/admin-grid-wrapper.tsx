@@ -6,7 +6,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Award, ChartNoAxesCombined, Trophy, Users, Volleyball } from "lucide-react";
+import { ArrowLeftRight, Award, ChartNoAxesCombined, Trophy, Users, Volleyball } from "lucide-react";
 
 import { ROUTES } from "@shared/constants/routes";
 
@@ -20,6 +20,7 @@ const adminMenus = [
   { id: "match", label: "Matches", path: ROUTES.ADMIN_MATCH, icon: Volleyball },
   { id: "team", label: "Teams", path: ROUTES.ADMIN_TEAM, icon: Award },
   { id: "competition", label: "Leagues", path: ROUTES.ADMIN_COMPETITION, icon: Trophy },
+  { id: "transfer", label: "Transfers", path: ROUTES.ADMIN_TRANSFER, icon: ArrowLeftRight },
   { id: "user", label: "Users", path: ROUTES.ADMIN_USER, icon: Users },
 ];
 
