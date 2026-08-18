@@ -7,6 +7,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 import { useAuth } from "@auth/contexts/AuthContext";
 
+import PageLoading from "@shared/components/loading/page-loading";
 import { ROUTES } from "@shared/constants/routes";
 
 const AdminRoute = () => {
@@ -19,11 +20,7 @@ const AdminRoute = () => {
 
   // 프로필이 아직 로드되지 않았을 때 간단한 로딩 처리
   if (!profile) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500" />
-      </div>
-    );
+    return <PageLoading />;
   }
 
   // 관리자 권한이 아닌 경우 대시보드로 리다이렉트

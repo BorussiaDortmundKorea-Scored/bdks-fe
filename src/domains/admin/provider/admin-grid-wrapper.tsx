@@ -6,6 +6,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { HorizonDragScroll } from "@youngduck/yd-ui/HorizonDragScroll";
 import { ArrowLeftRight, Award, ChartNoAxesCombined, Globe, Trophy, Users, Volleyball } from "lucide-react";
 
 import { ROUTES } from "@shared/constants/routes";
@@ -49,15 +50,15 @@ const AdminGridWrapper = ({ children }: IAdminWrapper) => {
               </li>
             ))}
           </ul>
-          <ul className="flex w-full gap-4 md:hidden!">
+          <HorizonDragScroll as="ul" className="w-full gap-4 md:hidden!">
             {adminMenus.map((menu) => (
-              <li key={menu.id}>
-                <Link to={menu.path} className="flex w-full cursor-pointer items-center gap-2">
+              <li key={menu.id} className="shrink-0">
+                <Link to={menu.path} className="flex cursor-pointer items-center gap-2">
                   <menu.icon size={24} className="text-primary-100" />
                 </Link>
               </li>
             ))}
-          </ul>
+          </HorizonDragScroll>
         </nav>
         <div className="bg-background-secondary card-navy-50 rounded-lg p-4 text-white">
           <div className="grid h-full w-full grid-cols-1 gap-4 md:grid-cols-8 md:grid-rows-8">{children}</div>
