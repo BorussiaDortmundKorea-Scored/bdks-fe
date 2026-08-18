@@ -5,6 +5,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@auth/contexts/AuthContext";
 
 import { supabase } from "@shared/api/config/supabaseClient";
+import PageLoading from "@shared/components/loading/page-loading";
 
 const AuthRoute = () => {
   const { user } = useAuth();
@@ -35,11 +36,7 @@ const AuthRoute = () => {
 
   // profile 확인 중일 때는 로딩 표시
   if (hasProfile === null) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
-      </div>
-    );
+    return <PageLoading />;
   }
 
   // profile이 없으면 닉네임 설정 페이지로 리다이렉트

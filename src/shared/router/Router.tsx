@@ -16,6 +16,7 @@ import AuthRoute from "@auth/provider/auth-route";
 
 import DashboardPage from "@dashboard/pages/dashboard-page";
 
+import PageLoading from "@shared/components/loading/page-loading";
 import { ROUTES } from "@shared/constants/routes";
 import PublicRoute from "@shared/provider/public-route";
 
@@ -62,7 +63,7 @@ const Router = () => {
     <BrowserRouter>
       <Ga4PageViewTracker />
       <AuthProvider>
-        <Suspense>
+        <Suspense fallback={<PageLoading />}>
         <Routes>
           {/* 퍼블릭 라우트 - 로그인하지 않은 사용자만 접근 */}
           <Route element={<PublicRoute />}>
