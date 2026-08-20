@@ -5,10 +5,10 @@
  */
 import { useNavigate } from "react-router-dom";
 
-import { Button, Chips } from "@youngduck/yd-ui";
+import { Chips } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
-import { Edit, FolderPlus, Trash2, Users } from "lucide-react";
+import { Edit, ListPlus, Plus, Trash2, Users } from "lucide-react";
 
 import type { IMatch } from "@admin/admin-match/api/admin-match-api";
 import { useDeleteMatch } from "@admin/admin-match/api/react-query-api/use-delete-match";
@@ -73,37 +73,25 @@ const AdminMatch = () => {
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between p-4">
         <h2 className="text-yds-s1 text-primary-100">경기 관리</h2>
-        <div className="md:hidden">
+        <div className="flex items-center gap-1">
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="border-primary-100 text-primary-100 flex h-8 w-8 items-center justify-center rounded-md border"
+            className="text-primary-100 hover:bg-primary-100/20 flex cursor-pointer items-center justify-center rounded-md p-2 transition-colors hover:text-white"
             aria-label="새 경기 추가"
+            title="경기 추가"
           >
-            <FolderPlus size={16} />
+            <Plus size={20} />
           </button>
-        </div>
-        <div className="hidden items-center gap-2 md:flex!">
-          <Button
-            variant="outlined"
-            color="primary"
-            size="md"
-            onClick={handleOpenAddModal}
-            className="flex items-center gap-2"
-            aria-label="새 경기 추가"
-          >
-            경기 추가
-          </Button>
-          <Button
-            variant="fill"
-            color="primary"
-            size="lg"
+          <button
+            type="button"
             onClick={handleOpenBulkAddModal}
-            className="flex items-center gap-2"
+            className="text-primary-100 hover:bg-primary-100/20 flex cursor-pointer items-center justify-center rounded-md p-2 transition-colors hover:text-white"
             aria-label="경기 일괄 추가"
+            title="경기 일괄 추가"
           >
-            경기 일괄 추가
-          </Button>
+            <ListPlus size={20} />
+          </button>
         </div>
       </div>
 
