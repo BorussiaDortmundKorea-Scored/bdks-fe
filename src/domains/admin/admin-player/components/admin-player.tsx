@@ -66,12 +66,14 @@ const AdminPlayer = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[1100px]">
         <ColGroup>
-          <Col className="w-[180px]" />
+          <Col className="w-[160px]" />
           <Col className="w-[120px]" />
           <Col className="w-[80px]" />
           <Col className="w-[120px]" />
+          <Col className="w-[110px]" />
+          <Col className="w-[110px]" />
           <Col className="w-[100px]" />
         </ColGroup>
         <THead>
@@ -80,6 +82,8 @@ const AdminPlayer = () => {
             <Th>이름</Th>
             <Th>등번호</Th>
             <Th>국적</Th>
+            <Th>전신 이미지</Th>
+            <Th>얼굴 이미지</Th>
             <Th>작업</Th>
           </Tr>
         </THead>
@@ -90,6 +94,28 @@ const AdminPlayer = () => {
               <Td>{player.korean_name || "-"}</Td>
               <Td>{player.jersey_number || "-"}</Td>
               <Td>{player.nationality || "-"}</Td>
+              <Td>
+                {player.full_profile_image_url ? (
+                  <img
+                    src={player.full_profile_image_url}
+                    alt={`${player.name} 전신 이미지`}
+                    className="h-24 w-auto object-contain"
+                  />
+                ) : (
+                  "-"
+                )}
+              </Td>
+              <Td>
+                {player.head_profile_image_url ? (
+                  <img
+                    src={player.head_profile_image_url}
+                    alt={`${player.name} 얼굴 이미지`}
+                    className="h-16 w-16 rounded-md object-cover"
+                  />
+                ) : (
+                  "-"
+                )}
+              </Td>
               <Td>
                 <div className="flex items-center gap-3">
                   <button

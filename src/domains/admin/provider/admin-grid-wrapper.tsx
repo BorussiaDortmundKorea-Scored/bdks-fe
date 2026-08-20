@@ -36,8 +36,8 @@ const AdminGridWrapper = ({ children }: IAdminWrapper) => {
               보돌코 <br /> 스코어드
             </Link>
           </h1>
-          <div className="text-yds-s2 hidden text-white md:block">MENU</div>
-          <ul className="hidden w-full flex-col gap-4 md:flex">
+          <div className="text-yds-s2 hidden text-white md:block!">MENU</div>
+          <ul className="hidden w-full flex-col gap-4 md:flex!">
             {adminMenus.map((menu) => (
               <li key={menu.id}>
                 <Link

@@ -5,10 +5,11 @@
  */
 import { useEffect, useState } from "react";
 
-import { Button, Input } from "@youngduck/yd-ui";
+import { Button, Input, NumberInput } from "@youngduck/yd-ui";
 
 import type { IPlayer } from "@admin/admin-player/api/admin-player-api";
 import { useUpdatePlayer } from "@admin/admin-player/api/react-query-api/use-update-player";
+import { buildPlayerImageUrls, extractPlayerImageName } from "@admin/admin-player/utils/player-image-utils";
 
 interface IAdminPlayerEditModal {
   player: IPlayer;
@@ -26,8 +27,7 @@ export const AdminPlayerEditModal = ({ player, onClose }: IAdminPlayerEditModal)
     korean_name: "",
     jersey_number: "",
     nationality: "",
-    full_profile_image_url: "",
-    head_profile_image_url: "",
+    image_name: "",
   });
   //!SECTION 상태값 영역
 
@@ -38,20 +38,20 @@ export const AdminPlayerEditModal = ({ player, onClose }: IAdminPlayerEditModal)
       korean_name: player.korean_name || "",
       jersey_number: player.jersey_number?.toString() || "",
       nationality: player.nationality || "",
-      full_profile_image_url: player.full_profile_image_url || "",
-      head_profile_image_url: player.head_profile_image_url || "",
+      image_name: extractPlayerImageName(player.full_profile_image_url || player.head_profile_image_url),
     });
   }, [player]);
 
   const handleUpdatePlayer = async () => {
+    const { full_profile_image_url, head_profile_image_url } = buildPlayerImageUrls(formData.image_name);
     await updatePlayer({
       id: player.id,
       name: formData.name || undefined,
       korean_name: formData.korean_name || undefined,
       jersey_number: formData.jersey_number ? parseInt(formData.jersey_number) : undefined,
       nationality: formData.nationality || undefined,
-      full_profile_image_url: formData.full_profile_image_url || undefined,
-      head_profile_image_url: formData.head_profile_image_url || undefined,
+      full_profile_image_url: full_profile_image_url || undefined,
+      head_profile_image_url: head_profile_image_url || undefined,
     });
     handleClose();
   };
@@ -62,8 +62,7 @@ export const AdminPlayerEditModal = ({ player, onClose }: IAdminPlayerEditModal)
       korean_name: "",
       jersey_number: "",
       nationality: "",
-      full_profile_image_url: "",
-      head_profile_image_url: "",
+      image_name: "",
     });
     onClose();
   };
@@ -99,15 +98,14 @@ export const AdminPlayerEditModal = ({ player, onClose }: IAdminPlayerEditModal)
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-yds-b1 text-primary-100">등번호</label>
-          <Input
-            type="number"
+          <NumberInput
             value={formData.jersey_number}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({ ...formData, jersey_number: e.target.value })
-            }
+            onValueChange={(value: string) => setFormData({ ...formData, jersey_number: value })}
             placeholder="등번호를 입력하세요"
             size="full"
-            color="primary-100"
+            min={0}
+            max={99}
+            align="left"
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -124,27 +122,14 @@ export const AdminPlayerEditModal = ({ player, onClose }: IAdminPlayerEditModal)
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-yds-b1 text-primary-100">전신 프로필 이미지 URL</label>
+          <label className="text-yds-b1 text-primary-100">이미지명</label>
           <Input
-            type="url"
-            value={formData.full_profile_image_url}
+            type="text"
+            value={formData.image_name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({ ...formData, full_profile_image_url: e.target.value })
+              setFormData({ ...formData, image_name: e.target.value })
             }
-            placeholder="전신 프로필 이미지 URL을 입력하세요"
-            size="full"
-            color="primary-100"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-yds-b1 text-primary-100">얼굴 프로필 이미지 URL</label>
-          <Input
-            type="url"
-            value={formData.head_profile_image_url}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({ ...formData, head_profile_image_url: e.target.value })
-            }
-            placeholder="얼굴 프로필 이미지 URL을 입력하세요"
+            placeholder="예: meyer (확장자 생략 시 .png)"
             size="full"
             color="primary-100"
           />

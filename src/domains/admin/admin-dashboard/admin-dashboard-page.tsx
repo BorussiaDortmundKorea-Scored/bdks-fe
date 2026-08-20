@@ -9,6 +9,12 @@ import AdminDashboardDeletedUsersSkeleton from "./admin-dashboard-deleted-users/
 import AdminDashboardMatchStats from "./admin-dashboard-match-stats/components/admin-dashboard-match-stats";
 import AdminDashboardMatchStatsError from "./admin-dashboard-match-stats/components/error/admin-dashboard-match-stats-error";
 import AdminDashboardMatchStatsSkeleton from "./admin-dashboard-match-stats/components/skeleton/admin-dashboard-match-stats-skeleton";
+import AdminDashboardMatchCoverage from "./admin-dashboard-match-coverage/components/admin-dashboard-match-coverage";
+import AdminDashboardMatchCoverageError from "./admin-dashboard-match-coverage/components/error/admin-dashboard-match-coverage-error";
+import AdminDashboardMatchCoverageSkeleton from "./admin-dashboard-match-coverage/components/skeleton/admin-dashboard-match-coverage-skeleton";
+import AdminDashboardRatingParticipation from "./admin-dashboard-rating-participation/components/admin-dashboard-rating-participation";
+import AdminDashboardRatingParticipationError from "./admin-dashboard-rating-participation/components/error/admin-dashboard-rating-participation-error";
+import AdminDashboardRatingParticipationSkeleton from "./admin-dashboard-rating-participation/components/skeleton/admin-dashboard-rating-participation-skeleton";
 import AdminDashboardSites from "./admin-dashboard-sites/components/admin-dashboard-sites";
 import AdminDashboardUserCountError from "./admin-dashboard-user-count/components/error/admin-dashboard-user-count-error";
 import AdminDashboardUserCountSkeleton from "./admin-dashboard-user-count/components/skeleton/admin-dashboard-user-count-skeleton";
@@ -40,8 +46,20 @@ const AdminDashboardPage = () => {
       >
         <AdminDashboardUserLoginType />
       </ReactQueryBoundary>
+      <ReactQueryBoundary
+        skeleton={<AdminDashboardRatingParticipationSkeleton />}
+        errorFallback={AdminDashboardRatingParticipationError}
+      >
+        <AdminDashboardRatingParticipation />
+      </ReactQueryBoundary>
       <ReactQueryBoundary skeleton={<AdminDashboardMatchStatsSkeleton />} errorFallback={AdminDashboardMatchStatsError}>
         <AdminDashboardMatchStats />
+      </ReactQueryBoundary>
+      <ReactQueryBoundary
+        skeleton={<AdminDashboardMatchCoverageSkeleton />}
+        errorFallback={AdminDashboardMatchCoverageError}
+      >
+        <AdminDashboardMatchCoverage />
       </ReactQueryBoundary>
     </AdminGridWrapper>
   );

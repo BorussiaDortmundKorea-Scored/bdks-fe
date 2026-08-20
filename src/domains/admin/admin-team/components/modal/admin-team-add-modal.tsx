@@ -9,6 +9,7 @@ import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
 import { useGetAllCountriesSuspense } from "@admin/admin-country/api/react-query-api/use-get-all-countries-suspense";
 import { useCreateTeam } from "@admin/admin-team/api/react-query-api/use-create-team";
+import { buildTeamLogoUrl } from "@admin/admin-team/utils/team-logo-utils";
 
 interface IAdminTeamAddModal {
   onClose: () => void;
@@ -30,7 +31,7 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
   //SECTION 상태값 영역
   const [formData, setFormData] = useState({
     name: "",
-    logo_image_url: "",
+    image_name: "",
   });
   //!SECTION 상태값 영역
 
@@ -39,13 +40,13 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
     await createTeam({
       name: formData.name,
       country_id: createCountrySelectHook.label || null,
-      logo_image_url: formData.logo_image_url || undefined,
+      logo_image_url: buildTeamLogoUrl(formData.image_name) || undefined,
     });
     handleClose();
   };
 
   const handleClose = () => {
-    setFormData({ name: "", logo_image_url: "" });
+    setFormData({ name: "", image_name: "" });
     onClose();
   };
   //!SECTION 메서드 영역
@@ -68,14 +69,14 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-yds-b1 text-primary-100">로고 이미지 URL</label>
+          <label className="text-yds-b1 text-primary-100">로고 이미지명</label>
           <Input
             type="text"
-            value={formData.logo_image_url}
+            value={formData.image_name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({ ...formData, logo_image_url: e.target.value })
+              setFormData({ ...formData, image_name: e.target.value })
             }
-            placeholder="예: https://... 또는 /storage/path"
+            placeholder="예: barcelona (확장자 생략 시 .png)"
             size="full"
             color="primary-100"
           />

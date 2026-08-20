@@ -83,7 +83,7 @@ const AdminMatch = () => {
             <FolderPlus size={16} />
           </button>
         </div>
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 md:flex!">
           <Button
             variant="outlined"
             color="primary"
@@ -123,7 +123,7 @@ const AdminMatch = () => {
         <THead>
           <Tr>
             <Th>경기일</Th>
-            <Th>시작 시간 (한국기준)</Th>
+            <Th>경기시간(KST)</Th>
             <Th>대회</Th>
             <Th>상대팀</Th>
             <Th>홈/어웨이</Th>
@@ -137,7 +137,7 @@ const AdminMatch = () => {
           {matches.map((match) => (
             <Tr key={match.id}>
               <Td>{match.match_date}</Td>
-              <Td>{match.match_start_time ? convertUTCToLocal(match.match_start_time).replace("T", " ") : "-"}</Td>
+              <Td>{match.match_start_time ? convertUTCToLocal(match.match_start_time).split("T")[1] : "-"}</Td>
               <Td>{match.competition_name}</Td>
               <Td>{match.opponent_team_name}</Td>
               <Td>{match.home_away === "HOME" ? "홈" : "어웨이"}</Td>
@@ -146,12 +146,10 @@ const AdminMatch = () => {
               </Td>
               <Td>{match.round_name}</Td>
               <Td>
-                {match.is_live ? (
+                {match.is_live && (
                   <Chips variant="fill" color="primary">
                     라이브
                   </Chips>
-                ) : (
-                  "-"
                 )}
               </Td>
               <Td>

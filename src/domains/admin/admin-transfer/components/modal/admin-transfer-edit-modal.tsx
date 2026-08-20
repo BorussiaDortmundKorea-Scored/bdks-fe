@@ -5,7 +5,7 @@
  */
 import { useMemo, useState } from "react";
 
-import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { Button, DatePicker, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
 import { useGetAllPlayersSuspense } from "@admin/admin-player/api/react-query-api/use-get-all-players-suspense";
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
@@ -97,23 +97,17 @@ export const AdminTransferEditModal = ({ transfer, onClose }: IAdminTransferEdit
         </div>
         <div>
           <label className="text-yds-b1 text-primary-100">이적일</label>
-          <Input
-            type="date"
-            value={transferDate}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTransferDate(e.target.value)}
-            size="full"
-            color="primary-100"
-          />
+          <DatePicker value={transferDate} onValueChange={setTransferDate} size="full" placeholder="이적일 선택" />
         </div>
         <div>
           <label className="text-yds-b1 text-primary-100">이적금액 (유로, 순수 금액)</label>
-          <Input
-            type="number"
+          <NumberInput
             value={euroFee}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEuroFee(e.target.value)}
+            onValueChange={setEuroFee}
             placeholder="예: 30000000 (= 30M €)"
             size="full"
-            color="primary-100"
+            min={0}
+            suffix="€"
           />
         </div>
       </div>

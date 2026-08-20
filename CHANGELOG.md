@@ -3,6 +3,25 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.8.8] - 2026-08-20
+
+**Branch**: `bdks-v1.8.8-ydui업그레이드및관리자편의성개선`
+
+### 추가
+- feat: 유저 평점 참여율, 경기별 참여율 대시보드 위젯 추가
+
+### 변경
+- build: yd-ui 0.21.2 라이브러리 업데이트
+- refactor: 관리자기능 입력 필드를 DatePicker/NumberInput으로 교체
+- refactor: supabase 이미지경로입력방식 유틸함수적용하여 파일명만입력하도록 편리하게수정
+- refactor: supabase 팀이미지경로입력방식 유틸함수적용
+
+### 수정
+- fix: 경기 테이블 표시 워딩 수정
+
+### 제거
+
+---
 ## [1.8.7] - 2026-08-18
 
 **Branch**: `bdks-v1.8.7-로딩컴포넌트단일화및404페이지리디자인`
