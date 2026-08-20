@@ -5,7 +5,7 @@
  */
 import { useMemo, useState } from "react";
 
-import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { Button, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
@@ -83,16 +83,13 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
       </div>
       <div>
         <label className="text-yds-b1 text-primary-100">교체 시간 (분)</label>
-        <Input
-          type="number"
+        <NumberInput
           min={1}
           max={120}
-          value={substitutionMinuteInput}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setSubstitutionMinuteInput(e.target.value === "" ? "" : parseInt(e.target.value) || "")
-          }
+          value={substitutionMinuteInput === "" ? "" : String(substitutionMinuteInput)}
+          onValueChange={(value: string) => setSubstitutionMinuteInput(value === "" ? "" : Number(value))}
           size="full"
-          color="primary-100"
+          align="left"
           placeholder="예: 67"
         />
       </div>

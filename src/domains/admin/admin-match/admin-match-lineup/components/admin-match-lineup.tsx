@@ -127,7 +127,7 @@ const AdminMatchLineup = () => {
           </button>
         </div>
         {/* 데스크탑: 스타팅 명단등록 + 선수 추가 버튼 노출 */}
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden md:flex! items-center gap-2">
           <Button
             variant="outlined"
             color="primary"

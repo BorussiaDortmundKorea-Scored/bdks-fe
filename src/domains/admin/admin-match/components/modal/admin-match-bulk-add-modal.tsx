@@ -5,7 +5,7 @@
  */
 import { useCallback, useRef, useState } from "react";
 
-import { Button, Input } from "@youngduck/yd-ui";
+import { Button, NumberInput } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense";
@@ -144,14 +144,13 @@ export const AdminMatchBulkAddModal = ({ onClose }: IAdminMatchBulkAddModalProps
 
       <div className="flex items-center gap-2">
         <span className="text-yds-b2 text-primary-100">경기 개수</span>
-        <Input
-          type="number"
+        <NumberInput
           min={1}
           max={MAX_MATCH_COUNT}
-          value={matchCount}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleChangeMatchCount(event.target.value)}
+          value={String(matchCount)}
+          onValueChange={handleChangeMatchCount}
           size="sm"
-          color="primary-100"
+          align="left"
           className="w-24"
         />
         <span className="text-yds-b3 text-white">(최대 {MAX_MATCH_COUNT}경기까지 한 번에 등록할 수 있어요)</span>

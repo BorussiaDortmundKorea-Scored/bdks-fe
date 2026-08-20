@@ -5,7 +5,7 @@
  */
 import { useEffect, useMemo, useState } from "react";
 
-import { Button, CheckBox, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { Button, CheckBox, Input, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
 import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense";
 import type { IMatch } from "@admin/admin-match/api/admin-match-api";
@@ -171,28 +171,22 @@ export const AdminMatchEditModal = ({ match, onClose }: IAdminMatchEditModal) =>
         <div className="grid grid-cols-2 gap-2">
           <div>
             <label className="text-yds-b1 text-primary-100">우리 점수</label>
-            <Input
-              type="number"
+            <NumberInput
               min={0}
-              value={formData.our_score}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFormData({ ...formData, our_score: parseInt(e.target.value) || 0 })
-              }
+              value={String(formData.our_score)}
+              onValueChange={(value: string) => setFormData({ ...formData, our_score: value === "" ? 0 : Number(value) })}
               size="full"
-              color="primary-100"
+              align="left"
             />
           </div>
           <div>
             <label className="text-yds-b1 text-primary-100">상대 점수</label>
-            <Input
-              type="number"
+            <NumberInput
               min={0}
-              value={formData.opponent_score}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFormData({ ...formData, opponent_score: parseInt(e.target.value) || 0 })
-              }
+              value={String(formData.opponent_score)}
+              onValueChange={(value: string) => setFormData({ ...formData, opponent_score: value === "" ? 0 : Number(value) })}
               size="full"
-              color="primary-100"
+              align="left"
             />
           </div>
         </div>

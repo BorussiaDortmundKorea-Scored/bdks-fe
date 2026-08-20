@@ -5,7 +5,7 @@
  */
 import { useMemo, useState } from "react";
 
-import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { Button, CheckBox, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
 import { useCreateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-create-match-lineup";
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
@@ -136,15 +136,12 @@ export const AdminMatchLineupAddModal = ({ matchId, onClose }: IAdminMatchLineup
           <label className="text-yds-b1 text-primary-100">라인업 타입 *</label>
           <SelectBox size="full" selectBoxHook={createLineupTypeHook} />
         </div>
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            checked={formData.is_captain}
-            onChange={(e) => setFormData({ ...formData, is_captain: e.target.checked })}
-            className="mr-2"
-          />
-          <label className="text-primary-100 text-sm">주장</label>
-        </div>
+        <CheckBox
+          checked={formData.is_captain}
+          onCheckedChange={(checked) => setFormData({ ...formData, is_captain: checked })}
+          value="주장"
+          shape="square"
+        />
         <div>
           <label className="text-yds-b1 text-primary-100">교체 상태</label>
           <SelectBox size="full" selectBoxHook={createSubStatusHook} />
@@ -152,16 +149,15 @@ export const AdminMatchLineupAddModal = ({ matchId, onClose }: IAdminMatchLineup
         {(createSubStatusHook.label === "SUBSTITUTED_IN" || createSubStatusHook.label === "SUBSTITUTED_OUT") && (
           <div>
             <label className="text-yds-b1 text-primary-100">교체 시간 (분)</label>
-            <Input
-              type="number"
+            <NumberInput
               min={1}
               max={120}
-              value={formData.substitution_minute || ""}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFormData({ ...formData, substitution_minute: parseInt(e.target.value) || null })
+              value={formData.substitution_minute != null ? String(formData.substitution_minute) : ""}
+              onValueChange={(value: string) =>
+                setFormData({ ...formData, substitution_minute: value === "" ? null : Number(value) })
               }
               size="full"
-              color="primary-100"
+              align="left"
               placeholder="예: 67"
             />
             <div className="mt-3">
@@ -173,70 +169,57 @@ export const AdminMatchLineupAddModal = ({ matchId, onClose }: IAdminMatchLineup
         <div className="grid grid-cols-2 gap-2">
           <div>
             <label className="text-yds-b1 text-primary-100">골</label>
-            <Input
-              type="number"
+            <NumberInput
               min={0}
-              value={formData.goals}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFormData({ ...formData, goals: parseInt(e.target.value) || 0 })
-              }
+              value={String(formData.goals)}
+              onValueChange={(value: string) => setFormData({ ...formData, goals: value === "" ? 0 : Number(value) })}
               size="full"
-              color="primary-100"
+              align="left"
               placeholder="0"
             />
           </div>
           <div>
             <label className="text-yds-b1 text-primary-100">어시스트</label>
-            <Input
-              type="number"
+            <NumberInput
               min={0}
-              value={formData.assists}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFormData({ ...formData, assists: parseInt(e.target.value) || 0 })
-              }
+              value={String(formData.assists)}
+              onValueChange={(value: string) => setFormData({ ...formData, assists: value === "" ? 0 : Number(value) })}
               size="full"
-              color="primary-100"
+              align="left"
               placeholder="0"
             />
           </div>
         </div>
         <div>
           <label className="text-yds-b1 text-primary-100">옐로우 카드</label>
-          <Input
-            type="number"
+          <NumberInput
             min={0}
             max={2}
-            value={formData.yellow_cards}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({ ...formData, yellow_cards: parseInt(e.target.value) || 0 })
-            }
+            value={String(formData.yellow_cards)}
+            onValueChange={(value: string) => setFormData({ ...formData, yellow_cards: value === "" ? 0 : Number(value) })}
             size="full"
-            color="primary-100"
+            align="left"
             placeholder="0"
           />
         </div>
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            checked={formData.is_sent_off}
-            onChange={(e) => setFormData({ ...formData, is_sent_off: e.target.checked })}
-            className="mr-2"
-          />
-          <label className="text-primary-100 text-sm">퇴장</label>
-        </div>
+        <CheckBox
+          checked={formData.is_sent_off}
+          onCheckedChange={(checked) => setFormData({ ...formData, is_sent_off: checked })}
+          value="퇴장"
+          shape="square"
+        />
         {formData.is_sent_off && (
           <div>
             <label className="text-yds-b1 text-primary-100">퇴장 시간 (분)</label>
-            <Input
-              type="number"
+            <NumberInput
               min={1}
               max={120}
-              value={formData.red_card_minute || ""}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFormData({ ...formData, red_card_minute: parseInt(e.target.value) || null })
+              value={formData.red_card_minute != null ? String(formData.red_card_minute) : ""}
+              onValueChange={(value: string) =>
+                setFormData({ ...formData, red_card_minute: value === "" ? null : Number(value) })
               }
               size="full"
-              color="primary-100"
+              align="left"
               placeholder="예: 90"
             />
           </div>
