@@ -3,7 +3,6 @@
  * 기능: 관리자 이적 관리 컴포넌트 - 이적 CRUD
  * 프로세스 설명: 이적 목록 조회, 등록/수정/삭제 (선수·방향·유형·시즌·상대클럽)
  */
-import { Button } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { ArrowLeftRight, Edit, Trash2 } from "lucide-react";
@@ -54,17 +53,15 @@ const AdminTransfer = () => {
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between p-4">
         <h2 className="text-yds-s1 text-primary-100">이적 관리</h2>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="md"
+        <button
+          type="button"
           onClick={handleOpenAddModal}
-          className="flex items-center gap-2"
+          className="text-primary-100 hover:bg-primary-100/20 flex cursor-pointer items-center justify-center rounded-md p-2 transition-colors hover:text-white"
           aria-label="새 이적 추가"
+          title="이적 추가"
         >
           <ArrowLeftRight size={20} />
-          이적 추가
-        </Button>
+        </button>
       </div>
 
       <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">

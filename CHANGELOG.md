@@ -3,6 +3,24 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.8.9] - 2026-08-20
+
+**Branch**: `bdks-v1.8.9-선수이미지배경제거도구및관리자버튼아이콘화`
+
+### 추가
+- feat: 선수 이미지 배경제거 기능 추가
+- feat: 관리자 헤더 액션 버튼 아이콘화
+
+### 변경
+- build: 이미지배경제거라이브러리설치
+
+### 수정
+- fix: 바로가기 메뉴아이템 워딩변경
+
+### 제거
+
+---
+
 ## [1.8.8] - 2026-08-20
 
 **Branch**: `bdks-v1.8.8-ydui업그레이드및관리자편의성개선`

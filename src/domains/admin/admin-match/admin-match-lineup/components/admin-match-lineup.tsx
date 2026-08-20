@@ -5,10 +5,9 @@
  */
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
-import { ArrowLeft, ArrowLeftRight, Edit, FolderPlus, Star, Trash2 } from "lucide-react";
+import { ArrowLeft, ArrowLeftRight, Edit, Star, Trash2, UserPlus, Users } from "lucide-react";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 import { useDeleteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-delete-match-lineup";
@@ -115,41 +114,26 @@ const AdminMatchLineup = () => {
           </button>
           <h2 className="text-yds-s1 text-primary-100">라인업 관리</h2>
         </div>
-        {/* 모바일: 선수 추가 아이콘만 노출 */}
-        <div className="md:hidden">
+        {/* 액션: 아이콘 버튼 (스타팅 명단등록 / 선수 추가) */}
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={handleOpenBulkAddModal}
+            className="text-primary-100 hover:bg-primary-100/20 flex cursor-pointer items-center justify-center rounded-md p-2 transition-colors hover:text-white"
+            aria-label="스타팅 명단등록"
+            title="스타팅 명단등록"
+          >
+            <Users size={20} />
+          </button>
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-primary-100 text-primary-100"
+            className="text-primary-100 hover:bg-primary-100/20 flex cursor-pointer items-center justify-center rounded-md p-2 transition-colors hover:text-white"
             aria-label="새 라인업 추가"
+            title="선수 추가"
           >
-            <FolderPlus size={16} />
+            <UserPlus size={20} />
           </button>
-        </div>
-        {/* 데스크탑: 스타팅 명단등록 + 선수 추가 버튼 노출 */}
-        <div className="hidden md:flex! items-center gap-2">
-          <Button
-            variant="outlined"
-            color="primary"
-            size="lg"
-            onClick={handleOpenBulkAddModal}
-            className="flex items-center gap-2"
-            aria-label="스타팅 명단등록"
-          >
-            <FolderPlus size={20} />
-            스타팅 명단등록
-          </Button>
-          <Button
-            variant="outlined"
-            color="primary"
-            size="md"
-            onClick={handleOpenAddModal}
-            className="flex items-center gap-2"
-            aria-label="새 라인업 추가"
-          >
-            <FolderPlus size={20} />
-            선수 추가
-          </Button>
         </div>
       </div>
 

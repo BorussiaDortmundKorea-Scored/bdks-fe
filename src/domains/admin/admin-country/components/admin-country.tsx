@@ -3,10 +3,9 @@
  * 기능: 국가 관리 컴포넌트 - 국가 CRUD 기능
  * 프로세스 설명: 국가 목록 조회, 생성, 수정, 삭제 기능 제공 (팀 국가 드롭다운의 원천)
  */
-import { Button } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
-import { Edit, FolderPlus, Trash2 } from "lucide-react";
+import { Edit, Plus, Trash2 } from "lucide-react";
 
 import type { ICountry } from "@admin/admin-country/api/admin-country-api";
 import { useDeleteCountry } from "@admin/admin-country/api/react-query-api/use-delete-country";
@@ -52,16 +51,15 @@ const AdminCountry = () => {
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between p-4">
         <h2 className="text-yds-s1 text-primary-100">국가 관리</h2>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="md"
+        <button
+          type="button"
           onClick={handleOpenAddModal}
-          className="flex items-center gap-2"
+          className="text-primary-100 hover:bg-primary-100/20 flex cursor-pointer items-center justify-center rounded-md p-2 transition-colors hover:text-white"
           aria-label="새 국가 추가"
+          title="국가 추가"
         >
-          <FolderPlus size={20} />국가 추가
-        </Button>
+          <Plus size={20} />
+        </button>
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}

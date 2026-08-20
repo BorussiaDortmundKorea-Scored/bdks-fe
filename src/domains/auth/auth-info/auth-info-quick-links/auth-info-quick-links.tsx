@@ -81,7 +81,7 @@ const AuthInfoQuickLinks = () => {
         />
         <AuthInfoQuickLinkButton
           iconSrc={`${ICON_BASE}/dev-contact.png`}
-          label="개발자 문의"
+          label="버그 제보"
           onClick={() => navigate(ROUTES.DEV_CONTACT)}
         />
         <AuthInfoQuickLinkButton
