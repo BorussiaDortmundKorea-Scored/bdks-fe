@@ -3,7 +3,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 // API 응답 타입 정의
 export interface ApiResponse<T> {
   data: T;
-  error: PostgrestError;
+  error: PostgrestError | null;
 }
 
 // Suabase PostgrestError 타입

@@ -1,5 +1,6 @@
+import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
-import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type ApiResponse } from "@shared/api/types/api-types";
 
 export interface IPlayerStats {
   id: string;
@@ -11,13 +12,10 @@ export interface IGetPlayerStatsRequest {
   player_id: string;
 }
 
-export const getPlayerStats = async (request: IGetPlayerStatsRequest): Promise<ApiResponse<IPlayerStats>> => {
-  const { data, error } = (await supabase.rpc("get_player_information", {
-    player_id_param: request.player_id,
-  })) as {
-    data: IPlayerStats;
-    error: PostgrestError | null;
-  };
-  return { data: data as IPlayerStats, error: error as PostgrestError };
-};
+export const getPlayerStats = async (request: IGetPlayerStatsRequest): Promise<ApiResponse<IPlayerStats>> =>
+  callRpc<IPlayerStats>(() =>
+    supabase.rpc("get_player_information", {
+      player_id_param: request.player_id,
+    }),
+  );
 

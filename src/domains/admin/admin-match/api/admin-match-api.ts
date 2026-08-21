@@ -1,5 +1,6 @@
+import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
-import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type ApiResponse } from "@shared/api/types/api-types";
 import { type IMatchEntity } from "@shared/types/entities/match.entity";
 
 export type IMatch = IMatchEntity & {
@@ -54,81 +55,63 @@ export interface IUpdateMatchRequest {
 }
 
 // 모든 경기 조회
-export const getAllMatches = async (): Promise<ApiResponse<IMatch[]>> => {
-  const { data, error } = (await supabase.rpc("get_all_matches")) as {
-    data: IMatch[];
-    error: PostgrestError | null;
-  };
-  return { data: data as IMatch[], error: error as PostgrestError };
-};
+export const getAllMatches = async (): Promise<ApiResponse<IMatch[]>> =>
+  callRpc<IMatch[]>(() => supabase.rpc("get_all_matches"));
 
 // 경기 생성
-export const createMatch = async (match: ICreateMatchRequest): Promise<ApiResponse<IMatch>> => {
-  const { data, error } = (await supabase.rpc("insert_match", {
-    p_competition_id: match.competition_id,
-    p_opponent_team_id: match.opponent_team_id,
-    p_match_date: match.match_date,
-    p_home_away: match.home_away,
-    p_our_score: match.our_score || 0,
-    p_opponent_score: match.opponent_score || 0,
-    p_formation: match.formation || null,
-    p_is_live: match.is_live || false,
-    p_round_name: match.round_name || "",
-    p_match_start_time: match.match_start_time || null,
-    p_second_half_start_time: match.second_half_start_time || null,
-    p_first_half_end_time: match.first_half_end_time || null,
-    p_second_half_end_time: match.second_half_end_time || null,
-  })) as { data: IMatch; error: PostgrestError | null };
-
-  return {
-    data: data as IMatch,
-    error: error as PostgrestError,
-  };
-};
+export const createMatch = async (match: ICreateMatchRequest): Promise<ApiResponse<IMatch>> =>
+  callRpc<IMatch>(() =>
+    supabase.rpc("insert_match", {
+      p_competition_id: match.competition_id,
+      p_opponent_team_id: match.opponent_team_id,
+      p_match_date: match.match_date,
+      p_home_away: match.home_away,
+      p_our_score: match.our_score || 0,
+      p_opponent_score: match.opponent_score || 0,
+      p_formation: match.formation || null,
+      p_is_live: match.is_live || false,
+      p_round_name: match.round_name || "",
+      p_match_start_time: match.match_start_time || null,
+      p_second_half_start_time: match.second_half_start_time || null,
+      p_first_half_end_time: match.first_half_end_time || null,
+      p_second_half_end_time: match.second_half_end_time || null,
+    }),
+  );
 
 // 경기 수정
-export const updateMatch = async (match: IUpdateMatchRequest): Promise<ApiResponse<IMatch>> => {
-  const { data, error } = (await supabase.rpc("update_match", {
-    p_match_id: match.id,
-    p_competition_id: match.competition_id,
-    p_opponent_team_id: match.opponent_team_id,
-    p_match_date: match.match_date,
-    p_home_away: match.home_away,
-    p_our_score: match.our_score,
-    p_opponent_score: match.opponent_score,
-    p_formation: match.formation,
-    p_is_live: match.is_live,
-    p_round_name: match.round_name,
-    p_match_start_time: match.match_start_time,
-    p_second_half_start_time: match.second_half_start_time,
-    p_first_half_end_time: match.first_half_end_time,
-    p_second_half_end_time: match.second_half_end_time,
-  })) as { data: IMatch; error: PostgrestError | null };
-
-  return {
-    data: data as IMatch,
-    error: error as PostgrestError,
-  };
-};
+export const updateMatch = async (match: IUpdateMatchRequest): Promise<ApiResponse<IMatch>> =>
+  callRpc<IMatch>(() =>
+    supabase.rpc("update_match", {
+      p_match_id: match.id,
+      p_competition_id: match.competition_id,
+      p_opponent_team_id: match.opponent_team_id,
+      p_match_date: match.match_date,
+      p_home_away: match.home_away,
+      p_our_score: match.our_score,
+      p_opponent_score: match.opponent_score,
+      p_formation: match.formation,
+      p_is_live: match.is_live,
+      p_round_name: match.round_name,
+      p_match_start_time: match.match_start_time,
+      p_second_half_start_time: match.second_half_start_time,
+      p_first_half_end_time: match.first_half_end_time,
+      p_second_half_end_time: match.second_half_end_time,
+    }),
+  );
 
 // 경기 삭제
-export const deleteMatch = async (id: string): Promise<ApiResponse<boolean>> => {
-  const { data, error } = (await supabase.rpc("delete_match", {
-    p_match_id: id,
-  })) as { data: boolean; error: PostgrestError | null };
-
-  return { data: data as boolean, error: error as PostgrestError };
-};
+export const deleteMatch = async (id: string): Promise<ApiResponse<boolean>> =>
+  callRpc<boolean>(() =>
+    supabase.rpc("delete_match", {
+      p_match_id: id,
+    }),
+  );
 
 export const bulkCreateMatches = async (
   payload: IBulkCreateMatchesRequest,
-): Promise<ApiResponse<IMatch[]>> => {
-  const { data, error } = (await supabase.rpc("bulk_insert_matches", {
-    p_matches: payload.matches,
-  })) as { data: IMatch[]; error: PostgrestError | null };
-
-  return {
-    data: data as IMatch[],
-    error: error as PostgrestError,
-  };
-};
+): Promise<ApiResponse<IMatch[]>> =>
+  callRpc<IMatch[]>(() =>
+    supabase.rpc("bulk_insert_matches", {
+      p_matches: payload.matches,
+    }),
+  );
