@@ -1,3 +1,4 @@
+import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
 import {
@@ -20,22 +21,12 @@ export interface IUpdateCompetitionRequest {
 }
 
 // 모든 대회 조회 (competition_types와 join되어 name/name_en 포함)
-export const getAllCompetitions = async (): Promise<ApiResponse<ICompetition[]>> => {
-  const { data, error } = (await supabase.rpc("get_all_competitions")) as {
-    data: ICompetition[];
-    error: PostgrestError | null;
-  };
-  return { data: data as ICompetition[], error: error as PostgrestError };
-};
+export const getAllCompetitions = async (): Promise<ApiResponse<ICompetition[]>> =>
+  callRpc<ICompetition[]>(() => supabase.rpc("get_all_competitions"));
 
 // 대회 종류(마스터) 목록 조회 — 드롭다운용
-export const getAllCompetitionTypes = async (): Promise<ApiResponse<ICompetitionType[]>> => {
-  const { data, error } = (await supabase.rpc("get_all_competition_types")) as {
-    data: ICompetitionType[];
-    error: PostgrestError | null;
-  };
-  return { data: data as ICompetitionType[], error: error as PostgrestError };
-};
+export const getAllCompetitionTypes = async (): Promise<ApiResponse<ICompetitionType[]>> =>
+  callRpc<ICompetitionType[]>(() => supabase.rpc("get_all_competition_types"));
 
 // 시즌(마스터) 목록 조회 — 드롭다운용 (최신 시즌부터)
 export const getAllSeasons = async (): Promise<ApiResponse<string[]>> => {
@@ -49,39 +40,30 @@ export const getAllSeasons = async (): Promise<ApiResponse<string[]>> => {
 // 대회 생성
 export const createCompetition = async (
   competition: ICreateCompetitionRequest,
-): Promise<ApiResponse<ICompetition>> => {
-  const { data, error } = (await supabase.rpc("insert_competition", {
-    competition_type_id: competition.competition_type_id,
-    competition_season: competition.season,
-  })) as { data: ICompetition; error: PostgrestError | null };
-
-  return {
-    data: data as ICompetition,
-    error: error as PostgrestError,
-  };
-};
+): Promise<ApiResponse<ICompetition>> =>
+  callRpc<ICompetition>(() =>
+    supabase.rpc("insert_competition", {
+      competition_type_id: competition.competition_type_id,
+      competition_season: competition.season,
+    }),
+  );
 
 // 대회 수정
 export const updateCompetition = async (
   competition: IUpdateCompetitionRequest,
-): Promise<ApiResponse<ICompetition>> => {
-  const { data, error } = (await supabase.rpc("update_competition", {
-    competition_id: competition.id,
-    competition_type_id: competition.competition_type_id,
-    competition_season: competition.season,
-  })) as { data: ICompetition; error: PostgrestError | null };
-
-  return {
-    data: data as ICompetition,
-    error: error as PostgrestError,
-  };
-};
+): Promise<ApiResponse<ICompetition>> =>
+  callRpc<ICompetition>(() =>
+    supabase.rpc("update_competition", {
+      competition_id: competition.id,
+      competition_type_id: competition.competition_type_id,
+      competition_season: competition.season,
+    }),
+  );
 
 // 대회 삭제
-export const deleteCompetition = async (id: string): Promise<ApiResponse<boolean>> => {
-  const { data, error } = (await supabase.rpc("delete_competition", {
-    competition_id: id,
-  })) as { data: boolean; error: PostgrestError | null };
-
-  return { data: data as boolean, error: error as PostgrestError };
-};
+export const deleteCompetition = async (id: string): Promise<ApiResponse<boolean>> =>
+  callRpc<boolean>(() =>
+    supabase.rpc("delete_competition", {
+      competition_id: id,
+    }),
+  );

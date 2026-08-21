@@ -11,23 +11,20 @@ import type {
 } from "../types";
 import { PostgrestError } from "@supabase/supabase-js";
 
+import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse } from "@shared/api/types/api-types";
 
 // 특정 경기의 특정 선수 평점 조회
 export const getMatchPlayerRating = async (
   request: IGetMatchPlayerRatingRequest,
-): Promise<ApiResponse<IMatchPlayerRating>> => {
-  const { data, error } = await supabase.rpc("get_match_single_player_rating", {
-    match_id_param: request.match_id,
-    player_id_param: request.player_id,
-  });
-
-  return {
-    data: data as IMatchPlayerRating,
-    error: error as PostgrestError,
-  };
-};
+): Promise<ApiResponse<IMatchPlayerRating>> =>
+  callRpc<IMatchPlayerRating>(() =>
+    supabase.rpc("get_match_single_player_rating", {
+      match_id_param: request.match_id,
+      player_id_param: request.player_id,
+    }),
+  );
 
 // 평점 입력 + broadcast 전송
 export const insertPlayerRating = async (
@@ -78,14 +75,10 @@ export const insertPlayerRating = async (
 // 사용자의 특정 선수에 대한 모든 평점 조회
 export const getUserPlayerRatings = async (
   request: IGetUserPlayerRatingsRequest,
-): Promise<ApiResponse<IUserPlayerRatings>> => {
-  const { data, error } = await supabase.rpc("get_user_player_ratings", {
-    p_match_id: request.match_id,
-    p_player_id: request.player_id,
-  });
-
-  return {
-    data: data as IUserPlayerRatings,
-    error: error as PostgrestError,
-  };
-};
+): Promise<ApiResponse<IUserPlayerRatings>> =>
+  callRpc<IUserPlayerRatings>(() =>
+    supabase.rpc("get_user_player_ratings", {
+      p_match_id: request.match_id,
+      p_player_id: request.player_id,
+    }),
+  );

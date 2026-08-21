@@ -1,5 +1,6 @@
+import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
-import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type ApiResponse } from "@shared/api/types/api-types";
 import { type IPlayerEntity } from "@shared/types/entities/player.entity";
 
 export type IPlayerDBWithMyRatings =
@@ -8,12 +9,9 @@ export type IPlayerDBWithMyRatings =
     overall_avg_rating_my: number | null;
   };
 
-export const getPlayersDbWithMyRatings = async (userId: string): Promise<ApiResponse<IPlayerDBWithMyRatings[]>> => {
-  const { data, error } = (await supabase.rpc("get_all_players_db_with_my_ratings", {
-    user_id_param: userId,
-  })) as {
-    data: IPlayerDBWithMyRatings[];
-    error: PostgrestError | null;
-  };
-  return { data: data as IPlayerDBWithMyRatings[], error: error as PostgrestError };
-};
+export const getPlayersDbWithMyRatings = async (userId: string): Promise<ApiResponse<IPlayerDBWithMyRatings[]>> =>
+  callRpc<IPlayerDBWithMyRatings[]>(() =>
+    supabase.rpc("get_all_players_db_with_my_ratings", {
+      user_id_param: userId,
+    }),
+  );

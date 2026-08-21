@@ -1,5 +1,6 @@
+import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
-import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type ApiResponse } from "@shared/api/types/api-types";
 
 export interface IFinishMatchList {
   id: string;
@@ -11,10 +12,5 @@ export interface IFinishMatchList {
   opponent_name: string;
 }
 
-export const getAllFinishMatchLists = async (): Promise<ApiResponse<IFinishMatchList[]>> => {
-  const { data, error } = (await supabase.rpc("get_all_finish_match_lists")) as {
-    data: IFinishMatchList[];
-    error: PostgrestError | null;
-  };
-  return { data: data as IFinishMatchList[], error: error as PostgrestError };
-};
+export const getAllFinishMatchLists = async (): Promise<ApiResponse<IFinishMatchList[]>> =>
+  callRpc<IFinishMatchList[]>(() => supabase.rpc("get_all_finish_match_lists"));

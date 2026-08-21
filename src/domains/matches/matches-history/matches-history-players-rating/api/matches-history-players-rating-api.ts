@@ -1,5 +1,6 @@
+import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
-import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
+import { type ApiResponse } from "@shared/api/types/api-types";
 import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
 
 export interface IMatchesHistoryPlayersRating {
@@ -31,22 +32,16 @@ export interface IMatchInfo {
 
 export const getMatchesHistoryPlayersRating = async (
   matchId: string,
-): Promise<ApiResponse<IMatchesHistoryPlayersRating[]>> => {
-  const { data, error } = (await supabase.rpc("get_matches_player_ratings", {
-    match_id_param: matchId,
-  })) as {
-    data: IMatchesHistoryPlayersRating[];
-    error: PostgrestError | null;
-  };
-  return { data: data as IMatchesHistoryPlayersRating[], error: error as PostgrestError };
-};
+): Promise<ApiResponse<IMatchesHistoryPlayersRating[]>> =>
+  callRpc<IMatchesHistoryPlayersRating[]>(() =>
+    supabase.rpc("get_matches_player_ratings", {
+      match_id_param: matchId,
+    }),
+  );
 
-export const getMatchInfo = async (matchId: string): Promise<ApiResponse<IMatchInfo>> => {
-  const { data, error } = (await supabase.rpc("get_match_info", {
-    match_id_param: matchId,
-  })) as {
-    data: IMatchInfo;
-    error: PostgrestError | null;
-  };
-  return { data: data as IMatchInfo, error: error as PostgrestError };
-};
+export const getMatchInfo = async (matchId: string): Promise<ApiResponse<IMatchInfo>> =>
+  callRpc<IMatchInfo>(() =>
+    supabase.rpc("get_match_info", {
+      match_id_param: matchId,
+    }),
+  );

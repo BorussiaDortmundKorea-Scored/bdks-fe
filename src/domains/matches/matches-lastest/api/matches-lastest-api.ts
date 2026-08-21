@@ -1,3 +1,4 @@
+import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
 import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
@@ -21,13 +22,8 @@ export interface IMatchesLastestPlayer {
   is_playing: boolean;
 }
 
-export const getLatestMatchLiveFormation = async (): Promise<ApiResponse<IMatchesLastestPlayer[]>> => {
-  const { data, error } = (await supabase.rpc("get_latest_match_live_formation")) as {
-    data: IMatchesLastestPlayer[];
-    error: PostgrestError | null;
-  };
-  return { data: data as IMatchesLastestPlayer[], error: error as PostgrestError };
-};
+export const getLatestMatchLiveFormation = async (): Promise<ApiResponse<IMatchesLastestPlayer[]>> =>
+  callRpc<IMatchesLastestPlayer[]>(() => supabase.rpc("get_latest_match_live_formation"));
 
 export interface IMatchesLastestInformation {
   match_id: string;

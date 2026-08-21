@@ -1,3 +1,4 @@
+import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
 import {
@@ -33,14 +34,8 @@ export interface ITransferReactionResult {
 }
 
 // 전체 이적 조회 (이적일 최신순)
-export const getTransfers = async (): Promise<ApiResponse<ITransferMarketItem[]>> => {
-  const { data, error } = (await supabase.rpc("get_transfers")) as {
-    data: ITransferMarketItem[];
-    error: PostgrestError | null;
-  };
-
-  return { data: data as ITransferMarketItem[], error: error as PostgrestError };
-};
+export const getTransfers = async (): Promise<ApiResponse<ITransferMarketItem[]>> =>
+  callRpc<ITransferMarketItem[]>(() => supabase.rpc("get_transfers"));
 
 // 좋아요/싫어요 토글 (없으면 추가 / 같은 거 재클릭 취소 / 반대면 전환)
 export const toggleTransferReaction = async (
