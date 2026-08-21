@@ -3,6 +3,24 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.9.1] - 2026-08-21
+
+**Branch**: `bdks-v1.9.1-RPC보안강화및API타입안정화`
+
+### 추가
+
+### 변경
+- refactor: api as 캐스팅 제거를 위한 callRpc 래퍼 패턴 도입 및 적용
+- test: api,훅 레이어 단위테스트 추가(callRpc,공통유틸,훅)
+- test: adimn CRUD 훅,모달 단위테스트 일괄 추가
+- fix: admin 변경 RPC 18종 권한 가드 및 anon 실행권한 회수
+
+### 수정
+
+### 제거
+
+---
+
 ## [1.8.9] - 2026-08-20
 
 **Branch**: `bdks-v1.8.9-선수이미지배경제거도구및관리자버튼아이콘화`
