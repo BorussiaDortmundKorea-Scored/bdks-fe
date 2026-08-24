@@ -5,6 +5,7 @@ import { type IProfileEntity } from "@shared/types/entities/profile.entity";
 
 export type IUser = Omit<IProfileEntity, "points"> & {
   email?: string | null;
+  /** 최근 활동일: 로그인/세션갱신(auth.updated_at)/평점입력 중 가장 최신 시각 (RPC get_all_users) */
   last_sign_in_at?: string | null;
 };
 

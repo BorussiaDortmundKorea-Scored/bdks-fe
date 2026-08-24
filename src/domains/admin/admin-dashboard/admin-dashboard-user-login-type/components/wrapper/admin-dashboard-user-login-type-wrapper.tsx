@@ -4,15 +4,20 @@
  */
 import React from "react";
 
+import { Card } from "@youngduck/yd-ui/Cards";
+
 interface IAdminDashboardUserLoginTypeWrapper {
   children: React.ReactNode;
 }
 
 const AdminDashboardUserLoginTypeWrapper = ({ children }: IAdminDashboardUserLoginTypeWrapper) => {
   return (
-    <div className="bg-background-tertiary text-primary-100 card-navy-50 flex h-full w-full flex-col justify-center md:col-start-1 md:col-end-4 md:row-start-2 md:row-end-4">
+    <Card
+      variant="outlined"
+      className="text-primary-100 flex h-full w-full flex-col justify-center md:col-start-1 md:col-end-4 md:row-start-2 md:row-end-4"
+    >
       {children}
-    </div>
+    </Card>
   );
 };
 

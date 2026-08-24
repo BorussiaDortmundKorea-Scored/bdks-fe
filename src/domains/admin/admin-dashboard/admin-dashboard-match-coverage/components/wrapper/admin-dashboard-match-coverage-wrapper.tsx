@@ -4,15 +4,20 @@
  */
 import React from "react";
 
+import { Card } from "@youngduck/yd-ui/Cards";
+
 interface IAdminDashboardMatchCoverageWrapper {
   children: React.ReactNode;
 }
 
 const AdminDashboardMatchCoverageWrapper = ({ children }: IAdminDashboardMatchCoverageWrapper) => {
   return (
-    <div className="bg-background-tertiary text-primary-100 card-navy-50 flex h-full w-full flex-col justify-center gap-2 md:col-start-1 md:col-end-9 md:row-start-7 md:row-end-9">
+    <Card
+      variant="outlined"
+      className=" flex h-full w-full flex-col justify-center gap-2 md:col-start-1 md:col-end-9 md:row-start-7 md:row-end-9"
+    >
       {children}
-    </div>
+    </Card>
   );
 };
 

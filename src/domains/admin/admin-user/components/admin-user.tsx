@@ -53,6 +53,7 @@ const AdminUser = () => {
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
+      hour12: false,
     });
   };
   //!SECTION 메서드 영역
@@ -83,7 +84,7 @@ const AdminUser = () => {
             <Th>이메일</Th>
             <Th>권한</Th>
             <Th>가입일</Th>
-            <Th>최근 로그인</Th>
+            <Th>최근 활동일</Th>
             <Th>작업</Th>
           </Tr>
         </THead>
