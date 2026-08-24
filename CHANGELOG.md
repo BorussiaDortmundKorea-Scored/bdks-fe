@@ -3,6 +3,23 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [1.9.2] - 2026-08-24
+
+**Branch**: `bdks-v1.9.2-대시보드추이차트화및경기일정적재`
+
+### 추가
+- feat: 평점 활동 추이 대시보드 위젯 추가
+- feat: 평점 입력 현황 차트 클릭 시 세부 데이터 보기
+
+### 변경
+- refactor: 경기별 평점 참여율 위젯을 추이 라인차트로 변경
+- refactor: 대시보드 yd-ui card로교체 및 관리자 col명 변경
+
+### 수정
+
+### 제거
+
+---
 ## [1.9.1] - 2026-08-21
 
 **Branch**: `bdks-v1.9.1-RPC보안강화및API타입안정화`
