@@ -5,6 +5,8 @@
  */
 import React from "react";
 
+import { Card } from "@youngduck/yd-ui/Cards";
+
 interface IAdminDashboardUserCountWrapper {
   children: React.ReactNode;
 }
@@ -23,9 +25,12 @@ const AdminDashboardUserCountWrapper = ({ children }: IAdminDashboardUserCountWr
   //!SECTION 메서드 영역
 
   return (
-    <div className="bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 flex h-full w-full flex-col justify-between md:col-start-1 md:col-end-3 md:row-start-1 md:row-end-2">
+    <Card
+      variant="outlined"
+      className="text-yds-s2 text-primary-100 flex h-full w-full flex-col justify-between md:col-start-1 md:col-end-3 md:row-start-1 md:row-end-2"
+    >
       {children}
-    </div>
+    </Card>
   );
 };
 

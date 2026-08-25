@@ -1,7 +1,7 @@
 {
   "name": "bdks-fe",
   "private": true,
-  "version": "1.9.1",
+  "version": "1.9.2",
   "type": "module",
   "scripts": {
     "dev:prod": "vite --mode prod --host",
@@ -14,7 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest --watch --ui",
     "test:coverage": "vitest run --coverage",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc -b",
     "preview": "vite preview",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
@@ -37,7 +37,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
-    "@youngduck/yd-ui": "^0.21.2",
+    "@youngduck/yd-ui": "^0.22.1",
     "chart.js": "^4.5.1",
     "gsap": "^3.13.0",
     "lint-staged": "^16.4.0",
@@ -103,7 +103,11 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "pnpm exec eslint --fix"
+      "pnpm exec eslint --fix",
+      "pnpm exec prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "pnpm exec prettier --write"
     ]
   },
   "msw": {

@@ -3,8 +3,11 @@
  * 기능: 경기별 평점 통계 차트 컴포넌트 테스트
  */
 import AdminDashboardMatchStats from "./admin-dashboard-match-stats";
+import AdminDashboardMatchStatsDetailChart from "./admin-dashboard-match-stats-detail-chart";
 import AdminDashboardMatchStatsError from "./error/admin-dashboard-match-stats-error";
+import AdminDashboardMatchStatsDetailError from "./error/admin-dashboard-match-stats-detail-error";
 import AdminDashboardMatchStatsSkeleton from "./skeleton/admin-dashboard-match-stats-skeleton";
+import AdminDashboardMatchStatsDetailSkeleton from "./skeleton/admin-dashboard-match-stats-detail-skeleton";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
@@ -85,5 +88,28 @@ describe("경기별 평점 통계 차트 컴포넌트 렌더링 테스트", () =
 
     const errorElement = await screen.findByText("데이터를 불러올 수 없습니다");
     expect(errorElement).toBeInTheDocument();
+  });
+
+  it("세부 차트: 경기별 유저 평점 입력 횟수가 로딩 후 렌더링된다", async () => {
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryBoundary
+          skeleton={<AdminDashboardMatchStatsDetailSkeleton />}
+          errorFallback={AdminDashboardMatchStatsDetailError}
+        >
+          <AdminDashboardMatchStatsDetailChart matchId="550e8400-e29b-41d4-a716-446655440001" />
+        </ReactQueryBoundary>
+      </QueryClientProvider>,
+    );
+
+    const loading = await screen.findByTestId("admin-dashboard-match-stats-detail-skeleton");
+    expect(loading).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("admin-dashboard-match-stats-detail-skeleton")).not.toBeInTheDocument();
+    });
+
+    expect(screen.getByRole("img")).toBeInTheDocument();
   });
 });

@@ -5,6 +5,8 @@
  */
 import React from "react";
 
+import { Card } from "@youngduck/yd-ui/Cards";
+
 interface IAdminDashboardSitesWrapper {
   children: React.ReactNode;
 }
@@ -22,9 +24,12 @@ const AdminDashboardSitesWrapper = ({ children }: IAdminDashboardSitesWrapper) =
   //!SECTION 메서드 영역
 
   return (
-    <div className="bg-background-tertiary text-yds-s2 text-primary-100 card-navy-50 flex items-center overflow-hidden md:col-start-7 md:col-end-9 md:row-start-1 md:row-end-2">
+    <Card
+      variant="outlined"
+      className="text-yds-s2 text-primary-100 flex items-center overflow-hidden md:col-start-5 md:col-end-9 md:row-start-1 md:row-end-2"
+    >
       {children}
-    </div>
+    </Card>
   );
 };
 

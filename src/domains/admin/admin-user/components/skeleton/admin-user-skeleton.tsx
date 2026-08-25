@@ -22,7 +22,7 @@ const AdminUserSkeleton = () => {
             <Th>이메일</Th>
             <Th>권한</Th>
             <Th>가입일</Th>
-            <Th>최근 로그인</Th>
+            <Th>최근 활동일</Th>
             <Th>작업</Th>
           </Tr>
         </THead>

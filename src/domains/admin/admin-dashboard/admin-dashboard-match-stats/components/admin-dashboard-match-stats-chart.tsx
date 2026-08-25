@@ -6,7 +6,18 @@
 import { Bar } from "react-chartjs-2";
 
 import { useGetMatchStats } from "../api/react-query-api/use-get-match-stats";
-import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, type TooltipItem } from "chart.js";
+import {
+  type ActiveElement,
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  type ChartEvent,
+  Legend,
+  LinearScale,
+  Title,
+  Tooltip,
+  type TooltipItem,
+} from "chart.js";
 
 // Chart.js 필수 요소 등록
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -14,7 +25,17 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const CHART_MIN_WIDTH_PX = 360;
 const BAR_GROUP_WIDTH_PX = 90;
 
-const AdminDashboardMatchStatsChart = () => {
+export interface ISelectedMatch {
+  match_id: string;
+  match_name: string;
+}
+
+interface IAdminDashboardMatchStatsChart {
+  /** 막대(경기) 클릭 시 해당 경기 정보를 전달 */
+  onBarClick?: (match: ISelectedMatch) => void;
+}
+
+const AdminDashboardMatchStatsChart = ({ onBarClick }: IAdminDashboardMatchStatsChart) => {
   const matchStats = useGetMatchStats();
   const chartMinWidthPx = Math.max(CHART_MIN_WIDTH_PX, matchStats.length * BAR_GROUP_WIDTH_PX);
 
@@ -54,6 +75,16 @@ const AdminDashboardMatchStatsChart = () => {
     interaction: {
       mode: "index" as const,
       intersect: false,
+    },
+    onClick: (_event: ChartEvent, elements: ActiveElement[]) => {
+      if (!onBarClick || elements.length === 0) return;
+      const index = elements[0].index;
+      const stat = matchStats[index];
+      if (stat) onBarClick({ match_id: stat.match_id, match_name: stat.match_name });
+    },
+    onHover: (event: ChartEvent, elements: ActiveElement[]) => {
+      const target = event.native?.target as HTMLElement | null;
+      if (target) target.style.cursor = elements.length > 0 ? "pointer" : "default";
     },
     plugins: {
       legend: {

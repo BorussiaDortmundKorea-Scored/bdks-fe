@@ -1,0 +1,44 @@
+[
+  {
+    "match_id": "cd9f3fab-dd79-46c0-a7e3-cb67051ed712",
+    "match_date": "2025-10-04",
+    "opponent_name": "라이프치히",
+    "unique_user_count": 28,
+    "total_rating_count": 131
+  },
+  {
+    "match_id": "b4474c75-6bb5-43cc-870e-64caeb0f48e4",
+    "match_date": "2025-10-18",
+    "opponent_name": "바이에른 뮌헨",
+    "unique_user_count": 21,
+    "total_rating_count": 177
+  },
+  {
+    "match_id": "0d13f111-f7f3-43b9-9602-26d5f09f46e6",
+    "match_date": "2025-11-05",
+    "opponent_name": "맨체스터시티",
+    "unique_user_count": 9,
+    "total_rating_count": 71
+  },
+  {
+    "match_id": "65296fa7-fd05-4e8c-be79-b49d740a1e91",
+    "match_date": "2025-11-08",
+    "opponent_name": "함부르크",
+    "unique_user_count": 6,
+    "total_rating_count": 45
+  },
+  {
+    "match_id": "a69e9ae7-050d-4572-b9f0-9f287e9c7bde",
+    "match_date": "2026-04-11",
+    "opponent_name": "레버쿠젠",
+    "unique_user_count": 10,
+    "total_rating_count": 74
+  },
+  {
+    "match_id": "e32b483b-b543-431a-bc52-be88fefbe234",
+    "match_date": "2026-08-23",
+    "opponent_name": "바이에른 뮌헨",
+    "unique_user_count": 14,
+    "total_rating_count": 155
+  }
+]

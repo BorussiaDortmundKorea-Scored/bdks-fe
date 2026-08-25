@@ -5,4 +5,5 @@
 export const adminDashboardMatchStatsKeys = {
   all: ["admin-dashboard-match-stats"] as const,
   stats: () => [...adminDashboardMatchStatsKeys.all, "stats"] as const,
+  userRatings: (matchId: string) => [...adminDashboardMatchStatsKeys.all, "user-ratings", matchId] as const,
 };
