@@ -14,7 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest --watch --ui",
     "test:coverage": "vitest run --coverage",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc -b",
     "preview": "vite preview",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
@@ -103,7 +103,11 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "pnpm exec eslint --fix"
+      "pnpm exec eslint --fix",
+      "pnpm exec prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "pnpm exec prettier --write"
     ]
   },
   "msw": {
