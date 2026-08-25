@@ -7,7 +7,7 @@
 import { Bar } from "react-chartjs-2";
 
 import { useGetMatchUserRatings } from "../api/react-query-api/use-get-match-user-ratings";
-import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from "chart.js";
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, type TooltipItem } from "chart.js";
 
 // Chart.js 필수 요소 등록 (요약 차트와 동일, 중복 등록은 무해)
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -68,9 +68,9 @@ const AdminDashboardMatchStatsDetailChart = ({ matchId }: IAdminDashboardMatchSt
         borderWidth: 2,
         padding: 12,
         callbacks: {
-          label: (item: { dataset: { label?: string }; parsed: { y: number } }) => {
+          label: (item: TooltipItem<"bar">) => {
             const label = item.dataset.label ?? "";
-            return `${label}: ${item.parsed.y}회`;
+            return `${label}: ${item.parsed.y ?? 0}회`;
           },
         },
       },

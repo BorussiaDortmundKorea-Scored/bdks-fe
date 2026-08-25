@@ -97,7 +97,7 @@ const StatSparklineCard = ({
             if (index == null) return "";
             return tooltipLabels[index] ?? "";
           },
-          label: (item: TooltipItem<"line">) => `${item.parsed.y.toLocaleString()}${unit}`,
+          label: (item: TooltipItem<"line">) => `${(item.parsed.y ?? 0).toLocaleString()}${unit}`,
         },
       },
     },
