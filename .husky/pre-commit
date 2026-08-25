@@ -1,7 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-
 echo "🔎 보돌코스코어드 커밋 전 lint-staged 실행 중..."
 npx pnpm run lint-staged || { echo "❌ lint-staged 검증 실패!"; exit 1; }
 
