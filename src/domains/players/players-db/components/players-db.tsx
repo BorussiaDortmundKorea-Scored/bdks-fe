@@ -31,24 +31,27 @@ const PlayersDb = () => {
       <HorizonDragScroll as="ul" className="w-full gap-1" data-testid="scroll-container">
         {PlayersDbWithMyRating.map((item) => (
           <li key={item.id} className="w-[105px] shrink-0">
-            <Link to={createPlayerStatsPath(item.id)} className="flex w-full flex-col items-center gap-[16px] hover:cursor-pointer">
-            <img
-              src={item.head_profile_image_url ?? undefined}
-              alt={item.korean_name ?? undefined}
-              className="h-[80px] w-[80px] object-cover"
-            />
-            <div className="flex flex-col items-center gap-[2px]">
-              <div className="text-sm text-white">{item.korean_name}</div>
-              <div className="text-primary-100 text-xs">
-                <span data-testid="overall-rating">
-                  All : {item.overall_avg_rating_all === null ? 0 : item.overall_avg_rating_all}
-                </span>
-                &nbsp;/&nbsp;
-                <span data-testid="my-rating">
-                  My : {item.overall_avg_rating_my === null ? 0 : item.overall_avg_rating_my}
-                </span>
+            <Link
+              to={createPlayerStatsPath(item.id)}
+              className="flex w-full flex-col items-center gap-[16px] hover:cursor-pointer"
+            >
+              <img
+                src={item.head_profile_image_url ?? undefined}
+                alt={item.korean_name ?? undefined}
+                className="h-[80px] w-[80px] object-cover"
+              />
+              <div className="flex flex-col items-center gap-[2px]">
+                <div className="text-yds-c1m text-white">{item.korean_name}</div>
+                <div className="text-primary-100 text-yds-c1r">
+                  <span data-testid="overall-rating">
+                    All : {item.overall_avg_rating_all === null ? 0 : item.overall_avg_rating_all}
+                  </span>
+                  &nbsp;/&nbsp;
+                  <span data-testid="my-rating">
+                    My : {item.overall_avg_rating_my === null ? 0 : item.overall_avg_rating_my}
+                  </span>
+                </div>
               </div>
-            </div>
             </Link>
           </li>
         ))}

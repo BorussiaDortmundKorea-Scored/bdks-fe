@@ -19,7 +19,7 @@ const MatchesHistoryWrapper = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <section className="text-primary-100 w-full">
-      <h2 className="mb-4 text-[22px] font-bold">최근 경기</h2>
+      <h2 className="text-yds-s2 mb-4">최근 경기</h2>
       {children}
     </section>
   );

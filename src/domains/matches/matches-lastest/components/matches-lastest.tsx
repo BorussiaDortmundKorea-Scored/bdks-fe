@@ -42,10 +42,10 @@ const MatchesLastest = () => {
       <div className="bg-background-secondary-layer flex h-full w-full flex-col rounded-[4px] p-2">
         <div className="flex h-auto w-full items-center justify-between gap-2">
           <div className="flex flex-col gap-1">
-            <div className="text-lg font-semibold text-white">
+            <div className="text-yds-b1 text-white">
               도르트문트({information.home_away === "HOME" ? "H" : "A"}) vs {information.opponent_name}
             </div>
-            <div className="text-primary-100 text-sm">
+            <div className="text-primary-100 text-yds-c1m">
               {information.season} {information.league_name} {information.round_name}
             </div>
           </div>
@@ -157,7 +157,9 @@ const PlayerCard = ({
 
       {/* 평점 오버레이 - 실시간 애니메이션 추가 */}
       <div className="border-primary-400 absolute -right-1 -bottom-1 flex h-7 w-7 items-center justify-center rounded-full border-2 bg-black shadow-lg">
-        <span className="text-xs font-bold text-white transition-all duration-300 ease-out">{player.avg_rating}</span>
+        <span className="text-yds-c1r font-bold text-white transition-all duration-300 ease-out">
+          {player.avg_rating}
+        </span>
       </div>
     </Link>
   );

@@ -19,7 +19,7 @@ const PlayersDbWrapper = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <section className="text-primary-100 w-full">
-      <h2 className="mb-4 text-[22px] font-bold">선수 DB</h2>
+      <h2 className="text-yds-s2 mb-4">선수 DB</h2>
       {children}
     </section>
   );
