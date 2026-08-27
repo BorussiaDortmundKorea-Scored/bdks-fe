@@ -5,13 +5,13 @@
  */
 import { Bar } from "react-chartjs-2";
 
-import { useGetMatchStats } from "../api/react-query-api/use-get-match-stats";
+import { type IMatchStatsData } from "../api/admin-dashboard-match-stats-api";
 import {
   type ActiveElement,
   BarElement,
   CategoryScale,
-  Chart as ChartJS,
   type ChartEvent,
+  Chart as ChartJS,
   Legend,
   LinearScale,
   Title,
@@ -31,12 +31,14 @@ export interface ISelectedMatch {
 }
 
 interface IAdminDashboardMatchStatsChart {
+  /** 차트에 그릴 경기별 통계 데이터 */
+  data: IMatchStatsData[];
   /** 막대(경기) 클릭 시 해당 경기 정보를 전달 */
   onBarClick?: (match: ISelectedMatch) => void;
 }
 
-const AdminDashboardMatchStatsChart = ({ onBarClick }: IAdminDashboardMatchStatsChart) => {
-  const matchStats = useGetMatchStats();
+const AdminDashboardMatchStatsChart = ({ data, onBarClick }: IAdminDashboardMatchStatsChart) => {
+  const matchStats = data;
   const chartMinWidthPx = Math.max(CHART_MIN_WIDTH_PX, matchStats.length * BAR_GROUP_WIDTH_PX);
 
   // 차트 데이터 구성
@@ -166,7 +168,7 @@ const AdminDashboardMatchStatsChart = ({ onBarClick }: IAdminDashboardMatchStats
   };
 
   return (
-    <div className="h-[240px] w-full overflow-x-auto">
+    <div className="h-full min-h-0 w-full overflow-x-auto">
       <div className="h-full" style={{ minWidth: chartMinWidthPx }}>
         <Bar data={chartData} options={chartOptions} />
       </div>

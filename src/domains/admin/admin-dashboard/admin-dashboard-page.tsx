@@ -6,12 +6,9 @@
 import AdminDashboardDeletedUsers from "./admin-dashboard-deleted-users/components/admin-dashboard-deleted-users";
 import AdminDashboardDeletedUsersError from "./admin-dashboard-deleted-users/components/error/admin-dashboard-deleted-users-error";
 import AdminDashboardDeletedUsersSkeleton from "./admin-dashboard-deleted-users/components/skeleton/admin-dashboard-deleted-users-skeleton";
-import AdminDashboardMatchCoverage from "./admin-dashboard-match-coverage/components/admin-dashboard-match-coverage";
-import AdminDashboardMatchCoverageError from "./admin-dashboard-match-coverage/components/error/admin-dashboard-match-coverage-error";
-import AdminDashboardMatchCoverageSkeleton from "./admin-dashboard-match-coverage/components/skeleton/admin-dashboard-match-coverage-skeleton";
-import AdminDashboardMatchStats from "./admin-dashboard-match-stats/components/admin-dashboard-match-stats";
-import AdminDashboardMatchStatsError from "./admin-dashboard-match-stats/components/error/admin-dashboard-match-stats-error";
-import AdminDashboardMatchStatsSkeleton from "./admin-dashboard-match-stats/components/skeleton/admin-dashboard-match-stats-skeleton";
+import AdminDashboardMatchOverview from "./admin-dashboard-match-overview/components/admin-dashboard-match-overview";
+import AdminDashboardMatchOverviewError from "./admin-dashboard-match-overview/components/error/admin-dashboard-match-overview-error";
+import AdminDashboardMatchOverviewSkeleton from "./admin-dashboard-match-overview/components/skeleton/admin-dashboard-match-overview-skeleton";
 import AdminDashboardRatingTrend from "./admin-dashboard-rating-trend/components/admin-dashboard-rating-trend";
 import AdminDashboardRatingTrendError from "./admin-dashboard-rating-trend/components/error/admin-dashboard-rating-trend-error";
 import AdminDashboardRatingTrendSkeleton from "./admin-dashboard-rating-trend/components/skeleton/admin-dashboard-rating-trend-skeleton";
@@ -52,14 +49,11 @@ const AdminDashboardPage = () => {
       >
         <AdminDashboardRatingTrend />
       </ReactQueryBoundary>
-      <ReactQueryBoundary skeleton={<AdminDashboardMatchStatsSkeleton />} errorFallback={AdminDashboardMatchStatsError}>
-        <AdminDashboardMatchStats />
-      </ReactQueryBoundary>
       <ReactQueryBoundary
-        skeleton={<AdminDashboardMatchCoverageSkeleton />}
-        errorFallback={AdminDashboardMatchCoverageError}
+        skeleton={<AdminDashboardMatchOverviewSkeleton />}
+        errorFallback={AdminDashboardMatchOverviewError}
       >
-        <AdminDashboardMatchCoverage />
+        <AdminDashboardMatchOverview />
       </ReactQueryBoundary>
     </AdminGridWrapper>
   );

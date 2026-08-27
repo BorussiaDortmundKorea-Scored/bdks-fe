@@ -1,0 +1,32 @@
+[
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440001",
+    "match_name": "2025/26 분데스리가 vs 바이에른 뮌헨 (홈)",
+    "opponent_name": "바이에른 뮌헨",
+    "match_date": "2026-08-23",
+    "unique_user_count": 14,
+    "total_rating_count": 155,
+    "total_users": 98,
+    "coverage_percent": 14.3
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440002",
+    "match_name": "2025/26 분데스리가 vs 레버쿠젠 (원정)",
+    "opponent_name": "레버쿠젠",
+    "match_date": "2026-04-11",
+    "unique_user_count": 10,
+    "total_rating_count": 74,
+    "total_users": 84,
+    "coverage_percent": 11.9
+  },
+  {
+    "match_id": "550e8400-e29b-41d4-a716-446655440003",
+    "match_name": "2025/26 챔피언스리그 vs 맨체스터시티 (홈)",
+    "opponent_name": "맨체스터시티",
+    "match_date": "2025-11-05",
+    "unique_user_count": 9,
+    "total_rating_count": 71,
+    "total_users": 57,
+    "coverage_percent": 15.8
+  }
+]
