@@ -7,14 +7,14 @@ import userEvent from "@testing-library/user-event";
 import { HttpResponse, http } from "msw";
 import { vi } from "vitest";
 
-import { getAnonymousUserAuthMock, getKakaoUserAuthMock } from "@shared/mocks/constants/user-mock-data";
-import { server } from "@shared/mocks/server";
-import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-
 import PlayerDbErrorFallback from "@players/players-db/components/error/players-db-error-fallback";
 import PlayersDb from "@players/players-db/components/players-db";
 import PlayerDbSkeleton from "@players/players-db/components/skeleton/players-db-skeleton";
 import PlayersDBDummy from "@players/players-db/mocks/players-db-dummy.json";
+
+import { getAnonymousUserAuthMock, getKakaoUserAuthMock } from "@shared/mocks/constants/user-mock-data";
+import { server } from "@shared/mocks/server";
+import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 // 모킹 모듈 가져오기
 const mockUseAuth = vi.fn();
@@ -94,12 +94,12 @@ describe("선수 누적평점 컴포넌트 렌더링 테스트", () => {
   });
 
   // 나머지 테스트들은 로딩 완료 후 실행
-  it("헤더 '선수 DB'가 렌더링 되어야 한다", async () => {
+  it("헤더 '선수 평점'이 렌더링 되어야 한다", async () => {
     await renderAndWaitForLoad(<PlayersDb />);
 
     const headerElement = screen.getByRole("heading", { level: 2 });
     expect(headerElement).toBeInTheDocument();
-    expect(headerElement.textContent).toBe("선수 DB");
+    expect(headerElement.textContent).toBe("선수 평점");
   });
 
   it("목데이터 21명의 선수가 모두 렌더링 되어야 한다", async () => {
