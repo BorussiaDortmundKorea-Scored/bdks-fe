@@ -32,41 +32,31 @@ export default defineConfig({
     trace: "on-first-retry",
   },
 
-  /* Configure projects for major browsers */
+  /*
+   * 렌더링 엔진 기준 최소 커버 (한국 사용자 + 모바일 우선):
+   * - Blink: Chrome/Edge/네이버 웨일/삼성인터넷 → chromium 하나로 커버
+   * - WebKit: iPhone Safari/카카오톡 인앱(iOS) → Mobile Safari로 커버
+   * Firefox(Gecko)·Edge/Chrome 채널(Blink 중복)은 상시 실행에서 제외.
+   *
+   * setup 프로젝트에서 익명로그인 1회 → storageState 저장 → 나머지 프로젝트가 재사용.
+   * 덕분에 테스트 수가 늘어도 dev에 생성되는 유저 수는 (테스트 수와 무관하게) 일정하게 유지됨.
+   */
   projects: [
+    { name: "setup", testMatch: /.*\.setup\.ts/ },
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: { ...devices["Desktop Chrome"], storageState: "e2e/.auth/user.json" },
+      dependencies: ["setup"],
     },
-
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
-
-    /* Test against mobile viewports. */
     {
       name: "Mobile Chrome",
-      use: { ...devices["Pixel 5"] },
+      use: { ...devices["Pixel 5"], storageState: "e2e/.auth/user.json" },
+      dependencies: ["setup"],
     },
     {
       name: "Mobile Safari",
-      use: { ...devices["iPhone 12"] },
-    },
-
-    /* Test against branded browsers. */
-    {
-      name: "Microsoft Edge",
-      use: { ...devices["Desktop Edge"], channel: "msedge" },
-    },
-    {
-      name: "Google Chrome",
-      use: { ...devices["Desktop Chrome"], channel: "chrome" },
+      use: { ...devices["iPhone 12"], storageState: "e2e/.auth/user.json" },
+      dependencies: ["setup"],
     },
   ],
 

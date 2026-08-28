@@ -4,7 +4,7 @@
  */
 const AdminDashboardMatchStatsDetailSkeleton = () => {
   return (
-    <div className="h-[240px] w-full" data-testid="admin-dashboard-match-stats-detail-skeleton">
+    <div className="h-full min-h-[160px] w-full" data-testid="admin-dashboard-match-stats-detail-skeleton">
       <div className="h-full w-full animate-pulse rounded-md bg-white/5" />
     </div>
   );

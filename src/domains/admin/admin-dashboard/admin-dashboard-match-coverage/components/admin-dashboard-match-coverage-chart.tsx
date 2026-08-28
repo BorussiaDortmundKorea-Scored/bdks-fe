@@ -5,6 +5,7 @@
  */
 import { Line } from "react-chartjs-2";
 
+import { type IMatchCoverageItem } from "../api/admin-dashboard-match-coverage-api";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -16,8 +17,6 @@ import {
   Tooltip,
   type TooltipItem,
 } from "chart.js";
-
-import { type IMatchCoverageItem } from "../api/admin-dashboard-match-coverage-api";
 
 // Line 차트 필수 요소 등록
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -113,7 +112,7 @@ const AdminDashboardMatchCoverageChart = ({ data }: IAdminDashboardMatchCoverage
   };
 
   return (
-    <div className="h-[120px] w-full">
+    <div className="h-full min-h-0 w-full">
       <Line data={chartData} options={chartOptions} />
     </div>
   );

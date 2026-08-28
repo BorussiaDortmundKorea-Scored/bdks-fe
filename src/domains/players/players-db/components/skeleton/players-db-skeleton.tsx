@@ -36,7 +36,7 @@ const PlayersDbSkeleton = () => {
                 {/* 평점 정보 skeleton */}
                 <div className="flex items-center gap-[4px]">
                   <div className="bg-background-tertiary h-[12px] w-[25px] animate-pulse rounded"></div>
-                  <span className="text-primary-100 text-xs">/</span>
+                  <span className="text-primary-100 text-yds-c1r">/</span>
                   <div className="bg-background-tertiary h-[12px] w-[25px] animate-pulse rounded"></div>
                 </div>
               </div>

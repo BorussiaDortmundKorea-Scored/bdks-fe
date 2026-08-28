@@ -3,6 +3,31 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [2.1.1] - 2026-08-27
+
+**Branch**: `bdks-v2.1.1-새시즌준비`
+
+### 추가
+
+- feat: 대시보드 와이드 2단 레이아웃 및 사이드패널(트로피·TOP기록)
+- feat: 리그 순위 기능 및 대회 관리 2행 그리드 개편
+- feat: 관리자 대시보드 경기 개요 통합 및 평점 현황 개편
+
+### 변경
+- docs: v2.1.1 새시즌준비 버전 및 변경사항 정리
+- refactor: 트로피 하위기능 분리 및 선수 평점 라벨 변경
+- test: 대시보드 위젯 단위테스트 추가(트로피·TOP기록·리그순위)
+- test: E2E 인증 재사용(storageState) 및 대시보드 스모크 추가
+
+- chore: .mcp.json 추적 제외 및 gitignore 반영
+- refactor: 대시보드·선수·경기 화면 yd-ui 타이포 토큰 통일
+
+### 수정
+
+### 제거
+
+---
+
 ## [1.9.2] - 2026-08-24
 
 **Branch**: `bdks-v1.9.2-대시보드추이차트화및경기일정적재`

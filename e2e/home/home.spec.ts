@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("로그인(메인) 페이지", () => {
+  // 로그인 페이지 검증이므로 저장된 세션을 무시하고 로그아웃 상태로 실행
+  test.use({ storageState: { cookies: [], origins: [] } });
+
   test("페이지 타이틀이 보돌코 스코어드가 보인다", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveTitle("보돌코 스코어드");

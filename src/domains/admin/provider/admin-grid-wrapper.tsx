@@ -21,7 +21,7 @@ const adminMenus = [
   { id: "match", label: "Matches", path: ROUTES.ADMIN_MATCH, icon: Volleyball },
   { id: "team", label: "Teams", path: ROUTES.ADMIN_TEAM, icon: Award },
   { id: "country", label: "Countries", path: ROUTES.ADMIN_COUNTRY, icon: Globe },
-  { id: "competition", label: "Leagues", path: ROUTES.ADMIN_COMPETITION, icon: Trophy },
+  { id: "competition", label: "Competition", path: ROUTES.ADMIN_COMPETITION, icon: Trophy },
   { id: "transfer", label: "Transfers", path: ROUTES.ADMIN_TRANSFER, icon: ArrowLeftRight },
   { id: "user", label: "Users", path: ROUTES.ADMIN_USER, icon: Users },
 ];

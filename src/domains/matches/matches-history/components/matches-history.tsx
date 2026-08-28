@@ -31,15 +31,15 @@ const MatchesHistory = () => {
         {finishMatchLists.map((match) => (
           <li key={match.id} className="w-[180px] shrink-0">
             <Link to={createMatchRatingsPath(match.id)} className="flex w-full flex-col gap-2 hover:cursor-pointer">
-            <img src={CARD_SECTION_IMAGE} alt="Yellow Wall" className="h-[90px] w-[180px] rounded object-cover" />
-            <div className="flex flex-col text-white">
-              <div className="truncate text-sm">
-                도르트문트({match.text_home_away === "HOME" ? "홈" : "원정"}) vs {match.opponent_name}
+              <img src={CARD_SECTION_IMAGE} alt="Yellow Wall" className="h-[90px] w-[180px] rounded object-cover" />
+              <div className="flex flex-col text-white">
+                <div className="text-yds-c1m truncate">
+                  도르트문트({match.text_home_away === "HOME" ? "홈" : "원정"}) vs {match.opponent_name}
+                </div>
+                <div className="text-primary-100 text-yds-c1r">
+                  {match.season} {match.league_name} {match.round_name}
+                </div>
               </div>
-              <div className="text-primary-100 text-xs">
-                {match.season} {match.league_name} {match.round_name}
-              </div>
-            </div>
             </Link>
           </li>
         ))}

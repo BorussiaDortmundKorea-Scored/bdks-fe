@@ -57,6 +57,11 @@ body {
   .bdks-container {
     @apply relative mx-auto flex h-dvh w-[clamp(320px,100vw,450px)] flex-col items-center justify-start px-4;
   }
+  /* 실험: 실제 서비스 화면을 넓게. 좌측 콘텐츠(450px)는 유지하고 우측 카드열을 추가하는 2열용.
+     고정폭이 아니라 max-w로 반응형(태블릿 오버플로 없음) */
+  .bdks-container-wide {
+    @apply relative mx-auto flex h-dvh w-full max-w-[900px] flex-col items-center justify-start px-4;
+  }
   .bdks-admin-container {
     @apply relative mx-auto flex h-auto w-full items-start justify-start gap-4 p-4 md:h-dvh md:w-[1200px];
   }

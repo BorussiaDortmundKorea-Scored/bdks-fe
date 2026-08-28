@@ -43,3 +43,9 @@ stats.html
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# 로컬 MCP 설정(토큰 포함 가능) 추적 제외
+.mcp.json
+
+# Playwright 인증 세션(로컬)
+e2e/.auth/

@@ -3,6 +3,7 @@
  * 기능: 대회 관리 컴포넌트 - 대회 CRUD 기능
  * 프로세스 설명: 대회 목록 조회, 생성, 수정, 삭제 기능 제공
  */
+import { Card } from "@youngduck/yd-ui/Cards";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, Plus, Trash2 } from "lucide-react";
@@ -66,46 +67,48 @@ const AdminCompetition = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
-        <ColGroup>
-          <Col className="w-[200px]" />
-          <Col className="w-[150px]" />
-          <Col className="w-[100px]" />
-        </ColGroup>
-        <THead>
-          <Tr>
-            <Th>대회명</Th>
-            <Th>시즌</Th>
-            <Th>작업</Th>
-          </Tr>
-        </THead>
-        <TBody>
-          {competitions.map((competition) => (
-            <Tr key={competition.id}>
-              <Td>{competition.name}</Td>
-              <Td>{competition.season}</Td>
-              <Td>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => handleOpenEditModal(competition)}
-                    className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
-                    aria-label="수정"
-                  >
-                    <Edit size={16} />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteCompetition(competition.id)}
-                    className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
-                    aria-label="삭제"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              </Td>
+      <Card variant="outlined" className="w-full">
+        <Table scrollable={true} className="md:w-full" scrollClassName="h-[240px] w-full">
+          <ColGroup>
+            <Col className="w-[200px]" />
+            <Col className="w-[150px]" />
+            <Col className="w-[100px]" />
+          </ColGroup>
+          <THead>
+            <Tr>
+              <Th>대회명</Th>
+              <Th>시즌</Th>
+              <Th>작업</Th>
             </Tr>
-          ))}
-        </TBody>
-      </Table>
+          </THead>
+          <TBody>
+            {competitions.map((competition) => (
+              <Tr key={competition.id}>
+                <Td>{competition.name}</Td>
+                <Td>{competition.season}</Td>
+                <Td>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => handleOpenEditModal(competition)}
+                      className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
+                      aria-label="수정"
+                    >
+                      <Edit size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteCompetition(competition.id)}
+                      className="cursor-pointer rounded-md p-1 text-red-400 transition-colors hover:bg-red-500/20 hover:text-white"
+                      aria-label="삭제"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </Td>
+              </Tr>
+            ))}
+          </TBody>
+        </Table>
+      </Card>
     </div>
   );
 };
