@@ -15,6 +15,9 @@
 
 ### 변경
 - docs: v2.1.1 새시즌준비 버전 및 변경사항 정리
+- refactor: 트로피 하위기능 분리 및 선수 평점 라벨 변경
+- test: 대시보드 위젯 단위테스트 추가(트로피·TOP기록·리그순위)
+- test: E2E 인증 재사용(storageState) 및 대시보드 스모크 추가
 
 - chore: .mcp.json 추적 제외 및 gitignore 반영
 - refactor: 대시보드·선수·경기 화면 yd-ui 타이포 토큰 통일
