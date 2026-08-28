@@ -1,0 +1,38 @@
+[
+  {
+    "competition": "BL1",
+    "season": "2026-27",
+    "position": 1,
+    "team_name": "바이에른 뮌헨",
+    "team_tla": "FCB",
+    "fd_team_id": 5,
+    "played": 3,
+    "won": 3,
+    "draw": 0,
+    "lost": 0,
+    "goals_for": 9,
+    "goals_against": 2,
+    "goal_difference": 7,
+    "points": 9,
+    "is_our_team": false,
+    "updated_at": "2026-08-27T00:00:00Z"
+  },
+  {
+    "competition": "BL1",
+    "season": "2026-27",
+    "position": 2,
+    "team_name": "도르트문트",
+    "team_tla": "BVB",
+    "fd_team_id": 4,
+    "played": 3,
+    "won": 2,
+    "draw": 1,
+    "lost": 0,
+    "goals_for": 7,
+    "goals_against": 3,
+    "goal_difference": 4,
+    "points": 7,
+    "is_our_team": true,
+    "updated_at": "2026-08-27T00:00:00Z"
+  }
+]

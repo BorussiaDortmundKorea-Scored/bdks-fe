@@ -1,3 +1,4 @@
+import { AdminStandingsHandlers } from "@admin/admin-competition/admin-standings/mocks/admin-standings-handler";
 import { AdminDashboardMatchOverviewHandlers } from "@admin/admin-dashboard/admin-dashboard-match-overview/mocks/admin-dashboard-match-overview-handler";
 import { AdminDashboardMatchStatsHandlers } from "@admin/admin-dashboard/admin-dashboard-match-stats/mocks/admin-dashboard-match-stats-handler";
 import { AdminDashboardRatingTrendHandlers } from "@admin/admin-dashboard/admin-dashboard-rating-trend/mocks/admin-dashboard-rating-trend-handler";
@@ -10,6 +11,8 @@ import { AuthInfoProfileCardHandlers } from "@auth/auth-info/auth-info-profile-c
 import { TransferMarketHandlers } from "@auth/auth-info/auth-info-quick-links/transfer-market/mocks/transfer-market-handler";
 import { UserRankingHandlers } from "@auth/auth-info/auth-info-quick-links/user-ranking/mocks/user-ranking-handler";
 import { ViewingCheckHandlers } from "@auth/auth-info/auth-info-quick-links/viewing-check/mocks/viewing-check-handler";
+
+import { DashboardTopPlayersHandlers } from "@dashboard/dashboard-top-players/mocks/dashboard-top-players-handler";
 
 import { MatchInfoHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/match-info-handler";
 import { MatchesHistoryPlayersRatingHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/matches-history-players-rating-handler";
@@ -31,6 +34,8 @@ export const handlers = [
   ...AdminDashboardUserLoginTypeHandlers,
   ...AdminMatchLineupHandlers,
   ...AdminMatchLineupSubstitutionHandlers,
+  ...AdminStandingsHandlers,
+  ...DashboardTopPlayersHandlers,
   ...AuthInfoProfileCardHandlers,
   ...TransferMarketHandlers,
   ...UserRankingHandlers,
