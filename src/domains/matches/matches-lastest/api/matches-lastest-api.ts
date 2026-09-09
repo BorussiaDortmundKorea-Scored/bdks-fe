@@ -1,7 +1,7 @@
 import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
-import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
+import { type LineupType } from "@shared/types/match-lineup.types";
 
 export interface IMatchesLastestPlayer {
   player_id: string; // UUID 타입
@@ -13,8 +13,10 @@ export interface IMatchesLastestPlayer {
   position_detail_name: string;
   lineup_type: LineupType;
   is_captain: boolean;
-  substitution_status: SubstitutionStatus;
-  substitution_partner_name: string | null;
+  sub_in_minute: number | null;
+  sub_in_partner_name: string | null;
+  sub_out_minute: number | null;
+  sub_out_partner_name: string | null;
   yellow_cards: number;
   is_sent_off: boolean;
   goals: number;

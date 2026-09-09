@@ -23,6 +23,8 @@ const MatchesHistoryPlayersRatingItem = ({ player }: MatchesHistoryPlayersRating
   // 복잡한 조건에 이름 붙이기
   const hasGoals = player.goals > 0;
   const hasYellowCards = player.yellow_cards > 0;
+  const isSubstitutedIn = player.sub_in_minute !== null;
+  const isSubstitutedOut = player.sub_out_minute !== null;
 
   return (
     <li className="flex h-[72px] w-full items-center justify-between gap-4 px-2 odd:bg-[#20242D]">
@@ -47,19 +49,17 @@ const MatchesHistoryPlayersRatingItem = ({ player }: MatchesHistoryPlayersRating
                 ))}
               </div>
             ) : null}
-            {player.substitution_status === "SUBSTITUTED_IN" ? (
+            {/* 교체 투입/아웃은 서로 배타적이지 않다 (투입됐다가 다시 교체된 선수) */}
+            {isSubstitutedIn ? (
               <div className="flex items-center gap-0.5">
                 <img src={EXCHANGE_IN_IMAGE} alt="substituted in" className="h-6 w-6" />
-                {player.substitution_minute !== null ? (
-                  <span className="text-yds-c2m text-primary-100">{player.substitution_minute}'</span>
-                ) : null}
+                <span className="text-yds-c2m text-primary-100">{player.sub_in_minute}'</span>
               </div>
-            ) : player.substitution_status === "SUBSTITUTED_OUT" ? (
+            ) : null}
+            {isSubstitutedOut ? (
               <div className="flex items-center gap-0.5">
                 <img src={EXCHANGE_OUT_IMAGE} alt="substituted out" className="h-6 w-6" />
-                {player.substitution_minute !== null ? (
-                  <span className="text-yds-c2m text-primary-100">{player.substitution_minute}'</span>
-                ) : null}
+                <span className="text-yds-c2m text-primary-100">{player.sub_out_minute}'</span>
               </div>
             ) : null}
           </div>

@@ -129,7 +129,7 @@ const PlayerCard = ({
 }) => {
   const { toast } = useOverlay();
 
-  const isUnplayedPlayer = player.lineup_type === "BENCH" && player.substitution_status !== "SUBSTITUTED_IN";
+  const isUnplayedPlayer = player.lineup_type === "BENCH" && player.sub_in_minute === null;
 
   const handleClick = (e: React.MouseEvent) => {
     if (isUnplayedPlayer) {

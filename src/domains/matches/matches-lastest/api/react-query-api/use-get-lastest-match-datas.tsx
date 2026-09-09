@@ -83,8 +83,8 @@ export function useGetLatestMatchDatas() {
 
   // 교체 명단: 출전후 교체 + 비출전
   const notPlayingPlayers = formationResult.data.filter((player) => !player.is_playing);
-  const substitutedOutPlayers = notPlayingPlayers.filter((player) => player.substitution_status === "SUBSTITUTED_OUT");
-  const unusedPlayers = notPlayingPlayers.filter((player) => player.substitution_status === "NONE");
+  const substitutedOutPlayers = notPlayingPlayers.filter((player) => player.sub_out_minute !== null);
+  const unusedPlayers = notPlayingPlayers.filter((player) => player.sub_out_minute === null);
 
   return {
     playingMembers, // 현재 뛰고 있는 선수들 (1-5선)
