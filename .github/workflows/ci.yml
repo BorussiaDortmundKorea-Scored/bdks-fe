@@ -1,0 +1,64 @@
+name: CI
+
+# PR 과 main 푸시에서 검증한다.
+# 로컬 husky pre-push 에서 하던 테스트·빌드를 여기로 옮겼다.
+# 로컬 훅은 워킹트리(미커밋 작업 포함)를 보지만 CI 는 커밋된 내용만 보므로,
+# 무관한 작업 때문에 푸시가 막히는 일이 없고 리뷰어도 결과를 볼 수 있다.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# 같은 브랜치에 새 푸시가 오면 진행 중인 실행을 취소한다
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: 린트·타입·테스트·빌드
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: 의존성 설치
+        run: pnpm install --frozen-lockfile
+
+      - name: 린트
+        run: pnpm run lint
+
+      - name: 타입체크
+        run: pnpm run type-check
+
+      - name: 테스트
+        run: pnpm run test
+
+      - name: 빌드
+        run: pnpm run build:dev
+
+  storybook:
+    name: 스토리북 빌드
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: 의존성 설치
+        run: pnpm install --frozen-lockfile
+
+      - name: 스토리북 빌드
+        run: pnpm run build-storybook

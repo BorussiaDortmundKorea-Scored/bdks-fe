@@ -3,6 +3,28 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [2.1.3] - 2026-09-09
+
+**Branch**: `bdks-v2.1.3-CI워크플로우도입및훅경량화`
+
+> 머지 후 로컬에서 수동 실행하던 릴리스 태깅을 CI로 옮기고, husky pre-push 검증을 GitHub Actions로 이관
+
+### 추가
+
+### 변경
+
+- ci: PR 검증 및 머지 시 버전 태그 자동화 도입
+- build: husky 훅 경량화 및 deprecated 스크립트 정리
+- docs: v2.1.3 CI 워크플로우 도입 버전 정리
+
+### 수정
+
+- fix: lint 에러 및 빌드산출물 검사 제외 처리
+
+### 제거
+
+---
+
 ## [2.1.2] - 2026-09-09
 
 **Branch**: `bdks-v2.1.2-교체기록투입아웃분리`

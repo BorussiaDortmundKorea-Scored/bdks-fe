@@ -1,0 +1,38 @@
+name: Tag on merge
+
+# main 에 package.json 이 바뀐 채로 머지되면 그 버전의 태그를 자동으로 남긴다.
+# 이전에는 머지 후 로컬에서 `pnpm run release` 를 수동 실행했는데,
+# 빠뜨려도 아무 신호가 없어서 v1.7.2 ~ v2.1.1 열두 버전의 태그가 유실됐다.
+on:
+  push:
+    branches: [main]
+    paths: ["package.json"]
+
+jobs:
+  tag:
+    name: 버전 태그 생성
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 버전 읽기
+        id: version
+        run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: 태그 생성 및 푸시
+        env:
+          TAG: v${{ steps.version.outputs.value }}
+        run: |
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "$TAG 태그가 이미 있어 건너뜁니다."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "$TAG"
+          git push origin "$TAG"
+          echo "$TAG 태그를 남겼습니다." >> "$GITHUB_STEP_SUMMARY"

@@ -11,7 +11,17 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
   [
     {
-      ignores: ["dist/**", "build/**", ".next/**", "node_modules/**"],
+      // 빌드 산출물은 검사 대상이 아니다 (로컬에 남아 있으면 lint 결과를 오염시킨다)
+      ignores: [
+        "dist/**",
+        "build/**",
+        ".next/**",
+        "node_modules/**",
+        "storybook-static/**",
+        "coverage/**",
+        "playwright-report/**",
+        "test-results/**",
+      ],
     },
     {
       files: ["**/*.{ts,tsx}"],
@@ -33,7 +43,7 @@ export default tseslint.config(
       rules: {
         ...reactHooks.configs.recommended.rules,
         "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-        'no-console': 'warn',
+        "no-console": "warn",
         // React Query 관련 규칙
         "@tanstack/query/exhaustive-deps": "error",
         "@tanstack/query/no-rest-destructuring": "warn",
