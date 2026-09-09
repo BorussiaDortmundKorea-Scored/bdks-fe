@@ -3,7 +3,6 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import React from "react";
 import { useParams } from "react-router-dom";
 
 import { useGetMatchesHistoryPlayersRatingSuspense } from "../api/react-query-api/use-get-matches-history-players-rating-suspense";
@@ -12,9 +11,7 @@ import MatchesHistoryPlayersRatingWrapper from "./wrapper/matches-history-player
 
 // import { Camera } from "lucide-react";
 
-interface IMatchesHistoryPlayersRating {}
-
-const MatchesHistoryPlayersRating: React.FC<IMatchesHistoryPlayersRating> = () => {
+const MatchesHistoryPlayersRating = () => {
   //SECTION HOOK호출 영역
   const { matchId } = useParams();
   const { data: matchesHistoryPlayersRating, matchInfo } = useGetMatchesHistoryPlayersRatingSuspense(matchId as string);
