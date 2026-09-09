@@ -16,6 +16,7 @@ import { AdminMatchLineupAddModal } from "@admin/admin-match/admin-match-lineup/
 import { AdminMatchLineupBulkAddModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-bulk-add-modal";
 import { AdminMatchLineupEditModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-edit-modal";
 import { AdminMatchLineupSubstitutionModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-substitution-modal";
+
 import { ROUTES } from "@shared/constants/routes";
 
 const AdminMatchLineup = () => {
@@ -71,8 +72,12 @@ const AdminMatchLineup = () => {
     });
   };
 
+  // 현재 그라운드에 있는 선수만 교체 아웃될 수 있다 (선발이거나, 이미 교체 투입된 선수)
+  const isOnPitch = (lineup: IMatchLineup) =>
+    (lineup.lineup_type === "STARTING" || lineup.sub_in_minute !== null) && lineup.sub_out_minute === null;
+
   const handleOpenSubstitutionModal = (lineup: IMatchLineup) => {
-    if (lineup.lineup_type !== "STARTING") return;
+    if (!isOnPitch(lineup)) return;
     overlay.modalOpen({
       content: (onClose) => <AdminMatchLineupSubstitutionModal matchId={matchId} lineup={lineup} onClose={onClose} />,
       config: { size: "sm" },
@@ -83,20 +88,6 @@ const AdminMatchLineup = () => {
     return type === "STARTING" ? "선발" : "벤치";
   };
 
-  const getSubstitutionStatusText = (status: string) => {
-    switch (status) {
-      case "IN":
-        return "교체투입";
-      case "OUT":
-        return "교체아웃";
-      case "SUBSTITUTED_IN":
-        return "교체투입";
-      case "SUBSTITUTED_OUT":
-        return "교체아웃";
-      default:
-        return "없음";
-    }
-  };
   //!SECTION 메서드 영역
 
   return (
@@ -107,7 +98,7 @@ const AdminMatchLineup = () => {
           <button
             type="button"
             onClick={handleBackToMatchList}
-            className="flex h-8 w-8 items-center justify-center text-primary-100"
+            className="text-primary-100 flex h-8 w-8 items-center justify-center"
             aria-label="경기 목록으로 이동"
           >
             <ArrowLeft size={24} />
@@ -171,8 +162,7 @@ const AdminMatchLineup = () => {
                 {lineup.is_captain && <Star size={16} className="text-yellow-500" />}
               </Td>
               <Td className="whitespace-nowrap">
-                {getSubstitutionStatusText(lineup.substitution_status ?? "")}
-                {lineup.substitution_minute && ` (${lineup.substitution_minute}')`}
+                <SubstitutionCell lineup={lineup} />
               </Td>
               <Td className="whitespace-nowrap">
                 {lineup.goals}골 / {lineup.assists}어시
@@ -183,7 +173,7 @@ const AdminMatchLineup = () => {
               </Td>
               <Td className="whitespace-nowrap">
                 <div className="flex items-center gap-3">
-                  {lineup.lineup_type === "STARTING" && (
+                  {isOnPitch(lineup) && (
                     <button
                       onClick={() => handleOpenSubstitutionModal(lineup)}
                       className="text-primary-100 hover:bg-primary-100/20 cursor-pointer rounded-md p-1 transition-colors hover:text-white"
@@ -217,3 +207,26 @@ const AdminMatchLineup = () => {
 };
 
 export default AdminMatchLineup;
+
+/** 한 선수의 교체 투입/아웃 두 시점을 함께 보여준다 */
+const SubstitutionCell = ({ lineup }: { lineup: IMatchLineup }) => {
+  const hasSubIn = lineup.sub_in_minute !== null;
+  const hasSubOut = lineup.sub_out_minute !== null;
+
+  if (!hasSubIn && !hasSubOut) return <span>없음</span>;
+
+  return (
+    <div className="flex flex-col gap-0.5">
+      {hasSubIn && (
+        <span className="text-green-400">
+          IN {lineup.sub_in_minute}'{lineup.sub_in_partner_name && ` (${lineup.sub_in_partner_name})`}
+        </span>
+      )}
+      {hasSubOut && (
+        <span className="text-red-400">
+          OUT {lineup.sub_out_minute}'{lineup.sub_out_partner_name && ` (${lineup.sub_out_partner_name})`}
+        </span>
+      )}
+    </div>
+  );
+};
