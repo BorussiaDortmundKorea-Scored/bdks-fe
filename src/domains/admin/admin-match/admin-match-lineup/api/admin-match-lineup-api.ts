@@ -10,14 +10,14 @@ export type IMatchLineup = IMatchLineupEntity & {
   player_korean_name: string;
   position_code: string | null;
   position_detail_name: string | null;
+  sub_in_partner_name: string | null;
+  sub_out_partner_name: string | null;
 };
 
-export type ICreateMatchLineupRequest =
-  Pick<IMatchLineupEntity, "match_id" | "player_id"> &
+export type ICreateMatchLineupRequest = Pick<IMatchLineupEntity, "match_id" | "player_id"> &
   Partial<Omit<IMatchLineupEntity, "id" | "match_id" | "player_id" | "created_at" | "updated_at">>;
 
-export type IUpdateMatchLineupRequest =
-  Pick<IMatchLineupEntity, "id"> &
+export type IUpdateMatchLineupRequest = Pick<IMatchLineupEntity, "id"> &
   Partial<Omit<IMatchLineupEntity, "id" | "created_at" | "updated_at">>;
 
 // 선수 목록 조회 (라인업에서 선택하기 위한)
@@ -60,9 +60,10 @@ export const createMatchLineup = async (lineup: ICreateMatchLineupRequest): Prom
       p_position_id: lineup.position_id || null,
       p_lineup_type: lineup.lineup_type || "STARTING",
       p_is_captain: lineup.is_captain || false,
-      p_substitution_status: lineup.substitution_status || "NONE",
-      p_substitution_minute: lineup.substitution_minute || null,
-      p_substitution_partner_id: lineup.substitution_partner_id || null,
+      p_sub_in_minute: lineup.sub_in_minute ?? null,
+      p_sub_in_partner_id: lineup.sub_in_partner_id || null,
+      p_sub_out_minute: lineup.sub_out_minute ?? null,
+      p_sub_out_partner_id: lineup.sub_out_partner_id || null,
       p_yellow_cards: lineup.yellow_cards || 0,
       p_red_card_minute: lineup.red_card_minute || null,
       p_is_sent_off: lineup.is_sent_off || false,
@@ -91,9 +92,12 @@ export const updateMatchLineup = async (lineup: IUpdateMatchLineupRequest): Prom
       p_position_id: lineup.position_id,
       p_lineup_type: lineup.lineup_type,
       p_is_captain: lineup.is_captain,
-      p_substitution_status: lineup.substitution_status,
-      p_substitution_minute: lineup.substitution_minute,
-      p_substitution_partner_id: lineup.substitution_partner_id,
+      // 교체 4개 값은 폼이 항상 전체 상태를 보내므로 그대로 덮어쓴다(비우기 가능)
+      p_sync_substitution: true,
+      p_sub_in_minute: lineup.sub_in_minute ?? null,
+      p_sub_in_partner_id: lineup.sub_in_partner_id ?? null,
+      p_sub_out_minute: lineup.sub_out_minute ?? null,
+      p_sub_out_partner_id: lineup.sub_out_partner_id ?? null,
       p_yellow_cards: lineup.yellow_cards,
       p_red_card_minute: lineup.red_card_minute,
       p_is_sent_off: lineup.is_sent_off,

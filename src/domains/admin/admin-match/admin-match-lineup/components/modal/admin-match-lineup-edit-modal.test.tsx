@@ -35,9 +35,10 @@ const mockLineup = {
   position_id: "pos-1",
   lineup_type: "STARTING",
   is_captain: false,
-  substitution_status: "NONE",
-  substitution_minute: null,
-  substitution_partner_id: null,
+  sub_in_minute: null,
+  sub_in_partner_id: null,
+  sub_out_minute: null,
+  sub_out_partner_id: null,
   yellow_cards: 0,
   red_card_minute: null,
   is_sent_off: false,
@@ -47,6 +48,8 @@ const mockLineup = {
   player_korean_name: "선수일",
   position_code: "CB",
   position_detail_name: "센터백",
+  sub_in_partner_name: null,
+  sub_out_partner_name: null,
 } as unknown as IMatchLineup;
 
 describe("AdminMatchLineupEditModal", () => {

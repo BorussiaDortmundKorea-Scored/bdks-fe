@@ -137,4 +137,26 @@ describe("AdminMatchLineup 컴포넌트 기능 테스트", () => {
     expect(await screen.findByText(/선수를 교체합니다/)).toBeInTheDocument();
     expect(await screen.findByText("교체 적용")).toBeInTheDocument();
   });
+
+  it("교체 투입 후 다시 교체 아웃된 선수는 두 시점이 모두 표시된다", async () => {
+    renderWithQueryClient(["/admin/match/uuid/lineup"]);
+
+    const playerName = await screen.findByText("에단 은와네리");
+    const row = playerName.closest("tr");
+
+    expect(within(row!).getByText(/IN 27'/)).toBeInTheDocument();
+    expect(within(row!).getByText(/OUT 82'/)).toBeInTheDocument();
+    // 이미 교체 아웃된 선수는 더 이상 교체할 수 없다
+    expect(within(row!).queryByLabelText("교체")).not.toBeInTheDocument();
+  });
+
+  it("교체로 투입돼 뛰고 있는 벤치 선수도 교체할 수 있다", async () => {
+    renderWithQueryClient(["/admin/match/uuid/lineup"]);
+
+    const playerName = await screen.findByText("카니 추쿠에메카");
+    const row = playerName.closest("tr");
+
+    expect(within(row!).getByText(/IN 82'/)).toBeInTheDocument();
+    expect(within(row!).getByLabelText("교체")).toBeInTheDocument();
+  });
 });

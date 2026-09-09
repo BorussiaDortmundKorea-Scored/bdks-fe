@@ -11,8 +11,9 @@ import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/adm
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
 import { useGetAllPositionsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-positions-suspense";
 import { useUpdateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-update-match-lineup";
-import { type LineupType, type SubstitutionStatus } from "@shared/types/match-lineup.types";
+
 import { type IMatchLineupEntity } from "@shared/types/entities/match-lineup.entity";
+import { type LineupType } from "@shared/types/match-lineup.types";
 
 interface IAdminMatchLineupEditModal {
   matchId: string;
@@ -28,14 +29,28 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-  const [formData, setFormData] = useState<Pick<IMatchLineupEntity, "player_id" | "position_id" | "lineup_type" | "is_captain" | "substitution_status" | "substitution_minute" | "substitution_partner_id" | "yellow_cards" | "red_card_minute" | "is_sent_off" | "goals" | "assists">>({
+  const [formData, setFormData] = useState<
+    Pick<
+      IMatchLineupEntity,
+      | "player_id"
+      | "position_id"
+      | "lineup_type"
+      | "is_captain"
+      | "sub_in_minute"
+      | "sub_out_minute"
+      | "yellow_cards"
+      | "red_card_minute"
+      | "is_sent_off"
+      | "goals"
+      | "assists"
+    >
+  >({
     player_id: "",
     position_id: "",
     lineup_type: "STARTING",
-    is_captain: false ,
-    substitution_status: "NONE",
-    substitution_minute: null,
-    substitution_partner_id: "",
+    is_captain: false,
+    sub_in_minute: null,
+    sub_out_minute: null,
     yellow_cards: 0,
     red_card_minute: null,
     is_sent_off: false,
@@ -67,15 +82,6 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
     [],
   );
 
-  const substitutionStatusOptions = useMemo(
-    () => [
-      { label: "NONE", value: "없음" },
-      { label: "SUBSTITUTED_IN", value: "교체투입" },
-      { label: "SUBSTITUTED_OUT", value: "교체아웃" },
-    ],
-    [],
-  );
-
   const getPlayerValueById = (id: string) => playerOptions.find((o) => o.label === id)?.value;
   const getPositionValueById = (id: string) => positionOptions.find((o) => o.label === id)?.value;
 
@@ -93,20 +99,15 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
     options: lineupTypeOptions,
     defaultValue: lineup ? (lineup.lineup_type === "STARTING" ? "선발" : "벤치") : undefined,
   });
-  const editSubStatusHook = useSelectBox({
-    options: substitutionStatusOptions,
-    defaultValue: lineup
-      ? lineup.substitution_status === "NONE"
-        ? "없음"
-        : lineup.substitution_status === "SUBSTITUTED_IN"
-          ? "교체투입"
-          : "교체아웃"
-      : undefined,
-  });
-  const editSubPartnerHook = useSelectBox({
+  const editSubInPartnerHook = useSelectBox({
     options: playerOptions,
     search: true,
-    defaultValue: lineup && lineup.substitution_partner_id ? getPlayerValueById(lineup.substitution_partner_id) : undefined,
+    defaultValue: lineup.sub_in_partner_id ? getPlayerValueById(lineup.sub_in_partner_id) : undefined,
+  });
+  const editSubOutPartnerHook = useSelectBox({
+    options: playerOptions,
+    search: true,
+    defaultValue: lineup.sub_out_partner_id ? getPlayerValueById(lineup.sub_out_partner_id) : undefined,
   });
   //!SECTION SelectBox 옵션/훅
 
@@ -117,9 +118,8 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
       position_id: lineup.position_id || "",
       lineup_type: lineup.lineup_type,
       is_captain: lineup.is_captain,
-      substitution_status: lineup.substitution_status,
-      substitution_minute: lineup.substitution_minute,
-      substitution_partner_id: lineup.substitution_partner_id || "",
+      sub_in_minute: lineup.sub_in_minute,
+      sub_out_minute: lineup.sub_out_minute,
       yellow_cards: lineup.yellow_cards,
       red_card_minute: lineup.red_card_minute,
       is_sent_off: lineup.is_sent_off,
@@ -136,10 +136,10 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
       position_id: (editPositionHook.label as string) || formData.position_id || undefined,
       lineup_type: (editLineupTypeHook.label as LineupType) || formData.lineup_type,
       is_captain: formData.is_captain,
-      substitution_status:
-        (editSubStatusHook.label as SubstitutionStatus) || formData.substitution_status,
-      substitution_minute: formData.substitution_minute || undefined,
-      substitution_partner_id: (editSubPartnerHook.label as string) || formData.substitution_partner_id || undefined,
+      sub_in_minute: formData.sub_in_minute,
+      sub_in_partner_id: (editSubInPartnerHook.label as string) || null,
+      sub_out_minute: formData.sub_out_minute,
+      sub_out_partner_id: (editSubOutPartnerHook.label as string) || null,
       yellow_cards: formData.yellow_cards,
       red_card_minute: formData.red_card_minute || undefined,
       is_sent_off: formData.is_sent_off,
@@ -155,9 +155,8 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
       position_id: "",
       lineup_type: "STARTING",
       is_captain: false,
-      substitution_status: "NONE",
-      substitution_minute: null,
-      substitution_partner_id: "",
+      sub_in_minute: null,
+      sub_out_minute: null,
       yellow_cards: 0,
       red_card_minute: null,
       is_sent_off: false,
@@ -190,30 +189,43 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
           value="주장"
           shape="square"
         />
+        {/* 교체는 투입/아웃 두 시점을 각각 입력한다. 비워두면 해당 교체가 없는 것 */}
         <div>
-          <label className="text-yds-b1 text-primary-100">교체 상태</label>
-          <SelectBox size="full" selectBoxHook={editSubStatusHook} />
-        </div>
-        {(editSubStatusHook.label === "SUBSTITUTED_IN" || editSubStatusHook.label === "SUBSTITUTED_OUT") && (
-          <div>
-            <label className="text-yds-b1 text-primary-100">교체 시간 (분)</label>
-            <NumberInput
-              min={1}
-              max={120}
-              value={formData.substitution_minute != null ? String(formData.substitution_minute) : ""}
-              onValueChange={(value: string) =>
-                setFormData({ ...formData, substitution_minute: value === "" ? null : Number(value) })
-              }
-              size="full"
-              align="left"
-              placeholder="예: 67"
-            />
-            <div className="mt-3">
-              <label className="text-yds-b1 text-primary-100">교체 대상 선수</label>
-              <SelectBox size="full" selectBoxHook={editSubPartnerHook} />
-            </div>
+          <label className="text-yds-b1 text-primary-100">교체 투입 시간 (분)</label>
+          <NumberInput
+            min={1}
+            max={120}
+            value={formData.sub_in_minute != null ? String(formData.sub_in_minute) : ""}
+            onValueChange={(value: string) =>
+              setFormData({ ...formData, sub_in_minute: value === "" ? null : Number(value) })
+            }
+            size="full"
+            align="left"
+            placeholder="예: 27"
+          />
+          <div className="mt-3">
+            <label className="text-yds-b1 text-primary-100">대신 들어간 선수</label>
+            <SelectBox size="full" selectBoxHook={editSubInPartnerHook} />
           </div>
-        )}
+        </div>
+        <div>
+          <label className="text-yds-b1 text-primary-100">교체 아웃 시간 (분)</label>
+          <NumberInput
+            min={1}
+            max={120}
+            value={formData.sub_out_minute != null ? String(formData.sub_out_minute) : ""}
+            onValueChange={(value: string) =>
+              setFormData({ ...formData, sub_out_minute: value === "" ? null : Number(value) })
+            }
+            size="full"
+            align="left"
+            placeholder="예: 82"
+          />
+          <div className="mt-3">
+            <label className="text-yds-b1 text-primary-100">대신 들어온 선수</label>
+            <SelectBox size="full" selectBoxHook={editSubOutPartnerHook} />
+          </div>
+        </div>
         <div className="grid grid-cols-2 gap-2">
           <div>
             <label className="text-yds-b1 text-primary-100">골</label>
@@ -244,7 +256,9 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
             min={0}
             max={2}
             value={String(formData.yellow_cards)}
-            onValueChange={(value: string) => setFormData({ ...formData, yellow_cards: value === "" ? 0 : Number(value) })}
+            onValueChange={(value: string) =>
+              setFormData({ ...formData, yellow_cards: value === "" ? 0 : Number(value) })
+            }
             size="full"
             align="left"
             placeholder="0"
@@ -284,4 +298,3 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
     </div>
   );
 };
-
