@@ -1,7 +1,4 @@
 echo "🔎 보돌코스코어드 커밋 전 lint-staged 실행 중..."
 npx pnpm run lint-staged || { echo "❌ lint-staged 검증 실패!"; exit 1; }
 
-echo "🔍 보돌코스코어드 커밋 전 타입체크 실행 중..."
-npx pnpm run type-check || { echo "❌ 타입체크 실패!"; exit 1; }
-
-echo "✅ 커밋 전 검증 완료!"
+echo "✅ 커밋 전 검증 완료! (타입체크·테스트·빌드는 CI에서 수행)"
