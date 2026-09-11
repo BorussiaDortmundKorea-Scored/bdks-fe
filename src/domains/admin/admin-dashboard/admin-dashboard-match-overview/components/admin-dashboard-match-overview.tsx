@@ -4,8 +4,6 @@
  * 프로세스 설명: get_match_overview 한 번 조회 → 참여율(Line) / 입력 현황(Bar+드릴다운) 두 페이지로 렌더.
  *              두 페이지가 같은 경기 집합/정렬을 공유한다.
  */
-import { useState } from "react";
-
 import { useGetMatchOverview } from "../api/react-query-api/use-get-match-overview";
 import { MATCH_OVERVIEW_CARD_CLASS } from "./wrapper/admin-dashboard-match-overview-wrapper";
 import { PagedCard } from "@youngduck/yd-ui/Cards";
@@ -15,17 +13,10 @@ import AdminDashboardMatchCoverageChart from "@admin/admin-dashboard/admin-dashb
 import { type IMatchStatsData } from "@admin/admin-dashboard/admin-dashboard-match-stats/api/admin-dashboard-match-stats-api";
 import AdminDashboardMatchStatsView from "@admin/admin-dashboard/admin-dashboard-match-stats/components/admin-dashboard-match-stats-view";
 
-// 페이지별 서브타이틀 (헤더 하단, 현재 페이지에 따라 변경)
-const PAGE_SUBTITLES = ["참여율", "개수"] as const;
-
 const AdminDashboardMatchOverview = () => {
   //SECTION HOOK호출 영역
   const overview = useGetMatchOverview();
   //!SECTION HOOK호출 영역
-
-  //SECTION 상태값 영역 (PagedCard 제어 모드: 현재 페이지 추적 → 서브타이틀 반영)
-  const [page, setPage] = useState(0);
-  //!SECTION 상태값 영역
 
   //SECTION 상태값 영역
   // 두 페이지 정렬 통일: 날짜 오름차순(과거→최신, coverage/rating-trend와 동일)
@@ -55,14 +46,10 @@ const AdminDashboardMatchOverview = () => {
   //!SECTION 상태값 영역
 
   return (
-    <PagedCard variant="outlined" className={MATCH_OVERVIEW_CARD_CLASS} page={page} onPageChange={setPage}>
-      <PagedCard.Header>
-        <div className="flex min-w-0 flex-col">
-          <span className="truncate">경기별 평점</span>
-          <span className="text-yds-c1m text-primary-100">{PAGE_SUBTITLES[page]}</span>
-        </div>
-      </PagedCard.Header>
-      <PagedCard.Page className="flex h-full flex-col">
+    <PagedCard variant="outlined" className={MATCH_OVERVIEW_CARD_CLASS}>
+      <PagedCard.Header>경기별 평점 현황</PagedCard.Header>
+      <PagedCard.Page className="flex h-full flex-col gap-2">
+        <span className="text-yds-c1m text-primary-100">참여율</span>
         {coverageData.length === 0 ? (
           <p className="text-yds-c1m text-primary-100">평점 데이터가 있는 경기가 없습니다.</p>
         ) : (
@@ -71,8 +58,11 @@ const AdminDashboardMatchOverview = () => {
           </div>
         )}
       </PagedCard.Page>
-      <PagedCard.Page className="h-full">
-        <AdminDashboardMatchStatsView data={statsData} />
+      <PagedCard.Page className="flex h-full flex-col gap-2">
+        <span className="text-yds-c1m text-primary-100">개수</span>
+        <div className="min-h-0 flex-1">
+          <AdminDashboardMatchStatsView data={statsData} />
+        </div>
       </PagedCard.Page>
     </PagedCard>
   );

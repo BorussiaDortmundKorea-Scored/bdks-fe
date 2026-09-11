@@ -64,9 +64,9 @@ describe("경기 평점 현황 통합 카드 렌더링 테스트", () => {
       expect(screen.queryByTestId("admin-dashboard-match-overview-skeleton")).not.toBeInTheDocument();
     });
 
-    // 단일 헤더(제목 + 현재 페이지 서브타이틀) + 페이지 2개 → dot 2개
-    expect(screen.getByText("경기별 평점")).toBeInTheDocument();
-    expect(screen.getByText("참여율")).toBeInTheDocument(); // 초기 페이지(참여율) 서브타이틀
+    // 단일 헤더 + 페이지 2개 → dot 2개. 서브타이틀은 각 페이지 안에 있다.
+    expect(screen.getByText("경기별 평점 현황")).toBeInTheDocument();
+    expect(screen.getByText("참여율")).toBeInTheDocument(); // 첫 페이지 서브타이틀
     expect(screen.getAllByRole("tab")).toHaveLength(2);
   });
 
