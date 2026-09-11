@@ -1,0 +1,42 @@
+[
+  {
+    "id": "660e8400-e29b-41d4-a716-556655440001",
+    "match_date": "2026-09-13",
+    "match_start_time": "2026-09-13T13:30:00+00:00",
+    "text_home_away": "HOME",
+    "round_name": "3라운드",
+    "season": "2026/27",
+    "league_name": "분데스리가",
+    "opponent_name": "우니온 베를린"
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-556655440002",
+    "match_date": "2026-09-20",
+    "match_start_time": "2026-09-20T17:00:00+00:00",
+    "text_home_away": "AWAY",
+    "round_name": "4라운드",
+    "season": "2026/27",
+    "league_name": "분데스리가",
+    "opponent_name": "볼프스부르크"
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-556655440003",
+    "match_date": "2026-09-24",
+    "match_start_time": null,
+    "text_home_away": "HOME",
+    "round_name": "리그페이즈 1",
+    "season": "2026/27",
+    "league_name": "챔피언스리그",
+    "opponent_name": "인터 밀란"
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-556655440004",
+    "match_date": "2026-09-27",
+    "match_start_time": null,
+    "text_home_away": "AWAY",
+    "round_name": "5라운드",
+    "season": "2026/27",
+    "league_name": "분데스리가",
+    "opponent_name": "묀헨글라트바흐"
+  }
+]

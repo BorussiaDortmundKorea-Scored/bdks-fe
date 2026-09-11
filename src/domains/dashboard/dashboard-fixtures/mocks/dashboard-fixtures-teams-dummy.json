@@ -1,0 +1,29 @@
+[
+  {
+    "id": "aa000000-0000-0000-0000-000000000001",
+    "name": "우니온 베를린",
+    "country_id": null,
+    "country_name": "독일",
+    "logo_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_union_berlin.png",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": "aa000000-0000-0000-0000-000000000002",
+    "name": "볼프스부르크",
+    "country_id": null,
+    "country_name": "독일",
+    "logo_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_wolfsburg.png",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": "aa000000-0000-0000-0000-000000000003",
+    "name": "인터 밀란",
+    "country_id": null,
+    "country_name": "이탈리아",
+    "logo_image_url": "https://abxgeyabzwzrorecsjcd.supabase.co/storage/v1/object/public/clubs/logo_inter.png",
+    "created_at": null,
+    "updated_at": null
+  }
+]
