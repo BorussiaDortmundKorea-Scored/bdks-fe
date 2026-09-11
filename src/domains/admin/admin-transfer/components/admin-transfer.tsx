@@ -76,12 +76,12 @@ const AdminTransfer = () => {
         </ColGroup>
         <THead>
           <Tr>
-            <Th>선수</Th>
-            <Th>방향</Th>
-            <Th>유형</Th>
-            <Th>상대클럽</Th>
+            <Th sortable>선수</Th>
+            <Th sortable>방향</Th>
+            <Th sortable>유형</Th>
+            <Th sortable>상대클럽</Th>
             <Th>이적금액</Th>
-            <Th>이적일</Th>
+            <Th sortable>이적일</Th>
             <Th>작업</Th>
           </Tr>
         </THead>

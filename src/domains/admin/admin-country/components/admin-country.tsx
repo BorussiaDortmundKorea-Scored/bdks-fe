@@ -70,7 +70,7 @@ const AdminCountry = () => {
         </ColGroup>
         <THead>
           <Tr>
-            <Th>국가명</Th>
+            <Th sortable>국가명</Th>
             <Th>작업</Th>
           </Tr>
         </THead>

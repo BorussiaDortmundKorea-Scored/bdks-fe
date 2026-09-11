@@ -76,8 +76,8 @@ const AdminCompetition = () => {
           </ColGroup>
           <THead>
             <Tr>
-              <Th>대회명</Th>
-              <Th>시즌</Th>
+              <Th sortable>대회명</Th>
+              <Th sortable>시즌</Th>
               <Th>작업</Th>
             </Tr>
           </THead>

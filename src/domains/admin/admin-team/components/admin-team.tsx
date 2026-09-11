@@ -75,9 +75,9 @@ const AdminTeam = () => {
         </ColGroup>
         <THead>
           <Tr>
-            <Th>팀명</Th>
+            <Th sortable>팀명</Th>
             <Th>로고</Th>
-            <Th>국가</Th>
+            <Th sortable>국가</Th>
             <Th>작업</Th>
           </Tr>
         </THead>

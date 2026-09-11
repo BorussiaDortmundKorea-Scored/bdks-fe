@@ -3,6 +3,34 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [2.1.4] - 2026-09-11
+
+**Branch**: `bdks-v2.1.4-경기일정위젯및관리자테이블정렬`
+
+> 대시보드 경기일정 위젯 신규 추가, yd-ui 0.23.3 업그레이드로 관리자 테이블 컬럼 정렬 도입
+
+### 추가
+
+- feat: 대시보드 사이드패널 경기일정 위젯 추가
+- feat: 경기 추가 모달 대회 목록을 활성 대회로 제한
+- feat: 관리자 테이블 컬럼 정렬 기능 적용
+
+### 변경
+
+- build: yd-ui 0.23.3 업그레이드
+- style: TOP PLAYERS 카드 테두리 제거 및 배경 적용
+- refactor: 경기 평점 현황 카드 서브타이틀 위치 조정
+- test: 대시보드 위젯 스토리북 스토리 추가(경기일정·TOP PLAYERS)
+- docs: v2.1.4 경기일정 위젯 및 관리자 테이블 정렬 정리
+
+### 수정
+
+- fix: get_upcoming_matches 에 킥오프 시각(match_start_time) 반환 추가
+
+### 제거
+
+---
+
 ## [2.1.3] - 2026-09-09
 
 **Branch**: `bdks-v2.1.3-CI워크플로우도입및훅경량화`

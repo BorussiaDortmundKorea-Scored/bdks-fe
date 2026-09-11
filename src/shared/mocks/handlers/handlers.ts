@@ -12,6 +12,7 @@ import { TransferMarketHandlers } from "@auth/auth-info/auth-info-quick-links/tr
 import { UserRankingHandlers } from "@auth/auth-info/auth-info-quick-links/user-ranking/mocks/user-ranking-handler";
 import { ViewingCheckHandlers } from "@auth/auth-info/auth-info-quick-links/viewing-check/mocks/viewing-check-handler";
 
+import { DashboardFixturesHandlers } from "@dashboard/dashboard-fixtures/mocks/dashboard-fixtures-handler";
 import { DashboardTopPlayersHandlers } from "@dashboard/dashboard-top-players/mocks/dashboard-top-players-handler";
 
 import { MatchInfoHandlers } from "@matches/matches-history/matches-history-players-rating/mocks/match-info-handler";
@@ -35,6 +36,7 @@ export const handlers = [
   ...AdminMatchLineupHandlers,
   ...AdminMatchLineupSubstitutionHandlers,
   ...AdminStandingsHandlers,
+  ...DashboardFixturesHandlers,
   ...DashboardTopPlayersHandlers,
   ...AuthInfoProfileCardHandlers,
   ...TransferMarketHandlers,

@@ -110,14 +110,14 @@ const AdminMatch = () => {
         </ColGroup>
         <THead>
           <Tr>
-            <Th>경기일</Th>
-            <Th>경기시간(KST)</Th>
-            <Th>대회</Th>
-            <Th>상대팀</Th>
-            <Th>홈/어웨이</Th>
+            <Th sortable>경기일</Th>
+            <Th sortable>경기시간(KST)</Th>
+            <Th sortable>대회</Th>
+            <Th sortable>상대팀</Th>
+            <Th sortable>홈/어웨이</Th>
             <Th>스코어</Th>
-            <Th>라운드</Th>
-            <Th>라이브</Th>
+            <Th sortable>라운드</Th>
+            <Th sortable>라이브</Th>
             <Th>작업</Th>
           </Tr>
         </THead>

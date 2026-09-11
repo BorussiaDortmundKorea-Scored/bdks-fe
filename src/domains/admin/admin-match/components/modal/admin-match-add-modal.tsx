@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 
 import { Button, Input, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
-import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense";
+import { useGetActiveCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-active-competitions-suspense";
 import { useCreateMatch } from "@admin/admin-match/api/react-query-api/use-create-match";
 import {
   calculateMatchTimes,
@@ -22,7 +22,7 @@ interface IAdminMatchAddModal {
 
 export const AdminMatchAddModal = ({ onClose }: IAdminMatchAddModal) => {
   //SECTION HOOK호출 영역
-  const { data: competitions } = useGetAllCompetitionsSuspense();
+  const { data: competitions } = useGetActiveCompetitionsSuspense();
   const { data: teams } = useGetAllTeamsSuspense();
   const { mutateAsync: createMatch, isPending: isCreating } = useCreateMatch();
   //!SECTION HOOK호출 영역
@@ -118,7 +118,7 @@ export const AdminMatchAddModal = ({ onClose }: IAdminMatchAddModal) => {
             color="primary-100"
           />
           {formData.match_start_time && (
-            <p className="mt-1 text-yds-c1m text-primary-60">
+            <p className="text-yds-c1m text-primary-60 mt-1">
               경기일: {extractKSTDateFromLocal(formData.match_start_time)} | 전반종료: +45분 | 후반시작: +60분 |
               후반종료: +105분 (수정 모달에서 개별 조정 가능)
             </p>

@@ -7,7 +7,6 @@
 import { Link } from "react-router-dom";
 
 import DashboardTopPlayersWrapper from "./wrapper/dashboard-top-players-wrapper";
-import { Card } from "@youngduck/yd-ui/Cards";
 
 import {
   type IRecordLeader,
@@ -16,6 +15,13 @@ import {
 import { useGetRecordLeadersSuspense } from "@dashboard/dashboard-top-players/api/react-query-api/use-get-record-leaders";
 
 import { createPlayerStatsPath } from "@shared/constants/routes";
+import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
+
+//SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
+const RECORD_CARD_BACKGROUND_IMAGE = `${SUPABASE_STORAGE_URL}/dortmund/fixtures.png`;
+// yd-ui Card 대신 직접 마크업한다 (테두리 없이 배경 이미지를 깔아야 해서)
+const RECORD_CARD_CLASS = "relative h-[160px] overflow-hidden rounded-lg";
+//!SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 
 interface ICategoryMeta {
   key: RecordCategory;
@@ -39,26 +45,46 @@ const splitNameLines = (name: string | null): string[] => {
   return [parts[0], parts.slice(1).join(" ")];
 };
 
+/** 카드 배경 이미지 + 가독성 확보용 딤 (장식용이라 alt 비움) */
+const RecordCardBackground = () => (
+  <>
+    <img
+      src={RECORD_CARD_BACKGROUND_IMAGE}
+      alt=""
+      aria-hidden="true"
+      className="absolute inset-0 h-full w-full object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+    <div aria-hidden="true" className="bg-background-primary/70 absolute inset-0" />
+  </>
+);
+
 const RecordCard = ({ meta, leader }: { meta: ICategoryMeta; leader?: IRecordLeader }) => {
   // 해당 기록 데이터가 없는 경우 placeholder
   if (!leader) {
     return (
-      <Card variant="outlined" className="relative flex h-[160px] flex-col justify-between overflow-hidden p-3">
-        <span className="text-primary-100 text-yds-c2r">{meta.label}</span>
-        <span className="text-yds-c1m text-primary-100">기록 없음</span>
-      </Card>
+      <div className={RECORD_CARD_CLASS}>
+        <RecordCardBackground />
+        <div className="relative flex h-full flex-col justify-between p-3">
+          <span className="text-primary-100 text-yds-c2r">{meta.label}</span>
+          <span className="text-yds-c1m text-primary-100">기록 없음</span>
+        </div>
+      </div>
     );
   }
 
   const nameLines = splitNameLines(leader.korean_name);
 
   return (
-    <Card variant="outlined" className="relative h-[160px] overflow-hidden p-3">
+    <div className={RECORD_CARD_CLASS}>
+      <RecordCardBackground />
+
       <Link
         to={createPlayerStatsPath(leader.player_id)}
-        className="flex h-full flex-col justify-between hover:cursor-pointer"
+        className="relative flex h-full flex-col justify-between p-3 hover:cursor-pointer"
       >
-        <div className="z-10 flex flex-col leading-tight">
+        <div className="flex flex-col leading-tight">
           <span className="text-primary-100 text-yds-c2r mb-1">{meta.label}</span>
           {nameLines.map((line, index) => (
             <span key={index} className="text-yds-b2 font-bold text-white">
@@ -66,20 +92,22 @@ const RecordCard = ({ meta, leader }: { meta: ICategoryMeta; leader?: IRecordLea
             </span>
           ))}
         </div>
-        <div className="z-10 flex flex-col">
+        <div className="flex flex-col">
           <span className="text-yds-s1 font-bold text-white">{meta.format(Number(leader.metric_value))}</span>
         </div>
-        <img
-          src={leader.full_profile_image_url ?? leader.head_profile_image_url ?? undefined}
-          alt={leader.korean_name ?? undefined}
-          loading="lazy"
-          onError={(event) => {
-            if (leader.head_profile_image_url) event.currentTarget.src = leader.head_profile_image_url;
-          }}
-          className="pointer-events-none absolute -right-2 bottom-0 h-[130px] w-auto object-contain object-bottom"
-        />
       </Link>
-    </Card>
+
+      {/* 선수 이미지는 Link 밖(뒤)에 둬서 기존처럼 텍스트 위에 겹쳐 그린다. pointer-events-none 이라 클릭에는 영향 없음 */}
+      <img
+        src={leader.full_profile_image_url ?? leader.head_profile_image_url ?? undefined}
+        alt={leader.korean_name ?? undefined}
+        loading="lazy"
+        onError={(event) => {
+          if (leader.head_profile_image_url) event.currentTarget.src = leader.head_profile_image_url;
+        }}
+        className="pointer-events-none absolute -right-2 bottom-0 h-[130px] w-auto object-contain object-bottom"
+      />
+    </div>
   );
 };
 
