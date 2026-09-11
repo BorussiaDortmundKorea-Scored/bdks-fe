@@ -46,14 +46,26 @@ const StandingTable = ({ rows }: { rows: IStanding[] }) => {
       </ColGroup>
       <THead>
         <Tr>
-          <Th>순위</Th>
-          <Th>팀</Th>
-          <Th className="text-right!">경기</Th>
-          <Th className="text-right!">승</Th>
-          <Th className="text-right!">무</Th>
-          <Th className="text-right!">패</Th>
-          <Th className="text-right!">득실</Th>
-          <Th className="text-right!">승점</Th>
+          <Th sortable>순위</Th>
+          <Th sortable>팀</Th>
+          <Th sortable className="text-right!">
+            경기
+          </Th>
+          <Th sortable className="text-right!">
+            승
+          </Th>
+          <Th sortable className="text-right!">
+            무
+          </Th>
+          <Th sortable className="text-right!">
+            패
+          </Th>
+          <Th sortable className="text-right!">
+            득실
+          </Th>
+          <Th sortable className="text-right!">
+            승점
+          </Th>
         </Tr>
       </THead>
       <TBody>

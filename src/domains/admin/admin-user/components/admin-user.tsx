@@ -80,11 +80,11 @@ const AdminUser = () => {
         </ColGroup>
         <THead>
           <Tr>
-            <Th>닉네임</Th>
-            <Th>이메일</Th>
-            <Th>권한</Th>
-            <Th>가입일</Th>
-            <Th>최근 활동일</Th>
+            <Th sortable>닉네임</Th>
+            <Th sortable>이메일</Th>
+            <Th sortable>권한</Th>
+            <Th sortable>가입일</Th>
+            <Th sortable>최근 활동일</Th>
             <Th>작업</Th>
           </Tr>
         </THead>

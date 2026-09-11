@@ -107,10 +107,10 @@ const AdminPlayer = () => {
           </ColGroup>
           <THead>
             <Tr>
-              <Th>영문 이름</Th>
-              <Th>이름</Th>
-              <Th>등번호</Th>
-              <Th>국적</Th>
+              <Th sortable>영문 이름</Th>
+              <Th sortable>이름</Th>
+              <Th sortable>등번호</Th>
+              <Th sortable>국적</Th>
               <Th>전신 이미지</Th>
               <Th>얼굴 이미지</Th>
               <Th>작업</Th>

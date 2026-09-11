@@ -142,11 +142,11 @@ const AdminMatchLineup = () => {
         </ColGroup>
         <THead>
           <Tr>
-            <Th>선수명</Th>
-            <Th>포지션</Th>
-            <Th>라인업</Th>
+            <Th sortable>선수명</Th>
+            <Th sortable>포지션</Th>
+            <Th sortable>라인업</Th>
             <Th>주장</Th>
-            <Th>교체</Th>
+            <Th sortable>교체</Th>
             <Th>골/어시</Th>
             <Th>카드</Th>
             <Th>작업</Th>
