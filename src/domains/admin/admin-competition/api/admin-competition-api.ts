@@ -1,10 +1,7 @@
 import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
-import {
-  type ICompetitionEntity,
-  type ICompetitionTypeEntity,
-} from "@shared/types/entities/competition.entity";
+import { type ICompetitionEntity, type ICompetitionTypeEntity } from "@shared/types/entities/competition.entity";
 
 export type ICompetition = ICompetitionEntity;
 export type ICompetitionType = ICompetitionTypeEntity;
@@ -24,6 +21,12 @@ export interface IUpdateCompetitionRequest {
 export const getAllCompetitions = async (): Promise<ApiResponse<ICompetition[]>> =>
   callRpc<ICompetition[]>(() => supabase.rpc("get_all_competitions"));
 
+// 선택 가능한 대회 조회 — 경기 추가/일괄추가 모달의 대회 드롭다운용
+// competition_types.is_active · seasons.is_active 를 모두 만족하는 대회만 내려오므로
+// 지난 시즌·미사용 대회가 선택지에서 제외된다. 전체 목록이 필요한 곳은 getAllCompetitions 사용.
+export const getActiveCompetitions = async (): Promise<ApiResponse<ICompetition[]>> =>
+  callRpc<ICompetition[]>(() => supabase.rpc("get_active_competitions"));
+
 // 대회 종류(마스터) 목록 조회 — 드롭다운용
 export const getAllCompetitionTypes = async (): Promise<ApiResponse<ICompetitionType[]>> =>
   callRpc<ICompetitionType[]>(() => supabase.rpc("get_all_competition_types"));
@@ -38,9 +41,7 @@ export const getAllSeasons = async (): Promise<ApiResponse<string[]>> => {
 };
 
 // 대회 생성
-export const createCompetition = async (
-  competition: ICreateCompetitionRequest,
-): Promise<ApiResponse<ICompetition>> =>
+export const createCompetition = async (competition: ICreateCompetitionRequest): Promise<ApiResponse<ICompetition>> =>
   callRpc<ICompetition>(() =>
     supabase.rpc("insert_competition", {
       competition_type_id: competition.competition_type_id,
@@ -49,9 +50,7 @@ export const createCompetition = async (
   );
 
 // 대회 수정
-export const updateCompetition = async (
-  competition: IUpdateCompetitionRequest,
-): Promise<ApiResponse<ICompetition>> =>
+export const updateCompetition = async (competition: IUpdateCompetitionRequest): Promise<ApiResponse<ICompetition>> =>
   callRpc<ICompetition>(() =>
     supabase.rpc("update_competition", {
       competition_id: competition.id,

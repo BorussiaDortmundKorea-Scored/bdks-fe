@@ -6,9 +6,9 @@ import { AdminMatchBulkAddModal } from "@admin/admin-match/components/modal/admi
 const bulkCreateMatchesMock = vi.fn();
 const toastMock = vi.fn();
 
-vi.mock("@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense", () => ({
-  useGetAllCompetitionsSuspense: () => ({
-    data: [{ id: "comp-1", name: "분데스리가", season: "2025-26" }],
+vi.mock("@admin/admin-competition/api/react-query-api/use-get-active-competitions-suspense", () => ({
+  useGetActiveCompetitionsSuspense: () => ({
+    data: [{ id: "comp-1", name: "분데스리가", season: "26-27" }],
   }),
 }));
 
@@ -58,7 +58,9 @@ describe("AdminMatchBulkAddModal", () => {
   it("경기 개수를 변경하면 렌더링되는 행 수가 늘어난다", () => {
     const { container } = render(<AdminMatchBulkAddModal onClose={vi.fn()} />);
 
-    const countInput = container.querySelector('input[type="text"], input[inputmode="numeric"], input') as HTMLInputElement;
+    const countInput = container.querySelector(
+      'input[type="text"], input[inputmode="numeric"], input',
+    ) as HTMLInputElement;
     expect(countInput).not.toBeNull();
 
     fireEvent.change(countInput, { target: { value: "7" } });

@@ -5,9 +5,9 @@ import { AdminMatchAddModal } from "@admin/admin-match/components/modal/admin-ma
 
 const createMatchMock = vi.fn();
 
-vi.mock("@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense", () => ({
-  useGetAllCompetitionsSuspense: () => ({
-    data: [{ id: "comp-1", name: "분데스리가", season: "2025-26" }],
+vi.mock("@admin/admin-competition/api/react-query-api/use-get-active-competitions-suspense", () => ({
+  useGetActiveCompetitionsSuspense: () => ({
+    data: [{ id: "comp-1", name: "분데스리가", season: "26-27" }],
   }),
 }));
 

@@ -8,7 +8,7 @@ import { useCallback, useRef, useState } from "react";
 import { Button, NumberInput } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
-import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-all-competitions-suspense";
+import { useGetActiveCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-active-competitions-suspense";
 import { useBulkCreateMatches } from "@admin/admin-match/api/react-query-api/use-bulk-create-matches";
 import AdminMatchBulkAddRow, {
   type IBulkAddRowHooks,
@@ -29,7 +29,7 @@ const MAX_MATCH_COUNT = 10;
 
 export const AdminMatchBulkAddModal = ({ onClose }: IAdminMatchBulkAddModalProps) => {
   //SECTION HOOK 호출
-  const { data: competitions } = useGetAllCompetitionsSuspense();
+  const { data: competitions } = useGetActiveCompetitionsSuspense();
   const { data: teams } = useGetAllTeamsSuspense();
   const { mutateAsync: bulkCreateMatches, isPending: isCreating } = useBulkCreateMatches();
   const { toast } = useOverlay();
