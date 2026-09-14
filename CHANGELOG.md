@@ -3,6 +3,29 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [2.1.5] - 2026-09-14
+
+**Branch**: `bdks-v2.1.5-sentry노이즈정리및프로필생성보안강화`
+
+> Sentry 환경 분리·노이즈 제거와 프로필 생성 RPC 권한 강화, 배포 후 청크 로드 실패 복구
+
+### 추가
+
+### 변경
+
+### 수정
+
+- fix: 로컬 개발 에러가 운영 Sentry로 섞이던 문제 수정
+- fix: 사용자 입력 검증 실패를 Sentry 보고에서 제외
+- fix: 배포 후 구버전 탭의 청크 로드 실패 복구
+- fix: insert_auth_profile 의 p_user_id 타인 지정 가능 문제 및 anon 실행권한 회수
+- fix: 탈퇴 후 잔여 세션으로 프로필 생성 시 FK 위반이 그대로 노출되던 문제 수정
+- docs: v2.1.5 Sentry 노이즈 정리 및 프로필 생성 보안 강화 정리
+
+### 제거
+
+---
+
 ## [2.1.4] - 2026-09-11
 
 **Branch**: `bdks-v2.1.4-경기일정위젯및관리자테이블정렬`
