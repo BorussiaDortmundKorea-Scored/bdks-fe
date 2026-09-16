@@ -1,0 +1,9 @@
+{
+  "total_users": 141,
+  "activated_users": 92,
+  "retained_users": 24,
+  "core_users": 9,
+  "avg_participation_rate": 26.7,
+  "retained_rate_threshold": 20,
+  "core_rate_threshold": 50
+}
