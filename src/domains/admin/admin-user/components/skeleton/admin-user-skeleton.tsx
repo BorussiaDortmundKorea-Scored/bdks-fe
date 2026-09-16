@@ -15,10 +15,11 @@ const AdminUserSkeleton = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
+      <Table scrollable={true} className="md:w-full" scrollClassName="h-[540px] w-full md:w-[911px]">
         <THead>
           <Tr>
             <Th>닉네임</Th>
+            <Th>최애</Th>
             <Th>이메일</Th>
             <Th>권한</Th>
             <Th>가입일</Th>
@@ -31,6 +32,9 @@ const AdminUserSkeleton = () => {
             <Tr key={index}>
               <Td>
                 <div className="bg-primary-100/20 h-4 w-24 animate-pulse rounded" />
+              </Td>
+              <Td>
+                <div className="bg-primary-100/20 h-8 w-8 animate-pulse rounded" />
               </Td>
               <Td>
                 <div className="bg-primary-100/20 h-4 w-40 animate-pulse rounded" />

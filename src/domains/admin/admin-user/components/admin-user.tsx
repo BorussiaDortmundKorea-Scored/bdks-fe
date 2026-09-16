@@ -69,9 +69,10 @@ const AdminUser = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-[1200px]" scrollClassName="h-[760px] w-full md:w-[911px]">
+      <Table scrollable={true} className="md:w-[1200px]" scrollClassName="h-[540px] w-full md:w-[911px]">
         <ColGroup>
           <Col className="w-[120px]" />
+          <Col className="w-[64px]" />
           <Col className="w-[200px]" />
           <Col className="w-[100px]" />
           <Col className="w-[180px]" />
@@ -81,6 +82,7 @@ const AdminUser = () => {
         <THead>
           <Tr>
             <Th sortable>닉네임</Th>
+            <Th>최애</Th>
             <Th sortable>이메일</Th>
             <Th sortable>권한</Th>
             <Th sortable>가입일</Th>
@@ -92,6 +94,21 @@ const AdminUser = () => {
           {users.map((user) => (
             <Tr key={user.id}>
               <Td>{user.nickname}</Td>
+              <Td>
+                {user.favorite_player_image_url ? (
+                  <img
+                    src={user.favorite_player_image_url}
+                    alt={`최애선수 ${user.favorite_player_name ?? ""}`}
+                    title={user.favorite_player_name ?? "최애선수"}
+                    loading="lazy"
+                    className="h-8 w-8 object-contain"
+                  />
+                ) : (
+                  <span className="text-yds-c1r text-white/40" title="최애선수 미등록">
+                    -
+                  </span>
+                )}
+              </Td>
               <Td>{user.email || "익명 사용자"}</Td>
               <Td>
                 {user.is_admin ? (
