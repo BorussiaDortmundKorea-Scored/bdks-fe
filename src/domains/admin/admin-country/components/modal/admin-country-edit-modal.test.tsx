@@ -26,14 +26,16 @@ describe("AdminCountryEditModal", () => {
     expect(screen.getByRole("button", { name: "취소" })).toBeInTheDocument();
   });
 
-  it("국가명을 비우면 수정 버튼이 비활성화된다", () => {
-    render(<AdminCountryEditModal country={country} onClose={vi.fn()} />);
-
-    expect(screen.getByRole("button", { name: "수정" })).toBeEnabled();
+  // 버튼을 잠가두면 왜 못 누르는지 알 수 없어, 눌러보면 사유를 알려주는 쪽으로 바꿨다
+  it("국가명을 비우면 갱신하지 않고 입력 밑에 사유를 보여준다", async () => {
+    const onClose = vi.fn();
+    render(<AdminCountryEditModal country={country} onClose={onClose} />);
 
     fireEvent.change(screen.getByPlaceholderText("예: 독일"), { target: { value: "   " } });
+    fireEvent.click(screen.getByRole("button", { name: "수정" }));
 
-    expect(screen.getByRole("button", { name: "수정" })).toBeDisabled();
+    expect(await screen.findByText("국가명을 입력해주세요")).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   it("수정 클릭 시 트림된 국가명으로 갱신하고 모달을 닫는다", async () => {

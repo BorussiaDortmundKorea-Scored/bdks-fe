@@ -63,7 +63,7 @@ describe("AdminMatchLineupEditModal", () => {
     render(<AdminMatchLineupEditModal matchId="match-1" lineup={mockLineup} onClose={vi.fn()} />);
 
     expect(screen.getByText("라인업 수정")).toBeInTheDocument();
-    expect(screen.getByText("선수 *")).toBeInTheDocument();
+    expect(screen.getByText("선수")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "수정" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "취소" })).toBeInTheDocument();
   });

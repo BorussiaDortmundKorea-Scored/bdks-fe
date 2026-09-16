@@ -31,17 +31,24 @@ describe("AdminMatchAddModal", () => {
     render(<AdminMatchAddModal onClose={vi.fn()} />);
 
     expect(screen.getByText("새 경기 추가")).toBeInTheDocument();
-    expect(screen.getByText("대회 *")).toBeInTheDocument();
-    expect(screen.getByText("상대팀 *")).toBeInTheDocument();
-    expect(screen.getByText("경기 시작 시간 (한국시간) *")).toBeInTheDocument();
+    expect(screen.getByText("대회")).toBeInTheDocument();
+    expect(screen.getByText("상대팀")).toBeInTheDocument();
+    expect(screen.getByText("경기 시작 시간 (한국시간)")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "추가" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "취소" })).toBeInTheDocument();
   });
 
-  it("필수값(대회/상대팀/시작시간)이 비어 있으면 추가 버튼이 비활성화된다", () => {
-    render(<AdminMatchAddModal onClose={vi.fn()} />);
+  // 버튼을 잠가두면 왜 못 누르는지 알 수 없어, 눌러보면 사유를 알려주는 쪽으로 바꿨다
+  it("필수값(대회/상대팀/시작시간)이 비어 있으면 등록하지 않고 사유를 보여준다", async () => {
+    const onClose = vi.fn();
+    render(<AdminMatchAddModal onClose={onClose} />);
 
-    expect(screen.getByRole("button", { name: "추가" })).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: "추가" }));
+
+    expect(await screen.findByText("대회를 선택해주세요")).toBeInTheDocument();
+    expect(screen.getByText("상대팀을 선택해주세요")).toBeInTheDocument();
+    expect(screen.getByText("경기 시작 시간을 입력해주세요")).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   it("취소 클릭 시 생성 없이 모달을 닫는다", () => {

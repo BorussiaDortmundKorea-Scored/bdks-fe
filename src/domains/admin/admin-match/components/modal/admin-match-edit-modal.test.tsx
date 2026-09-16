@@ -51,8 +51,8 @@ describe("AdminMatchEditModal", () => {
     render(<AdminMatchEditModal match={mockMatch} onClose={vi.fn()} />);
 
     expect(screen.getByText("경기 수정")).toBeInTheDocument();
-    expect(screen.getByText("대회 *")).toBeInTheDocument();
-    expect(screen.getByText("상대팀 *")).toBeInTheDocument();
+    expect(screen.getByText("대회")).toBeInTheDocument();
+    expect(screen.getByText("상대팀")).toBeInTheDocument();
     expect(screen.getByText("포메이션")).toBeInTheDocument();
     expect(screen.getByText("경기 시간 설정")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "수정" })).toBeInTheDocument();

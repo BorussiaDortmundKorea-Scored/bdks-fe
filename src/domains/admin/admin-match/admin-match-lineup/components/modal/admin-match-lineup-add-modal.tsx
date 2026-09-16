@@ -1,16 +1,27 @@
 /**
  * 작성자: KYD
  * 기능: 라인업 추가 모달 컴포넌트
- * 프로세스 설명: 라인업 추가 폼을 모달로 표시
+ * 프로세스 설명: 라인업 추가 폼을 모달로 표시.
+ *                선수·포지션은 SelectBox 훅이 값의 원천이라 제출 직전에 payload 를 조립해 검증한다
  */
 import { useMemo, useState } from "react";
 
-import { Button, CheckBox, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { Button, CheckBox, Field, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
 import { useCreateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-create-match-lineup";
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
 import { useGetAllPositionsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-positions-suspense";
+import { useGetMatchLineupsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense";
+import { useLineupPlayerOptions } from "@admin/admin-match/admin-match-lineup/hooks/use-lineup-player-options";
+import {
+  type IAdminMatchLineupFormValues,
+  MATCH_MINUTE_MAX,
+  MATCH_MINUTE_MIN,
+  MAX_YELLOW_CARDS,
+  adminMatchLineupFormSchema,
+} from "@admin/admin-match/admin-match-lineup/schemas/admin-match-lineup-schema";
 
+import { toFieldErrors } from "@shared/hooks/use-zod-form";
 import { type LineupType } from "@shared/types/match-lineup.types";
 
 interface IAdminMatchLineupAddModal {
@@ -18,38 +29,36 @@ interface IAdminMatchLineupAddModal {
   onClose: () => void;
 }
 
+/** 초기값을 두 곳에 적어두면 한쪽만 고쳐져 폼이 어긋난다 */
+const INITIAL_STATS = {
+  is_captain: false,
+  sub_in_minute: null as number | null,
+  sub_out_minute: null as number | null,
+  yellow_cards: 0,
+  red_card_minute: null as number | null,
+  is_sent_off: false,
+  goals: 0,
+  assists: 0,
+};
+
 export const AdminMatchLineupAddModal = ({ matchId, onClose }: IAdminMatchLineupAddModal) => {
   //SECTION HOOK호출 영역
   const { data: players } = useGetAllPlayersSuspense();
   const { data: positions } = useGetAllPositionsSuspense();
+  const { data: lineups } = useGetMatchLineupsSuspense(matchId);
   const { mutateAsync: createLineup, isPending: isCreating } = useCreateMatchLineup(matchId);
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-  const [formData, setFormData] = useState({
-    player_id: "",
-    position_id: "",
-    lineup_type: "STARTING" as LineupType,
-    is_captain: false,
-    sub_in_minute: null as number | null,
-    sub_out_minute: null as number | null,
-    yellow_cards: 0,
-    red_card_minute: null as number | null,
-    is_sent_off: false,
-    goals: 0,
-    assists: 0,
-  });
+  const [stats, setStats] = useState(INITIAL_STATS);
+  const [errors, setErrors] = useState<Partial<Record<keyof IAdminMatchLineupFormValues, string>>>({});
   //!SECTION 상태값 영역
 
   //SECTION SelectBox 옵션/훅
-  const playerOptions = useMemo(
-    () =>
-      players.map((p) => ({
-        label: p.id,
-        value: `${p.korean_name || p.name}${p.jersey_number ? ` (${p.jersey_number}번)` : ""}`,
-      })),
-    [players],
-  );
+  // 교체 파트너는 이미 명단에 올라간 선수를 지목하는 자리라 전체 목록을 그대로 쓴다
+  const playerOptions = useLineupPlayerOptions(players);
+  // 추가할 선수는 이미 이 경기 명단에 있는 선수를 빼고 보여준다
+  const addablePlayerOptions = useLineupPlayerOptions(players, lineups);
 
   const positionOptions = useMemo(
     () => positions.map((pos) => ({ label: pos.id, value: `${pos.position_detail_name} (${pos.position_code})` })),
@@ -64,7 +73,7 @@ export const AdminMatchLineupAddModal = ({ matchId, onClose }: IAdminMatchLineup
     [],
   );
 
-  const createPlayerHook = useSelectBox({ options: playerOptions, search: true });
+  const createPlayerHook = useSelectBox({ options: addablePlayerOptions, search: true });
   const createPositionHook = useSelectBox({ options: positionOptions, search: true });
   const createLineupTypeHook = useSelectBox({ options: lineupTypeOptions, defaultValue: "선발" });
   const createSubInPartnerHook = useSelectBox({ options: playerOptions, search: true });
@@ -72,40 +81,48 @@ export const AdminMatchLineupAddModal = ({ matchId, onClose }: IAdminMatchLineup
   //!SECTION SelectBox 옵션/훅
 
   //SECTION 메서드 영역
+  const setStat = <TKey extends keyof typeof INITIAL_STATS>(key: TKey, value: (typeof INITIAL_STATS)[TKey]) => {
+    setStats((prev) => ({ ...prev, [key]: value }));
+  };
+
   const handleCreateLineup = async () => {
+    const result = adminMatchLineupFormSchema.safeParse({
+      ...stats,
+      player_id: createPlayerHook.label ?? "",
+      position_id: createPositionHook.label || null,
+      lineup_type: createLineupTypeHook.label || "STARTING",
+      sub_in_partner_id: createSubInPartnerHook.label || null,
+      sub_out_partner_id: createSubOutPartnerHook.label || null,
+    });
+
+    if (!result.success) {
+      setErrors(toFieldErrors<IAdminMatchLineupFormValues>(result.error));
+      return;
+    }
+    setErrors({});
+
     await createLineup({
       match_id: matchId,
-      player_id: (createPlayerHook.label as string) || formData.player_id,
-      position_id: (createPositionHook.label as string) || undefined,
-      lineup_type: (createLineupTypeHook.label as LineupType) || formData.lineup_type,
-      is_captain: formData.is_captain,
-      sub_in_minute: formData.sub_in_minute,
-      sub_in_partner_id: (createSubInPartnerHook.label as string) || null,
-      sub_out_minute: formData.sub_out_minute,
-      sub_out_partner_id: (createSubOutPartnerHook.label as string) || null,
-      yellow_cards: formData.yellow_cards,
-      red_card_minute: formData.red_card_minute || undefined,
-      is_sent_off: formData.is_sent_off,
-      goals: formData.goals,
-      assists: formData.assists,
+      player_id: result.data.player_id,
+      position_id: result.data.position_id ?? undefined,
+      lineup_type: result.data.lineup_type as LineupType,
+      is_captain: result.data.is_captain,
+      sub_in_minute: result.data.sub_in_minute,
+      sub_in_partner_id: result.data.sub_in_partner_id,
+      sub_out_minute: result.data.sub_out_minute,
+      sub_out_partner_id: result.data.sub_out_partner_id,
+      yellow_cards: result.data.yellow_cards,
+      red_card_minute: result.data.red_card_minute ?? undefined,
+      is_sent_off: result.data.is_sent_off,
+      goals: result.data.goals,
+      assists: result.data.assists,
     });
     handleClose();
   };
 
   const handleClose = () => {
-    setFormData({
-      player_id: "",
-      position_id: "",
-      lineup_type: "STARTING",
-      is_captain: false,
-      sub_in_minute: null,
-      sub_out_minute: null,
-      yellow_cards: 0,
-      red_card_minute: null,
-      is_sent_off: false,
-      goals: 0,
-      assists: 0,
-    });
+    setStats(INITIAL_STATS);
+    setErrors({});
     onClose();
   };
   //!SECTION 메서드 영역
@@ -114,120 +131,106 @@ export const AdminMatchLineupAddModal = ({ matchId, onClose }: IAdminMatchLineup
     <div className="flex flex-col gap-4">
       <h2 className="text-yds-b1 text-primary-100">새 선수 추가</h2>
       <div className="flex flex-col gap-4">
-        <div>
-          <label className="text-yds-b1 text-primary-100">선수 *</label>
+        <Field label="선수" required error={errors.player_id}>
           <SelectBox size="full" selectBoxHook={createPlayerHook} />
-        </div>
-        <div>
-          <label className="text-yds-b1 text-primary-100">포지션</label>
+          {addablePlayerOptions.length === 0 && (
+            <p className="text-yds-c1m text-primary-100 mt-1">
+              추가할 수 있는 선수가 없습니다. 이미 모든 선수가 이 경기 명단에 있습니다.
+            </p>
+          )}
+        </Field>
+        <Field label="포지션" error={errors.position_id}>
           <SelectBox size="full" selectBoxHook={createPositionHook} />
-        </div>
-        <div>
-          <label className="text-yds-b1 text-primary-100">라인업 타입 *</label>
+        </Field>
+        <Field label="라인업 타입" required error={errors.lineup_type}>
           <SelectBox size="full" selectBoxHook={createLineupTypeHook} />
-        </div>
+        </Field>
         <CheckBox
-          checked={formData.is_captain}
-          onCheckedChange={(checked) => setFormData({ ...formData, is_captain: checked })}
+          checked={stats.is_captain}
+          onCheckedChange={(checked) => setStat("is_captain", checked)}
           value="주장"
           shape="square"
         />
         {/* 교체는 투입/아웃 두 시점을 각각 입력한다. 비워두면 해당 교체가 없는 것 */}
-        <div>
-          <label className="text-yds-b1 text-primary-100">교체 투입 시간 (분)</label>
+        <Field label="교체 투입 시간 (분)" error={errors.sub_in_minute}>
           <NumberInput
-            min={1}
-            max={120}
-            value={formData.sub_in_minute != null ? String(formData.sub_in_minute) : ""}
-            onValueChange={(value: string) =>
-              setFormData({ ...formData, sub_in_minute: value === "" ? null : Number(value) })
-            }
+            min={MATCH_MINUTE_MIN}
+            max={MATCH_MINUTE_MAX}
+            value={stats.sub_in_minute != null ? String(stats.sub_in_minute) : ""}
+            onValueChange={(value: string) => setStat("sub_in_minute", value === "" ? null : Number(value))}
             size="full"
             align="left"
             placeholder="예: 27"
           />
-          <div className="mt-3">
-            <label className="text-yds-b1 text-primary-100">대신 들어간 선수</label>
-            <SelectBox size="full" selectBoxHook={createSubInPartnerHook} />
-          </div>
-        </div>
-        <div>
-          <label className="text-yds-b1 text-primary-100">교체 아웃 시간 (분)</label>
+        </Field>
+        <Field label="대신 들어간 선수" error={errors.sub_in_partner_id}>
+          <SelectBox size="full" selectBoxHook={createSubInPartnerHook} />
+        </Field>
+        <Field label="교체 아웃 시간 (분)" error={errors.sub_out_minute}>
           <NumberInput
-            min={1}
-            max={120}
-            value={formData.sub_out_minute != null ? String(formData.sub_out_minute) : ""}
-            onValueChange={(value: string) =>
-              setFormData({ ...formData, sub_out_minute: value === "" ? null : Number(value) })
-            }
+            min={MATCH_MINUTE_MIN}
+            max={MATCH_MINUTE_MAX}
+            value={stats.sub_out_minute != null ? String(stats.sub_out_minute) : ""}
+            onValueChange={(value: string) => setStat("sub_out_minute", value === "" ? null : Number(value))}
             size="full"
             align="left"
             placeholder="예: 82"
           />
-          <div className="mt-3">
-            <label className="text-yds-b1 text-primary-100">대신 들어온 선수</label>
-            <SelectBox size="full" selectBoxHook={createSubOutPartnerHook} />
-          </div>
-        </div>
+        </Field>
+        <Field label="대신 들어온 선수" error={errors.sub_out_partner_id}>
+          <SelectBox size="full" selectBoxHook={createSubOutPartnerHook} />
+        </Field>
         <div className="grid grid-cols-2 gap-2">
-          <div>
-            <label className="text-yds-b1 text-primary-100">골</label>
+          <Field label="골" error={errors.goals}>
             <NumberInput
               min={0}
-              value={String(formData.goals)}
-              onValueChange={(value: string) => setFormData({ ...formData, goals: value === "" ? 0 : Number(value) })}
+              value={String(stats.goals)}
+              onValueChange={(value: string) => setStat("goals", value === "" ? 0 : Number(value))}
               size="full"
               align="left"
               placeholder="0"
             />
-          </div>
-          <div>
-            <label className="text-yds-b1 text-primary-100">어시스트</label>
+          </Field>
+          <Field label="어시스트" error={errors.assists}>
             <NumberInput
               min={0}
-              value={String(formData.assists)}
-              onValueChange={(value: string) => setFormData({ ...formData, assists: value === "" ? 0 : Number(value) })}
+              value={String(stats.assists)}
+              onValueChange={(value: string) => setStat("assists", value === "" ? 0 : Number(value))}
               size="full"
               align="left"
               placeholder="0"
             />
-          </div>
+          </Field>
         </div>
-        <div>
-          <label className="text-yds-b1 text-primary-100">옐로우 카드</label>
+        <Field label="옐로우 카드" error={errors.yellow_cards}>
           <NumberInput
             min={0}
-            max={2}
-            value={String(formData.yellow_cards)}
-            onValueChange={(value: string) =>
-              setFormData({ ...formData, yellow_cards: value === "" ? 0 : Number(value) })
-            }
+            max={MAX_YELLOW_CARDS}
+            value={String(stats.yellow_cards)}
+            onValueChange={(value: string) => setStat("yellow_cards", value === "" ? 0 : Number(value))}
             size="full"
             align="left"
             placeholder="0"
           />
-        </div>
+        </Field>
         <CheckBox
-          checked={formData.is_sent_off}
-          onCheckedChange={(checked) => setFormData({ ...formData, is_sent_off: checked })}
+          checked={stats.is_sent_off}
+          onCheckedChange={(checked) => setStat("is_sent_off", checked)}
           value="퇴장"
           shape="square"
         />
-        {formData.is_sent_off && (
-          <div>
-            <label className="text-yds-b1 text-primary-100">퇴장 시간 (분)</label>
+        {stats.is_sent_off && (
+          <Field label="퇴장 시간 (분)" required error={errors.red_card_minute}>
             <NumberInput
-              min={1}
-              max={120}
-              value={formData.red_card_minute != null ? String(formData.red_card_minute) : ""}
-              onValueChange={(value: string) =>
-                setFormData({ ...formData, red_card_minute: value === "" ? null : Number(value) })
-              }
+              min={MATCH_MINUTE_MIN}
+              max={MATCH_MINUTE_MAX}
+              value={stats.red_card_minute != null ? String(stats.red_card_minute) : ""}
+              onValueChange={(value: string) => setStat("red_card_minute", value === "" ? null : Number(value))}
               size="full"
               align="left"
               placeholder="예: 90"
             />
-          </div>
+          </Field>
         )}
       </div>
       <div className="mt-6 flex gap-2">

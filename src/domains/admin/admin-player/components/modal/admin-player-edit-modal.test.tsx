@@ -36,12 +36,16 @@ describe("AdminPlayerEditModal", () => {
     expect(screen.getByRole("button", { name: "취소" })).toBeInTheDocument();
   });
 
-  it("이름이 비면 수정 버튼이 비활성화된다", () => {
-    render(<AdminPlayerEditModal player={basePlayer} onClose={vi.fn()} />);
+  // 버튼을 잠가두면 왜 못 누르는지 알 수 없어, 눌러보면 사유를 알려주는 쪽으로 바꿨다
+  it("이름을 비우면 갱신하지 않고 입력 밑에 사유를 보여준다", async () => {
+    const onClose = vi.fn();
+    render(<AdminPlayerEditModal player={basePlayer} onClose={onClose} />);
 
     fireEvent.change(screen.getByDisplayValue("Meyer"), { target: { value: "" } });
+    fireEvent.click(screen.getByRole("button", { name: "수정" }));
 
-    expect(screen.getByRole("button", { name: "수정" })).toBeDisabled();
+    expect(await screen.findByText("선수 이름을 입력해주세요")).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   it("수정 클릭 시 변경된 값으로 수정하고 모달을 닫는다", async () => {

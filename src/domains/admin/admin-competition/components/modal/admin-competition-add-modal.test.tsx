@@ -33,10 +33,16 @@ describe("AdminCompetitionAddModal", () => {
     expect(screen.getByRole("button", { name: "취소" })).toBeInTheDocument();
   });
 
-  it("대회 종류·시즌이 선택되지 않으면 추가 버튼이 비활성화된다", () => {
-    render(<AdminCompetitionAddModal onClose={vi.fn()} />);
+  // 버튼을 잠가두면 왜 못 누르는지 알 수 없어, 눌러보면 사유를 알려주는 쪽으로 바꿨다
+  it("대회 종류·시즌을 고르지 않으면 등록하지 않고 사유를 보여준다", async () => {
+    const onClose = vi.fn();
+    render(<AdminCompetitionAddModal onClose={onClose} />);
 
-    expect(screen.getByRole("button", { name: "추가" })).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: "추가" }));
+
+    expect(await screen.findByText("대회 종류를 선택해주세요")).toBeInTheDocument();
+    expect(screen.getByText("시즌을 선택해주세요")).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   it("취소 클릭 시 등록 없이 모달을 닫는다", () => {

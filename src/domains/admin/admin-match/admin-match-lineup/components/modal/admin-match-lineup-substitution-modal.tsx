@@ -1,16 +1,24 @@
 /**
  * 작성자: KYD
  * 기능: 라인업 교체 모달 컴포넌트
- * 프로세스 설명: 라인업 교체 폼을 모달로 표시
+ * 프로세스 설명: 라인업 교체 폼을 모달로 표시. 실패 사유는 toast 대신 해당 입력 밑에 붙인다
  */
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
-import { Button, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
-import { useOverlay } from "@youngduck/yd-ui/Overlays";
+import { Button, Field, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
 import { useSubstituteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-substitute-match-lineup";
+import { useLineupPlayerOptions } from "@admin/admin-match/admin-match-lineup/hooks/use-lineup-player-options";
+import {
+  type IAdminMatchLineupSubstitutionValues,
+  MATCH_MINUTE_MAX,
+  MATCH_MINUTE_MIN,
+  adminMatchLineupSubstitutionSchema,
+} from "@admin/admin-match/admin-match-lineup/schemas/admin-match-lineup-schema";
+
+import { toFieldErrors } from "@shared/hooks/use-zod-form";
 
 interface IAdminMatchLineupSubstitutionModal {
   matchId: string;
@@ -22,22 +30,15 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
   //SECTION HOOK호출 영역
   const { data: players } = useGetAllPlayersSuspense();
   const { mutateAsync: substituteLineup, isPending: isSubstituting } = useSubstituteMatchLineup(matchId);
-  const { toast } = useOverlay();
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
   const [substitutionMinuteInput, setSubstitutionMinuteInput] = useState<number | "">("");
+  const [errors, setErrors] = useState<Partial<Record<keyof IAdminMatchLineupSubstitutionValues, string>>>({});
   //!SECTION 상태값 영역
 
   //SECTION SelectBox 옵션/훅
-  const playerOptions = useMemo(
-    () =>
-      players.map((p) => ({
-        label: p.id,
-        value: `${p.korean_name || p.name}${p.jersey_number ? ` (${p.jersey_number}번)` : ""}`,
-      })),
-    [players],
-  );
+  const playerOptions = useLineupPlayerOptions(players);
 
   const substitutionBenchPlayerHook = useSelectBox({
     options: playerOptions,
@@ -47,21 +48,21 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
 
   //SECTION 메서드 영역
   const handleConfirmSubstitution = async () => {
-    if (!substitutionMinuteInput || substitutionMinuteInput < 1 || substitutionMinuteInput > 120) {
-      toast({ content: "교체 시간은 1분 이상 120분 이하로 입력해주세요." });
-      return;
-    }
+    const result = adminMatchLineupSubstitutionSchema.safeParse({
+      partner_player_id: substitutionBenchPlayerHook.label ?? "",
+      substitution_minute: substitutionMinuteInput === "" ? undefined : substitutionMinuteInput,
+    });
 
-    const partnerPlayerId = substitutionBenchPlayerHook.label as string | undefined;
-    if (!partnerPlayerId) {
-      toast({ content: "교체로 들어올 선수를 선택해주세요." });
+    if (!result.success) {
+      setErrors(toFieldErrors<IAdminMatchLineupSubstitutionValues>(result.error));
       return;
     }
+    setErrors({});
 
     await substituteLineup({
       lineup_id: lineup.id,
-      substitution_minute: substitutionMinuteInput,
-      partner_player_id: partnerPlayerId,
+      substitution_minute: result.data.substitution_minute,
+      partner_player_id: result.data.partner_player_id,
     });
 
     handleClose();
@@ -69,6 +70,7 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
 
   const handleClose = () => {
     setSubstitutionMinuteInput("");
+    setErrors({});
     onClose();
   };
   //!SECTION 메서드 영역
@@ -77,22 +79,20 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
     <div className="flex flex-col gap-4">
       <h2 className="text-yds-b1 text-primary-100">선수 교체</h2>
       <p className="text-primary-200 text-sm">{lineup.player_korean_name || lineup.player_name} 선수를 교체합니다.</p>
-      <div>
-        <label className="text-yds-b1 text-primary-100">교체로 들어올 선수 *</label>
+      <Field label="교체로 들어올 선수" required error={errors.partner_player_id}>
         <SelectBox size="full" selectBoxHook={substitutionBenchPlayerHook} />
-      </div>
-      <div>
-        <label className="text-yds-b1 text-primary-100">교체 시간 (분)</label>
+      </Field>
+      <Field label="교체 시간 (분)" required error={errors.substitution_minute}>
         <NumberInput
-          min={1}
-          max={120}
+          min={MATCH_MINUTE_MIN}
+          max={MATCH_MINUTE_MAX}
           value={substitutionMinuteInput === "" ? "" : String(substitutionMinuteInput)}
           onValueChange={(value: string) => setSubstitutionMinuteInput(value === "" ? "" : Number(value))}
           size="full"
           align="left"
           placeholder="예: 67"
         />
-      </div>
+      </Field>
       <div className="mt-6 flex gap-2">
         <Button variant="outlined" color="primary" size="full" onClick={handleClose}>
           취소
