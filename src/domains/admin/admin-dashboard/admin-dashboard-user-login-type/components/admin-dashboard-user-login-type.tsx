@@ -2,20 +2,15 @@
  * 작성자: KYD
  * 기능: 프로필 보유 유저의 로그인 유형(카카오/익명) 파이 차트 및 텍스트 표시
  */
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 import { useGetUserLoginTypeCountsSuspense } from "../api/react-query-api/use-get-user-login-type-counts";
 import AdminDashboardUserLoginTypeWrapper from "./wrapper/admin-dashboard-user-login-type-wrapper";
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+
+import { CHART_COLOR, CHART_TOOLTIP_STYLE } from "@shared/constants/chart-palette";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-const CHART_COLORS = {
-  kakao: "rgba(255, 205, 0, 0.8)",
-  kakaoBorder: "rgba(255, 205, 0, 1)",
-  anonymous: "rgba(0, 0, 0, 0.8)",
-  anonymousBorder: "rgba(0, 0, 0, 1)",
-} as const;
 
 const AdminDashboardUserLoginType = () => {
   const { data: loginTypeCounts } = useGetUserLoginTypeCountsSuspense();
@@ -28,9 +23,13 @@ const AdminDashboardUserLoginType = () => {
     datasets: [
       {
         data: [kakaoCount, anonymousCount],
-        backgroundColor: [CHART_COLORS.kakao, CHART_COLORS.anonymous],
-        borderColor: [CHART_COLORS.kakaoBorder, CHART_COLORS.anonymousBorder],
+        // 평점활동추이·평점분포·리텐션과 같은 규칙: 면은 연하게, 테두리는 진하게 2px
+        backgroundColor: [CHART_COLOR.primaryFill, CHART_COLOR.secondaryFill],
+        borderColor: [CHART_COLOR.primaryLine, CHART_COLOR.secondaryLine],
         borderWidth: 2,
+        // 기본값(center)이면 두 조각이 같은 경계선을 각자 칠해 나중에 그려지는 검정이 노랑을 덮는다.
+        // inner 로 각자 안쪽에 칠하게 해야 카카오 조각이 노란 테두리로 닫힌다.
+        borderAlign: "inner" as const,
       },
     ],
   };
@@ -42,21 +41,15 @@ const AdminDashboardUserLoginType = () => {
       legend: {
         position: "right" as const,
         labels: {
-          color: "#FFFFFF",
-          font: { size: 14, },
+          color: CHART_COLOR.text,
+          font: { size: 14 },
           padding: 16,
           pointStyle: "rect",
           usePointStyle: true,
         },
       },
       tooltip: {
-        enabled: true,
-        backgroundColor: "rgba(0, 0, 0, 0.9)",
-        titleColor: "#FFCD00",
-        bodyColor: "#FFFFFF",
-        borderColor: "#FFCD00",
-        borderWidth: 2,
-        padding: 12,
+        ...CHART_TOOLTIP_STYLE,
         callbacks: {
           label: (context: { label: string; parsed: number; dataset: { data: number[] } }) => {
             const total = context.parsed;
@@ -71,7 +64,6 @@ const AdminDashboardUserLoginType = () => {
 
   return (
     <AdminDashboardUserLoginTypeWrapper>
-      <h2 className="text-yds-s2 mb-4">회원 유형</h2>
       <div className="h-[120px] w-full">
         <Pie data={chartData} options={chartOptions} />
       </div>

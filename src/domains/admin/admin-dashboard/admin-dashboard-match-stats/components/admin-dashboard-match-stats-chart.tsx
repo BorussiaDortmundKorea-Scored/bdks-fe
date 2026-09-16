@@ -1,8 +1,11 @@
 /**
  * 작성자: KYD
  * 기능: 경기별 평점 통계 Bar 차트 컴포넌트
- * 프로세스 설명: Chart.js를 사용하여 경기별 유저 수와 평점 개수를 시각화
+ * 프로세스 설명: Chart.js를 사용하여 경기별 유저 수와 평점 개수를 시각화.
+ *              데이터가 날짜 오름차순이라 최신 경기가 오른쪽 끝에 오고, 최신부터 보는 일이 많아
+ *              마운트 시 가로 스크롤을 오른쪽 끝으로 붙여 둔다.
  */
+import { useLayoutEffect, useRef } from "react";
 import { Bar } from "react-chartjs-2";
 
 import { type IMatchStatsData } from "../api/admin-dashboard-match-stats-api";
@@ -19,11 +22,22 @@ import {
   type TooltipItem,
 } from "chart.js";
 
+import { CHART_COLOR, CHART_TOOLTIP_STYLE } from "@shared/constants/chart-palette";
+
 // Chart.js 필수 요소 등록
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const CHART_MIN_WIDTH_PX = 360;
 const BAR_GROUP_WIDTH_PX = 90;
+
+/** 계열 이름과 단위. 유저 수는 사람이라 '명', 평점은 건수라 '개' 로 센다 */
+const USER_COUNT_SERIES = { label: "평점 입력 유저 수", unit: "명" } as const;
+const RATING_COUNT_SERIES = { label: "총 평점 개수", unit: "개" } as const;
+
+const SERIES_UNIT: Record<string, string> = {
+  [USER_COUNT_SERIES.label]: USER_COUNT_SERIES.unit,
+  [RATING_COUNT_SERIES.label]: RATING_COUNT_SERIES.unit,
+};
 
 export interface ISelectedMatch {
   match_id: string;
@@ -38,8 +52,17 @@ interface IAdminDashboardMatchStatsChart {
 }
 
 const AdminDashboardMatchStatsChart = ({ data, onBarClick }: IAdminDashboardMatchStatsChart) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
   const matchStats = data;
   const chartMinWidthPx = Math.max(CHART_MIN_WIDTH_PX, matchStats.length * BAR_GROUP_WIDTH_PX);
+
+  // 최신 경기(오른쪽 끝)부터 보이도록 초기 스크롤을 끝으로 보낸다.
+  // 경기 목록이 바뀌면 다시 끝으로 붙인다. 이후 사용자가 스크롤한 위치는 건드리지 않는다.
+  useLayoutEffect(() => {
+    const element = scrollRef.current;
+    if (!element) return;
+    element.scrollLeft = element.scrollWidth;
+  }, [chartMinWidthPx, matchStats.length]);
 
   // 차트 데이터 구성
   const chartData = {
@@ -50,19 +73,20 @@ const AdminDashboardMatchStatsChart = ({ data, onBarClick }: IAdminDashboardMatc
     }),
     datasets: [
       {
-        label: "평점 입력 유저 수",
+        label: USER_COUNT_SERIES.label,
         data: matchStats.map((stat) => stat.unique_user_count),
-        backgroundColor: "rgba(255, 205, 0, 0.8)", // 도르트문트 옐로우
-        borderColor: "rgba(255, 205, 0, 1)",
+        // 회원 유형·평점 분포·리텐션과 같은 규칙: 면은 연하게, 테두리는 진하게 2px
+        backgroundColor: CHART_COLOR.primaryFill, // 도르트문트 옐로우
+        borderColor: CHART_COLOR.primaryLine,
         borderWidth: 2,
         borderRadius: 4,
         barThickness: 20,
       },
       {
-        label: "총 평점 개수",
+        label: RATING_COUNT_SERIES.label,
         data: matchStats.map((stat) => stat.total_rating_count),
-        backgroundColor: "rgba(0, 0, 0, 0.8)", // 도르트문트 블랙
-        borderColor: "rgba(0, 0, 0, 1)",
+        backgroundColor: CHART_COLOR.secondaryFill, // 도르트문트 블랙
+        borderColor: CHART_COLOR.secondaryLine,
         borderWidth: 2,
         borderRadius: 4,
         barThickness: 20,
@@ -92,7 +116,7 @@ const AdminDashboardMatchStatsChart = ({ data, onBarClick }: IAdminDashboardMatc
       legend: {
         position: "top" as const,
         labels: {
-          color: "#FFFFFF",
+          color: CHART_COLOR.text,
           font: {
             size: 14,
           },
@@ -102,13 +126,7 @@ const AdminDashboardMatchStatsChart = ({ data, onBarClick }: IAdminDashboardMatc
         },
       },
       tooltip: {
-        enabled: true,
-        backgroundColor: "rgba(0, 0, 0, 0.9)",
-        titleColor: "#FFCD00",
-        bodyColor: "#FFFFFF",
-        borderColor: "#FFCD00",
-        borderWidth: 2,
-        padding: 12,
+        ...CHART_TOOLTIP_STYLE,
         displayColors: true,
         titleFont: {
           size: 14,
@@ -125,8 +143,9 @@ const AdminDashboardMatchStatsChart = ({ data, onBarClick }: IAdminDashboardMatc
           },
           label: (item: TooltipItem<"bar">) => {
             const label = item.dataset.label ?? "";
-            const value = item.parsed.y;
-            return `${label}: ${value}명`;
+            const value = item.parsed.y ?? 0;
+            // 유저 수는 '명', 평점 개수는 '개' — 두 계열의 단위가 다르다
+            return `${label}: ${value.toLocaleString()}${SERIES_UNIT[label] ?? ""}`;
           },
         },
       },
@@ -135,7 +154,7 @@ const AdminDashboardMatchStatsChart = ({ data, onBarClick }: IAdminDashboardMatc
       x: {
         stacked: false,
         ticks: {
-          color: "#FFFFFF",
+          color: CHART_COLOR.text,
           font: {
             size: 11,
           },
@@ -149,26 +168,22 @@ const AdminDashboardMatchStatsChart = ({ data, onBarClick }: IAdminDashboardMatc
         stacked: false,
         beginAtZero: true,
         ticks: {
-          color: "#FFFFFF",
+          color: CHART_COLOR.text,
           font: {
             size: 12,
           },
-          callback: (value: string | number) => {
-            if (typeof value === "number") return `${value.toLocaleString()}명`;
-            const parsed = Number(value);
-            if (Number.isNaN(parsed)) return `${value}명`;
-            return `${parsed.toLocaleString()}명`;
-          },
+          // 유저 수(명)와 평점 개수(개)가 한 축을 공유하므로 눈금에는 단위를 붙이지 않는다
+          callback: (value: string | number) => Number(value).toLocaleString(),
         },
         grid: {
-          color: "rgba(255, 255, 255, 0.1)",
+          color: CHART_COLOR.grid,
         },
       },
     },
   };
 
   return (
-    <div className="h-full min-h-0 w-full overflow-x-auto">
+    <div ref={scrollRef} className="h-full min-h-0 w-full overflow-x-auto">
       <div className="h-full" style={{ minWidth: chartMinWidthPx }}>
         <Bar data={chartData} options={chartOptions} />
       </div>

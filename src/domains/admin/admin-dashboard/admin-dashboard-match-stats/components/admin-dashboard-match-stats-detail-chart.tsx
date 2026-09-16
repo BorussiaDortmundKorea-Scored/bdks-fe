@@ -18,6 +18,8 @@ import {
   type TooltipItem,
 } from "chart.js";
 
+import { CHART_COLOR, CHART_TOOLTIP_STYLE } from "@shared/constants/chart-palette";
+
 // Chart.js 필수 요소 등록 (요약 차트와 동일, 중복 등록은 무해)
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -45,8 +47,9 @@ const AdminDashboardMatchStatsDetailChart = ({ matchId }: IAdminDashboardMatchSt
       {
         label: "유저별 평점 입력 횟수",
         data: userRatings.map((user) => user.rating_count),
-        backgroundColor: "rgba(255, 205, 0, 0.8)", // 도르트문트 옐로우
-        borderColor: "rgba(255, 205, 0, 1)",
+        // 상위 개수 차트와 같은 규칙: 면은 연하게, 테두리는 진하게 2px
+        backgroundColor: CHART_COLOR.primaryFill, // 도르트문트 옐로우
+        borderColor: CHART_COLOR.primaryLine,
         borderWidth: 2,
         borderRadius: 4,
         barThickness: 20,
@@ -61,7 +64,7 @@ const AdminDashboardMatchStatsDetailChart = ({ matchId }: IAdminDashboardMatchSt
       legend: {
         position: "top" as const,
         labels: {
-          color: "#FFFFFF",
+          color: CHART_COLOR.text,
           font: { size: 14 },
           padding: 16,
           usePointStyle: true,
@@ -69,13 +72,7 @@ const AdminDashboardMatchStatsDetailChart = ({ matchId }: IAdminDashboardMatchSt
         },
       },
       tooltip: {
-        enabled: true,
-        backgroundColor: "rgba(0, 0, 0, 0.9)",
-        titleColor: "#FFCD00",
-        bodyColor: "#FFFFFF",
-        borderColor: "#FFCD00",
-        borderWidth: 2,
-        padding: 12,
+        ...CHART_TOOLTIP_STYLE,
         callbacks: {
           label: (item: TooltipItem<"bar">) => {
             const label = item.dataset.label ?? "";
@@ -86,20 +83,20 @@ const AdminDashboardMatchStatsDetailChart = ({ matchId }: IAdminDashboardMatchSt
     },
     scales: {
       x: {
-        ticks: { color: "#FFFFFF", font: { size: 11 }, autoSkip: false },
+        ticks: { color: CHART_COLOR.text, font: { size: 11 }, autoSkip: false },
         grid: { display: false },
       },
       y: {
         beginAtZero: true,
         ticks: {
-          color: "#FFFFFF",
+          color: CHART_COLOR.text,
           font: { size: 12 },
           callback: (value: string | number) => {
             const parsed = typeof value === "number" ? value : Number(value);
             return Number.isNaN(parsed) ? `${value}회` : `${parsed.toLocaleString()}회`;
           },
         },
-        grid: { color: "rgba(255, 255, 255, 0.1)" },
+        grid: { color: CHART_COLOR.grid },
       },
     },
   };
