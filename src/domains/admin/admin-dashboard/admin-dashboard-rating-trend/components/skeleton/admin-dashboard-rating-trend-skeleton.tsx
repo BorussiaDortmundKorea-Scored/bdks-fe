@@ -9,14 +9,14 @@ const AdminDashboardRatingTrendSkeleton = () => {
     <AdminDashboardRatingTrendWrapper>
       <div data-testid="admin-dashboard-rating-trend-skeleton" className="flex w-full animate-pulse flex-col gap-3">
         <div className="flex items-center justify-between">
-          <div className="bg-background-secondary h-5 w-1/3 rounded" />
+          <div className="h-5 w-1/3 rounded bg-white/5" />
           <div className="flex gap-2">
-            <div className="bg-background-secondary h-3.5 w-3.5 rounded-full" />
-            <div className="bg-background-secondary h-3.5 w-3.5 rounded-full" />
+            <div className="h-3.5 w-3.5 rounded-full bg-white/5" />
+            <div className="h-3.5 w-3.5 rounded-full bg-white/5" />
           </div>
         </div>
-        <div className="bg-background-secondary h-6 w-1/2 rounded" />
-        <div className="bg-background-secondary h-[72px] w-full rounded" />
+        <div className="h-6 w-1/2 rounded bg-white/5" />
+        <div className="h-[72px] w-full rounded bg-white/5" />
       </div>
     </AdminDashboardRatingTrendWrapper>
   );

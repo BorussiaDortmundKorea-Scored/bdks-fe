@@ -5,7 +5,7 @@
  *              두 페이지가 같은 경기 집합/정렬을 공유한다.
  */
 import { useGetMatchOverview } from "../api/react-query-api/use-get-match-overview";
-import { MATCH_OVERVIEW_CARD_CLASS } from "./wrapper/admin-dashboard-match-overview-wrapper";
+import { MATCH_OVERVIEW_CARD_CLASS, MATCH_OVERVIEW_TITLE } from "./wrapper/admin-dashboard-match-overview-wrapper";
 import { PagedCard } from "@youngduck/yd-ui/Cards";
 
 import { type IMatchCoverageItem } from "@admin/admin-dashboard/admin-dashboard-match-coverage/api/admin-dashboard-match-coverage-api";
@@ -47,7 +47,7 @@ const AdminDashboardMatchOverview = () => {
 
   return (
     <PagedCard variant="outlined" className={MATCH_OVERVIEW_CARD_CLASS}>
-      <PagedCard.Header>경기별 평점 현황</PagedCard.Header>
+      <PagedCard.Header>{MATCH_OVERVIEW_TITLE}</PagedCard.Header>
       <PagedCard.Page className="flex h-full flex-col gap-2">
         <span className="text-yds-c1m text-primary-100">참여율</span>
         {coverageData.length === 0 ? (

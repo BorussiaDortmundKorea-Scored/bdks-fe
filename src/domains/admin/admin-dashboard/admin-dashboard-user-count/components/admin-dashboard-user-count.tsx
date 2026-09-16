@@ -13,7 +13,6 @@ const AdminDashboardUserCount = () => {
 
   return (
     <AdminDashboardUserCountWrapper>
-      <h2>회원 수</h2>
       <div className="flex w-full items-center justify-between text-white">
         <p className="text-yds-b1">{userTotalAndMonthlyPercent.total_users}명</p>
         <p className="text-yds-c1m flex items-center gap-1">
