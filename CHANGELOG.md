@@ -3,6 +3,28 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [2.1.6] - 2026-09-16
+
+**Branch**: `bdks-v2.1.6-rpc에러코드규약및zod검증도입`
+
+> RPC 에러를 문구가 아닌 코드로 다루는 규약 도입과 zod 기반 폼 검증 전면 적용
+
+### 추가
+
+- feat: RPC 에러 코드 규약 도입으로 문구 매칭 제거
+- feat: zod 기반 폼 검증을 관리자 모달 전반에 도입
+
+### 변경
+
+- refactor: HOME/AWAY 리터럴을 공유 유니온 타입으로 통합
+- docs: v2.1.6 RPC 에러 코드 규약 및 zod 검증 도입 정리
+
+### 수정
+
+### 제거
+
+---
+
 ## [2.1.5] - 2026-09-14
 
 **Branch**: `bdks-v2.1.5-sentry노이즈정리및프로필생성보안강화`

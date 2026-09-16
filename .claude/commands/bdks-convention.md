@@ -33,6 +33,9 @@ src/
 │   │   │   └── {domain}-error-fallback.tsx
 │   │   └── skeleton/
 │   │       └── {domain}-skeleton.tsx
+│   ├── hooks/                         # 도메인 전용 커스텀 훅
+│   ├── schemas/
+│   │   └── {domain}-schema.ts         # zod 폼 검증 스키마 + 초기값 + 도메인 상수
 │   ├── mocks/                         # MSW 핸들러
 │   └── {domain}-page.tsx             # 페이지 컴포넌트
 ├── shared/                     # 공유 모듈
@@ -65,6 +68,7 @@ src/
 ## 네이밍 컨벤션
 
 **파일/폴더**: kebab-case
+
 - 페이지: `*-page.tsx` (예: `admin-competition-page.tsx`)
 - API: `*-api.ts` (예: `admin-competition-api.ts`)
 - Query 훅: `use-get-*.tsx` (예: `use-get-all-competitions.tsx`)
@@ -74,10 +78,12 @@ src/
 - 에러 폴백: `*-error-fallback.tsx`
 - 스켈레톤: `*-skeleton.tsx`
 - 모달: `*-modal.tsx`
+- 스키마: `*-schema.ts` (예: `admin-match-schema.ts`)
 - 테스트: `*.test.tsx`
 - 스토리: `*.stories.tsx`
 
 **코드 내부**:
+
 - 컴포넌트: PascalCase (`AdminCompetition`)
 - 상수: UPPER_SNAKE_CASE (`ADMIN_COMPETITION_QUERY_KEYS`)
 - 변수/함수: camelCase (`handleDeleteCompetition`)
@@ -146,8 +152,8 @@ export default Component;
 ```tsx
 // API 함수
 export const fetchCompetitions = async () => {
-  const response = await supabase.rpc('get_competitions');
-  return handleSupabaseApiResponse(response, '대회 목록 조회 실패');
+  const response = await supabase.rpc("get_competitions");
+  return handleSupabaseApiResponse(response, "대회 목록 조회 실패");
 };
 
 // Query 훅
@@ -212,7 +218,7 @@ const DomainErrorFallback = () => {
   <ReactQueryBoundary skeleton={<DomainSkeleton />} errorFallback={DomainErrorFallback}>
     <Domain />
   </ReactQueryBoundary>
-</LayoutWithHeaderFooter>
+</LayoutWithHeaderFooter>;
 ```
 
 - **모달/토스트**: `@youngduck/yd-ui`의 `useOverlay()` 훅
