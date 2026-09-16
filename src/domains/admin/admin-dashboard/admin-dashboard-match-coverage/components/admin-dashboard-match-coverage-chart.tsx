@@ -18,14 +18,10 @@ import {
   type TooltipItem,
 } from "chart.js";
 
+import { CHART_COLOR, CHART_TOOLTIP_STYLE } from "@shared/constants/chart-palette";
+
 // Line 차트 필수 요소 등록
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
-
-// 기존 대시보드 차트와 동일한 팔레트 (도르트문트 옐로우)
-const CHART_COLORS = {
-  line: "rgba(255, 205, 0, 1)",
-  fill: "rgba(255, 205, 0, 0.15)",
-} as const;
 
 interface IAdminDashboardMatchCoverageChartProps {
   data: IMatchCoverageItem[];
@@ -41,8 +37,8 @@ const AdminDashboardMatchCoverageChart = ({ data }: IAdminDashboardMatchCoverage
       {
         label: "참여율",
         data: ordered.map((item) => item.coverage_percent),
-        borderColor: CHART_COLORS.line,
-        backgroundColor: CHART_COLORS.fill,
+        borderColor: CHART_COLOR.primaryLine,
+        backgroundColor: CHART_COLOR.primaryFill,
         borderWidth: 2,
         fill: true,
         tension: 0.4,
@@ -64,13 +60,7 @@ const AdminDashboardMatchCoverageChart = ({ data }: IAdminDashboardMatchCoverage
     plugins: {
       legend: { display: false },
       tooltip: {
-        enabled: true,
-        backgroundColor: "rgba(0, 0, 0, 0.9)",
-        titleColor: "#FFCD00",
-        bodyColor: "#FFFFFF",
-        borderColor: "#FFCD00",
-        borderWidth: 2,
-        padding: 12,
+        ...CHART_TOOLTIP_STYLE,
         displayColors: false,
         titleFont: { size: 14, weight: "bold" as const },
         bodyFont: { size: 13 },
@@ -96,17 +86,17 @@ const AdminDashboardMatchCoverageChart = ({ data }: IAdminDashboardMatchCoverage
     },
     scales: {
       x: {
-        ticks: { color: "#FFFFFF", font: { size: 11 }, autoSkip: true },
+        ticks: { color: CHART_COLOR.text, font: { size: 11 }, autoSkip: true },
         grid: { display: false },
       },
       y: {
         beginAtZero: true,
         ticks: {
-          color: "#FFFFFF",
+          color: CHART_COLOR.text,
           font: { size: 12 },
           callback: (value: string | number) => `${value}%`,
         },
-        grid: { color: "rgba(255, 255, 255, 0.1)" },
+        grid: { color: CHART_COLOR.grid },
       },
     },
   };

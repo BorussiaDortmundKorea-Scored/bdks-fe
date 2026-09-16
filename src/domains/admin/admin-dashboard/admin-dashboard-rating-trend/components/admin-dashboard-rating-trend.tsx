@@ -3,12 +3,11 @@
  * 기능: 평점 활동 추이 PagedCard (월별 평점 입력량 / 경기별 평점 참여를 dot 페이저로 전환)
  * 프로세스 설명: get_monthly_rating_trend / get_match_participation_trend RPC를 조회해 스파크라인 페이지 2개로 표시
  */
-import { PagedCard } from "@youngduck/yd-ui/Cards";
-
 import { useGetMatchParticipationTrendSuspense } from "../api/react-query-api/use-get-match-participation-trend";
 import { useGetMonthlyRatingTrendSuspense } from "../api/react-query-api/use-get-monthly-rating-trend";
 import StatSparklineCard from "./stat-sparkline-card";
-import { RATING_TREND_CARD_CLASS } from "./wrapper/admin-dashboard-rating-trend-wrapper";
+import { RATING_TREND_CARD_CLASS, RATING_TREND_TITLE } from "./wrapper/admin-dashboard-rating-trend-wrapper";
+import { PagedCard } from "@youngduck/yd-ui/Cards";
 
 const AdminDashboardRatingTrend = () => {
   //SECTION HOOK호출 영역
@@ -31,7 +30,7 @@ const AdminDashboardRatingTrend = () => {
 
   return (
     <PagedCard variant="outlined" className={RATING_TREND_CARD_CLASS}>
-      <PagedCard.Header>평점 활동 추이</PagedCard.Header>
+      <PagedCard.Header>{RATING_TREND_TITLE}</PagedCard.Header>
       <PagedCard.Page>
         <StatSparklineCard
           label="이번 달"

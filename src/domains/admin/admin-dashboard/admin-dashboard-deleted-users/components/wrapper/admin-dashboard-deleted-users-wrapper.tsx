@@ -16,6 +16,7 @@ const AdminDashboardDeletedUsersWrapper = ({ children }: IAdminDashboardDeletedU
       variant="outlined"
       className="text-yds-s2 text-primary-100 flex h-full w-full flex-col justify-between md:col-start-3 md:col-end-5 md:row-start-1 md:row-end-2"
     >
+      <h2>누적 탈퇴 회원</h2>
       {children}
     </Card>
   );

@@ -6,6 +6,9 @@
  */
 import { Card } from "@youngduck/yd-ui/Cards";
 
+/** 카드 제목 (본체 PagedCard.Header / 스켈레톤 / 에러 공통) */
+export const MATCH_OVERVIEW_TITLE = "경기별 평점 현황";
+
 /** 대시보드 그리드 배치 클래스 (본체 PagedCard / 스켈레톤 / 에러 공통) */
 export const MATCH_OVERVIEW_CARD_CLASS =
   "text-primary-100 h-full w-full md:col-start-1 md:col-end-7 md:row-start-4 md:row-end-7";
@@ -13,6 +16,8 @@ export const MATCH_OVERVIEW_CARD_CLASS =
 const AdminDashboardMatchOverviewWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <Card variant="outlined" className={`${MATCH_OVERVIEW_CARD_CLASS} flex flex-col justify-center`}>
+      {/* 제목은 정적이라 로딩 중에도 진짜 문구를 보여준다 (회원 리텐션 카드와 같은 방식) */}
+      <span className="text-yds-s2 text-primary-100 mb-2">{MATCH_OVERVIEW_TITLE}</span>
       {children}
     </Card>
   );

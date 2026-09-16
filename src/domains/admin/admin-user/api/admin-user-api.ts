@@ -7,6 +7,10 @@ export type IUser = Omit<IProfileEntity, "points"> & {
   email?: string | null;
   /** 최근 활동일: 로그인/세션갱신(auth.updated_at)/평점입력 중 가장 최신 시각 (RPC get_all_users) */
   last_sign_in_at?: string | null;
+  /** 최애선수 표시명 (korean_name 우선, players 조인) */
+  favorite_player_name: string | null;
+  /** 최애선수 얼굴 이미지 URL (players.head_profile_image_url) */
+  favorite_player_image_url: string | null;
 };
 
 export interface IDeleteUserResponse {

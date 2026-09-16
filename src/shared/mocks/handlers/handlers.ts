@@ -1,11 +1,14 @@
 import { AdminStandingsHandlers } from "@admin/admin-competition/admin-standings/mocks/admin-standings-handler";
 import { AdminDashboardMatchOverviewHandlers } from "@admin/admin-dashboard/admin-dashboard-match-overview/mocks/admin-dashboard-match-overview-handler";
 import { AdminDashboardMatchStatsHandlers } from "@admin/admin-dashboard/admin-dashboard-match-stats/mocks/admin-dashboard-match-stats-handler";
+import { AdminDashboardRatingDistributionHandlers } from "@admin/admin-dashboard/admin-dashboard-rating-distribution/mocks/admin-dashboard-rating-distribution-handler";
 import { AdminDashboardRatingTrendHandlers } from "@admin/admin-dashboard/admin-dashboard-rating-trend/mocks/admin-dashboard-rating-trend-handler";
+import { AdminDashboardRetentionHandlers } from "@admin/admin-dashboard/admin-dashboard-retention/mocks/admin-dashboard-retention-handler";
 import { AdminDashboardUserCountHandlers } from "@admin/admin-dashboard/admin-dashboard-user-count/mocks/admin-dashboard-user-count-handler";
 import { AdminDashboardUserLoginTypeHandlers } from "@admin/admin-dashboard/admin-dashboard-user-login-type/mocks/admin-dashboard-user-login-type-handler";
 import { AdminMatchLineupHandlers } from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-handler";
 import { AdminMatchLineupSubstitutionHandlers } from "@admin/admin-match/admin-match-lineup/mocks/admin-match-lineup-substitution-handler";
+import { AdminUserPopularPlayersHandlers } from "@admin/admin-user/admin-user-popular-players/mocks/admin-user-popular-players-handler";
 
 import { AuthInfoProfileCardHandlers } from "@auth/auth-info/auth-info-profile-card/mocks/auth-info-profile-card-handler";
 import { TransferMarketHandlers } from "@auth/auth-info/auth-info-quick-links/transfer-market/mocks/transfer-market-handler";
@@ -30,12 +33,15 @@ import { PlayersStatsByGameHandlers } from "@players/players-stats/players-stats
 export const handlers = [
   ...AdminDashboardMatchOverviewHandlers,
   ...AdminDashboardMatchStatsHandlers,
+  ...AdminDashboardRatingDistributionHandlers,
   ...AdminDashboardRatingTrendHandlers,
+  ...AdminDashboardRetentionHandlers,
   ...AdminDashboardUserCountHandlers,
   ...AdminDashboardUserLoginTypeHandlers,
   ...AdminMatchLineupHandlers,
   ...AdminMatchLineupSubstitutionHandlers,
   ...AdminStandingsHandlers,
+  ...AdminUserPopularPlayersHandlers,
   ...DashboardFixturesHandlers,
   ...DashboardTopPlayersHandlers,
   ...AuthInfoProfileCardHandlers,

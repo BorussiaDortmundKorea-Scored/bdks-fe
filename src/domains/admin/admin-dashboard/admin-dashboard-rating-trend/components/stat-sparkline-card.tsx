@@ -17,14 +17,10 @@ import {
   type TooltipItem,
 } from "chart.js";
 
+import { CHART_COLOR, CHART_TOOLTIP_STYLE } from "@shared/constants/chart-palette";
+
 // 스파크라인(라인차트) 필수 요소 등록
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip);
-
-// 기존 대시보드 차트와 동일한 팔레트 (도르트문트 옐로우)
-const CHART_COLORS = {
-  line: "rgba(255, 205, 0, 1)",
-  fill: "rgba(255, 205, 0, 0.15)",
-} as const;
 
 interface IStatSparklineCardProps {
   label: string;
@@ -58,8 +54,8 @@ const StatSparklineCard = ({
     datasets: [
       {
         data: series,
-        borderColor: CHART_COLORS.line,
-        backgroundColor: CHART_COLORS.fill,
+        borderColor: CHART_COLOR.primaryLine,
+        backgroundColor: CHART_COLOR.primaryFill,
         borderWidth: 2,
         fill: true,
         tension: 0.4,
@@ -81,13 +77,7 @@ const StatSparklineCard = ({
     plugins: {
       legend: { display: false },
       tooltip: {
-        enabled: true,
-        backgroundColor: "rgba(0, 0, 0, 0.9)",
-        titleColor: "#FFCD00",
-        bodyColor: "#FFFFFF",
-        borderColor: "#FFCD00",
-        borderWidth: 2,
-        padding: 12,
+        ...CHART_TOOLTIP_STYLE,
         displayColors: false,
         titleFont: { size: 13, weight: "bold" as const },
         bodyFont: { size: 13 },
@@ -120,9 +110,7 @@ const StatSparklineCard = ({
           {isRise ? "▲" : "▼"} {Math.abs(delta).toLocaleString()}
           {percent !== null ? ` (${Math.abs(percent).toFixed(1)}%)` : ""}
         </span>
-        {caption ? (
-          <span className="text-primary-100 ml-auto truncate text-[11px] opacity-70">{caption}</span>
-        ) : null}
+        {caption ? <span className="text-primary-100 ml-auto truncate text-[11px] opacity-70">{caption}</span> : null}
       </div>
 
       <div className="h-[72px] w-full">

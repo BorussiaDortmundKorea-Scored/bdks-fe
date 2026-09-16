@@ -16,6 +16,7 @@ const AdminDashboardUserLoginTypeWrapper = ({ children }: IAdminDashboardUserLog
       variant="outlined"
       className="text-primary-100 flex h-full w-full flex-col justify-center md:col-start-1 md:col-end-4 md:row-start-2 md:row-end-4"
     >
+      <h2 className="text-yds-s2 mb-4">회원 유형</h2>
       {children}
     </Card>
   );

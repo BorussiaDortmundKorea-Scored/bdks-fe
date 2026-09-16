@@ -9,9 +9,15 @@ import AdminDashboardDeletedUsersSkeleton from "./admin-dashboard-deleted-users/
 import AdminDashboardMatchOverview from "./admin-dashboard-match-overview/components/admin-dashboard-match-overview";
 import AdminDashboardMatchOverviewError from "./admin-dashboard-match-overview/components/error/admin-dashboard-match-overview-error";
 import AdminDashboardMatchOverviewSkeleton from "./admin-dashboard-match-overview/components/skeleton/admin-dashboard-match-overview-skeleton";
+import AdminDashboardRatingDistribution from "./admin-dashboard-rating-distribution/components/admin-dashboard-rating-distribution";
+import AdminDashboardRatingDistributionError from "./admin-dashboard-rating-distribution/components/error/admin-dashboard-rating-distribution-error";
+import AdminDashboardRatingDistributionSkeleton from "./admin-dashboard-rating-distribution/components/skeleton/admin-dashboard-rating-distribution-skeleton";
 import AdminDashboardRatingTrend from "./admin-dashboard-rating-trend/components/admin-dashboard-rating-trend";
 import AdminDashboardRatingTrendError from "./admin-dashboard-rating-trend/components/error/admin-dashboard-rating-trend-error";
 import AdminDashboardRatingTrendSkeleton from "./admin-dashboard-rating-trend/components/skeleton/admin-dashboard-rating-trend-skeleton";
+import AdminDashboardRetention from "./admin-dashboard-retention/components/admin-dashboard-retention";
+import AdminDashboardRetentionError from "./admin-dashboard-retention/components/error/admin-dashboard-retention-error";
+import AdminDashboardRetentionSkeleton from "./admin-dashboard-retention/components/skeleton/admin-dashboard-retention-skeleton";
 import AdminDashboardSites from "./admin-dashboard-sites/components/admin-dashboard-sites";
 import AdminDashboardUserCountError from "./admin-dashboard-user-count/components/error/admin-dashboard-user-count-error";
 import AdminDashboardUserCountSkeleton from "./admin-dashboard-user-count/components/skeleton/admin-dashboard-user-count-skeleton";
@@ -54,6 +60,16 @@ const AdminDashboardPage = () => {
         errorFallback={AdminDashboardMatchOverviewError}
       >
         <AdminDashboardMatchOverview />
+      </ReactQueryBoundary>
+      {/* 하단 1행: 좌 리텐션 퍼널 / 우 평점 분포 */}
+      <ReactQueryBoundary skeleton={<AdminDashboardRetentionSkeleton />} errorFallback={AdminDashboardRetentionError}>
+        <AdminDashboardRetention />
+      </ReactQueryBoundary>
+      <ReactQueryBoundary
+        skeleton={<AdminDashboardRatingDistributionSkeleton />}
+        errorFallback={AdminDashboardRatingDistributionError}
+      >
+        <AdminDashboardRatingDistribution />
       </ReactQueryBoundary>
     </AdminGridWrapper>
   );

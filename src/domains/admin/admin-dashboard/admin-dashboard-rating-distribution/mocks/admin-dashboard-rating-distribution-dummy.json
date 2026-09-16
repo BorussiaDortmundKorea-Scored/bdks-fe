@@ -1,0 +1,24 @@
+{
+  "total_rating_count": 1042,
+  "average_rating": 6.27,
+  "distribution": [
+    { "bucket": 0, "rating_count": 16 },
+    { "bucket": 1, "rating_count": 6 },
+    { "bucket": 2, "rating_count": 12 },
+    { "bucket": 3, "rating_count": 23 },
+    { "bucket": 4, "rating_count": 43 },
+    { "bucket": 5, "rating_count": 149 },
+    { "bucket": 6, "rating_count": 458 },
+    { "bucket": 7, "rating_count": 211 },
+    { "bucket": 8, "rating_count": 94 },
+    { "bucket": 9, "rating_count": 13 },
+    { "bucket": 10, "rating_count": 17 }
+  ],
+  "phase": [
+    { "phase_order": 1, "phase_label": "경기 전", "rating_count": 25 },
+    { "phase_order": 2, "phase_label": "전반", "rating_count": 117 },
+    { "phase_order": 3, "phase_label": "하프타임", "rating_count": 82 },
+    { "phase_order": 4, "phase_label": "후반", "rating_count": 151 },
+    { "phase_order": 5, "phase_label": "경기 종료", "rating_count": 667 }
+  ]
+}

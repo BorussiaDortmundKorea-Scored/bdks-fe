@@ -12,7 +12,6 @@ const AdminDashboardDeletedUsers = () => {
 
   return (
     <AdminDashboardDeletedUsersWrapper>
-      <h2>누적 탈퇴 회원</h2>
       <div className="flex w-full items-center justify-between text-white">
         <p className="text-yds-b1">{deletedUsersStats.total_deleted}명</p>
         <p className="text-yds-c1m flex items-center gap-1">
