@@ -1,9 +1,10 @@
+import { type ReactNode } from "react";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
-import { type ReactNode } from "react";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createMatch } from "@admin/admin-match/api/admin-match-api";
+import { type ICreateMatchRequest, createMatch } from "@admin/admin-match/api/admin-match-api";
 import { ADMIN_MATCH_QUERY_KEYS } from "@admin/admin-match/api/react-query-api/admin-match-query-key";
 import { useCreateMatch } from "@admin/admin-match/api/react-query-api/use-create-match";
 
@@ -26,7 +27,7 @@ const createWrapper = (client: QueryClient) =>
     return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
   };
 
-const request = {
+const request: ICreateMatchRequest = {
   competition_id: "c1",
   opponent_team_id: "o1",
   match_date: "2026-01-01",

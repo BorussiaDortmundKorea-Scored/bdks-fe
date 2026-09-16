@@ -9,13 +9,14 @@ import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse } from "@shared/api/types/api-types";
 import { type ITeamEntity } from "@shared/types/entities/team.entity";
+import { type HomeAway } from "@shared/types/match.types";
 
 export interface IUpcomingMatch {
   id: string;
   match_date: string;
   /** 킥오프 시각(UTC ISO). 아직 확정되지 않은 경기가 많아 null 이 흔하다. */
   match_start_time: string | null;
-  text_home_away: "HOME" | "AWAY";
+  text_home_away: HomeAway;
   round_name: string | null;
   season: string;
   league_name: string;
