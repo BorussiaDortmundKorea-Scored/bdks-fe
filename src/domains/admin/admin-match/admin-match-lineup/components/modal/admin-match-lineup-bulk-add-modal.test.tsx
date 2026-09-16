@@ -3,10 +3,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AdminMatchLineupBulkAddModal } from "@admin/admin-match/admin-match-lineup/components/modal/admin-match-lineup-bulk-add-modal";
 
-const { bulkCreateMock, toastMock, isCreatingRef } = vi.hoisted(() => ({
+const { bulkCreateMock, toastMock, isCreatingRef, registeredLineupsRef } = vi.hoisted(() => ({
   bulkCreateMock: vi.fn(),
   toastMock: vi.fn(),
   isCreatingRef: { current: false },
+  registeredLineupsRef: { current: [] as { player_id: string }[] },
 }));
 
 vi.mock("@admin/admin-match/admin-match-lineup/api/react-query-api/use-bulk-create-match-lineups", () => ({
@@ -28,6 +29,10 @@ vi.mock("@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-p
   }),
 }));
 
+vi.mock("@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense", () => ({
+  useGetMatchLineupsSuspense: () => ({ data: registeredLineupsRef.current }),
+}));
+
 vi.mock("@youngduck/yd-ui/Overlays", () => ({
   useOverlay: () => ({ toast: toastMock }),
 }));
@@ -36,6 +41,7 @@ describe("AdminMatchLineupBulkAddModal", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     isCreatingRef.current = false;
+    registeredLineupsRef.current = [];
     bulkCreateMock.mockResolvedValue(undefined);
   });
 

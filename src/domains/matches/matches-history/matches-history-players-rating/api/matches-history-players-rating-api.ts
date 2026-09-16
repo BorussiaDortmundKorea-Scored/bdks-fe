@@ -2,6 +2,7 @@ import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse } from "@shared/api/types/api-types";
 import { type LineupType } from "@shared/types/match-lineup.types";
+import { type HomeAway } from "@shared/types/match.types";
 
 export interface IMatchesHistoryPlayersRating {
   korean_name: string;
@@ -22,7 +23,7 @@ export interface IMatchesHistoryPlayersRating {
 }
 
 export interface IMatchInfo {
-  home_away: "HOME" | "AWAY";
+  home_away: HomeAway;
   our_score: number;
   opponent_score: number;
   competition_name: string;

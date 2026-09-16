@@ -2,6 +2,7 @@ import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse } from "@shared/api/types/api-types";
 import { type IMatchEntity } from "@shared/types/entities/match.entity";
+import { type HomeAway } from "@shared/types/match.types";
 
 export type IMatch = IMatchEntity & {
   competition_name: string;
@@ -12,7 +13,7 @@ export interface IBulkCreateMatchItem {
   competition_id: string;
   opponent_team_id: string;
   match_date: string;
-  home_away: "HOME" | "AWAY";
+  home_away: HomeAway;
   match_start_time: string;
   round_name?: string;
 }
@@ -25,7 +26,7 @@ export interface ICreateMatchRequest {
   competition_id: string;
   opponent_team_id: string;
   match_date: string;
-  home_away: string;
+  home_away: HomeAway;
   our_score?: number;
   opponent_score?: number;
   formation?: string;
@@ -42,7 +43,7 @@ export interface IUpdateMatchRequest {
   competition_id?: string;
   opponent_team_id?: string;
   match_date?: string;
-  home_away?: string;
+  home_away?: HomeAway;
   our_score?: number;
   opponent_score?: number;
   formation?: string;
@@ -107,9 +108,7 @@ export const deleteMatch = async (id: string): Promise<ApiResponse<boolean>> =>
     }),
   );
 
-export const bulkCreateMatches = async (
-  payload: IBulkCreateMatchesRequest,
-): Promise<ApiResponse<IMatch[]>> =>
+export const bulkCreateMatches = async (payload: IBulkCreateMatchesRequest): Promise<ApiResponse<IMatch[]>> =>
   callRpc<IMatch[]>(() =>
     supabase.rpc("bulk_insert_matches", {
       p_matches: payload.matches,

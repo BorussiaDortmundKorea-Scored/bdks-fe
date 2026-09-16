@@ -29,14 +29,15 @@ describe("AdminTeamAddModal", () => {
     expect(screen.getByRole("button", { name: "취소" })).toBeInTheDocument();
   });
 
-  it("팀명이 비어 있으면 추가 버튼이 비활성화된다", () => {
-    render(<AdminTeamAddModal onClose={vi.fn()} />);
+  // 버튼을 잠가두면 왜 못 누르는지 알 수 없어, 눌러보면 사유를 알려주는 쪽으로 바꿨다
+  it("팀명이 비어 있으면 등록하지 않고 입력 밑에 사유를 보여준다", async () => {
+    const onClose = vi.fn();
+    render(<AdminTeamAddModal onClose={onClose} />);
 
-    expect(screen.getByRole("button", { name: "추가" })).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: "추가" }));
 
-    fireEvent.change(screen.getByPlaceholderText("팀명을 입력하세요"), { target: { value: "FC 테스트" } });
-
-    expect(screen.getByRole("button", { name: "추가" })).toBeEnabled();
+    expect(await screen.findByText("팀명을 입력해주세요")).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   it("팀명만 입력해 추가하면 국가·로고 없이 등록하고 모달을 닫는다", async () => {

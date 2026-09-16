@@ -1,13 +1,14 @@
 import { callRpc } from "@shared/api/call-rpc";
 import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse } from "@shared/api/types/api-types";
+import { type HomeAway } from "@shared/types/match.types";
 
 export type ViewingMatchStatus = "PAST" | "TODAY";
 
 export interface IViewingMatch {
   id: string;
   match_date: string;
-  home_away: "HOME" | "AWAY";
+  home_away: HomeAway;
   round_name: string | null;
   competition_name: string;
   season: string;

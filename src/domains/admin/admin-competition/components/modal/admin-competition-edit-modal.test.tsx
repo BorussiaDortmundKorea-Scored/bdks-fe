@@ -41,15 +41,21 @@ describe("AdminCompetitionEditModal", () => {
     expect(screen.getByRole("button", { name: "취소" })).toBeInTheDocument();
   });
 
-  it("대회 종류·시즌이 비어 있으면 수정 버튼이 비활성화된다", () => {
+  // 버튼을 잠가두면 왜 못 누르는지 알 수 없어, 눌러보면 사유를 알려주는 쪽으로 바꿨다
+  it("대회 종류·시즌이 비어 있으면 갱신하지 않고 사유를 보여준다", async () => {
+    const onClose = vi.fn();
     render(
       <AdminCompetitionEditModal
         competition={{ ...baseCompetition, name: "", season: "" } as ICompetition}
-        onClose={vi.fn()}
+        onClose={onClose}
       />,
     );
 
-    expect(screen.getByRole("button", { name: "수정" })).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: "수정" }));
+
+    expect(await screen.findByText("대회 종류를 선택해주세요")).toBeInTheDocument();
+    expect(screen.getByText("시즌을 선택해주세요")).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   it("수정 클릭 시 프리필된 값으로 수정하고 모달을 닫는다", async () => {

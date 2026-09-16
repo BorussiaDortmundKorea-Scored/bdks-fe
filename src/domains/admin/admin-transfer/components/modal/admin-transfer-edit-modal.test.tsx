@@ -40,9 +40,9 @@ describe("AdminTransferEditModal", () => {
     render(<AdminTransferEditModal transfer={transfer} onClose={vi.fn()} />);
 
     expect(screen.getByText("이적 수정")).toBeInTheDocument();
-    expect(screen.getByText("선수 *")).toBeInTheDocument();
-    expect(screen.getByText("방향 *")).toBeInTheDocument();
-    expect(screen.getByText("유형 *")).toBeInTheDocument();
+    expect(screen.getByText("선수")).toBeInTheDocument();
+    expect(screen.getByText("방향")).toBeInTheDocument();
+    expect(screen.getByText("유형")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("예: 30000000 (= 30M €)")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "수정" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "취소" })).toBeInTheDocument();

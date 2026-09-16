@@ -77,7 +77,7 @@ describe("AdminMatchLineup 컴포넌트 기능 테스트", () => {
 
     // 모달이 열렸는지 확인
     expect(await screen.findByText("새 선수 추가")).toBeInTheDocument();
-    expect(await screen.findByText("선수 *")).toBeInTheDocument();
+    expect(await screen.findByText("선수")).toBeInTheDocument();
     expect(await screen.findByText("추가")).toBeInTheDocument();
   });
 

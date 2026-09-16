@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
@@ -47,7 +47,7 @@ describe("AdminMatchLineupSubstitutionModal", () => {
 
     expect(screen.getByText("선수 교체")).toBeInTheDocument();
     expect(screen.getByText("선수일 선수를 교체합니다.")).toBeInTheDocument();
-    expect(screen.getByText("교체로 들어올 선수 *")).toBeInTheDocument();
+    expect(screen.getByText("교체로 들어올 선수")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "교체 적용" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "취소" })).toBeInTheDocument();
   });
@@ -62,15 +62,15 @@ describe("AdminMatchLineupSubstitutionModal", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("교체 시간이 비어 있으면 토스트를 띄우고 교체하지 않는다", async () => {
+  // 사라지는 토스트 대신 어떤 칸이 문제인지 입력 밑에 남긴다
+  it("교체 대상·시간이 비어 있으면 교체하지 않고 입력 밑에 사유를 보여준다", async () => {
     const onClose = vi.fn();
     render(<AdminMatchLineupSubstitutionModal matchId="match-1" lineup={mockLineup} onClose={onClose} />);
 
     fireEvent.click(screen.getByRole("button", { name: "교체 적용" }));
 
-    await waitFor(() =>
-      expect(toastMock).toHaveBeenCalledWith({ content: "교체 시간은 1분 이상 120분 이하로 입력해주세요." }),
-    );
+    expect(await screen.findByText("교체로 들어올 선수를 선택해주세요")).toBeInTheDocument();
+    expect(screen.getByText("교체 시간을 1분 이상 120분 이하로 입력해주세요")).toBeInTheDocument();
     expect(substituteMock).not.toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
   });

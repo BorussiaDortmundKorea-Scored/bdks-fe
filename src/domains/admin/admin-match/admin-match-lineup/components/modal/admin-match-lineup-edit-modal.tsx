@@ -1,18 +1,27 @@
 /**
  * 작성자: KYD
  * 기능: 라인업 수정 모달 컴포넌트
- * 프로세스 설명: 라인업 수정 폼을 모달로 표시
+ * 프로세스 설명: 라인업 수정 폼을 모달로 표시.
+ *                선수·포지션은 SelectBox 훅이 값의 원천이라 제출 직전에 payload 를 조립해 검증한다
  */
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
-import { Button, CheckBox, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
+import { Button, CheckBox, Field, NumberInput, SelectBox, useSelectBox } from "@youngduck/yd-ui";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
 import { useGetAllPositionsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-positions-suspense";
 import { useUpdateMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-update-match-lineup";
+import { useLineupPlayerOptions } from "@admin/admin-match/admin-match-lineup/hooks/use-lineup-player-options";
+import {
+  type IAdminMatchLineupFormValues,
+  MATCH_MINUTE_MAX,
+  MATCH_MINUTE_MIN,
+  MAX_YELLOW_CARDS,
+  adminMatchLineupFormSchema,
+} from "@admin/admin-match/admin-match-lineup/schemas/admin-match-lineup-schema";
 
-import { type IMatchLineupEntity } from "@shared/types/entities/match-lineup.entity";
+import { toFieldErrors } from "@shared/hooks/use-zod-form";
 import { type LineupType } from "@shared/types/match-lineup.types";
 
 interface IAdminMatchLineupEditModal {
@@ -29,45 +38,22 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-  const [formData, setFormData] = useState<
-    Pick<
-      IMatchLineupEntity,
-      | "player_id"
-      | "position_id"
-      | "lineup_type"
-      | "is_captain"
-      | "sub_in_minute"
-      | "sub_out_minute"
-      | "yellow_cards"
-      | "red_card_minute"
-      | "is_sent_off"
-      | "goals"
-      | "assists"
-    >
-  >({
-    player_id: "",
-    position_id: "",
-    lineup_type: "STARTING",
-    is_captain: false,
-    sub_in_minute: null,
-    sub_out_minute: null,
-    yellow_cards: 0,
-    red_card_minute: null,
-    is_sent_off: false,
-    goals: 0,
-    assists: 0,
+  // 모달은 행마다 새로 마운트되므로 초기값을 props 에서 바로 만든다
+  const [stats, setStats] = useState({
+    is_captain: lineup.is_captain,
+    sub_in_minute: lineup.sub_in_minute,
+    sub_out_minute: lineup.sub_out_minute,
+    yellow_cards: lineup.yellow_cards,
+    red_card_minute: lineup.red_card_minute,
+    is_sent_off: lineup.is_sent_off,
+    goals: lineup.goals,
+    assists: lineup.assists,
   });
+  const [errors, setErrors] = useState<Partial<Record<keyof IAdminMatchLineupFormValues, string>>>({});
   //!SECTION 상태값 영역
 
   //SECTION SelectBox 옵션/훅
-  const playerOptions = useMemo(
-    () =>
-      players.map((p) => ({
-        label: p.id,
-        value: `${p.korean_name || p.name}${p.jersey_number ? ` (${p.jersey_number}번)` : ""}`,
-      })),
-    [players],
-  );
+  const playerOptions = useLineupPlayerOptions(players);
 
   const positionOptions = useMemo(
     () => positions.map((pos) => ({ label: pos.id, value: `${pos.position_detail_name} (${pos.position_code})` })),
@@ -88,16 +74,16 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
   const editPlayerHook = useSelectBox({
     options: playerOptions,
     search: true,
-    defaultValue: lineup ? getPlayerValueById(lineup.player_id) : undefined,
+    defaultValue: getPlayerValueById(lineup.player_id),
   });
   const editPositionHook = useSelectBox({
     options: positionOptions,
     search: true,
-    defaultValue: lineup && lineup.position_id ? getPositionValueById(lineup.position_id) : undefined,
+    defaultValue: lineup.position_id ? getPositionValueById(lineup.position_id) : undefined,
   });
   const editLineupTypeHook = useSelectBox({
     options: lineupTypeOptions,
-    defaultValue: lineup ? (lineup.lineup_type === "STARTING" ? "선발" : "벤치") : undefined,
+    defaultValue: lineup.lineup_type === "STARTING" ? "선발" : "벤치",
   });
   const editSubInPartnerHook = useSelectBox({
     options: playerOptions,
@@ -112,56 +98,42 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
   //!SECTION SelectBox 옵션/훅
 
   //SECTION 메서드 영역
-  useEffect(() => {
-    setFormData({
-      player_id: lineup.player_id,
-      position_id: lineup.position_id || "",
-      lineup_type: lineup.lineup_type,
-      is_captain: lineup.is_captain,
-      sub_in_minute: lineup.sub_in_minute,
-      sub_out_minute: lineup.sub_out_minute,
-      yellow_cards: lineup.yellow_cards,
-      red_card_minute: lineup.red_card_minute,
-      is_sent_off: lineup.is_sent_off,
-      goals: lineup.goals,
-      assists: lineup.assists,
-    });
-  }, [lineup]);
+  const setStat = <TKey extends keyof typeof stats>(key: TKey, value: (typeof stats)[TKey]) => {
+    setStats((prev) => ({ ...prev, [key]: value }));
+  };
 
   const handleUpdateLineup = async () => {
+    const result = adminMatchLineupFormSchema.safeParse({
+      ...stats,
+      player_id: editPlayerHook.label || lineup.player_id,
+      position_id: editPositionHook.label || lineup.position_id || null,
+      lineup_type: editLineupTypeHook.label || lineup.lineup_type,
+      sub_in_partner_id: editSubInPartnerHook.label || null,
+      sub_out_partner_id: editSubOutPartnerHook.label || null,
+    });
+
+    if (!result.success) {
+      setErrors(toFieldErrors<IAdminMatchLineupFormValues>(result.error));
+      return;
+    }
+    setErrors({});
+
     await updateLineup({
       id: lineup.id,
       match_id: matchId,
-      player_id: (editPlayerHook.label as string) || formData.player_id || undefined,
-      position_id: (editPositionHook.label as string) || formData.position_id || undefined,
-      lineup_type: (editLineupTypeHook.label as LineupType) || formData.lineup_type,
-      is_captain: formData.is_captain,
-      sub_in_minute: formData.sub_in_minute,
-      sub_in_partner_id: (editSubInPartnerHook.label as string) || null,
-      sub_out_minute: formData.sub_out_minute,
-      sub_out_partner_id: (editSubOutPartnerHook.label as string) || null,
-      yellow_cards: formData.yellow_cards,
-      red_card_minute: formData.red_card_minute || undefined,
-      is_sent_off: formData.is_sent_off,
-      goals: formData.goals,
-      assists: formData.assists,
-    });
-    handleClose();
-  };
-
-  const handleClose = () => {
-    setFormData({
-      player_id: "",
-      position_id: "",
-      lineup_type: "STARTING",
-      is_captain: false,
-      sub_in_minute: null,
-      sub_out_minute: null,
-      yellow_cards: 0,
-      red_card_minute: null,
-      is_sent_off: false,
-      goals: 0,
-      assists: 0,
+      player_id: result.data.player_id,
+      position_id: result.data.position_id ?? undefined,
+      lineup_type: result.data.lineup_type as LineupType,
+      is_captain: result.data.is_captain,
+      sub_in_minute: result.data.sub_in_minute,
+      sub_in_partner_id: result.data.sub_in_partner_id,
+      sub_out_minute: result.data.sub_out_minute,
+      sub_out_partner_id: result.data.sub_out_partner_id,
+      yellow_cards: result.data.yellow_cards,
+      red_card_minute: result.data.red_card_minute ?? undefined,
+      is_sent_off: result.data.is_sent_off,
+      goals: result.data.goals,
+      assists: result.data.assists,
     });
     onClose();
   };
@@ -171,124 +143,105 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
     <div className="flex flex-col gap-4">
       <h2 className="text-yds-b1 text-primary-100">라인업 수정</h2>
       <div className="flex flex-col gap-4">
-        <div>
-          <label className="text-yds-b1 text-primary-100">선수 *</label>
+        <Field label="선수" required error={errors.player_id}>
           <SelectBox size="full" selectBoxHook={editPlayerHook} />
-        </div>
-        <div>
-          <label className="text-yds-b1 text-primary-100">포지션</label>
+        </Field>
+        <Field label="포지션" error={errors.position_id}>
           <SelectBox size="full" selectBoxHook={editPositionHook} />
-        </div>
-        <div>
-          <label className="text-yds-b1 text-primary-100">라인업 타입 *</label>
+        </Field>
+        <Field label="라인업 타입" required error={errors.lineup_type}>
           <SelectBox size="full" selectBoxHook={editLineupTypeHook} />
-        </div>
+        </Field>
         <CheckBox
-          checked={formData.is_captain || false}
-          onCheckedChange={(checked) => setFormData({ ...formData, is_captain: checked })}
+          checked={stats.is_captain || false}
+          onCheckedChange={(checked) => setStat("is_captain", checked)}
           value="주장"
           shape="square"
         />
         {/* 교체는 투입/아웃 두 시점을 각각 입력한다. 비워두면 해당 교체가 없는 것 */}
-        <div>
-          <label className="text-yds-b1 text-primary-100">교체 투입 시간 (분)</label>
+        <Field label="교체 투입 시간 (분)" error={errors.sub_in_minute}>
           <NumberInput
-            min={1}
-            max={120}
-            value={formData.sub_in_minute != null ? String(formData.sub_in_minute) : ""}
-            onValueChange={(value: string) =>
-              setFormData({ ...formData, sub_in_minute: value === "" ? null : Number(value) })
-            }
+            min={MATCH_MINUTE_MIN}
+            max={MATCH_MINUTE_MAX}
+            value={stats.sub_in_minute != null ? String(stats.sub_in_minute) : ""}
+            onValueChange={(value: string) => setStat("sub_in_minute", value === "" ? null : Number(value))}
             size="full"
             align="left"
             placeholder="예: 27"
           />
-          <div className="mt-3">
-            <label className="text-yds-b1 text-primary-100">대신 들어간 선수</label>
-            <SelectBox size="full" selectBoxHook={editSubInPartnerHook} />
-          </div>
-        </div>
-        <div>
-          <label className="text-yds-b1 text-primary-100">교체 아웃 시간 (분)</label>
+        </Field>
+        <Field label="대신 들어간 선수" error={errors.sub_in_partner_id}>
+          <SelectBox size="full" selectBoxHook={editSubInPartnerHook} />
+        </Field>
+        <Field label="교체 아웃 시간 (분)" error={errors.sub_out_minute}>
           <NumberInput
-            min={1}
-            max={120}
-            value={formData.sub_out_minute != null ? String(formData.sub_out_minute) : ""}
-            onValueChange={(value: string) =>
-              setFormData({ ...formData, sub_out_minute: value === "" ? null : Number(value) })
-            }
+            min={MATCH_MINUTE_MIN}
+            max={MATCH_MINUTE_MAX}
+            value={stats.sub_out_minute != null ? String(stats.sub_out_minute) : ""}
+            onValueChange={(value: string) => setStat("sub_out_minute", value === "" ? null : Number(value))}
             size="full"
             align="left"
             placeholder="예: 82"
           />
-          <div className="mt-3">
-            <label className="text-yds-b1 text-primary-100">대신 들어온 선수</label>
-            <SelectBox size="full" selectBoxHook={editSubOutPartnerHook} />
-          </div>
-        </div>
+        </Field>
+        <Field label="대신 들어온 선수" error={errors.sub_out_partner_id}>
+          <SelectBox size="full" selectBoxHook={editSubOutPartnerHook} />
+        </Field>
         <div className="grid grid-cols-2 gap-2">
-          <div>
-            <label className="text-yds-b1 text-primary-100">골</label>
+          <Field label="골" error={errors.goals}>
             <NumberInput
               min={0}
-              value={String(formData.goals)}
-              onValueChange={(value: string) => setFormData({ ...formData, goals: value === "" ? 0 : Number(value) })}
+              value={String(stats.goals)}
+              onValueChange={(value: string) => setStat("goals", value === "" ? 0 : Number(value))}
               size="full"
               align="left"
               placeholder="0"
             />
-          </div>
-          <div>
-            <label className="text-yds-b1 text-primary-100">어시스트</label>
+          </Field>
+          <Field label="어시스트" error={errors.assists}>
             <NumberInput
               min={0}
-              value={String(formData.assists)}
-              onValueChange={(value: string) => setFormData({ ...formData, assists: value === "" ? 0 : Number(value) })}
+              value={String(stats.assists)}
+              onValueChange={(value: string) => setStat("assists", value === "" ? 0 : Number(value))}
               size="full"
               align="left"
               placeholder="0"
             />
-          </div>
+          </Field>
         </div>
-        <div>
-          <label className="text-yds-b1 text-primary-100">옐로우 카드</label>
+        <Field label="옐로우 카드" error={errors.yellow_cards}>
           <NumberInput
             min={0}
-            max={2}
-            value={String(formData.yellow_cards)}
-            onValueChange={(value: string) =>
-              setFormData({ ...formData, yellow_cards: value === "" ? 0 : Number(value) })
-            }
+            max={MAX_YELLOW_CARDS}
+            value={String(stats.yellow_cards)}
+            onValueChange={(value: string) => setStat("yellow_cards", value === "" ? 0 : Number(value))}
             size="full"
             align="left"
             placeholder="0"
           />
-        </div>
+        </Field>
         <CheckBox
-          checked={formData.is_sent_off || false}
-          onCheckedChange={(checked) => setFormData({ ...formData, is_sent_off: checked })}
+          checked={stats.is_sent_off || false}
+          onCheckedChange={(checked) => setStat("is_sent_off", checked)}
           value="퇴장"
           shape="square"
         />
-        {formData.is_sent_off && (
-          <div>
-            <label className="text-yds-b1 text-primary-100">퇴장 시간 (분)</label>
+        {stats.is_sent_off && (
+          <Field label="퇴장 시간 (분)" required error={errors.red_card_minute}>
             <NumberInput
-              min={1}
-              max={120}
-              value={formData.red_card_minute != null ? String(formData.red_card_minute) : ""}
-              onValueChange={(value: string) =>
-                setFormData({ ...formData, red_card_minute: value === "" ? null : Number(value) })
-              }
+              min={MATCH_MINUTE_MIN}
+              max={MATCH_MINUTE_MAX}
+              value={stats.red_card_minute != null ? String(stats.red_card_minute) : ""}
+              onValueChange={(value: string) => setStat("red_card_minute", value === "" ? null : Number(value))}
               size="full"
               align="left"
               placeholder="예: 90"
             />
-          </div>
+          </Field>
         )}
       </div>
       <div className="mt-6 flex gap-2">
-        <Button variant="outlined" color="primary" size="full" onClick={handleClose}>
+        <Button variant="outlined" color="primary" size="full" onClick={onClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleUpdateLineup} disabled={isUpdating}>

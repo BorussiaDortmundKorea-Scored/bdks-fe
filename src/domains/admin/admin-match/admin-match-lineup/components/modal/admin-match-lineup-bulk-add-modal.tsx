@@ -11,6 +11,9 @@ import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { useBulkCreateMatchLineups } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-bulk-create-match-lineups";
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
 import { useGetAllPositionsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-positions-suspense";
+import { useGetMatchLineupsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense";
+import { useLineupPlayerOptions } from "@admin/admin-match/admin-match-lineup/hooks/use-lineup-player-options";
+import { adminMatchLineupBulkSchema } from "@admin/admin-match/admin-match-lineup/schemas/admin-match-lineup-schema";
 
 interface IPlayerSelection {
   player_id: string;
@@ -27,6 +30,7 @@ export const AdminMatchLineupBulkAddModal = ({ matchId, onClose }: IAdminMatchLi
   //SECTION HOOK호출 영역
   const { data: players } = useGetAllPlayersSuspense();
   const { data: positions } = useGetAllPositionsSuspense();
+  const { data: lineups } = useGetMatchLineupsSuspense(matchId);
   const { mutateAsync: bulkCreateLineups, isPending: isCreating } = useBulkCreateMatchLineups(matchId);
   const { toast } = useOverlay();
   //!SECTION HOOK호출 영역
@@ -42,14 +46,8 @@ export const AdminMatchLineupBulkAddModal = ({ matchId, onClose }: IAdminMatchLi
   //!SECTION 상태값 영역
 
   //SECTION SelectBox 옵션/훅
-  const playerOptions = useMemo(
-    () =>
-      players.map((p) => ({
-        label: p.id,
-        value: `${p.korean_name || p.name}${p.jersey_number ? ` (${p.jersey_number}번)` : ""}`,
-      })),
-    [players],
-  );
+  // 이미 이 경기 명단에 등록된 선수는 다시 고를 수 없게 옵션에서 뺀다
+  const playerOptions = useLineupPlayerOptions(players, lineups);
 
   const positionOptions = useMemo(
     () => positions.map((pos) => ({ label: pos.id, value: `${pos.position_detail_name} (${pos.position_code})` })),
@@ -119,34 +117,18 @@ export const AdminMatchLineupBulkAddModal = ({ matchId, onClose }: IAdminMatchLi
       is_captain: selections[index]?.is_captain || false,
     }));
 
-    // 유효성 검사
-    const validSelections = currentSelections.filter((sel) => sel.player_id && sel.position_id);
+    // 선수와 포지션을 둘 다 고른 행만 등록 대상이다
+    const filledSelections = currentSelections.filter((sel) => sel.player_id && sel.position_id);
+    const result = adminMatchLineupBulkSchema.safeParse(filledSelections);
 
-    if (validSelections.length === 0) {
-      toast({ content: "최소 1명의 선수를 선택해주세요." });
-      return;
-    }
-
-    if (validSelections.length > 11) {
-      toast({ content: "선발명단은 최대 11명까지 가능합니다." });
-      return;
-    }
-
-    // 중복 선수 체크
-    const playerIds = validSelections.map((sel) => sel.player_id);
-    const uniquePlayerIds = new Set(playerIds);
-    if (playerIds.length !== uniquePlayerIds.size) {
-      toast({ content: "중복된 선수가 선택되었습니다." });
+    if (!result.success) {
+      toast({ content: result.error.issues[0].message });
       return;
     }
 
     await bulkCreateLineups({
       match_id: matchId,
-      lineups: validSelections.map((sel) => ({
-        player_id: sel.player_id,
-        position_id: sel.position_id,
-        is_captain: sel.is_captain,
-      })),
+      lineups: result.data,
     });
     handleClose();
   };

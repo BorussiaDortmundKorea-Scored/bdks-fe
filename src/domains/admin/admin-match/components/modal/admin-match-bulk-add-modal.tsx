@@ -9,10 +9,12 @@ import { Button, NumberInput } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
 import { useGetActiveCompetitionsSuspense } from "@admin/admin-competition/api/react-query-api/use-get-active-competitions-suspense";
+import type { IBulkCreateMatchItem } from "@admin/admin-match/api/admin-match-api";
 import { useBulkCreateMatches } from "@admin/admin-match/api/react-query-api/use-bulk-create-matches";
 import AdminMatchBulkAddRow, {
   type IBulkAddRowHooks,
 } from "@admin/admin-match/components/modal/admin-match-bulk-add-row";
+import { adminMatchFormSchema } from "@admin/admin-match/schemas/admin-match-schema";
 import { convertLocalToUTC, extractKSTDateFromLocal } from "@admin/admin-match/utils/datetime-utils";
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
 
@@ -92,29 +94,44 @@ export const AdminMatchBulkAddModal = ({ onClose }: IAdminMatchBulkAddModalProps
   const handleSubmit = async () => {
     const trimmedRows = rows.slice(0, matchCount);
 
-    const payload = trimmedRows
-      .map((row, index) => {
-        const hooks = rowHooksRef.current.get(index);
-        if (!hooks) return null;
+    const payload: IBulkCreateMatchItem[] = [];
+    const invalidRowNumbers: number[] = [];
 
-        const competitionId = hooks.competitionLabel;
-        const opponentTeamId = hooks.teamLabel;
-        const homeAway = hooks.homeAwayLabel as "HOME" | "AWAY";
+    trimmedRows.forEach((row, index) => {
+      const hooks = rowHooksRef.current.get(index);
+      const result = adminMatchFormSchema.safeParse({
+        competition_id: hooks?.competitionLabel ?? "",
+        opponent_team_id: hooks?.teamLabel ?? "",
+        match_start_time: row.match_start_time,
+        home_away: hooks?.homeAwayLabel ?? "",
+        round_name: row.round_name,
+      });
 
-        if (!competitionId || !opponentTeamId || !row.match_start_time) {
-          return null;
-        }
+      // 아무것도 안 건드린 행은 "덜 채운 행"이 아니라 애초에 안 쓰는 행이다
+      const isUntouched = !row.match_start_time && !row.round_name && !hooks?.competitionLabel && !hooks?.teamLabel;
 
-        return {
-          competition_id: competitionId,
-          opponent_team_id: opponentTeamId,
-          match_date: extractKSTDateFromLocal(row.match_start_time),
-          home_away: homeAway,
-          match_start_time: convertLocalToUTC(row.match_start_time),
-          round_name: row.round_name || undefined,
-        };
-      })
-      .filter((item) => item !== null);
+      if (!result.success) {
+        if (!isUntouched) invalidRowNumbers.push(index + 1);
+        return;
+      }
+
+      payload.push({
+        competition_id: result.data.competition_id,
+        opponent_team_id: result.data.opponent_team_id,
+        match_date: extractKSTDateFromLocal(result.data.match_start_time),
+        home_away: result.data.home_away,
+        match_start_time: convertLocalToUTC(result.data.match_start_time),
+        round_name: result.data.round_name || undefined,
+      });
+    });
+
+    // 덜 채운 행을 조용히 버리면 등록된 줄 알고 넘어간다
+    if (invalidRowNumbers.length > 0) {
+      toast({
+        content: `${invalidRowNumbers.join(", ")}번 경기의 필수 값(대회, 상대팀, 경기 시작 시간)을 채워주세요.`,
+      });
+      return;
+    }
 
     if (payload.length === 0) {
       toast({ content: "최소 1경기 이상 필수 값(대회, 상대팀, 경기 시작 시간)을 채워주세요." });

@@ -1,8 +1,9 @@
 import * as Sentry from "@sentry/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { RPC_ERROR_STATUS, RpcError } from "@shared/api/rpc-error";
 import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-types";
-import { capturePostgrestError, handleSupabaseApiResponse, isUserValidationError } from "@shared/utils/sentry-utils";
+import { capturePostgrestError, handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 
 vi.mock("@sentry/react", () => ({
   captureException: vi.fn(),
@@ -46,6 +47,29 @@ describe("handleSupabaseApiResponse", () => {
 
     expect(() => handleSupabaseApiResponse(response)).toThrow("실패");
   });
+
+  // 호출부가 문구가 아니라 코드로 분기할 수 있어야 한다
+  it("RpcError 로 던져 code/details/hint 를 호출부에 전달한다", () => {
+    const error = makeError({
+      code: RPC_ERROR_STATUS.CONFLICT,
+      message: "NICKNAME_DUPLICATED",
+      details: "nickname=철수",
+      hint: "이미 등록된 닉네임이에요",
+    });
+    const response: ApiResponse<number[]> = { data: [], error };
+
+    try {
+      handleSupabaseApiResponse(response);
+      expect.unreachable("에러가 던져져야 한다");
+    } catch (thrown) {
+      expect(thrown).toBeInstanceOf(RpcError);
+      const rpcError = thrown as RpcError;
+      expect(rpcError.code).toBe(RPC_ERROR_STATUS.CONFLICT);
+      expect(rpcError.message).toBe("NICKNAME_DUPLICATED");
+      expect(rpcError.details).toBe("nickname=철수");
+      expect(rpcError.hint).toBe("이미 등록된 닉네임이에요");
+    }
+  });
 });
 
 describe("capturePostgrestError", () => {
@@ -65,30 +89,28 @@ describe("capturePostgrestError", () => {
   });
 
   // 사용자 입력 검증 실패는 장애가 아니라 정상 흐름 → Sentry 노이즈를 만들지 않는다
-  it.each([
-    "Nickname already exists",
-    "Nickname cannot be empty",
-    "Nickname cannot be longer than 20 characters",
-    "Profile already exists for this user",
-  ])("사용자 입력 검증 실패(%s)는 Sentry에 보고하지 않는다", (message) => {
-    capturePostgrestError(makeError({ message }));
+  it.each([RPC_ERROR_STATUS.BAD_REQUEST, RPC_ERROR_STATUS.NOT_FOUND, RPC_ERROR_STATUS.CONFLICT])(
+    "사용자 입력 에러(%s)는 Sentry에 보고하지 않는다",
+    (code) => {
+      capturePostgrestError(makeError({ code, message: "NICKNAME_DUPLICATED" }));
 
-    expect(Sentry.captureException).not.toHaveBeenCalled();
-  });
+      expect(Sentry.captureException).not.toHaveBeenCalled();
+    },
+  );
 
-  it("검증 실패와 문구가 비슷해도 서버 에러는 그대로 보고한다", () => {
-    capturePostgrestError(makeError({ message: "Nickname lookup failed" }));
+  // 탈퇴 후 남은 세션처럼 추적 가치가 있는 항목은 계속 보고받아야 한다
+  it.each([RPC_ERROR_STATUS.UNAUTHORIZED, RPC_ERROR_STATUS.FORBIDDEN])(
+    "인증·권한 에러(%s)는 그대로 보고한다",
+    (code) => {
+      capturePostgrestError(makeError({ code, message: "ACCOUNT_NOT_FOUND" }));
+
+      expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+    },
+  );
+
+  it("규약을 따르지 않는 기존 RPC 에러(P0001)는 그대로 보고한다", () => {
+    capturePostgrestError(makeError({ code: "P0001", message: "Nickname already exists" }));
 
     expect(Sentry.captureException).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe("isUserValidationError", () => {
-  it("앞뒤 공백이 있어도 검증 실패로 판정한다", () => {
-    expect(isUserValidationError({ message: "  Nickname already exists  " })).toBe(true);
-  });
-
-  it("계정 소실처럼 조치가 필요한 에러는 검증 실패가 아니다", () => {
-    expect(isUserValidationError({ message: "Account no longer exists. Please sign in again." })).toBe(false);
   });
 });
