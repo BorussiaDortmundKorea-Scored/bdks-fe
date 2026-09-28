@@ -12,6 +12,7 @@ import {
 import { MATCHES_LASTEST_QUERY_KEYS } from "@matches/matches-lastest/api/react-query-api/matches-lastest-query-key";
 
 import { supabase } from "@shared/api/config/supabaseClient";
+import { type FormationLines, type IFormationPlayer } from "@shared/components/match/formation/formation-types";
 import { TIME_UNIT } from "@shared/constants/time-unit";
 import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 
@@ -65,26 +66,39 @@ export function useGetLatestMatchDatas() {
     };
   }, [informationResult.data.match_id, queryClient]);
 
+  // 공용 FormationBoard 가 쓰는 모양(IFormationPlayer)으로 맞춰서 내보낸다
+  const toFormationPlayer = (player: IMatchesLastestPlayer): IFormationPlayer => ({
+    playerId: player.player_id,
+    name: player.player_name,
+    imageUrl: player.profile_image_url,
+    rating: player.avg_rating,
+    isCaptain: player.is_captain,
+    goals: player.goals,
+    yellowCards: player.yellow_cards,
+    isSentOff: player.is_sent_off,
+    subInMinute: player.sub_in_minute,
+    subOutMinute: player.sub_out_minute,
+  });
+
   // 선발과 후보 분리
   const startingPlayers = formationResult.data.filter((player) => player.is_playing);
 
   // 선발 선수들을 라인별로 그룹화
-  const playingMembers = startingPlayers.reduce(
-    (acc, player) => {
-      const lineNumber = player.line_number;
-      if (!acc[lineNumber]) {
-        acc[lineNumber] = [];
-      }
-      acc[lineNumber].push(player);
-      return acc;
-    },
-    {} as Record<number, IMatchesLastestPlayer[]>,
-  );
+  const playingMembers = startingPlayers.reduce((acc, player) => {
+    const lineNumber = player.line_number;
+    if (!acc[lineNumber]) {
+      acc[lineNumber] = [];
+    }
+    acc[lineNumber].push(toFormationPlayer(player));
+    return acc;
+  }, {} as FormationLines);
 
   // 교체 명단: 출전후 교체 + 비출전
   const notPlayingPlayers = formationResult.data.filter((player) => !player.is_playing);
-  const substitutedOutPlayers = notPlayingPlayers.filter((player) => player.sub_out_minute !== null);
-  const unusedPlayers = notPlayingPlayers.filter((player) => player.sub_out_minute === null);
+  const substitutedOutPlayers = notPlayingPlayers
+    .filter((player) => player.sub_out_minute !== null)
+    .map(toFormationPlayer);
+  const unusedPlayers = notPlayingPlayers.filter((player) => player.sub_out_minute === null).map(toFormationPlayer);
 
   return {
     playingMembers, // 현재 뛰고 있는 선수들 (1-5선)
