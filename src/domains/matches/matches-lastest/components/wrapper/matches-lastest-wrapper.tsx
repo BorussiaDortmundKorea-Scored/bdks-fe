@@ -1,37 +1,13 @@
 /**
  * 작성자: KYD
- * 기능: 2:3 비율의 옐로우 월 이미지 표시
- * 프로세스 설명: aspect-ratio로 정확한 비율 유지
+ * 기능: 최신경기 화면 레이아웃 쉘 (스켈레톤/에러용)
+ * 프로세스 설명: 본체는 공용 FormationBoard 가 쉘까지 그리므로, 여기서는 스켈레톤·에러가
+ *              같은 껍데기를 쓰도록 공용 FormationShell 에 위임만 한다.
  */
-import ImageWithSkeleton from "@shared/components/image/image-with-skeleton";
-import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
-
-//SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
-const YELLOW_WALL_IMAGE = `${SUPABASE_STORAGE_URL}/dortmund/yellow_wall.webp`;
-//SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
+import FormationShell from "@shared/components/match/formation/formation-shell";
 
 const MatchesLastestWrapper = ({ children }: { children: React.ReactNode }) => {
-  //SECTION HOOK호출 영역
-  //!SECTION HOOK호출 영역
-
-  //SECTION 상태값 영역
-  //!SECTION 상태값 영역
-
-  //SECTION 메서드 영역
-  //!SECTION 메서드 영역
-
-  return (
-    <section className="relative aspect-2/3 w-full">
-      <ImageWithSkeleton src={YELLOW_WALL_IMAGE} skeleton={<SkeletonComponent />}>
-        {({ src }) => <img src={src} alt="yellow wall" className="h-full w-full object-cover" />}
-      </ImageWithSkeleton>
-      <div className="absolute inset-0 flex items-center justify-center p-2">{children}</div>
-    </section>
-  );
-};
-
-const SkeletonComponent = () => {
-  return <div className="h-full w-full"></div>;
+  return <FormationShell>{children}</FormationShell>;
 };
 
 export default MatchesLastestWrapper;

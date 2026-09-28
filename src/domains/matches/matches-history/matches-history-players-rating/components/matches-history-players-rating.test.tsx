@@ -5,7 +5,7 @@ import MatchesHistoryPlayersRating from "./matches-history-players-rating";
 import MatchesHistoryPlayersRatingSkeleton from "./skeleton/matches-history-players-rating-skeleton";
 import { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 
 import { server } from "@shared/mocks/server";
@@ -42,8 +42,16 @@ describe("경기-선수 평점 컴포넌트 렌더링 테스트", () => {
       expect(screen.queryByTestId("matches-history-players-rating-skeleton")).not.toBeInTheDocument();
     });
 
-    const firstPlayer = await screen.findByText("그레고르 코벨");
-    expect(firstPlayer).toBeInTheDocument();
+    // 포메이션은 이름 대신 얼굴로 그려지므로 이미지의 alt 로 확인한다.
+    // 사이드 패널에도 최고 평점 선수의 얼굴이 있어 포메이션 영역 안에서만 센다.
+    const formation = await screen.findByRole("region", { name: "포메이션" });
+    expect(within(formation).getByAltText("그레고르 코벨")).toBeInTheDocument();
+
+    // 그라운드에 있던 11명만 선발 화면에 나온다 (더미 13명 중 2명은 교체 아웃/미출전)
+    const playerImages = within(formation)
+      .getAllByRole("img")
+      .filter((image) => image.getAttribute("alt") !== "yellow wall");
+    expect(playerImages).toHaveLength(11);
   });
 
   it("API호출 실패시 에러컴포넌트가 나와야한다", async () => {

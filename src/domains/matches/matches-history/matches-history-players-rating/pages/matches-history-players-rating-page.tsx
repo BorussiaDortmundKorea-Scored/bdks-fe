@@ -3,11 +3,11 @@
  * 기능:
  * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
  */
-import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
 import MatchesHistoryPlayersRatingErrorFallback from "../components/error/matches-history-players-rating-error-fallback";
 import MatchesHistoryPlayersRating from "../components/matches-history-players-rating";
 import MatchesHistoryPlayersRatingSkeleton from "../components/skeleton/matches-history-players-rating-skeleton";
 
+import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
 import BackButton from "@shared/components/layout/header/buttons/back-button";
 import Header from "@shared/components/layout/header/header";
 import { usePageTransition } from "@shared/hooks/use-page-transition";
@@ -33,7 +33,7 @@ const MatchesHistoryPlayersRatingPage = () => {
   //!SECTION 메서드 영역
 
   return (
-    <div className="bdks-container" ref={pageRef}>
+    <div className="bdks-container-wide" ref={pageRef}>
       <Header options={options} />
       <LayoutWithHeaderFooter>
         <ReactQueryBoundary
