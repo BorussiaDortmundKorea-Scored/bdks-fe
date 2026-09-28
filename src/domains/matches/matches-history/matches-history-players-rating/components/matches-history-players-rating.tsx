@@ -1,48 +1,41 @@
 /**
  * 작성자: KYD
- * 기능:
- * 프로세스 설명: 프로세스 복잡시 노션링크 첨부권장
+ * 기능: 종료된 경기 선수 평점 포메이션 렌더링
+ * 프로세스 설명: 최신경기(matches-lastest)와 같은 공용 FormationBoard 를 쓴다.
+ *              이 화면만의 차이는 헤더 우측에 진행 시간 대신 스코어를 둔다는 것뿐이다.
  */
 import { useParams } from "react-router-dom";
 
 import { useGetMatchesHistoryPlayersRatingSuspense } from "../api/react-query-api/use-get-matches-history-players-rating-suspense";
-import MatchesHistoryPlayersRatingItem from "./matches-history-players-rating-item/matches-history-players-rating-item";
-import MatchesHistoryPlayersRatingWrapper from "./wrapper/matches-history-players-rating-wrapper";
+import MatchSummaryPanel from "../match-summary-panel/components/match-summary-panel";
+import { PLAYERS_RATING_GRID_CLASS } from "./wrapper/matches-history-players-rating-wrapper";
 
-// import { Camera } from "lucide-react";
+import FormationBoard from "@shared/components/match/formation/formation-board";
 
 const MatchesHistoryPlayersRating = () => {
   //SECTION HOOK호출 영역
   const { matchId } = useParams();
-  const { data: matchesHistoryPlayersRating, matchInfo } = useGetMatchesHistoryPlayersRatingSuspense(matchId as string);
-
+  const { data, playingMembers, substitutedOutPlayers, unusedPlayers, matchInfo } =
+    useGetMatchesHistoryPlayersRatingSuspense(matchId as string);
   //!SECTION HOOK호출 영역
 
-  //SECTION 상태값 영역
-  //!SECTION 상태값 영역
-
-  //SECTION 메서드 영역
-
-  //!SECTION 메서드 영역
-
   return (
-    <MatchesHistoryPlayersRatingWrapper>
-      <header className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-yds-s2 text-white">도르트문트 vs {matchInfo.opponent_team_name}</h2>
-          <p className="text-yds-c1m text-primary-100">
-            {matchInfo.competition_name} {matchInfo.season}
-          </p>
-        </div>
-        {/* <Camera size={24} className="text-primary-100 cursor-pointer" /> */}
-      </header>
-      <div className="text-yds-s2 text-primary-100">선수단 평점</div>
-      <ul>
-        {matchesHistoryPlayersRating.map((player) => (
-          <MatchesHistoryPlayersRatingItem key={player.korean_name} player={player} />
-        ))}
-      </ul>
-    </MatchesHistoryPlayersRatingWrapper>
+    <div className={PLAYERS_RATING_GRID_CLASS}>
+      <FormationBoard
+        title={`도르트문트(${matchInfo.home_away === "HOME" ? "H" : "A"}) vs ${matchInfo.opponent_team_name}`}
+        subtitle={`${matchInfo.season} ${matchInfo.competition_name}`}
+        headerRight={
+          // 최신경기는 진행 시간(CurrentMatchTime)을 두지만 이 화면은 종료된 경기라 스코어를 둔다
+          <div className="text-md text-primary-100 shrink-0 font-semibold">
+            {matchInfo.our_score} : {matchInfo.opponent_score}
+          </div>
+        }
+        playingMembers={playingMembers}
+        substitutedOutPlayers={substitutedOutPlayers}
+        unusedPlayers={unusedPlayers}
+      />
+      <MatchSummaryPanel players={data} matchInfo={matchInfo} />
+    </div>
   );
 };
 

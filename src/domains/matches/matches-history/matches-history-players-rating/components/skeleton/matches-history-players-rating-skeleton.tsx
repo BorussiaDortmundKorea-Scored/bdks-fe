@@ -1,69 +1,25 @@
 /**
  * 작성자: KYD
- * 기능: 경기 선수 평점 리스트 스켈레톤 컴포넌트
+ * 기능: 경기 선수 평점 스켈레톤
+ * 프로세스 설명: 본체와 같은 2단 레이아웃을 깔아 로딩이 끝나는 순간 배치가 튀지 않게 한다.
+ *              좌측 포메이션은 최신경기(matches-lastest-skeleton)를 그대로 쓰고,
+ *              우측은 이 화면에만 있는 경기정보 패널 스켈레톤이다.
  */
-import MatchesHistoryPlayersRatingWrapper from "../wrapper/matches-history-players-rating-wrapper";
-import { Camera } from "lucide-react";
+import MatchSummaryPanelSkeleton from "../../match-summary-panel/components/skeleton/match-summary-panel-skeleton";
+import MatchesHistoryPlayersRatingWrapper, {
+  PLAYERS_RATING_GRID_CLASS,
+} from "../wrapper/matches-history-players-rating-wrapper";
 
 const MatchesHistoryPlayersRatingSkeleton = () => {
-  //SECTION HOOK호출 영역
-  const skeletonItems = Array.from({ length: 11 }, (_, index) => index);
-  //!SECTION HOOK호출 영역
-
-  //SECTION 상태값 영역
-
-  //!SECTION 상태값 영역
-
-  //SECTION 메서드 영역
-
-  //!SECTION 메서드 영역
-
   return (
-    <MatchesHistoryPlayersRatingWrapper>
-      {/* 헤더 스켈레톤 */}
-      <header className="flex items-center justify-between" data-testid="matches-history-players-rating-skeleton">
-        <div className="flex flex-col gap-2">
-          <div className="h-[26px] w-[200px] animate-pulse rounded bg-gray-600"></div>
-          <div className="h-[16px] w-[120px] animate-pulse rounded bg-gray-600"></div>
+    <div className={PLAYERS_RATING_GRID_CLASS}>
+      <MatchesHistoryPlayersRatingWrapper>
+        <div data-testid="matches-history-players-rating-skeleton">
+          <div className="h-[100px] w-full bg-gray-600"></div>
         </div>
-        <Camera size={24} className="text-primary-100 cursor-pointer" />
-      </header>
-
-      {/* 선수단 평점 제목 스켈레톤 */}
-      <div className="h-[26px] w-[80px] animate-pulse rounded bg-gray-600"></div>
-
-      {/* 선수 리스트 스켈레톤 */}
-      <ul>
-        {skeletonItems.map((index) => (
-          <li key={index} className="flex h-[72px] w-full items-center justify-between gap-4 px-2 odd:bg-[#20242D]">
-            {/* 왼쪽: 선수 정보 스켈레톤 */}
-            <div className="flex min-w-0 flex-1 items-center gap-2">
-              {/* 선수 이미지 스켈레톤 */}
-              <div className="h-[56px] w-[56px] flex-shrink-0 animate-pulse rounded bg-gray-600"></div>
-
-              <div className="flex min-w-0 flex-1 flex-col gap-1">
-                {/* 선수 이름 스켈레톤 */}
-                <div className="h-[26px] w-[80px] animate-pulse rounded bg-gray-600"></div>
-
-                {/* 포지션 및 배지들 스켈레톤 */}
-                <div className="flex flex-wrap items-center gap-1">
-                  <div className="h-[16px] w-[40px] animate-pulse rounded bg-gray-600"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* 오른쪽: 평점 및 BOTM 스켈레톤 */}
-            <div className="flex flex-shrink-0 items-center gap-2">
-              {/* 평점 스켈레톤 */}
-              <div className="flex items-center gap-1">
-                <div className="h-[16px] w-[16px] animate-pulse rounded bg-gray-600"></div>
-                <div className="h-[12px] w-[24px] animate-pulse rounded bg-gray-600"></div>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </MatchesHistoryPlayersRatingWrapper>
+      </MatchesHistoryPlayersRatingWrapper>
+      <MatchSummaryPanelSkeleton />
+    </div>
   );
 };
 
