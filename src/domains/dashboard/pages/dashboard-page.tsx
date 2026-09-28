@@ -1,4 +1,10 @@
-import DashboardSidePanel from "@dashboard/components/dashboard-side-panel";
+import DashboardFixtures from "@dashboard/dashboard-fixtures/components/dashboard-fixtures";
+import DashboardFixturesErrorFallback from "@dashboard/dashboard-fixtures/components/error/dashboard-fixtures-error-fallback";
+import DashboardFixturesSkeleton from "@dashboard/dashboard-fixtures/components/skeleton/dashboard-fixtures-skeleton";
+import DashboardTopPlayers from "@dashboard/dashboard-top-players/components/dashboard-top-players";
+import DashboardTopPlayersErrorFallback from "@dashboard/dashboard-top-players/components/error/dashboard-top-players-error-fallback";
+import DashboardTopPlayersSkeleton from "@dashboard/dashboard-top-players/components/skeleton/dashboard-top-players-skeleton";
+import DashboardTrophy from "@dashboard/dashboard-trophy/components/dashboard-trophy";
 
 import MatchesHistoryErrorFallback from "@matches/matches-history/components/error/matches-history-error-fallback";
 import MatchesHistory from "@matches/matches-history/components/matches-history";
@@ -57,7 +63,24 @@ const DashboardPage = () => {
                 <PlayerDb />
               </ReactQueryBoundary>
             </div>
-            <DashboardSidePanel />
+            {/* 우측 카드열: 좌측과 같은 방식으로 각 위젯이 자기 ReactQueryBoundary 를 갖는다 */}
+            <aside className="flex w-full flex-col gap-6">
+              <ReactQueryBoundary
+                skeleton={<DashboardFixturesSkeleton />}
+                errorFallback={DashboardFixturesErrorFallback}
+              >
+                <DashboardFixtures />
+              </ReactQueryBoundary>
+
+              <DashboardTrophy />
+
+              <ReactQueryBoundary
+                skeleton={<DashboardTopPlayersSkeleton />}
+                errorFallback={DashboardTopPlayersErrorFallback}
+              >
+                <DashboardTopPlayers />
+              </ReactQueryBoundary>
+            </aside>
           </div>
         </LayoutWithHeaderFooter>
         <BottomNavigationBar />
