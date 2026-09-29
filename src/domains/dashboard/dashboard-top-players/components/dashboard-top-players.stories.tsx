@@ -1,10 +1,7 @@
-import { BrowserRouter } from "react-router-dom";
-
 import DashboardTopPlayers from "./dashboard-top-players";
 import DashboardTopPlayersErrorFallback from "./error/dashboard-top-players-error-fallback";
 import DashboardTopPlayersSkeleton from "./skeleton/dashboard-top-players-skeleton";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
@@ -18,36 +15,14 @@ const meta: Meta<typeof DashboardTopPlayers> = {
   title: "Dashboard/DashboardTopPlayers",
   component: DashboardTopPlayers,
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-
-      return (
-        <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary
-              skeleton={<DashboardTopPlayersSkeleton />}
-              errorFallback={DashboardTopPlayersErrorFallback}
-            >
-              {/* 실제 배치인 사이드 패널 폭을 흉내 */}
-              <div className="bg-background-primary w-full max-w-[360px] px-4 py-6">
-                <Story />
-              </div>
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </BrowserRouter>
-      );
-    },
+    (Story) => (
+      <ReactQueryBoundary skeleton={<DashboardTopPlayersSkeleton />} errorFallback={DashboardTopPlayersErrorFallback}>
+        {/* 실제 배치인 사이드 패널 폭을 흉내 */}
+        <div className="bg-background-primary w-full max-w-[360px] px-4 py-6">
+          <Story />
+        </div>
+      </ReactQueryBoundary>
+    ),
   ],
 };
 

@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
-import PlayersStatsByGame from "@players/players-stats/players-stats-by-game/components/players-stats-by-game";
 import PlayersStatsByGameError from "@players/players-stats/players-stats-by-game/components/error/players-stats-by-game-error";
+import PlayersStatsByGame from "@players/players-stats/players-stats-by-game/components/players-stats-by-game";
 import PlayersStatsByGameSkeleton from "@players/players-stats/players-stats-by-game/components/skeleton/players-stats-by-game-skeleton";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
@@ -15,27 +14,11 @@ const meta: Meta<typeof PlayersStatsByGame> = {
     playerId: "player-123",
   },
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      return (
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryBoundary skeleton={<PlayersStatsByGameSkeleton />} errorFallback={PlayersStatsByGameError}>
-            <Story />
-          </ReactQueryBoundary>
-        </QueryClientProvider>
-      );
-    },
+    (Story) => (
+      <ReactQueryBoundary skeleton={<PlayersStatsByGameSkeleton />} errorFallback={PlayersStatsByGameError}>
+        <Story />
+      </ReactQueryBoundary>
+    ),
   ],
 };
 

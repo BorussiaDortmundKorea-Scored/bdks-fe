@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import { AuthContext } from "@auth/contexts/AuthContext";
@@ -19,36 +18,20 @@ const meta: Meta<typeof PlayerRatingByMatchDetailChart> = {
     playerId: "player-123",
   },
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      // 차트가 useAuth 로 user.id 를 읽으므로 Provider 없이는 렌더 전에 throw 된다
-      return (
-        <AuthContext.Provider value={storybookKakaoAuthMock}>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary
-              skeleton={<PlayerRatingByMatchDetailChartSkeleton />}
-              errorFallback={PlayersStatsByGameError}
-            >
-              {/* 실제 화면에서는 어두운 카드 안에 들어가므로 같은 배경을 깔아준다 */}
-              <div className="bg-background-primary px-4 py-6">
-                <Story />
-              </div>
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </AuthContext.Provider>
-      );
-    },
+    // 차트가 useAuth 로 user.id 를 읽으므로 Provider 없이는 렌더 전에 throw 된다
+    (Story) => (
+      <AuthContext.Provider value={storybookKakaoAuthMock}>
+        <ReactQueryBoundary
+          skeleton={<PlayerRatingByMatchDetailChartSkeleton />}
+          errorFallback={PlayersStatsByGameError}
+        >
+          {/* 실제 화면에서는 어두운 카드 안에 들어가므로 같은 배경을 깔아준다 */}
+          <div className="bg-background-primary px-4 py-6">
+            <Story />
+          </div>
+        </ReactQueryBoundary>
+      </AuthContext.Provider>
+    ),
   ],
 };
 

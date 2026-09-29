@@ -1,9 +1,7 @@
-// import { MemoryRouter } from "react-router-dom";
 import MatchesLastestPlayerRatingErrorFallback from "./error/matches-lastest-player-rating-error-fallback";
 import MatchesLastestPlayerRating from "./matches-lastest-player-rating";
 import MatchesLastestPlayerRatingSkeleton from "./skeleton/matches-lastest-player-rating-skeleton";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
@@ -12,30 +10,14 @@ const meta: Meta<typeof MatchesLastestPlayerRating> = {
   title: "Matches/MatchesLastest/PlayerRating",
   component: MatchesLastestPlayerRating,
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      return (
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryBoundary
-            skeleton={<MatchesLastestPlayerRatingSkeleton />}
-            errorFallback={MatchesLastestPlayerRatingErrorFallback}
-          >
-            <Story />
-          </ReactQueryBoundary>
-        </QueryClientProvider>
-      );
-    },
+    (Story) => (
+      <ReactQueryBoundary
+        skeleton={<MatchesLastestPlayerRatingSkeleton />}
+        errorFallback={MatchesLastestPlayerRatingErrorFallback}
+      >
+        <Story />
+      </ReactQueryBoundary>
+    ),
   ],
 };
 

@@ -1,7 +1,4 @@
-import { BrowserRouter } from "react-router-dom";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import { AuthContext } from "@auth/contexts/AuthContext";
@@ -17,31 +14,13 @@ const meta: Meta<typeof PlayersDb> = {
   title: "Players/PlayersDb",
   component: PlayersDb,
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      return (
-        <BrowserRouter>
-          <AuthContext.Provider value={storybookKakaoAuthMock}>
-            <QueryClientProvider client={queryClient}>
-              <ReactQueryBoundary skeleton={<PlayersDbSkeleton />} errorFallback={PlayersDbErrorFallback}>
-                <Story />
-              </ReactQueryBoundary>
-            </QueryClientProvider>
-          </AuthContext.Provider>
-        </BrowserRouter>
-      );
-    },
+    (Story) => (
+      <AuthContext.Provider value={storybookKakaoAuthMock}>
+        <ReactQueryBoundary skeleton={<PlayersDbSkeleton />} errorFallback={PlayersDbErrorFallback}>
+          <Story />
+        </ReactQueryBoundary>
+      </AuthContext.Provider>
+    ),
   ],
 };
 

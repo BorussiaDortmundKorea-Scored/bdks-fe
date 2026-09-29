@@ -1,7 +1,4 @@
-import { BrowserRouter } from "react-router-dom";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import MatchesLastestErrorFallback from "@matches/matches-lastest/components/error/matches-lastest-error-fallback";
@@ -14,29 +11,11 @@ const meta: Meta<typeof MatchesLastest> = {
   title: "Matches/MatchesLastest/MatchesLastest",
   component: MatchesLastest,
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      return (
-        <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary skeleton={<MatchesLastestSkeleton />} errorFallback={MatchesLastestErrorFallback}>
-              <Story />
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </BrowserRouter>
-      );
-    },
+    (Story) => (
+      <ReactQueryBoundary skeleton={<MatchesLastestSkeleton />} errorFallback={MatchesLastestErrorFallback}>
+        <Story />
+      </ReactQueryBoundary>
+    ),
   ],
 };
 

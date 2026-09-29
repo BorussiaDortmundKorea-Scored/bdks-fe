@@ -5,8 +5,6 @@
  *              라인별로 앉았을 때의 모습과 교체 탭을 본다. 배지가 골고루 박힌 4-2-3-1 한 벌을
  *              고정 데이터로 깔아 두어 좁은 화면에서 줄이 잘리지 않는지도 같이 확인한다.
  */
-import { MemoryRouter } from "react-router-dom";
-
 import FormationBoard from "./formation-board";
 import { type FormationLines, type IFormationPlayer } from "./formation-types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
@@ -98,11 +96,9 @@ const meta: Meta<typeof FormationBoard> = {
   },
   decorators: [
     (Story) => (
-      <MemoryRouter>
-        <div className="mx-auto w-full max-w-[450px]">
-          <Story />
-        </div>
-      </MemoryRouter>
+      <div className="mx-auto w-full max-w-[450px]">
+        <Story />
+      </div>
     ),
   ],
   args: {

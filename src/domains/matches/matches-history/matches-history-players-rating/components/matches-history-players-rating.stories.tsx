@@ -1,8 +1,6 @@
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
+import { reactRouterParameters } from "storybook-addon-remix-react-router";
 
 import MatchesHistoryPlayersRatingErrorFallback from "@matches/matches-history/matches-history-players-rating/components/error/matches-history-players-rating-error-fallback";
 import MatchesHistoryPlayersRating from "@matches/matches-history/matches-history-players-rating/components/matches-history-players-rating";
@@ -13,35 +11,22 @@ import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 const meta: Meta<typeof MatchesHistoryPlayersRating> = {
   title: "Matches/MatchesHistory/PlayersRating",
   component: MatchesHistoryPlayersRating,
+  // 컴포넌트가 useParams 로 matchId 를 읽으므로 경로를 지정해 준다
+  parameters: {
+    reactRouter: reactRouterParameters({
+      location: { pathParams: { matchId: "match-001" } },
+      routing: { path: "/match/:matchId/ratings" },
+    }),
+  },
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      return (
-        <MemoryRouter initialEntries={["/match/match-001/ratings"]}>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary
-              skeleton={<MatchesHistoryPlayersRatingSkeleton />}
-              errorFallback={MatchesHistoryPlayersRatingErrorFallback}
-            >
-              <Routes>
-                <Route path="/match/:matchId/ratings" element={<Story />} />
-              </Routes>
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </MemoryRouter>
-      );
-    },
+    (Story) => (
+      <ReactQueryBoundary
+        skeleton={<MatchesHistoryPlayersRatingSkeleton />}
+        errorFallback={MatchesHistoryPlayersRatingErrorFallback}
+      >
+        <Story />
+      </ReactQueryBoundary>
+    ),
   ],
 };
 

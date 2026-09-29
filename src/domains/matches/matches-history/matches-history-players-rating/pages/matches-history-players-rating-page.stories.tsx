@@ -2,9 +2,8 @@ import MatchesHistoryPlayersRatingErrorFallback from "../components/error/matche
 import MatchesHistoryPlayersRatingSkeleton from "../components/skeleton/matches-history-players-rating-skeleton";
 import MatchesHistoryPlayersRatingPage from "./matches-history-players-rating-page";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
-import { reactRouterParameters, withRouter } from "storybook-addon-remix-react-router";
+import { reactRouterParameters } from "storybook-addon-remix-react-router";
 
 import { AuthContext } from "@auth/contexts/AuthContext";
 
@@ -14,34 +13,24 @@ import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 const meta: Meta<typeof MatchesHistoryPlayersRatingPage> = {
   title: "Matches/MatchesHistory/PlayersRatingPage",
   component: MatchesHistoryPlayersRatingPage,
+  // 페이지가 useParams 로 matchId 를 읽으므로 경로를 지정해 준다 (라우터 자체는 preview 의 전역 데코레이터)
+  parameters: {
+    reactRouter: reactRouterParameters({
+      location: { pathParams: { matchId: "match-456" } },
+      routing: { path: "/match/:matchId/ratings" },
+    }),
+  },
   decorators: [
-    withRouter,
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      return (
-        <AuthContext.Provider value={storybookKakaoAuthMock}>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary
-              skeleton={<MatchesHistoryPlayersRatingSkeleton />}
-              errorFallback={MatchesHistoryPlayersRatingErrorFallback}
-            >
-              <Story />
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </AuthContext.Provider>
-      );
-    },
+    (Story) => (
+      <AuthContext.Provider value={storybookKakaoAuthMock}>
+        <ReactQueryBoundary
+          skeleton={<MatchesHistoryPlayersRatingSkeleton />}
+          errorFallback={MatchesHistoryPlayersRatingErrorFallback}
+        >
+          <Story />
+        </ReactQueryBoundary>
+      </AuthContext.Provider>
+    ),
   ],
 };
 
@@ -49,39 +38,25 @@ export default meta;
 
 type Story = StoryObj<typeof MatchesHistoryPlayersRatingPage>;
 
-const defaultRouterParams = {
-  reactRouter: reactRouterParameters({
-    location: {
-      pathParams: { matchId: "match-456" },
-    },
-    routing: { path: "/match/:matchId/ratings" },
-  }),
-};
-
 export const Iphone5: Story = {
-  parameters: { ...defaultRouterParams },
   globals: { viewport: { value: "iphone5", isRotated: false } },
 };
 
 export const Iphone12: Story = {
-  parameters: { ...defaultRouterParams },
   globals: { viewport: { value: "iphone12", isRotated: false } },
 };
 
 export const GalaxyS24: Story = {
-  parameters: { ...defaultRouterParams },
   globals: { viewport: { value: "GalaxyS24", isRotated: false } },
 };
 
 export const GalaxyS24Plus: Story = {
-  parameters: { ...defaultRouterParams },
   globals: { viewport: { value: "GalaxyS24Plus", isRotated: false } },
 };
 
 // 로딩 상태: MSW에서 지연시간 추가
 export const Loading: Story = {
   parameters: {
-    ...defaultRouterParams,
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_matches_player_ratings", async () => {
@@ -100,7 +75,6 @@ export const Loading: Story = {
 // 에러 상태: MSW에서 에러 응답
 export const Error: Story = {
   parameters: {
-    ...defaultRouterParams,
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_matches_player_ratings", () => {
