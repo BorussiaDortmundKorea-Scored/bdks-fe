@@ -129,7 +129,7 @@ const AdminMatchLineup = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
+      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:w-[911px]">
         <ColGroup>
           <Col className="w-[120px]" />
           <Col className="w-[100px]" />

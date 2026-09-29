@@ -27,7 +27,7 @@ const AdminDashboardUserCountWrapper = ({ children }: IAdminDashboardUserCountWr
   return (
     <Card
       variant="outlined"
-      className="text-yds-s2 text-primary-100 flex h-full w-full flex-col justify-between md:col-start-1 md:col-end-3 md:row-start-1 md:row-end-2"
+      className="text-yds-s2 text-primary-100 flex h-full w-full flex-col justify-between xl:col-start-1 xl:col-end-3 xl:row-start-1 xl:row-end-2"
     >
       <h2>회원 수</h2>
       {children}

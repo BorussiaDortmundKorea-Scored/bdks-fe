@@ -29,15 +29,15 @@ const adminMenus = [
 const AdminGridWrapper = ({ children }: IAdminWrapper) => {
   return (
     <main className="bdks-admin-container">
-      <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-[200px_minmax(0,1fr)]">
-        <nav className="bg-background-secondary card-navy-50 relative flex h-auto w-full flex-col gap-4 rounded-lg p-4 md:h-full md:min-h-[876px] md:w-full">
+      <div className="grid w-full grid-cols-1 gap-4 xl:grid-cols-[200px_minmax(0,1fr)]">
+        <nav className="bg-background-secondary card-navy-50 relative flex h-auto w-full flex-col gap-4 rounded-lg p-4 xl:h-full xl:min-h-[876px] xl:w-full">
           <h1 className="font-shilla-culture text-primary-100 text-center text-[24px] font-semibold">
             <Link to={ROUTES.ADMIN_DASHBOARD}>
               보돌코 <br /> 스코어드
             </Link>
           </h1>
-          <div className="text-yds-s2 hidden text-white md:block!">MENU</div>
-          <ul className="hidden w-full flex-col gap-4 md:flex!">
+          <div className="text-yds-s2 hidden text-white xl:block!">MENU</div>
+          <ul className="hidden w-full flex-col gap-4 xl:flex!">
             {adminMenus.map((menu) => (
               <li key={menu.id}>
                 <Link
@@ -50,7 +50,7 @@ const AdminGridWrapper = ({ children }: IAdminWrapper) => {
               </li>
             ))}
           </ul>
-          <HorizonDragScroll as="ul" className="w-full gap-4 md:hidden!">
+          <HorizonDragScroll as="ul" className="w-full gap-4 xl:hidden!">
             {adminMenus.map((menu) => (
               <li key={menu.id} className="shrink-0">
                 <Link to={menu.path} className="flex cursor-pointer items-center gap-2">
@@ -61,7 +61,7 @@ const AdminGridWrapper = ({ children }: IAdminWrapper) => {
           </HorizonDragScroll>
         </nav>
         <div className="bg-background-secondary card-navy-50 rounded-lg p-4 text-white">
-          <div className="grid h-full w-full grid-cols-1 gap-4 md:grid-cols-8 md:grid-rows-8">{children}</div>
+          <div className="grid h-full w-full grid-cols-1 gap-4 xl:grid-cols-8 xl:grid-rows-8">{children}</div>
         </div>
       </div>
     </main>

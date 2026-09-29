@@ -26,7 +26,7 @@ const AdminDashboardSitesWrapper = ({ children }: IAdminDashboardSitesWrapper) =
   return (
     <Card
       variant="outlined"
-      className="text-yds-s2 text-primary-100 flex items-center overflow-hidden md:col-start-5 md:col-end-9 md:row-start-1 md:row-end-2"
+      className="text-yds-s2 text-primary-100 flex items-center overflow-hidden xl:col-start-5 xl:col-end-9 xl:row-start-1 xl:row-end-2"
     >
       {children}
     </Card>

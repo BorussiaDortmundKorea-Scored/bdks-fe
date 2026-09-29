@@ -3,7 +3,7 @@
  * 기능: 국가 관리 스켈레톤 컴포넌트
  * 프로세스 설명: 국가 데이터 로딩 중 표시되는 스켈레톤 화면
  */
-import { Table, THead, TBody, Td, Th, Tr } from "@youngduck/yd-ui/Table";
+import { TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 
 const AdminCountrySkeleton = () => {
   return (
@@ -15,7 +15,7 @@ const AdminCountrySkeleton = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
+      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:w-[911px]">
         <THead>
           <Tr>
             <Th>국가명</Th>

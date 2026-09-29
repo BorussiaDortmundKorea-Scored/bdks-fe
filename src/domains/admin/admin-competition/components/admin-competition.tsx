@@ -68,7 +68,7 @@ const AdminCompetition = () => {
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
       <Card variant="outlined" className="w-full">
-        <Table scrollable={true} className="md:w-full" scrollClassName="h-[240px] w-full">
+        <Table scrollable={true} className="xl:w-full" scrollClassName="h-[240px] w-full">
           <ColGroup>
             <Col className="w-[200px]" />
             <Col className="w-[150px]" />

@@ -33,7 +33,7 @@ const StandingTable = ({ rows }: { rows: IStanding[] }) => {
   }
 
   return (
-    <Table scrollable className="md:w-full" scrollClassName="h-[360px] w-full">
+    <Table scrollable className="xl:w-full" scrollClassName="h-[360px] w-full">
       <ColGroup>
         <Col className="w-[72px]" />
         <Col className="w-auto" />

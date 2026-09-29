@@ -69,7 +69,7 @@ const AdminUser = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-[1200px]" scrollClassName="h-[540px] w-full md:w-[911px]">
+      <Table scrollable={true} className="xl:w-[1200px]" scrollClassName="h-[540px] w-full xl:w-[911px]">
         <ColGroup>
           <Col className="w-[120px]" />
           <Col className="w-[64px]" />

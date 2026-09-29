@@ -95,7 +95,7 @@ const AdminPlayer = () => {
 
       {view === "table" ? (
         /* 스크롤 가능한 컨텐츠 영역 */
-        <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[1100px]">
+        <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:w-[1100px]">
           <ColGroup>
             <Col className="w-[160px]" />
             <Col className="w-[120px]" />
