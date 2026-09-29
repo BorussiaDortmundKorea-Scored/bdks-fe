@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 
 import { useGetMatchesHistoryPlayersRatingSuspense } from "../api/react-query-api/use-get-matches-history-players-rating-suspense";
 import MatchSummaryPanel from "../match-summary-panel/components/match-summary-panel";
-import { PLAYERS_RATING_GRID_CLASS } from "./wrapper/matches-history-players-rating-wrapper";
 
 import FormationBoard from "@shared/components/match/formation/formation-board";
 
@@ -20,7 +19,7 @@ const MatchesHistoryPlayersRating = () => {
   //!SECTION HOOK호출 영역
 
   return (
-    <div className={PLAYERS_RATING_GRID_CLASS}>
+    <div className="bdks-grid-2col">
       <FormationBoard
         title={`도르트문트(${matchInfo.home_away === "HOME" ? "H" : "A"}) vs ${matchInfo.opponent_team_name}`}
         subtitle={`${matchInfo.season} ${matchInfo.competition_name}`}
