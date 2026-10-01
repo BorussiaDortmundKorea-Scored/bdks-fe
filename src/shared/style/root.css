@@ -17,7 +17,9 @@
 
   --breakpoint-xs: 320px; /* 320px - 작은 폰 */
   --breakpoint-sm: 375px;
-  --breakpoint-md: 450px;
+  --breakpoint-md: 450px; /* 450px - bdks-container 최대폭에 도달하는 지점 */
+  --breakpoint-lg: 1024px; /* 1024px - 1열 → 2열 전환점 (대시보드·경기평점). PC 레이아웃을 넓힐 땐 여기만 바꾼다 */
+  --breakpoint-xl: 1280px; /* 1280px - 관리자 데스크톱 전환점. 1200px 고정 레이아웃 + 좌우 여백이 들어가는 최소 폭 */
 }
 
 /* [Self-Hosting WOFF2] 로컬 폰트 로드 (CDN 제공 woff2) */
@@ -62,8 +64,17 @@ body {
   .bdks-container-wide {
     @apply relative mx-auto flex h-dvh w-full max-w-[900px] flex-col items-center justify-start px-4;
   }
+  /* bdks-container-wide 안에 들어가는 2단 그리드 (대시보드 · 경기 평점 공용).
+     좁은 화면은 1열 450px 센터, lg(1024px) 이상은 [좌 450px 고정 / 우 나머지].
+     컨테이너가 900px 에서 멈추므로 넓은 화면에서 좌우가 450:450 으로 같아진다.
+     화면마다 같은 문자열을 적으면 한쪽만 고쳐져 어긋나므로 여기 한 곳에서만 관리한다. */
+  .bdks-grid-2col {
+    @apply mx-auto grid w-full max-w-[450px] grid-cols-1 gap-4 lg:max-w-none lg:grid-cols-[450px_minmax(0,1fr)];
+  }
+  /* 관리자는 1200px 고정 레이아웃이라 그게 온전히 들어가는 xl(1280px)부터 데스크톱으로 전환한다.
+     그 아래(폰·태블릿·1024 노트북)는 모바일과 같은 1열 스택 — 가로 스크롤이 생기지 않는다. */
   .bdks-admin-container {
-    @apply relative mx-auto flex h-auto w-full items-start justify-start gap-4 p-4 md:h-dvh md:w-[1200px];
+    @apply relative mx-auto flex h-auto w-full items-start justify-start gap-4 p-4 xl:h-dvh xl:w-[1200px];
   }
 
   /* Layout Classes */

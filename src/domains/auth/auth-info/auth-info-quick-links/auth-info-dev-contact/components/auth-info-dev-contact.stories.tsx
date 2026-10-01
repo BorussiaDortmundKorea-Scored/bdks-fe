@@ -22,11 +22,6 @@ const meta: Meta<typeof AuthInfoDevContact> = {
       </AuthContext.Provider>
     ),
   ],
-  parameters: {
-    viewport: {
-      defaultViewport: "iphone5",
-    },
-  },
 };
 
 export default meta;

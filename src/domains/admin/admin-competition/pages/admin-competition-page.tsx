@@ -17,13 +17,13 @@ const AdminCompetitionPage = () => {
   return (
     <AdminGridWrapper>
       {/* 상단: 대회 관리 */}
-      <div className="h-full w-full md:col-start-1 md:col-end-9 md:row-start-1 md:row-end-4">
+      <div className="h-full w-full xl:col-start-1 xl:col-end-9 xl:row-start-1 xl:row-end-4">
         <ReactQueryBoundary skeleton={<AdminCompetitionSkeleton />} errorFallback={AdminCompetitionErrorFallback}>
           <AdminCompetition />
         </ReactQueryBoundary>
       </div>
       {/* 하단: 리그 순위 */}
-      <div className="h-full w-full md:col-start-1 md:col-end-9 md:row-start-4 md:row-end-9">
+      <div className="h-full w-full xl:col-start-1 xl:col-end-9 xl:row-start-4 xl:row-end-9">
         <ReactQueryBoundary skeleton={<AdminStandingsSkeleton />} errorFallback={AdminStandingsErrorFallback}>
           <AdminStandings />
         </ReactQueryBoundary>

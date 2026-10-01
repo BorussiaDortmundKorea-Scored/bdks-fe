@@ -2,9 +2,8 @@ import MatchesLastestPlayerRatingErrorFallback from "../components/error/matches
 import MatchesLastestPlayerRatingSkeleton from "../components/skeleton/matches-lastest-player-rating-skeleton";
 import MatchesLastestPlayerRatingPage from "./matches-lastest-player-rating-page";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
-import { reactRouterParameters, withRouter } from "storybook-addon-remix-react-router";
+import { reactRouterParameters } from "storybook-addon-remix-react-router";
 
 import { AuthContext } from "@auth/contexts/AuthContext";
 
@@ -14,34 +13,24 @@ import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 const meta: Meta<typeof MatchesLastestPlayerRatingPage> = {
   title: "Matches/MatchesLastest/PlayerRatingPage",
   component: MatchesLastestPlayerRatingPage,
+  // 페이지가 useParams 로 matchId·playerId 를 읽으므로 경로를 지정해 준다 (라우터 자체는 preview 의 전역 데코레이터)
+  parameters: {
+    reactRouter: reactRouterParameters({
+      location: { pathParams: { matchId: "match-456", playerId: "player-123" } },
+      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
+    }),
+  },
   decorators: [
-    withRouter,
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      return (
-        <AuthContext.Provider value={storybookKakaoAuthMock}>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary
-              skeleton={<MatchesLastestPlayerRatingSkeleton />}
-              errorFallback={MatchesLastestPlayerRatingErrorFallback}
-            >
-              <Story />
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </AuthContext.Provider>
-      );
-    },
+    (Story) => (
+      <AuthContext.Provider value={storybookKakaoAuthMock}>
+        <ReactQueryBoundary
+          skeleton={<MatchesLastestPlayerRatingSkeleton />}
+          errorFallback={MatchesLastestPlayerRatingErrorFallback}
+        >
+          <Story />
+        </ReactQueryBoundary>
+      </AuthContext.Provider>
+    ),
   ],
 };
 
@@ -50,75 +39,28 @@ export default meta;
 type Story = StoryObj<typeof MatchesLastestPlayerRatingPage>;
 
 // 기본 스토리
-export const Default: Story = {
-  parameters: {
-    reactRouter: reactRouterParameters({
-      location: {
-        pathParams: { matchId: "match-456", playerId: "player-123" },
-      },
-      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
-    }),
-  },
-};
+export const Default: Story = {};
 
 // 모바일 뷰포트 스토리들
 export const Iphone5: Story = {
-  parameters: {
-    reactRouter: reactRouterParameters({
-      location: {
-        pathParams: { matchId: "match-456", playerId: "player-123" },
-      },
-      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
-    }),
-    viewport: { value: "iphone5", isRotated: false },
-  },
+  globals: { viewport: { value: "iphone5", isRotated: false } },
 };
 
 export const Iphone12: Story = {
-  parameters: {
-    reactRouter: reactRouterParameters({
-      location: {
-        pathParams: { matchId: "match-456", playerId: "player-123" },
-      },
-      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
-    }),
-    viewport: { value: "iphone12", isRotated: false },
-  },
+  globals: { viewport: { value: "iphone12", isRotated: false } },
 };
 
 export const GalaxyS24: Story = {
-  parameters: {
-    reactRouter: reactRouterParameters({
-      location: {
-        pathParams: { matchId: "match-456", playerId: "player-123" },
-      },
-      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
-    }),
-    viewport: { value: "GalaxyS24", isRotated: false },
-  },
+  globals: { viewport: { value: "GalaxyS24", isRotated: false } },
 };
 
 export const GalaxyS24Plus: Story = {
-  parameters: {
-    reactRouter: reactRouterParameters({
-      location: {
-        pathParams: { matchId: "match-456", playerId: "player-123" },
-      },
-      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
-    }),
-    viewport: { value: "GalaxyS24Plus", isRotated: false },
-  },
+  globals: { viewport: { value: "GalaxyS24Plus", isRotated: false } },
 };
 
 // 로딩 상태: MSW에서 지연시간 추가
 export const Loading: Story = {
   parameters: {
-    reactRouter: reactRouterParameters({
-      location: {
-        pathParams: { matchId: "match-456", playerId: "player-123" },
-      },
-      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
-    }),
     msw: {
       handlers: [
         // 글로벌 핸들러를 덮어쓰기 위해 더 구체적인 패턴 사용
@@ -134,12 +76,6 @@ export const Loading: Story = {
 // 에러 상태: MSW에서 에러 응답
 export const Error: Story = {
   parameters: {
-    reactRouter: reactRouterParameters({
-      location: {
-        pathParams: { matchId: "match-456", playerId: "player-123" },
-      },
-      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
-    }),
     msw: {
       handlers: [
         // 글로벌 핸들러를 덮어쓰기 위해 더 구체적인 패턴 사용
@@ -154,12 +90,6 @@ export const Error: Story = {
 // 평점 입력 성공 시뮬레이션
 export const RatingSuccess: Story = {
   parameters: {
-    reactRouter: reactRouterParameters({
-      location: {
-        pathParams: { matchId: "match-456", playerId: "player-123" },
-      },
-      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
-    }),
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_match_single_player_rating", () => {
@@ -206,12 +136,6 @@ export const RatingSuccess: Story = {
 // 평점 입력 실패 시뮬레이션 (중복 입력)
 export const RatingDuplicateError: Story = {
   parameters: {
-    reactRouter: reactRouterParameters({
-      location: {
-        pathParams: { matchId: "match-456", playerId: "player-123" },
-      },
-      routing: { path: "/matches/lastest/player-rating/:matchId/:playerId" },
-    }),
     msw: {
       handlers: [
         http.post("*/rest/v1/rpc/get_match_single_player_rating", () => {

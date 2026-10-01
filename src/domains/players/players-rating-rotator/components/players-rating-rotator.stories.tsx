@@ -1,7 +1,4 @@
-import { BrowserRouter } from "react-router-dom";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import PlayersRatingRotatorErrorFallback from "@players/players-rating-rotator/components/error/players-rating-rotator-error-fallback";
@@ -14,32 +11,11 @@ const meta: Meta<typeof PlayersRatingRotator> = {
   title: "Players/PlayersRatingRotator",
   component: PlayersRatingRotator,
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      return (
-        <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary
-              skeleton={<PlayersRatingRotatorSkeleton />}
-              errorFallback={PlayersRatingRotatorErrorFallback}
-            >
-              <Story />
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </BrowserRouter>
-      );
-    },
+    (Story) => (
+      <ReactQueryBoundary skeleton={<PlayersRatingRotatorSkeleton />} errorFallback={PlayersRatingRotatorErrorFallback}>
+        <Story />
+      </ReactQueryBoundary>
+    ),
   ],
 };
 

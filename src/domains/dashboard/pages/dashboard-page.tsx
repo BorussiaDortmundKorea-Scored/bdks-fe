@@ -46,12 +46,8 @@ const DashboardPage = () => {
       <div className="bdks-container-wide" ref={pageRef}>
         <Header options={options} />
         <LayoutWithHeaderFooter>
-          {/*
-            2단 레이아웃(실험):
-            - 좁은 화면(<1024px): 1열, 좌측 콘텐츠를 기존과 동일하게 450px로 센터 유지
-            - 넓은 화면(≥1024px): 2열 [좌 450px 고정 / 우 나머지], 우측에 카드열
-          */}
-          <div className="mx-auto grid w-full max-w-[450px] grid-cols-1 gap-4 min-[1024px]:max-w-none min-[1024px]:grid-cols-[450px_minmax(0,1fr)]">
+          {/* 2단 레이아웃(실험). 정의는 root.css 의 .bdks-grid-2col 한 곳에 있다 */}
+          <div className="bdks-grid-2col">
             <div className="flex w-full flex-col gap-4">
               <ReactQueryBoundary skeleton={<MatchesLastestSkeleton />} errorFallback={MatchesLastestErrorFallback}>
                 <MatchesLastest />

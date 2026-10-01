@@ -17,13 +17,13 @@ const AdminUserPage = () => {
   return (
     <AdminGridWrapper>
       {/* 상단: 사용자 목록 */}
-      <div className="h-full w-full md:col-start-1 md:col-end-9 md:row-start-1 md:row-end-7">
+      <div className="h-full w-full xl:col-start-1 xl:col-end-9 xl:row-start-1 xl:row-end-7">
         <ReactQueryBoundary skeleton={<AdminUserSkeleton />} errorFallback={AdminUserErrorFallback}>
           <AdminUser />
         </ReactQueryBoundary>
       </div>
       {/* 하단 1행: 인기 최애선수 순위 */}
-      <div className="h-full w-full md:col-start-1 md:col-end-9 md:row-start-7 md:row-end-9">
+      <div className="h-full w-full xl:col-start-1 xl:col-end-9 xl:row-start-7 xl:row-end-9">
         <ReactQueryBoundary
           skeleton={<AdminUserPopularPlayersSkeleton />}
           errorFallback={AdminUserPopularPlayersErrorFallback}

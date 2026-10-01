@@ -2,7 +2,6 @@ import UserRankingErrorFallback from "./error/user-ranking-error-fallback";
 import UserRankingSkeleton from "./skeleton/user-ranking-skeleton";
 import UserRanking from "./user-ranking";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
@@ -11,30 +10,13 @@ const meta: Meta<typeof UserRanking> = {
   title: "Auth/AuthInfo/UserRanking",
   component: UserRanking,
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-
-      return (
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryBoundary skeleton={<UserRankingSkeleton />} errorFallback={UserRankingErrorFallback}>
-            <div className="bdks-container bg-background-primary px-4 py-6">
-              <Story />
-            </div>
-          </ReactQueryBoundary>
-        </QueryClientProvider>
-      );
-    },
+    (Story) => (
+      <ReactQueryBoundary skeleton={<UserRankingSkeleton />} errorFallback={UserRankingErrorFallback}>
+        <div className="bdks-container bg-background-primary px-4 py-6">
+          <Story />
+        </div>
+      </ReactQueryBoundary>
+    ),
   ],
 };
 
@@ -42,13 +24,7 @@ export default meta;
 
 type Story = StoryObj<typeof UserRanking>;
 
-export const Default: Story = {
-  parameters: {
-    viewport: {
-      defaultViewport: "iphone5",
-    },
-  },
-};
+export const Default: Story = {};
 
 export const WithLongNicknames: Story = {
   parameters: {
@@ -108,9 +84,6 @@ export const WithLongNicknames: Story = {
         }),
       ],
     },
-    viewport: {
-      defaultViewport: "iphone5",
-    },
   },
 };
 
@@ -123,17 +96,9 @@ export const Error: Story = {
         }),
       ],
     },
-    viewport: {
-      defaultViewport: "iphone5",
-    },
   },
 };
 
 export const Loading: Story = {
   render: () => <UserRankingSkeleton />,
-  parameters: {
-    viewport: {
-      defaultViewport: "iphone5",
-    },
-  },
 };

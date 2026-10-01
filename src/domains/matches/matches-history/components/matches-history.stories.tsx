@@ -1,7 +1,4 @@
-import { BrowserRouter } from "react-router-dom";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import MatchesHistoryErrorFallback from "@matches/matches-history/components/error/matches-history-error-fallback";
@@ -14,29 +11,11 @@ const meta: Meta<typeof MatchesHistory> = {
   title: "Matches/MatchesHistory/MatchesHistory",
   component: MatchesHistory,
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-      return (
-        <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary skeleton={<MatchesHistorySkeleton />} errorFallback={MatchesHistoryErrorFallback}>
-              <Story />
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </BrowserRouter>
-      );
-    },
+    (Story) => (
+      <ReactQueryBoundary skeleton={<MatchesHistorySkeleton />} errorFallback={MatchesHistoryErrorFallback}>
+        <Story />
+      </ReactQueryBoundary>
+    ),
   ],
 };
 

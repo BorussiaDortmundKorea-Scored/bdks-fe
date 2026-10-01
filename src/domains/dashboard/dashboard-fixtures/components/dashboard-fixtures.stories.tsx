@@ -2,7 +2,6 @@ import DashboardFixtures from "./dashboard-fixtures";
 import DashboardFixturesErrorFallback from "./error/dashboard-fixtures-error-fallback";
 import DashboardFixturesSkeleton from "./skeleton/dashboard-fixtures-skeleton";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
@@ -16,31 +15,14 @@ const meta: Meta<typeof DashboardFixtures> = {
   title: "Dashboard/DashboardFixtures",
   component: DashboardFixtures,
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-
-      return (
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryBoundary skeleton={<DashboardFixturesSkeleton />} errorFallback={DashboardFixturesErrorFallback}>
-            {/* 실제 배치인 사이드 패널 폭을 흉내 */}
-            <div className="bg-background-primary w-full max-w-[360px] px-4 py-6">
-              <Story />
-            </div>
-          </ReactQueryBoundary>
-        </QueryClientProvider>
-      );
-    },
+    (Story) => (
+      <ReactQueryBoundary skeleton={<DashboardFixturesSkeleton />} errorFallback={DashboardFixturesErrorFallback}>
+        {/* 실제 배치인 사이드 패널 폭을 흉내 */}
+        <div className="bg-background-primary w-full max-w-[360px] px-4 py-6">
+          <Story />
+        </div>
+      </ReactQueryBoundary>
+    ),
   ],
 };
 

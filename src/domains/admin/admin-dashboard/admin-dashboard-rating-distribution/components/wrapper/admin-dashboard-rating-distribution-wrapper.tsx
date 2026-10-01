@@ -10,7 +10,7 @@ export const RATING_DISTRIBUTION_TITLE = "평점 분포";
 
 /** 대시보드 그리드 배치 클래스 (본체 PagedCard / 스켈레톤 / 에러 공통) */
 export const RATING_DISTRIBUTION_CARD_CLASS =
-  "text-primary-100 h-full w-full md:col-start-5 md:col-end-9 md:row-start-7 md:row-end-9";
+  "text-primary-100 h-full w-full xl:col-start-5 xl:col-end-9 xl:row-start-7 xl:row-end-9";
 
 const AdminDashboardRatingDistributionWrapper = ({ children }: { children: React.ReactNode }) => {
   return (

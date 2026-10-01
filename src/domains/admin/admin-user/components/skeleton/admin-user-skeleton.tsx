@@ -15,7 +15,7 @@ const AdminUserSkeleton = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[540px] w-full md:w-[911px]">
+      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[540px] w-full xl:w-[911px]">
         <THead>
           <Tr>
             <Th>닉네임</Th>

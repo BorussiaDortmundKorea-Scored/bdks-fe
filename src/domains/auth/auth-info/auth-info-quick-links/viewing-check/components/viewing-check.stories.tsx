@@ -2,7 +2,6 @@ import ViewingCheckErrorFallback from "./error/viewing-check-error-fallback";
 import ViewingCheckSkeleton from "./skeleton/viewing-check-skeleton";
 import ViewingCheck from "./viewing-check";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpResponse, http } from "msw";
 
 import { AuthContext } from "@auth/contexts/AuthContext";
@@ -14,32 +13,15 @@ const meta: Meta<typeof ViewingCheck> = {
   title: "Auth/AuthInfo/ViewingCheck",
   component: ViewingCheck,
   decorators: [
-    (Story) => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry: false,
-            gcTime: 0,
-            staleTime: 0,
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-          },
-        },
-      });
-
-      return (
-        <AuthContext.Provider value={storybookKakaoAuthMock}>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryBoundary skeleton={<ViewingCheckSkeleton />} errorFallback={ViewingCheckErrorFallback}>
-              <div className="bdks-container bg-background-primary px-4 py-6">
-                <Story />
-              </div>
-            </ReactQueryBoundary>
-          </QueryClientProvider>
-        </AuthContext.Provider>
-      );
-    },
+    (Story) => (
+      <AuthContext.Provider value={storybookKakaoAuthMock}>
+        <ReactQueryBoundary skeleton={<ViewingCheckSkeleton />} errorFallback={ViewingCheckErrorFallback}>
+          <div className="bdks-container bg-background-primary px-4 py-6">
+            <Story />
+          </div>
+        </ReactQueryBoundary>
+      </AuthContext.Provider>
+    ),
   ],
 };
 
@@ -48,13 +30,7 @@ export default meta;
 type Story = StoryObj<typeof ViewingCheck>;
 
 // 기본 스토리 - 다양한 상태의 경기가 섞여 있는 도감
-export const Default: Story = {
-  parameters: {
-    viewport: {
-      defaultViewport: "iphone5",
-    },
-  },
-};
+export const Default: Story = {};
 
 // 많은 경기가 있는 도감
 export const ManyMatches: Story = {
@@ -149,9 +125,6 @@ export const ManyMatches: Story = {
         }),
       ],
     },
-    viewport: {
-      defaultViewport: "iphone5",
-    },
   },
 };
 
@@ -208,9 +181,6 @@ export const AllViewed: Story = {
         }),
       ],
     },
-    viewport: {
-      defaultViewport: "iphone5",
-    },
   },
 };
 
@@ -224,17 +194,9 @@ export const Error: Story = {
         }),
       ],
     },
-    viewport: {
-      defaultViewport: "iphone5",
-    },
   },
 };
 
 export const Loading: Story = {
   render: () => <ViewingCheckSkeleton />,
-  parameters: {
-    viewport: {
-      defaultViewport: "iphone5",
-    },
-  },
 };

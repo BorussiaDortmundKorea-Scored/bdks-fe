@@ -6,13 +6,11 @@
  *              우측은 이 화면에만 있는 경기정보 패널 스켈레톤이다.
  */
 import MatchSummaryPanelSkeleton from "../../match-summary-panel/components/skeleton/match-summary-panel-skeleton";
-import MatchesHistoryPlayersRatingWrapper, {
-  PLAYERS_RATING_GRID_CLASS,
-} from "../wrapper/matches-history-players-rating-wrapper";
+import MatchesHistoryPlayersRatingWrapper from "../wrapper/matches-history-players-rating-wrapper";
 
 const MatchesHistoryPlayersRatingSkeleton = () => {
   return (
-    <div className={PLAYERS_RATING_GRID_CLASS}>
+    <div className="bdks-grid-2col">
       <MatchesHistoryPlayersRatingWrapper>
         <div data-testid="matches-history-players-rating-skeleton">
           <div className="h-[100px] w-full bg-gray-600"></div>

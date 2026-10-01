@@ -8,11 +8,11 @@ const AdminTransferSkeleton = () => {
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex w-full items-center justify-between p-4">
-        <div className="h-6 w-24 animate-pulse rounded bg-primary-100/20" />
-        <div className="h-10 w-28 animate-pulse rounded bg-primary-100/20" />
+        <div className="bg-primary-100/20 h-6 w-24 animate-pulse rounded" />
+        <div className="bg-primary-100/20 h-10 w-28 animate-pulse rounded" />
       </div>
 
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
+      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:w-[911px]">
         <THead>
           <Tr>
             <Th>선수</Th>
@@ -29,13 +29,13 @@ const AdminTransferSkeleton = () => {
             <Tr key={index}>
               {Array.from({ length: 6 }).map((__, col) => (
                 <Td key={col}>
-                  <div className="h-4 w-20 animate-pulse rounded bg-primary-100/20" />
+                  <div className="bg-primary-100/20 h-4 w-20 animate-pulse rounded" />
                 </Td>
               ))}
               <Td>
                 <div className="flex items-center gap-3">
-                  <div className="h-4 w-4 animate-pulse rounded bg-primary-100/20" />
-                  <div className="h-4 w-4 animate-pulse rounded bg-primary-100/20" />
+                  <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
+                  <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
                 </div>
               </Td>
             </Tr>

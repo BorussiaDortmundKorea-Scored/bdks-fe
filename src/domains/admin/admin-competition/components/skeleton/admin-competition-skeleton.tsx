@@ -10,12 +10,12 @@ const AdminCompetitionSkeleton = () => {
     <div className="flex h-full w-full flex-col">
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between p-4">
-        <div className="h-6 w-24 animate-pulse rounded bg-primary-100/20" />
-        <div className="h-10 w-28 animate-pulse rounded bg-primary-100/20" />
+        <div className="bg-primary-100/20 h-6 w-24 animate-pulse rounded" />
+        <div className="bg-primary-100/20 h-10 w-28 animate-pulse rounded" />
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="md:w-full" scrollClassName="h-[760px] w-full md:w-[911px]">
+      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:w-[911px]">
         <THead>
           <Tr>
             <Th>대회명</Th>
@@ -27,15 +27,15 @@ const AdminCompetitionSkeleton = () => {
           {Array.from({ length: 10 }).map((_, index) => (
             <Tr key={index}>
               <Td>
-                <div className="h-4 w-32 animate-pulse rounded bg-primary-100/20" />
+                <div className="bg-primary-100/20 h-4 w-32 animate-pulse rounded" />
               </Td>
               <Td>
-                <div className="h-4 w-20 animate-pulse rounded bg-primary-100/20" />
+                <div className="bg-primary-100/20 h-4 w-20 animate-pulse rounded" />
               </Td>
               <Td>
                 <div className="flex items-center gap-3">
-                  <div className="h-4 w-4 animate-pulse rounded bg-primary-100/20" />
-                  <div className="h-4 w-4 animate-pulse rounded bg-primary-100/20" />
+                  <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
+                  <div className="bg-primary-100/20 h-4 w-4 animate-pulse rounded" />
                 </div>
               </Td>
             </Tr>

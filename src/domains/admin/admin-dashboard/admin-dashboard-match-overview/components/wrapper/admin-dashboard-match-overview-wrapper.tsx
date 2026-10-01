@@ -11,7 +11,7 @@ export const MATCH_OVERVIEW_TITLE = "경기별 평점 현황";
 
 /** 대시보드 그리드 배치 클래스 (본체 PagedCard / 스켈레톤 / 에러 공통) */
 export const MATCH_OVERVIEW_CARD_CLASS =
-  "text-primary-100 h-full w-full md:col-start-1 md:col-end-7 md:row-start-4 md:row-end-7";
+  "text-primary-100 h-full w-full xl:col-start-1 xl:col-end-7 xl:row-start-4 xl:row-end-7";
 
 const AdminDashboardMatchOverviewWrapper = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -1,18 +1,9 @@
-import { BrowserRouter } from "react-router-dom";
-
 import AdminGridWrapper from "./admin-grid-wrapper";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof AdminGridWrapper> = {
   component: AdminGridWrapper,
   title: "Admin/AdminGridWrapper",
-  decorators: [
-    (Story) => (
-      <BrowserRouter>
-        <Story />
-      </BrowserRouter>
-    ),
-  ],
 };
 
 export default meta;
