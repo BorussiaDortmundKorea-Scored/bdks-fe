@@ -1,7 +1,7 @@
 {
   "name": "bdks-fe",
   "private": true,
-  "version": "2.1.9",
+  "version": "2.1.10",
   "packageManager": "pnpm@10.12.4",
   "type": "module",
   "scripts": {
