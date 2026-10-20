@@ -1,7 +1,7 @@
 {
   "name": "bdks-fe",
   "private": true,
-  "version": "2.1.11",
+  "version": "2.1.12",
   "packageManager": "pnpm@10.12.4",
   "type": "module",
   "scripts": {
@@ -38,6 +38,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
+    "@vercel/analytics": "^2.0.1",
     "@youngduck/yd-ui": "^0.23.3",
     "chart.js": "^4.5.1",
     "gsap": "^3.13.0",
