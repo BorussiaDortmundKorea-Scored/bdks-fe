@@ -1,4 +1,5 @@
 {
+  "regions": ["icn1"],
   "rewrites": [{ "source": "/(.*)", "destination": "/" }],
   "installCommand": "rm -rf node_modules pnpm-lock.yaml && pnpm install --no-frozen-lockfile"
 }
