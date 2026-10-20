@@ -3,6 +3,27 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [2.1.12] - 2026-10-20
+
+**Branch**: `bdks-v2.1.12-버셀애널리틱스및서울리전`
+
+> Vercel Web Analytics 도입과 Vercel 함수 리전 서울(icn1) 지정
+
+### 추가
+
+- feat: Vercel Web Analytics 도입
+
+### 변경
+
+- chore: Vercel 함수 리전을 서울(icn1)로 지정
+- docs: v2.1.12 버셀 애널리틱스 및 서울 리전 정리
+
+### 수정
+
+### 제거
+
+---
+
 ## [2.1.11] - 2026-10-19
 
 **Branch**: `bdks-v2.1.11-포메이션다이아몬드카드`
