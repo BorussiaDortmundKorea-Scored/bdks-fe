@@ -19,11 +19,11 @@ const PageLoading = () => {
       data-testid="page-loading"
       className="bg-background-primary flex h-dvh w-full flex-col items-center justify-center gap-6"
     >
-      <div className="border-yellow-500/20 border-t-yellow-500 size-12 animate-spin rounded-full border-4" />
+      <div className="size-12 animate-spin rounded-full border-4 border-yellow-500/20 border-t-yellow-500" />
 
       <div className="flex flex-col items-center gap-1">
-        <p className="font-shilla-culture text-2xl font-bold text-primary-400">보돌코 스코어드</p>
-        <p className="text-sm text-primary-100">불러오는 중...</p>
+        <p className="font-shilla-culture text-primary-400 text-2xl font-bold">보돌코 스코어드</p>
+        <p className="text-primary-100 text-sm">불러오는 중...</p>
       </div>
     </div>
   );

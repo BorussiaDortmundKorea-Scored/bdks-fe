@@ -3,11 +3,9 @@
  * 기능: 네비게이션 아이템 상수 정의
  * 프로세스 설명: 메뉴 버튼과 하단 네비게이션 바에서 공통으로 사용하는 네비게이션 아이템 정의
  */
-import type { LucideIcon } from "lucide-react";
-
-import { Coffee, Home, LogOut, Settings, User } from "lucide-react";
-
 import { ROUTES } from "./routes";
+import type { LucideIcon } from "lucide-react";
+import { Coffee, Home, LogOut, Settings, User } from "lucide-react";
 
 export type NavigationItemType = "top-menu" | "bottom-nav-bar";
 

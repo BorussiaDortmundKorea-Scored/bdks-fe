@@ -8,4 +8,3 @@ export const PlayerStatsHandlers = [
     return HttpResponse.json(PlayerStatsDummy);
   }),
 ];
-

@@ -13,10 +13,10 @@ import RatingGaugeInput from "../rating-gauge-input/components/rating-gauge-inpu
 import type { IInsertPlayerRatingRequest } from "../types";
 import { Button } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
-import CurrentMatchTime from "@shared/components/match/current-match-time";
 
 import { getDisplayTime, parseMinuteFromDisplayTime } from "@matches/utils/match-time-utils";
 
+import CurrentMatchTime from "@shared/components/match/current-match-time";
 // import { Camera } from "lucide-react";
 
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";

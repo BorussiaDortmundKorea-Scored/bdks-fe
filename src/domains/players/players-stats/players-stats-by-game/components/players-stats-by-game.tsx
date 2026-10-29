@@ -5,10 +5,12 @@
  */
 import { useState } from "react";
 
-import { useGetPlayersStatsByGame } from "@players/players-stats/players-stats-by-game/api/react-query-api/use-get-players-stats-by-game";
-import PlayerRatingByMatchDetailChart from "./player-rating-by-match-detail-chart";
 import PlayersStatsByGameError from "./error/players-stats-by-game-error";
+import PlayerRatingByMatchDetailChart from "./player-rating-by-match-detail-chart";
 import PlayerRatingByMatchDetailChartSkeleton from "./skeleton/player-rating-by-match-detail-chart-skeleton";
+
+import { useGetPlayersStatsByGame } from "@players/players-stats/players-stats-by-game/api/react-query-api/use-get-players-stats-by-game";
+
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 interface PlayersStatsByGameProps {
@@ -45,16 +47,13 @@ const PlayersStatsByGame = ({ playerId }: PlayersStatsByGameProps) => {
               <div className="flex items-center gap-2">
                 <span className="text-yds-s3 text-primary-100">{match.league_name}</span>
                 <span className="text-yds-s3 text-gray-400">{match.season}</span>
-                
+
                 {match.round_name && <span className="text-yds-s3 text-gray-400">{match.round_name}</span>}
-             
               </div>
               <div className="flex items-end gap-2">
                 <span className="text-yds-s2 font-semibold text-white">{match.opponent_name}</span>
-                <span className="text-yds-c1m text-gray-400">
-                  {match.text_home_away}
-                </span>
-             </div>
+                <span className="text-yds-c1m text-gray-400">{match.text_home_away}</span>
+              </div>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex flex-col items-end gap-1">

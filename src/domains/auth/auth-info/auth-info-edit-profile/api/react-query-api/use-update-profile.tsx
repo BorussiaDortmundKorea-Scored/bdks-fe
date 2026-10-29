@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
-import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
-import { type IUpdateProfileRequest, updateProfile } from "@auth/auth-info/auth-info-edit-profile/api/auth-info-edit-profile-api";
+import {
+  type IUpdateProfileRequest,
+  updateProfile,
+} from "@auth/auth-info/auth-info-edit-profile/api/auth-info-edit-profile-api";
 import { AUTH_INFO_PROFILE_CARD_QUERY_KEYS } from "@auth/auth-info/auth-info-profile-card/api/auth-info-profile-card-query-keys";
 import { useAuth } from "@auth/contexts/AuthContext";
 

@@ -1,7 +1,7 @@
 {
   "name": "bdks-fe",
   "private": true,
-  "version": "2.1.12",
+  "version": "2.1.13",
   "packageManager": "pnpm@10.12.4",
   "type": "module",
   "scripts": {
@@ -11,6 +11,8 @@
     "build:dev": "tsc -b && vite build --mode dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "lint-staged": "lint-staged",
     "test": "vitest run",
     "test:watch": "vitest --watch --ui",
@@ -21,8 +23,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --exit-zero-on-changes",
-    "check": "pnpm run lint && pnpm run type-check && pnpm run test && pnpm run build-storybook && pnpm run build:dev",
-    "check:quick": "pnpm run lint && pnpm run type-check && pnpm run test",
+    "check": "pnpm run lint && pnpm run format:check && pnpm run type-check && pnpm run test && pnpm run build-storybook && pnpm run build:dev",
+    "check:quick": "pnpm run lint && pnpm run format:check && pnpm run type-check && pnpm run test",
     "changelog": "node scripts/update-changelog.js",
     "release": "node scripts/auto-release.js",
     "test:e2e": "playwright test",

@@ -4,8 +4,8 @@
  */
 import { HttpResponse, http } from "msw";
 
-import AdminDashboardMatchUserRatingsDummy from "@admin/admin-dashboard/admin-dashboard-match-stats/mocks/admin-dashboard-match-user-ratings-dummy.json";
 import AdminDashboardMatchStatsDummy from "@admin/admin-dashboard/admin-dashboard-match-stats/mocks/admin-dashboard-match-stats-dummy.json";
+import AdminDashboardMatchUserRatingsDummy from "@admin/admin-dashboard/admin-dashboard-match-stats/mocks/admin-dashboard-match-user-ratings-dummy.json";
 
 export const AdminDashboardMatchStatsHandlers = [
   http.post("*/rest/v1/rpc/get_match_rating_stats", () => {
@@ -15,4 +15,3 @@ export const AdminDashboardMatchStatsHandlers = [
     return HttpResponse.json(AdminDashboardMatchUserRatingsDummy);
   }),
 ];
-

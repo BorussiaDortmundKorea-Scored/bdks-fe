@@ -1,14 +1,14 @@
-
 /**
  * 작성자: KYD
  * 기능: 개발자에게 문의, 버그제보, 제안 등 메일 전송 컴포넌트
  */
-
 import { useState } from "react";
 
 import emailjs from "@emailjs/browser";
-import { useAuth } from "@auth/contexts/AuthContext";
 import { Button } from "@youngduck/yd-ui";
+
+import { useAuth } from "@auth/contexts/AuthContext";
+
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
 
 interface DevContactFormValues {
@@ -32,8 +32,7 @@ const AuthInfoDevContact = () => {
 
   //SECTION 메서드 영역
   const handleChange =
-    (field: keyof DevContactFormValues) =>
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (field: keyof DevContactFormValues) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setFormValues((prev) => ({
         ...prev,
         [field]: event.target.value,
@@ -77,7 +76,7 @@ const AuthInfoDevContact = () => {
         name: userName,
         message: "",
       });
-    } catch{
+    } catch {
       setResult("error");
     } finally {
       setIsSubmitting(false);
@@ -90,7 +89,7 @@ const AuthInfoDevContact = () => {
   return (
     <form className="w-full" onSubmit={handleSubmit}>
       <LayoutWithHeaderFooter>
-        <label className="flex flex-col gap-2 text-primary-100">
+        <label className="text-primary-100 flex flex-col gap-2">
           <p className="text-yds-s2 text-white">건의 / 버그 제보</p>
         </label>
         <input
@@ -98,22 +97,20 @@ const AuthInfoDevContact = () => {
           value={formValues.title}
           onChange={handleChange("title")}
           required
-          className="bg-background-secondary text-white rounded px-3 py-4 placeholder:text-primary-70 outline-none"
+          className="bg-background-secondary placeholder:text-primary-70 rounded px-3 py-4 text-white outline-none"
           placeholder="제목"
         />
         <textarea
           value={formValues.message}
           onChange={handleChange("message")}
           placeholder="서비스 사용 중 불편한 점이나 소중한 아이디어가 있다면 편하게 남겨 주세요."
-          className="min-h-[240px] resize-none rounded bg-background-secondary px-3 py-2 text-white placeholder:text-primary-70 outline-none"
+          className="bg-background-secondary placeholder:text-primary-70 min-h-[240px] resize-none rounded px-3 py-2 text-white outline-none"
         />
         {result === "success" && (
           <p className="text-yds-c1m text-primary-100">소중한 의견 감사합니다! 메일이 정상적으로 전송되었어요.</p>
         )}
         {result === "error" && (
-          <p className="text-yds-c1m text-red-400">
-            메일 전송에 실패했습니다. 잠시 후 다시 시도해주세요
-          </p>
+          <p className="text-yds-c1m text-red-400">메일 전송에 실패했습니다. 잠시 후 다시 시도해주세요</p>
         )}
       </LayoutWithHeaderFooter>
       <div className="flex h-auto w-full items-center justify-center">

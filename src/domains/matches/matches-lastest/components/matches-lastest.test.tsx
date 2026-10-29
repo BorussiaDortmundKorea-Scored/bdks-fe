@@ -5,12 +5,12 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import { vi } from "vitest";
 
-import { server } from "@shared/mocks/server";
-import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-
 import MatchesLastestErrorFallback from "@matches/matches-lastest/components/error/matches-lastest-error-fallback";
 import MatchesLastest from "@matches/matches-lastest/components/matches-lastest";
 import MatchesLastestSkeleton from "@matches/matches-lastest/components/skeleton/matches-lastest-skeleton";
+
+import { server } from "@shared/mocks/server";
+import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 vi.mock("@shared/api/config/supabaseClient", () => ({
   supabase: {

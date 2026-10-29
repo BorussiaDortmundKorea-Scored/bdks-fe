@@ -20,7 +20,6 @@ const useKakaoLogin = () => {
       const baseUrl = import.meta.env.VITE_BASE_URL;
       const redirectUrl = `${baseUrl}/dashboard`;
 
-
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "kakao",
         options: {

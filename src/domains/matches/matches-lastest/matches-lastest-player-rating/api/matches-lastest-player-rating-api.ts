@@ -48,22 +48,21 @@ export const insertPlayerRating = async (
       action: "INSERT",
     };
 
-      // 개별 선수 채널 (기존 - 개별 선수 화면용)
-      const playerChannelName = `match-${request.match_id}-player-${request.player_id}`;
-      await supabase.channel(playerChannelName).send({
-        type: "broadcast",
-        event: "rating_updated",
-        payload,
-      });
+    // 개별 선수 채널 (기존 - 개별 선수 화면용)
+    const playerChannelName = `match-${request.match_id}-player-${request.player_id}`;
+    await supabase.channel(playerChannelName).send({
+      type: "broadcast",
+      event: "rating_updated",
+      payload,
+    });
 
-      // 전체 경기 채널 (새로 추가 - 전체 선수 목록용)
-      const allPlayersChannelName = `match-${request.match_id}-all-players`;
-      await supabase.channel(allPlayersChannelName).send({
-        type: "broadcast",
-        event: "player_rating_updated", // 이벤트명 다르게 설정
-        payload,
-      });
-    
+    // 전체 경기 채널 (새로 추가 - 전체 선수 목록용)
+    const allPlayersChannelName = `match-${request.match_id}-all-players`;
+    await supabase.channel(allPlayersChannelName).send({
+      type: "broadcast",
+      event: "player_rating_updated", // 이벤트명 다르게 설정
+      payload,
+    });
   }
 
   return {

@@ -1,10 +1,10 @@
-
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 
 import AuthInfoDevContact from "@auth/auth-info/auth-info-quick-links/auth-info-dev-contact/components/auth-info-dev-contact";
-import { getKakaoUserAuthMock, getAnonymousUserAuthMock } from "@shared/mocks/constants/user-mock-data";
+
+import { getAnonymousUserAuthMock, getKakaoUserAuthMock } from "@shared/mocks/constants/user-mock-data";
 
 // emailjs 모킹
 const mockEmailjsSend = vi.fn();
@@ -131,9 +131,7 @@ describe("AuthInfoDevContact", () => {
     await fillForm("테스트 제목", "테스트 내용입니다.");
     await userEvent.click(screen.getByRole("button", { name: "문의하기" }));
 
-    expect(
-      await screen.findByText(/메일 전송에 실패했습니다/),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/메일 전송에 실패했습니다/)).toBeInTheDocument();
   });
 
   it("환경변수가 없으면 에러 메시지를 노출한다", async () => {
@@ -144,9 +142,7 @@ describe("AuthInfoDevContact", () => {
     await fillForm("테스트 제목", "테스트 내용입니다.");
     await userEvent.click(screen.getByRole("button", { name: "문의하기" }));
 
-    expect(
-      await screen.findByText(/메일 전송에 실패했습니다/),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/메일 전송에 실패했습니다/)).toBeInTheDocument();
     expect(mockEmailjsSend).not.toHaveBeenCalled();
   });
 

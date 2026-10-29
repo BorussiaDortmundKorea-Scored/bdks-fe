@@ -10,9 +10,7 @@ export interface IProfileSummary extends Pick<IProfileEntity, "points"> {
 /**
  * 프로필 카드용 요약 정보 조회 (포인트 + 좋아하는 선수 이미지)
  */
-export const getProfileSummary = async (
-  userId: string,
-): Promise<ApiResponse<IProfileSummary | null>> => {
+export const getProfileSummary = async (userId: string): Promise<ApiResponse<IProfileSummary | null>> => {
   const { data, error } = (await supabase.rpc("get_profile_summary", {
     p_user_id: userId,
   })) as {

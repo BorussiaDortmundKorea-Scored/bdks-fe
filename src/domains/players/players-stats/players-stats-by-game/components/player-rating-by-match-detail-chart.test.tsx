@@ -5,13 +5,13 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import { vi } from "vitest";
 
+import PlayersStatsByGameError from "@players/players-stats/players-stats-by-game/components/error/players-stats-by-game-error";
+import PlayerRatingByMatchDetailChart from "@players/players-stats/players-stats-by-game/components/player-rating-by-match-detail-chart";
+import PlayerRatingByMatchDetailChartSkeleton from "@players/players-stats/players-stats-by-game/components/skeleton/player-rating-by-match-detail-chart-skeleton";
+
 import { getAnonymousUserAuthMock } from "@shared/mocks/constants/user-mock-data";
 import { server } from "@shared/mocks/server";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-
-import PlayerRatingByMatchDetailChart from "@players/players-stats/players-stats-by-game/components/player-rating-by-match-detail-chart";
-import PlayersStatsByGameError from "@players/players-stats/players-stats-by-game/components/error/players-stats-by-game-error";
-import PlayerRatingByMatchDetailChartSkeleton from "@players/players-stats/players-stats-by-game/components/skeleton/player-rating-by-match-detail-chart-skeleton";
 
 const mockUseAuth = vi.fn();
 

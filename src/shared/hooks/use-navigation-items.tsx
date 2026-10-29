@@ -5,9 +5,8 @@
  */
 import { useLocation, useNavigate } from "react-router-dom";
 
-import type { LucideIcon } from "lucide-react";
-
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
+import type { LucideIcon } from "lucide-react";
 
 import { useAuth } from "@auth/contexts/AuthContext";
 
@@ -57,14 +56,16 @@ export const useNavigationItems = (type: NavigationItemType) => {
     return true;
   });
 
-  const processedItems: ProcessedNavigationItem[] = filteredItems.map((item): ProcessedNavigationItem => ({
-    id: item.id,
-    icon: item.icon,
-    path: item.path,
-    label: item.label,
-    isActive: item.path ? isActive(item.path) : false,
-    onClick: item.onClick({ navigate, signOut, toast }),
-  }));
+  const processedItems: ProcessedNavigationItem[] = filteredItems.map(
+    (item): ProcessedNavigationItem => ({
+      id: item.id,
+      icon: item.icon,
+      path: item.path,
+      label: item.label,
+      isActive: item.path ? isActive(item.path) : false,
+      onClick: item.onClick({ navigate, signOut, toast }),
+    }),
+  );
   //!SECTION 상태값 영역
 
   return {

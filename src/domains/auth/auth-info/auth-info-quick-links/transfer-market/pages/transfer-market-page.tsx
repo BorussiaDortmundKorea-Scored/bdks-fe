@@ -3,9 +3,9 @@
  * 기능: 선수 이적시장 페이지
  * 프로세스 설명: 내 정보 > 바로가기 > 선수 이적시장 진입 페이지
  */
-import TransferMarket from "@auth/auth-info/auth-info-quick-links/transfer-market/components/transfer-market";
 import TransferMarketErrorFallback from "@auth/auth-info/auth-info-quick-links/transfer-market/components/error/transfer-market-error-fallback";
 import TransferMarketSkeleton from "@auth/auth-info/auth-info-quick-links/transfer-market/components/skeleton/transfer-market-skeleton";
+import TransferMarket from "@auth/auth-info/auth-info-quick-links/transfer-market/components/transfer-market";
 
 import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
 import { BackButton } from "@shared/components/layout/header/buttons";

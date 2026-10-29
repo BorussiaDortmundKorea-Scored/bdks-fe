@@ -3,8 +3,7 @@ import { supabase } from "@shared/api/config/supabaseClient";
 import { type ApiResponse } from "@shared/api/types/api-types";
 import { type IProfileEntity } from "@shared/types/entities/profile.entity";
 
-export type IUpdateProfileRequest = Pick<IProfileEntity, "nickname"> &
-  Partial<Pick<IProfileEntity, "favorite_player">>;
+export type IUpdateProfileRequest = Pick<IProfileEntity, "nickname"> & Partial<Pick<IProfileEntity, "favorite_player">>;
 
 export const updateProfile = async (
   userId: string,

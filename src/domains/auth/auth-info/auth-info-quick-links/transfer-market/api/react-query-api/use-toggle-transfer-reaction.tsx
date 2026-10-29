@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
-import { toggleTransferReaction } from "@auth/auth-info/auth-info-quick-links/transfer-market/api/transfer-market-api";
 import { TRANSFER_MARKET_QUERY_KEYS } from "@auth/auth-info/auth-info-quick-links/transfer-market/api/react-query-api/transfer-market-query-keys";
+import { toggleTransferReaction } from "@auth/auth-info/auth-info-quick-links/transfer-market/api/transfer-market-api";
 
 import { type TransferReaction } from "@shared/types/entities/transfer.entity";
 import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";

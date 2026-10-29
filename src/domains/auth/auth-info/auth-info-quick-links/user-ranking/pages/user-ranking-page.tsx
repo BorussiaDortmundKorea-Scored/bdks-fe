@@ -3,9 +3,9 @@
  * 기능: 유저 랭킹 페이지
  * 프로세스 설명: 내 정보 > 바로가기 유저 랭킹 버튼 진입 페이지
  */
-import UserRanking from "@auth/auth-info/auth-info-quick-links/user-ranking/components/user-ranking";
 import UserRankingErrorFallback from "@auth/auth-info/auth-info-quick-links/user-ranking/components/error/user-ranking-error-fallback";
 import UserRankingSkeleton from "@auth/auth-info/auth-info-quick-links/user-ranking/components/skeleton/user-ranking-skeleton";
+import UserRanking from "@auth/auth-info/auth-info-quick-links/user-ranking/components/user-ranking";
 
 import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
 import { BackButton } from "@shared/components/layout/header/buttons";

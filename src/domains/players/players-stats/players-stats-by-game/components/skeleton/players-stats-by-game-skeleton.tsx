@@ -44,4 +44,3 @@ const PlayersStatsByGameSkeleton = () => {
 };
 
 export default PlayersStatsByGameSkeleton;
-
