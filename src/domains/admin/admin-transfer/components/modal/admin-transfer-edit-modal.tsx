@@ -1,7 +1,7 @@
 /**
  * 작성자: KYD
  * 기능: 이적 수정 모달
- * 프로세스 설명: 기존 이적 기록을 선택값 기반으로 수정.
+ * 프로세스 설명: 기존 이적 기록을 선택값 기반으로 수정. 은퇴는 상대클럽·이적금액 칸을 숨긴다.
  *                값의 원천이 SelectBox 훅이라 제출 직전에 payload 를 조립해 한 번 검증한다
  */
 import { useMemo, useState } from "react";
@@ -16,6 +16,7 @@ import {
   TRANSFER_DIRECTION_OPTIONS,
   TRANSFER_TYPE_OPTIONS,
   directionDefaultValue,
+  isRetiredType,
   typeDefaultValue,
 } from "@admin/admin-transfer/constants/transfer-options";
 import {
@@ -69,17 +70,19 @@ export const AdminTransferEditModal = ({ transfer, onClose }: IAdminTransferEdit
   const [transferDate, setTransferDate] = useState(transfer.transfer_date ?? "");
   const [euroFee, setEuroFee] = useState(transfer.euro_fee != null ? String(transfer.euro_fee) : "");
   const [errors, setErrors] = useState<Partial<Record<keyof IAdminTransferFormValues, string>>>({});
+  const isRetired = isRetiredType(typeHook.label);
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
   const handleUpdateTransfer = async () => {
+    // 은퇴로 바꾸면 RPC(update_transfer)가 상대 클럽·이적금액을 비운다
     const result = adminTransferFormSchema.safeParse({
       player_id: playerHook.label,
       direction: directionHook.label,
       transfer_type: typeHook.label,
-      counterpart_team_id: teamHook.label || null,
+      counterpart_team_id: isRetired ? null : teamHook.label || null,
       transfer_date: transferDate || null,
-      euro_fee: euroFee === "" ? null : Number(euroFee),
+      euro_fee: isRetired || euroFee === "" ? null : Number(euroFee),
     });
 
     if (!result.success) {
@@ -109,24 +112,28 @@ export const AdminTransferEditModal = ({ transfer, onClose }: IAdminTransferEdit
           <SelectBox size="full" selectBoxHook={directionHook} label="영입/방출 선택" />
         </Field>
         <Field label="유형" required error={errors.transfer_type}>
-          <SelectBox size="full" selectBoxHook={typeHook} label="완전/임대 선택" />
+          <SelectBox size="full" selectBoxHook={typeHook} label="완전/임대/은퇴 선택" />
         </Field>
-        <Field label="상대 클럽" error={errors.counterpart_team_id}>
-          <SelectBox size="full" selectBoxHook={teamHook} label="상대 클럽 선택 (자유계약·유스는 비움)" />
+        {!isRetired && (
+          <Field label="상대 클럽" error={errors.counterpart_team_id}>
+            <SelectBox size="full" selectBoxHook={teamHook} label="상대 클럽 선택 (자유계약·유스는 비움)" />
+          </Field>
+        )}
+        <Field label={isRetired ? "은퇴일" : "이적일"} error={errors.transfer_date}>
+          <DatePicker value={transferDate} onValueChange={setTransferDate} size="full" placeholder="날짜 선택" />
         </Field>
-        <Field label="이적일" error={errors.transfer_date}>
-          <DatePicker value={transferDate} onValueChange={setTransferDate} size="full" placeholder="이적일 선택" />
-        </Field>
-        <Field label="이적금액 (유로, 순수 금액)" error={errors.euro_fee}>
-          <NumberInput
-            value={euroFee}
-            onValueChange={setEuroFee}
-            placeholder="예: 30000000 (= 30M €)"
-            size="full"
-            min={0}
-            suffix="€"
-          />
-        </Field>
+        {!isRetired && (
+          <Field label="이적금액 (유로, 순수 금액)" error={errors.euro_fee}>
+            <NumberInput
+              value={euroFee}
+              onValueChange={setEuroFee}
+              placeholder="예: 30000000 (= 30M €)"
+              size="full"
+              min={0}
+              suffix="€"
+            />
+          </Field>
+        )}
       </div>
       <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={onClose}>
