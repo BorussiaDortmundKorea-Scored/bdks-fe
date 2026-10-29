@@ -26,8 +26,13 @@ export const AdminMatchLineupHandlers = [
     // 업데이트된 라인업 반환 (첫 번째 더미 데이터 사용)
     return HttpResponse.json(AdminMatchLineupDummy[0]);
   }),
-  http.post("*/rest/v1/rpc/bulk_insert_match_lineups", () => {
-    // 일괄 생성된 라인업 목록 반환 (더미 데이터의 일부)
-    return HttpResponse.json(AdminMatchLineupDummy);
+  http.post("*/rest/v1/rpc/save_match_starting_lineup", () => {
+    return HttpResponse.json(true);
+  }),
+  http.post("*/rest/v1/rpc/save_match_on_pitch_positions", () => {
+    return HttpResponse.json(true);
+  }),
+  http.post("*/rest/v1/rpc/add_match_bench_players", () => {
+    return HttpResponse.json(1);
   }),
 ];

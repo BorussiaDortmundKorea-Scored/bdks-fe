@@ -21,6 +21,8 @@ import {
   adminMatchLineupFormSchema,
 } from "@admin/admin-match/admin-match-lineup/schemas/admin-match-lineup-schema";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { toFieldErrors } from "@shared/hooks/use-zod-form";
 import { type LineupType } from "@shared/types/match-lineup.types";
 
@@ -141,7 +143,7 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">라인업 수정</h2>
+      <ModalTitle>라인업 수정</ModalTitle>
       <div className="flex flex-col gap-4">
         <Field label="선수" required error={errors.player_id}>
           <SelectBox size="full" selectBoxHook={editPlayerHook} />
@@ -240,14 +242,14 @@ export const AdminMatchLineupEditModal = ({ matchId, lineup, onClose }: IAdminMa
           </Field>
         )}
       </div>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={onClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleUpdateLineup} disabled={isUpdating}>
           {isUpdating ? "수정 중..." : "수정"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };
