@@ -18,4 +18,3 @@ export const getPlayerStats = async (request: IGetPlayerStatsRequest): Promise<A
       player_id_param: request.player_id,
     }),
   );
-

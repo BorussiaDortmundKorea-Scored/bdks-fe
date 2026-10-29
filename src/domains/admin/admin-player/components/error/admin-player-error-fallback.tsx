@@ -22,9 +22,9 @@ const AdminPlayerErrorFallback = ({ error, resetErrorBoundary }: AdminPlayerErro
   };
 
   return (
-    <div className="w-full flex flex-col h-full">
+    <div className="flex h-full w-full flex-col">
       {/* 고정된 헤더 */}
-      <header className="w-full flex layout-header-height items-center relative shrink-0 bg-background-primary z-10">
+      <header className="layout-header-height bg-background-primary relative z-10 flex w-full shrink-0 items-center">
         <button onClick={handleGoBack} aria-label="뒤로가기" className="flex cursor-pointer">
           <ArrowLeft size={24} className="text-primary-400" />
         </button>
@@ -34,37 +34,37 @@ const AdminPlayerErrorFallback = ({ error, resetErrorBoundary }: AdminPlayerErro
       </header>
 
       {/* 스크롤 가능한 컨텐츠 영역 - 헤더 높이를 제외한 나머지 영역 */}
-      <div className="w-full flex-1 flex flex-col gap-4 overflow-y-auto scrollbar-hide">
-        <div className="flex items-center justify-center flex-1">
+      <div className="scrollbar-hide flex w-full flex-1 flex-col gap-4 overflow-y-auto">
+        <div className="flex flex-1 items-center justify-center">
           <div className="text-center">
-            <div className="flex justify-center mb-4">
+            <div className="mb-4 flex justify-center">
               <img src={API_ERROR_LOGO} alt="에러" className="h-16 w-16" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">데이터를 불러오는 중 오류가 발생했습니다</h2>
-            <p className="text-gray-600 mb-6 max-w-md">
+            <h2 className="mb-2 text-2xl font-bold text-gray-900">데이터를 불러오는 중 오류가 발생했습니다</h2>
+            <p className="mb-6 max-w-md text-gray-600">
               선수 정보를 불러오는 중 문제가 발생했습니다. 다시 시도해주세요.
             </p>
-            <div className="flex gap-3 justify-center">
+            <div className="flex justify-center gap-3">
               <button
                 onClick={resetErrorBoundary}
-                className="flex items-center gap-2 px-4 py-2 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors"
+                className="bg-primary-400 hover:bg-primary-500 flex items-center gap-2 rounded-lg px-4 py-2 text-white transition-colors"
               >
                 <RefreshCw size={16} />
                 다시 시도
               </button>
               <button
                 onClick={handleGoBack}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50"
               >
                 뒤로 가기
               </button>
             </div>
             {process.env.NODE_ENV === "development" && (
-              <details className="mt-4 text-left max-w-md mx-auto">
+              <details className="mx-auto mt-4 max-w-md text-left">
                 <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
                   개발자 정보 (클릭하여 확장)
                 </summary>
-                <pre className="mt-2 p-2 bg-gray-100 rounded text-xs text-red-600 overflow-auto">{error.message}</pre>
+                <pre className="mt-2 overflow-auto rounded bg-gray-100 p-2 text-xs text-red-600">{error.message}</pre>
               </details>
             )}
           </div>

@@ -4,13 +4,12 @@
  * 프로세스 설명: SITE_LINK_DATA 기준으로 한 줄 배치, internalPath는 내부 이동, link는 외부 링크. 가로 넘침 시 휠로 가로 스크롤
  */
 import { useNavigate } from "react-router-dom";
-import { HorizonDragScroll } from "@youngduck/yd-ui/HorizonDragScroll";
 
 import { SITE_LINK_DATA } from "../constants/site-link-data";
 import AdminDashboardSitesWrapper from "./wrapper/admin-dashboard-sites-wrapper";
+import { HorizonDragScroll } from "@youngduck/yd-ui/HorizonDragScroll";
 
-const LINK_BUTTON_CLASS =
-  "cursor-pointer shrink-0 focus:outline-none";
+const LINK_BUTTON_CLASS = "cursor-pointer shrink-0 focus:outline-none";
 
 const AdminDashboardSites = () => {
   const navigate = useNavigate();

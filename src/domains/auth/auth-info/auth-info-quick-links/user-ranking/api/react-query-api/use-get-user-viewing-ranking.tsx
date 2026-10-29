@@ -1,7 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { getUserViewingRanking } from "@auth/auth-info/auth-info-quick-links/user-ranking/api/user-ranking-api";
 import { USER_RANKING_QUERY_KEYS } from "@auth/auth-info/auth-info-quick-links/user-ranking/api/react-query-api/user-ranking-query-keys";
+import { getUserViewingRanking } from "@auth/auth-info/auth-info-quick-links/user-ranking/api/user-ranking-api";
+
 import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 
 export function useGetUserViewingRanking() {

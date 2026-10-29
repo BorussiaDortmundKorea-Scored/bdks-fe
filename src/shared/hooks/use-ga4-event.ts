@@ -28,4 +28,3 @@ export const useGa4Event = () => {
 
   return { trackEvent };
 };
-

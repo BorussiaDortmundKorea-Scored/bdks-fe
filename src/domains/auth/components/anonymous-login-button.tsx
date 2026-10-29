@@ -1,8 +1,11 @@
 // src/shared/components/AnonymousLoginButton.tsx
 import React from "react";
-import useAnonymousLogin from "@auth/hooks/useAnonymousLogin";
+
 import { Button } from "@youngduck/yd-ui";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
+
+import useAnonymousLogin from "@auth/hooks/useAnonymousLogin";
+
 import { GA4_CATEGORIES, GA4_EVENTS, GA4_LOGIN_METHODS } from "@shared/constants/analytics";
 import { useGa4Event } from "@shared/hooks/use-ga4-event";
 

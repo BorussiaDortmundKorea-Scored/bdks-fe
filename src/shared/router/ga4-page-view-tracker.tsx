@@ -4,8 +4,8 @@
  * 프로세스 설명: useLocation으로 pathname 감지 → 변경 시 GA4 pageview 이벤트 전송
  */
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import ReactGA from "react-ga4";
+import { useLocation } from "react-router-dom";
 
 const Ga4PageViewTracker = () => {
   const { pathname, search } = useLocation();

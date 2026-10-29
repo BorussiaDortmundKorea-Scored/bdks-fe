@@ -4,12 +4,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 
+import PlayersStatsByGameError from "@players/players-stats/players-stats-by-game/components/error/players-stats-by-game-error";
+import PlayersStatsByGame from "@players/players-stats/players-stats-by-game/components/players-stats-by-game";
+import PlayersStatsByGameSkeleton from "@players/players-stats/players-stats-by-game/components/skeleton/players-stats-by-game-skeleton";
+
 import { server } from "@shared/mocks/server";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-
-import PlayersStatsByGame from "@players/players-stats/players-stats-by-game/components/players-stats-by-game";
-import PlayersStatsByGameError from "@players/players-stats/players-stats-by-game/components/error/players-stats-by-game-error";
-import PlayersStatsByGameSkeleton from "@players/players-stats/players-stats-by-game/components/skeleton/players-stats-by-game-skeleton";
 
 const renderWithQueryClient = (component: React.ReactElement) => {
   const queryClient = new QueryClient({

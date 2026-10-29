@@ -35,10 +35,7 @@ describe("AdminMatchBulkAddRow", () => {
     render(<AdminMatchBulkAddRow {...baseProps} onHooksReady={onHooksReady} />);
 
     expect(onHooksReady).toHaveBeenCalled();
-    expect(onHooksReady).toHaveBeenCalledWith(
-      0,
-      expect.objectContaining({ homeAwayLabel: expect.any(String) }),
-    );
+    expect(onHooksReady).toHaveBeenCalledWith(0, expect.objectContaining({ homeAwayLabel: expect.any(String) }));
   });
 
   it("라운드명 입력 시 onRowChange를 호출한다", () => {

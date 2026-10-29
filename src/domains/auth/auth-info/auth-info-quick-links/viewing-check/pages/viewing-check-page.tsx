@@ -3,9 +3,9 @@
  * 기능: 관람체크 페이지
  * 프로세스 설명: 내 정보 > 바로가기 관람 버튼 진입 페이지
  */
-import ViewingCheck from "@auth/auth-info/auth-info-quick-links/viewing-check/components/viewing-check";
 import ViewingCheckErrorFallback from "@auth/auth-info/auth-info-quick-links/viewing-check/components/error/viewing-check-error-fallback";
 import ViewingCheckSkeleton from "@auth/auth-info/auth-info-quick-links/viewing-check/components/skeleton/viewing-check-skeleton";
+import ViewingCheck from "@auth/auth-info/auth-info-quick-links/viewing-check/components/viewing-check";
 
 import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
 import { BackButton } from "@shared/components/layout/header/buttons";

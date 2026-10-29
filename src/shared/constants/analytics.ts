@@ -16,4 +16,3 @@ export const GA4_LOGIN_METHODS = {
   KAKAO: "kakao",
   ANONYMOUS: "anonymous",
 } as const;
-

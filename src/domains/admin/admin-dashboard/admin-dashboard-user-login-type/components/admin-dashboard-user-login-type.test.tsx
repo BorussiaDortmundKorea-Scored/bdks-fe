@@ -2,14 +2,14 @@
  * 작성자: KYD
  * 기능: 로그인 유형(카카오/익명) 대시보드 컴포넌트 테스트
  */
+import AdminDashboardUserLoginType from "./admin-dashboard-user-login-type";
+import AdminDashboardUserLoginTypeError from "./error/admin-dashboard-user-login-type-error";
+import AdminDashboardUserLoginTypeSkeleton from "./skeleton/admin-dashboard-user-login-type-skeleton";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import { describe, expect, it, vi } from "vitest";
 
-import AdminDashboardUserLoginType from "./admin-dashboard-user-login-type";
-import AdminDashboardUserLoginTypeError from "./error/admin-dashboard-user-login-type-error";
-import AdminDashboardUserLoginTypeSkeleton from "./skeleton/admin-dashboard-user-login-type-skeleton";
 import { server } from "@shared/mocks/server";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
@@ -66,9 +66,7 @@ describe("로그인 유형 대시보드 렌더링 테스트", () => {
   });
 
   it("에러 발생 시 에러 컴포넌트가 렌더링된다", async () => {
-    server.use(
-      http.post("*/rest/v1/rpc/get_user_login_type_counts", () => HttpResponse.error()),
-    );
+    server.use(http.post("*/rest/v1/rpc/get_user_login_type_counts", () => HttpResponse.error()));
 
     renderWithQueryClient(<AdminDashboardUserLoginType />);
 

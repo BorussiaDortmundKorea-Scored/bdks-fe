@@ -16,14 +16,13 @@ const AuthRoute = () => {
     const checkProfile = async () => {
       if (!user) return;
 
-        const { data, error } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle();
+      const { data, error } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle();
 
-        if (error) {
-          return;
-        }
+      if (error) {
+        return;
+      }
 
-        setHasProfile(!!data);
-      
+      setHasProfile(!!data);
     };
 
     checkProfile();

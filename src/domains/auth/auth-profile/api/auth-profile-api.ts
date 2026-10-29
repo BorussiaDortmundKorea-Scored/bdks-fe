@@ -6,9 +6,7 @@ import { type IProfileEntity } from "@shared/types/entities/profile.entity";
 
 export type IProfile = IProfileEntity;
 
-export type ICreateProfileRequest =
-  Pick<IProfileEntity, "nickname"> &
-  Partial<Pick<IProfileEntity, "favorite_player">>;
+export type ICreateProfileRequest = Pick<IProfileEntity, "nickname"> & Partial<Pick<IProfileEntity, "favorite_player">>;
 
 // 프로필 생성
 export const createProfile = async (profile: ICreateProfileRequest): Promise<ApiResponse<IProfile>> =>

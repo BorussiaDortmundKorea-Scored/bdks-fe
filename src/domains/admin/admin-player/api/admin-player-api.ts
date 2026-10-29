@@ -5,12 +5,10 @@ import { type IPlayerEntity } from "@shared/types/entities/player.entity";
 
 export type IPlayer = IPlayerEntity;
 
-export type ICreatePlayerRequest =
-  Pick<IPlayerEntity, "name"> &
+export type ICreatePlayerRequest = Pick<IPlayerEntity, "name"> &
   Partial<Omit<IPlayerEntity, "id" | "name" | "created_at" | "updated_at">>;
 
-export type IUpdatePlayerRequest =
-  Pick<IPlayerEntity, "id"> &
+export type IUpdatePlayerRequest = Pick<IPlayerEntity, "id"> &
   Partial<Omit<IPlayerEntity, "id" | "created_at" | "updated_at">>;
 
 // 모든 선수 조회

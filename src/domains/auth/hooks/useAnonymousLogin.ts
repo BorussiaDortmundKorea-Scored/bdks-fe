@@ -1,5 +1,6 @@
 // src/shared/hooks/useAnonymousLogin.ts
 import { useState } from "react";
+
 import { supabase } from "@shared/api/config/supabaseClient";
 
 interface LoginResult {

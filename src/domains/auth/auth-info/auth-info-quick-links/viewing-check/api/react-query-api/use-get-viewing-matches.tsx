@@ -1,7 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { getViewingMatches } from "@auth/auth-info/auth-info-quick-links/viewing-check/api/viewing-check-api";
 import { VIEWING_CHECK_QUERY_KEYS } from "@auth/auth-info/auth-info-quick-links/viewing-check/api/react-query-api/viewing-check-query-keys";
+import { getViewingMatches } from "@auth/auth-info/auth-info-quick-links/viewing-check/api/viewing-check-api";
+
 import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 
 export function useGetViewingMatches() {

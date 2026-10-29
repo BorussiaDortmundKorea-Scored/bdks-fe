@@ -28,4 +28,3 @@ export const getPlayerStatsByGame = async (
       player_id_param: request.player_id,
     }),
   );
-

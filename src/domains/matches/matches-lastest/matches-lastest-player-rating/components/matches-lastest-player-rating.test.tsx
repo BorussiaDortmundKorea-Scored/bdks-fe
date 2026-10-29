@@ -5,13 +5,13 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import { vi } from "vitest";
 
+import MatchesLastestPlayerRatingErrorFallback from "@matches/matches-lastest/matches-lastest-player-rating/components/error/matches-lastest-player-rating-error-fallback";
+import MatchesLastestPlayerRating from "@matches/matches-lastest/matches-lastest-player-rating/components/matches-lastest-player-rating";
+import MatchesLastestPlayerRatingSkeleton from "@matches/matches-lastest/matches-lastest-player-rating/components/skeleton/matches-lastest-player-rating-skeleton";
+
 import { getAnonymousUserAuthMock } from "@shared/mocks/constants/user-mock-data";
 import { server } from "@shared/mocks/server";
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-
-import MatchesLastestPlayerRating from "@matches/matches-lastest/matches-lastest-player-rating/components/matches-lastest-player-rating";
-import MatchesLastestPlayerRatingErrorFallback from "@matches/matches-lastest/matches-lastest-player-rating/components/error/matches-lastest-player-rating-error-fallback";
-import MatchesLastestPlayerRatingSkeleton from "@matches/matches-lastest/matches-lastest-player-rating/components/skeleton/matches-lastest-player-rating-skeleton";
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom");

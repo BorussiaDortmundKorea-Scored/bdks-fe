@@ -6,9 +6,9 @@ import PlayersRatingRotatorSkeleton from "./skeleton/players-rating-rotator-skel
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 
-import ReactQueryBoundary from "@shared/provider/react-query-boundary";
-
 import PlayersRatingRotator from "@players/players-rating-rotator/components/players-rating-rotator";
+
+import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 describe("PlayerRatingRotator 컴포넌트 렌더링 테스트", () => {
   const renderWithQueryClient = (component: React.ReactElement) => {

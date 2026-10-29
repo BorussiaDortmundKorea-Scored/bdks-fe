@@ -5,9 +5,9 @@
  */
 import { Plane, ThumbsDown, ThumbsUp } from "lucide-react";
 
-import TransferMarketWrapper from "@auth/auth-info/auth-info-quick-links/transfer-market/components/wrapper/transfer-market-wrapper";
 import { useGetTransfers } from "@auth/auth-info/auth-info-quick-links/transfer-market/api/react-query-api/use-get-transfers";
 import { useToggleTransferReaction } from "@auth/auth-info/auth-info-quick-links/transfer-market/api/react-query-api/use-toggle-transfer-reaction";
+import TransferMarketWrapper from "@auth/auth-info/auth-info-quick-links/transfer-market/components/wrapper/transfer-market-wrapper";
 
 import { formatEuroToMillion } from "@shared/utils/euro-utils";
 

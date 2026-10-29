@@ -1,13 +1,14 @@
 // src/shared/components/LogoutButton.tsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@shared/constants/routes";
+
 import { useAuth } from "@auth/contexts/AuthContext";
 
+import { ROUTES } from "@shared/constants/routes";
+
 const LogoutButton: React.FC = () => {
-  
   const { signOut } = useAuth();
 
   const navigate = useNavigate();
@@ -22,7 +23,6 @@ const LogoutButton: React.FC = () => {
       <LogOut size={24} className="text-primary-100" />
     </button>
   );
-
 };
 
 export default LogoutButton;

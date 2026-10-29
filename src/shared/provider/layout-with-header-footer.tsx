@@ -15,7 +15,7 @@ interface ILayoutWithHeaderFooter {
 const LayoutWithHeaderFooter: React.FC<ILayoutWithHeaderFooter> = ({ children, className = "" }) => {
   return (
     <div
-      className={`w-full layout-content-with-header-footer flex flex-col gap-4 overflow-y-auto scrollbar-hide ${className}`}
+      className={`layout-content-with-header-footer scrollbar-hide flex w-full flex-col gap-4 overflow-y-auto ${className}`}
     >
       {children}
     </div>

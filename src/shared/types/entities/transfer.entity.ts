@@ -12,12 +12,12 @@ export type TransferReaction = "LIKE" | "DISLIKE"; // 좋아요 / 싫어요
  *   api 레이어에서 `ITransferEntity & { ... }` 로 정의한다.
  */
 export interface ITransferEntity {
-  id: string
-  player_id: string
-  direction: TransferDirection
-  transfer_type: TransferType
-  counterpart_team_id: string | null
-  transfer_date: string | null
-  euro_fee: number | null
-  created_at: string | null
+  id: string;
+  player_id: string;
+  direction: TransferDirection;
+  transfer_type: TransferType;
+  counterpart_team_id: string | null;
+  transfer_date: string | null;
+  euro_fee: number | null;
+  created_at: string | null;
 }

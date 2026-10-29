@@ -20,9 +20,9 @@ const AuthInfoEditProfilePage = () => {
     <div className="bdks-container" ref={pageRef}>
       <Header options={options} />
       <ReactQueryBoundary
-        skeleton={<div className="flex h-40 w-full items-center justify-center text-primary-100">불러오는 중...</div>}
+        skeleton={<div className="text-primary-100 flex h-40 w-full items-center justify-center">불러오는 중...</div>}
         errorFallback={() => (
-          <div className="flex h-40 w-full items-center justify-center text-primary-100">
+          <div className="text-primary-100 flex h-40 w-full items-center justify-center">
             프로필 정보를 불러올 수 없습니다.
           </div>
         )}

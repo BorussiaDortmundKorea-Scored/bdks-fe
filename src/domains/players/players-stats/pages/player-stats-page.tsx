@@ -10,13 +10,12 @@ import PlayersStatsByGameError from "@players/players-stats/players-stats-by-gam
 import PlayersStatsByGame from "@players/players-stats/players-stats-by-game/components/players-stats-by-game";
 import PlayersStatsByGameSkeleton from "@players/players-stats/players-stats-by-game/components/skeleton/players-stats-by-game-skeleton";
 
+import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
 import BackButton from "@shared/components/layout/header/buttons/back-button";
 import Header from "@shared/components/layout/header/header";
 import { usePageTransition } from "@shared/hooks/use-page-transition";
-import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 import LayoutWithHeaderFooter from "@shared/provider/layout-with-header-footer";
-import BottomNavigationBar from "@shared/components/layout/footer/bottom-navigation-bar";
-
+import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
 //SECTION 리렌더링이 불필요한영역: 매직넘버, 문자열, 상수
 const headerOptions = {

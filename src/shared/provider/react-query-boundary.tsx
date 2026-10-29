@@ -1,6 +1,7 @@
-import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+
+import { QueryErrorResetBoundary } from "@tanstack/react-query";
 
 export type ErrorFallbackProps = {
   error: Error;

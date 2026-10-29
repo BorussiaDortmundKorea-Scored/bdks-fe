@@ -8,10 +8,7 @@
 
 export type RemoveBackgroundProgress = (key: string, current: number, total: number) => void;
 
-export const removePlayerImageBackground = async (
-  file: Blob,
-  onProgress?: RemoveBackgroundProgress,
-): Promise<Blob> => {
+export const removePlayerImageBackground = async (file: Blob, onProgress?: RemoveBackgroundProgress): Promise<Blob> => {
   const { removeBackground } = await import("@imgly/background-removal");
 
   return removeBackground(file, {

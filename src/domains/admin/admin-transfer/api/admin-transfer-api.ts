@@ -45,9 +45,7 @@ export const getTransfers = async (): Promise<ApiResponse<ITransfer[]>> =>
   callRpc<ITransfer[]>(() => supabase.rpc("get_transfers"));
 
 // 이적 등록
-export const createTransfer = async (
-  transfer: ICreateTransferRequest,
-): Promise<ApiResponse<ITransferEntity>> =>
+export const createTransfer = async (transfer: ICreateTransferRequest): Promise<ApiResponse<ITransferEntity>> =>
   callRpc<ITransferEntity>(() =>
     supabase.rpc("insert_transfer", {
       p_player_id: transfer.player_id,
@@ -60,9 +58,7 @@ export const createTransfer = async (
   );
 
 // 이적 수정 (부분 업데이트 — 넘긴 값만 반영)
-export const updateTransfer = async (
-  transfer: IUpdateTransferRequest,
-): Promise<ApiResponse<ITransferEntity>> =>
+export const updateTransfer = async (transfer: IUpdateTransferRequest): Promise<ApiResponse<ITransferEntity>> =>
   callRpc<ITransferEntity>(() =>
     supabase.rpc("update_transfer", {
       p_id: transfer.id,

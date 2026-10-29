@@ -1,12 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { TIME_UNIT } from "@shared/constants/time-unit";
 import {
   type IGetPlayerStatsByGameRequest,
   type IPlayerStatsByGame,
   getPlayerStatsByGame,
 } from "@players/players-stats/players-stats-by-game/api/players-stats-by-game-api";
 import { PLAYERS_STATS_BY_GAME_QUERY_KEYS } from "@players/players-stats/players-stats-by-game/api/react-query-api/players-stats-by-game-query-key";
+
+import { TIME_UNIT } from "@shared/constants/time-unit";
 import { handleSupabaseApiResponse } from "@shared/utils/sentry-utils";
 
 export function useGetPlayersStatsByGame(request: IGetPlayerStatsByGameRequest) {
@@ -24,4 +25,3 @@ export function useGetPlayersStatsByGame(request: IGetPlayerStatsByGameRequest) 
 
   return { data };
 }
-
