@@ -35,6 +35,10 @@ jobs:
       - name: 린트
         run: pnpm run lint
 
+      # lint-staged 는 커밋한 파일만 정리하므로, 손대지 않은 파일이 규칙과 어긋나도 여기서 잡는다
+      - name: 포맷 검사
+        run: pnpm run format:check
+
       - name: 타입체크
         run: pnpm run type-check
 
