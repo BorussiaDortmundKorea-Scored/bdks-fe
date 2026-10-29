@@ -3,6 +3,27 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [2.1.13] - 2026-10-29
+
+**Branch**: `bdks-v2.1.13-프리티어일괄적용및CI검사추가`
+
+> 규칙과 어긋나 있던 파일에 prettier 를 일괄 적용하고, CI 에 prettier 검사를 넣어 다시 어긋나지 않게 함
+
+### 추가
+
+### 변경
+
+- chore: prettier 줄바꿈 auto·무시 목록·format 스크립트 추가
+- style: 전체 파일 prettier 일괄 적용
+- ci: CI 에 prettier 포맷 검사 추가
+- docs: v2.1.13 prettier 일괄 적용 및 CI 검사 정리
+
+### 수정
+
+### 제거
+
+---
+
 ## [2.1.12] - 2026-10-29
 
 **Branch**: `bdks-v2.1.12-관리자라인업포메이션보드`
