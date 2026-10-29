@@ -15,6 +15,8 @@ import { useGetAllSeasons } from "@admin/admin-competition/api/react-query-api/u
 import { useUpdateCompetition } from "@admin/admin-competition/api/react-query-api/use-update-competition";
 import { adminCompetitionFormSchema } from "@admin/admin-competition/schemas/admin-competition-schema";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { useZodForm } from "@shared/hooks/use-zod-form";
 
 interface IAdminCompetitionEditModal {
@@ -71,7 +73,7 @@ export const AdminCompetitionEditModal = ({ competition, onClose }: IAdminCompet
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">대회 수정</h2>
+      <ModalTitle>대회 수정</ModalTitle>
       <div className="flex flex-col gap-4">
         <Field label="대회 종류" required error={errors.competitionTypeName}>
           <SelectBox selectBoxHook={typeSelectBox} size="full" label="대회 종류 선택" />
@@ -80,14 +82,14 @@ export const AdminCompetitionEditModal = ({ competition, onClose }: IAdminCompet
           <SelectBox selectBoxHook={seasonSelectBox} size="full" label="시즌 선택" />
         </Field>
       </div>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={onClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleUpdateCompetition} disabled={isUpdating}>
           {isUpdating ? "수정 중..." : "수정"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };

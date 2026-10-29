@@ -18,6 +18,7 @@ import { AdminMatchBulkAddModal } from "@admin/admin-match/components/modal/admi
 import { AdminMatchEditModal } from "@admin/admin-match/components/modal/admin-match-edit-modal";
 import { convertUTCToLocal } from "@admin/admin-match/utils/datetime-utils";
 
+import { MODAL_SLOT_CONFIG } from "@shared/components/modal/modal-slot-config";
 import { createAdminMatchLineupPath } from "@shared/constants/routes";
 
 const AdminMatch = () => {
@@ -45,21 +46,21 @@ const AdminMatch = () => {
   const handleOpenAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchAddModal onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
 
   const handleOpenBulkAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchBulkAddModal onClose={onClose} />,
-      config: { size: "lg" },
+      config: { size: "lg", ...MODAL_SLOT_CONFIG },
     });
   };
 
   const handleOpenEditModal = (match: IMatch) => {
     overlay.modalOpen({
       content: (onClose) => <AdminMatchEditModal match={match} onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
 

@@ -14,6 +14,7 @@ import { AdminTransferAddModal } from "@admin/admin-transfer/components/modal/ad
 import { AdminTransferEditModal } from "@admin/admin-transfer/components/modal/admin-transfer-edit-modal";
 import { directionText, typeText } from "@admin/admin-transfer/constants/transfer-options";
 
+import { MODAL_SLOT_CONFIG } from "@shared/components/modal/modal-slot-config";
 import { formatEuroToMillion } from "@shared/utils/euro-utils";
 
 const AdminTransfer = () => {
@@ -36,14 +37,14 @@ const AdminTransfer = () => {
   const handleOpenAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminTransferAddModal onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
 
   const handleOpenEditModal = (transfer: ITransfer) => {
     overlay.modalOpen({
       content: (onClose) => <AdminTransferEditModal transfer={transfer} onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
   //!SECTION 메서드 영역

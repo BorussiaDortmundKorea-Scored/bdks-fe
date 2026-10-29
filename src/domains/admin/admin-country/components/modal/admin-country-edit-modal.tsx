@@ -9,6 +9,8 @@ import type { ICountry } from "@admin/admin-country/api/admin-country-api";
 import { useUpdateCountry } from "@admin/admin-country/api/react-query-api/use-update-country";
 import { adminCountryFormSchema } from "@admin/admin-country/schemas/admin-country-schema";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { useZodForm } from "@shared/hooks/use-zod-form";
 
 interface IAdminCountryEditModal {
@@ -34,7 +36,7 @@ export const AdminCountryEditModal = ({ country, onClose }: IAdminCountryEditMod
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">국가 수정</h2>
+      <ModalTitle>국가 수정</ModalTitle>
       <Field label="국가명" required error={errors.name}>
         <Input
           type="text"
@@ -45,14 +47,14 @@ export const AdminCountryEditModal = ({ country, onClose }: IAdminCountryEditMod
           color="primary-100"
         />
       </Field>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={onClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleUpdateCountry} disabled={isUpdating}>
           {isUpdating ? "수정 중..." : "수정"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };

@@ -23,6 +23,8 @@ import {
   adminTransferFormSchema,
 } from "@admin/admin-transfer/schemas/admin-transfer-schema";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { toFieldErrors } from "@shared/hooks/use-zod-form";
 import { type TransferDirection, type TransferType } from "@shared/types/entities/transfer.entity";
 
@@ -98,7 +100,7 @@ export const AdminTransferEditModal = ({ transfer, onClose }: IAdminTransferEdit
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">이적 수정</h2>
+      <ModalTitle>이적 수정</ModalTitle>
       <div className="space-y-4">
         <Field label="선수" required error={errors.player_id}>
           <SelectBox size="full" selectBoxHook={playerHook} label="선수 선택" />
@@ -126,14 +128,14 @@ export const AdminTransferEditModal = ({ transfer, onClose }: IAdminTransferEdit
           />
         </Field>
       </div>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={onClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleUpdateTransfer} disabled={isUpdating}>
           {isUpdating ? "수정 중..." : "수정"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };

@@ -14,6 +14,8 @@ import {
 } from "@admin/admin-player/schemas/admin-player-schema";
 import { buildPlayerImageUrls, extractPlayerImageName } from "@admin/admin-player/utils/player-image-utils";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { useZodForm } from "@shared/hooks/use-zod-form";
 
 interface IAdminPlayerEditModal {
@@ -60,7 +62,7 @@ export const AdminPlayerEditModal = ({ player, onClose }: IAdminPlayerEditModal)
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">선수 수정</h2>
+      <ModalTitle>선수 수정</ModalTitle>
       <div className="flex flex-col gap-4">
         <Field label="이름" required error={errors.name}>
           <Input
@@ -114,14 +116,14 @@ export const AdminPlayerEditModal = ({ player, onClose }: IAdminPlayerEditModal)
           />
         </Field>
 
-        <div className="mt-6 flex gap-2">
+        <ModalFooter>
           <Button variant="outlined" color="primary" size="full" onClick={handleClose}>
             취소
           </Button>
           <Button variant="fill" color="primary" size="full" onClick={handleUpdatePlayer} disabled={isUpdating}>
             {isUpdating ? "수정 중..." : "수정"}
           </Button>
-        </div>
+        </ModalFooter>
       </div>
     </div>
   );

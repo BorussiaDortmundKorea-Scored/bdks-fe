@@ -11,6 +11,8 @@ import {
   adminCountryFormSchema,
 } from "@admin/admin-country/schemas/admin-country-schema";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { useZodForm } from "@shared/hooks/use-zod-form";
 
 interface IAdminCountryAddModal {
@@ -43,7 +45,7 @@ export const AdminCountryAddModal = ({ onClose }: IAdminCountryAddModal) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">새 국가 추가</h2>
+      <ModalTitle>새 국가 추가</ModalTitle>
       <Field label="국가명" required error={errors.name}>
         <Input
           type="text"
@@ -54,14 +56,14 @@ export const AdminCountryAddModal = ({ onClose }: IAdminCountryAddModal) => {
           color="primary-100"
         />
       </Field>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={handleClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleCreateCountry} disabled={isCreating}>
           {isCreating ? "추가 중..." : "추가"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };

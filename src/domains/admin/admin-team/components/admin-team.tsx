@@ -13,6 +13,8 @@ import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/us
 import { AdminTeamAddModal } from "@admin/admin-team/components/modal/admin-team-add-modal";
 import { AdminTeamEditModal } from "@admin/admin-team/components/modal/admin-team-edit-modal";
 
+import { MODAL_SLOT_CONFIG } from "@shared/components/modal/modal-slot-config";
+
 const AdminTeam = () => {
   //SECTION HOOK호출 영역
   const { data: teams } = useGetAllTeamsSuspense();
@@ -37,14 +39,14 @@ const AdminTeam = () => {
   const handleOpenAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminTeamAddModal onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
 
   const handleOpenEditModal = (team: ITeam) => {
     overlay.modalOpen({
       content: (onClose) => <AdminTeamEditModal team={team} onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
   //!SECTION 메서드 영역

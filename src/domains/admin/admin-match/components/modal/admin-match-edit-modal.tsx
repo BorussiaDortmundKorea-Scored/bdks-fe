@@ -23,6 +23,8 @@ import {
 } from "@admin/admin-match/utils/datetime-utils";
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { toFieldErrors } from "@shared/hooks/use-zod-form";
 
 interface IAdminMatchEditModal {
@@ -142,7 +144,7 @@ export const AdminMatchEditModal = ({ match, onClose }: IAdminMatchEditModal) =>
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">경기 수정</h2>
+      <ModalTitle>경기 수정</ModalTitle>
       <div className="space-y-4">
         <Field label="대회" required error={errors.competition_id}>
           <SelectBox size="full" selectBoxHook={editCompetitionHook} />
@@ -248,14 +250,14 @@ export const AdminMatchEditModal = ({ match, onClose }: IAdminMatchEditModal) =>
           shape="square"
         />
       </div>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={onClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleUpdateMatch} disabled={isUpdating}>
           {isUpdating ? "수정 중..." : "수정"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };
