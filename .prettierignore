@@ -1,0 +1,7 @@
+# 도구가 자동으로 만드는 파일
+pnpm-lock.yaml
+public/mockServiceWorker.js
+
+# 에디터·AI 도구 설정
+.claude
+.cursor
