@@ -14,6 +14,8 @@ import { useGetAllCompetitionsSuspense } from "@admin/admin-competition/api/reac
 import { AdminCompetitionAddModal } from "@admin/admin-competition/components/modal/admin-competition-add-modal";
 import { AdminCompetitionEditModal } from "@admin/admin-competition/components/modal/admin-competition-edit-modal";
 
+import { MODAL_SLOT_CONFIG } from "@shared/components/modal/modal-slot-config";
+
 const AdminCompetition = () => {
   //SECTION HOOK호출 영역
   const { data: competitions } = useGetAllCompetitionsSuspense();
@@ -38,14 +40,14 @@ const AdminCompetition = () => {
   const handleOpenAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminCompetitionAddModal onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
 
   const handleOpenEditModal = (competition: ICompetition) => {
     overlay.modalOpen({
       content: (onClose) => <AdminCompetitionEditModal competition={competition} onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
   //!SECTION 메서드 영역

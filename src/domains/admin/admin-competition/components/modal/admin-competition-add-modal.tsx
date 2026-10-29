@@ -17,6 +17,8 @@ import {
   adminCompetitionFormSchema,
 } from "@admin/admin-competition/schemas/admin-competition-schema";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { useZodForm } from "@shared/hooks/use-zod-form";
 
 interface IAdminCompetitionAddModal {
@@ -76,7 +78,7 @@ export const AdminCompetitionAddModal = ({ onClose }: IAdminCompetitionAddModal)
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">새 대회 추가</h2>
+      <ModalTitle>새 대회 추가</ModalTitle>
       <div className="flex flex-col gap-4">
         <Field label="대회 종류" required error={errors.competitionTypeName}>
           <SelectBox selectBoxHook={typeSelectBox} size="full" label="대회 종류 선택" />
@@ -85,14 +87,14 @@ export const AdminCompetitionAddModal = ({ onClose }: IAdminCompetitionAddModal)
           <SelectBox selectBoxHook={seasonSelectBox} size="full" label="시즌 선택" />
         </Field>
       </div>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={handleClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleCreateCompetition} disabled={isCreating}>
           {isCreating ? "추가 중..." : "추가"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };

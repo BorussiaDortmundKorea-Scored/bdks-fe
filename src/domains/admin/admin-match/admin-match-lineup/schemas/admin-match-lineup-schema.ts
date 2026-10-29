@@ -1,6 +1,6 @@
 /**
  * 작성자: KYD
- * 기능: 라인업 추가/수정·교체·일괄등록 폼 검증 스키마
+ * 기능: 라인업 수정·교체·경기 기록 폼 검증 스키마
  * 프로세스 설명: match_lineups 의 DB CHECK(분 범위, 투입<아웃 순서)와 같은 규칙을 FE 에서 먼저 본다.
  *                제약 위반을 서버까지 보내면 사용자는 어떤 칸이 문제인지 알 수 없는 에러만 받는다.
  */
@@ -89,21 +89,3 @@ export const adminMatchLineupSubstitutionSchema = z.object({
 });
 
 export type IAdminMatchLineupSubstitutionValues = z.infer<typeof adminMatchLineupSubstitutionSchema>;
-
-/** 스타팅 일괄 등록: 채운 행만 모아서 한 번에 본다 */
-export const adminMatchLineupBulkSchema = z
-  .array(
-    z.object({
-      player_id: z.string().min(1),
-      position_id: z.string().min(1),
-      is_captain: z.boolean(),
-    }),
-  )
-  .min(1, "최소 1명의 선수를 선택해주세요.")
-  .max(STARTING_LINEUP_SIZE, `선발명단은 최대 ${STARTING_LINEUP_SIZE}명까지 가능합니다.`)
-  .superRefine((rows, ctx) => {
-    const playerIds = rows.map((row) => row.player_id);
-    if (playerIds.length !== new Set(playerIds).size) {
-      ctx.addIssue({ code: "custom", message: "중복된 선수가 선택되었습니다." });
-    }
-  });

@@ -13,6 +13,8 @@ import { useUpdateTeam } from "@admin/admin-team/api/react-query-api/use-update-
 import { adminTeamFormSchema } from "@admin/admin-team/schemas/admin-team-schema";
 import { buildTeamLogoUrl, extractTeamLogoName } from "@admin/admin-team/utils/team-logo-utils";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { useZodForm } from "@shared/hooks/use-zod-form";
 
 interface IAdminTeamEditModal {
@@ -68,7 +70,7 @@ export const AdminTeamEditModal = ({ team, onClose }: IAdminTeamEditModal) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">팀 수정</h2>
+      <ModalTitle>팀 수정</ModalTitle>
       <div className="flex flex-col gap-4">
         <Field label="팀명" required error={errors.name}>
           <Input
@@ -94,14 +96,14 @@ export const AdminTeamEditModal = ({ team, onClose }: IAdminTeamEditModal) => {
           <SelectBox size="full" selectBoxHook={editCountrySelectHook} label="국가 선택" />
         </Field>
       </div>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={handleClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleUpdateTeam} disabled={isUpdating}>
           {isUpdating ? "수정 중..." : "수정"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };

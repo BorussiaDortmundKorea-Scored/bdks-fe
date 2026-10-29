@@ -2,29 +2,162 @@
   {
     "id": "test-position-uuid-1",
     "position_code": "GK",
-    "sort_order": 1,
+    "sort_order": 10,
     "position_detail_name": "GK",
-    "line_number": 1
+    "line_number": 5
   },
   {
     "id": "test-position-uuid-2",
     "position_code": "DF",
-    "sort_order": 2,
+    "sort_order": 30,
     "position_detail_name": "CB",
-    "line_number": 2
+    "line_number": 4
   },
   {
     "id": "test-position-uuid-3",
     "position_code": "MF",
-    "sort_order": 3,
+    "sort_order": 20,
     "position_detail_name": "CAM",
-    "line_number": 3
+    "line_number": 2
   },
   {
     "id": "test-position-uuid-4",
     "position_code": "FW",
-    "sort_order": 4,
+    "sort_order": 20,
     "position_detail_name": "ST",
+    "line_number": 1
+  },
+  {
+    "id": "test-position-uuid-5",
+    "position_code": "FW",
+    "sort_order": 5,
+    "position_detail_name": "LW",
+    "line_number": 1
+  },
+  {
+    "id": "test-position-uuid-6",
+    "position_code": "FW",
+    "sort_order": 10,
+    "position_detail_name": "LS",
+    "line_number": 1
+  },
+  {
+    "id": "test-position-uuid-7",
+    "position_code": "FW",
+    "sort_order": 30,
+    "position_detail_name": "RS",
+    "line_number": 1
+  },
+  {
+    "id": "test-position-uuid-8",
+    "position_code": "FW",
+    "sort_order": 40,
+    "position_detail_name": "RW",
+    "line_number": 1
+  },
+  {
+    "id": "test-position-uuid-9",
+    "position_code": "MF",
+    "sort_order": 10,
+    "position_detail_name": "LAM",
+    "line_number": 2
+  },
+  {
+    "id": "test-position-uuid-10",
+    "position_code": "MF",
+    "sort_order": 30,
+    "position_detail_name": "RAM",
+    "line_number": 2
+  },
+  {
+    "id": "test-position-uuid-11",
+    "position_code": "MF",
+    "sort_order": 5,
+    "position_detail_name": "LM",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-12",
+    "position_code": "DF",
+    "sort_order": 5,
+    "position_detail_name": "LWB",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-13",
+    "position_code": "MF",
+    "sort_order": 10,
+    "position_detail_name": "LCM",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-14",
+    "position_code": "MF",
+    "sort_order": 10,
+    "position_detail_name": "LDM",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-15",
+    "position_code": "MF",
+    "sort_order": 20,
+    "position_detail_name": "CDM",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-16",
+    "position_code": "MF",
+    "sort_order": 20,
+    "position_detail_name": "RCM",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-17",
+    "position_code": "MF",
+    "sort_order": 30,
+    "position_detail_name": "RDM",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-18",
+    "position_code": "DF",
+    "sort_order": 40,
+    "position_detail_name": "RWB",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-19",
+    "position_code": "MF",
+    "sort_order": 40,
+    "position_detail_name": "RM",
+    "line_number": 3
+  },
+  {
+    "id": "test-position-uuid-20",
+    "position_code": "DF",
+    "sort_order": 10,
+    "position_detail_name": "LB",
+    "line_number": 4
+  },
+  {
+    "id": "test-position-uuid-21",
+    "position_code": "DF",
+    "sort_order": 20,
+    "position_detail_name": "LCB",
+    "line_number": 4
+  },
+  {
+    "id": "test-position-uuid-22",
+    "position_code": "DF",
+    "sort_order": 40,
+    "position_detail_name": "RCB",
+    "line_number": 4
+  },
+  {
+    "id": "test-position-uuid-23",
+    "position_code": "DF",
+    "sort_order": 50,
+    "position_detail_name": "RB",
     "line_number": 4
   }
 ]

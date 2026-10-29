@@ -13,6 +13,8 @@ import { useGetAllCountriesSuspense } from "@admin/admin-country/api/react-query
 import { AdminCountryAddModal } from "@admin/admin-country/components/modal/admin-country-add-modal";
 import { AdminCountryEditModal } from "@admin/admin-country/components/modal/admin-country-edit-modal";
 
+import { MODAL_SLOT_CONFIG } from "@shared/components/modal/modal-slot-config";
+
 const AdminCountry = () => {
   //SECTION HOOK호출 영역
   const { data: countries } = useGetAllCountriesSuspense();
@@ -34,14 +36,14 @@ const AdminCountry = () => {
   const handleOpenAddModal = () => {
     overlay.modalOpen({
       content: (onClose) => <AdminCountryAddModal onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
 
   const handleOpenEditModal = (country: ICountry) => {
     overlay.modalOpen({
       content: (onClose) => <AdminCountryEditModal country={country} onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
   //!SECTION 메서드 영역

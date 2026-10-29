@@ -16,6 +16,8 @@ import { useGetAllPlayersSuspense } from "@admin/admin-player/api/react-query-ap
 import { AdminPlayerAddModal } from "@admin/admin-player/components/modal/admin-player-add-modal";
 import { AdminPlayerEditModal } from "@admin/admin-player/components/modal/admin-player-edit-modal";
 
+import { MODAL_SLOT_CONFIG } from "@shared/components/modal/modal-slot-config";
+
 type PlayerView = "table" | "imageTool";
 
 const AdminPlayer = () => {
@@ -40,13 +42,16 @@ const AdminPlayer = () => {
   };
 
   const handleOpenAddModal = () => {
-    overlay.modalOpen({ content: (onClose) => <AdminPlayerAddModal onClose={onClose} />, config: { size: "sm" } });
+    overlay.modalOpen({
+      content: (onClose) => <AdminPlayerAddModal onClose={onClose} />,
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
+    });
   };
 
   const handleOpenEditModal = (player: IPlayer) => {
     overlay.modalOpen({
       content: (onClose) => <AdminPlayerEditModal player={player} onClose={onClose} />,
-      config: { size: "sm" },
+      config: { size: "sm", ...MODAL_SLOT_CONFIG },
     });
   };
   //!SECTION 메서드 영역

@@ -18,6 +18,8 @@ import {
   adminMatchLineupSubstitutionSchema,
 } from "@admin/admin-match/admin-match-lineup/schemas/admin-match-lineup-schema";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { toFieldErrors } from "@shared/hooks/use-zod-form";
 
 interface IAdminMatchLineupSubstitutionModal {
@@ -77,7 +79,7 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">선수 교체</h2>
+      <ModalTitle>선수 교체</ModalTitle>
       <p className="text-primary-200 text-sm">{lineup.player_korean_name || lineup.player_name} 선수를 교체합니다.</p>
       <Field label="교체로 들어올 선수" required error={errors.partner_player_id}>
         <SelectBox size="full" selectBoxHook={substitutionBenchPlayerHook} />
@@ -93,7 +95,7 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
           placeholder="예: 67"
         />
       </Field>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={handleClose}>
           취소
         </Button>
@@ -106,7 +108,7 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
         >
           {isSubstituting ? "교체 적용 중..." : "교체 적용"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };

@@ -12,6 +12,8 @@ import { useCreateTeam } from "@admin/admin-team/api/react-query-api/use-create-
 import { ADMIN_TEAM_FORM_INITIAL_VALUES, adminTeamFormSchema } from "@admin/admin-team/schemas/admin-team-schema";
 import { buildTeamLogoUrl } from "@admin/admin-team/utils/team-logo-utils";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
 import { useZodForm } from "@shared/hooks/use-zod-form";
 
 interface IAdminTeamAddModal {
@@ -53,7 +55,7 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">새 팀 추가</h2>
+      <ModalTitle>새 팀 추가</ModalTitle>
       <div className="flex flex-col gap-4">
         <Field label="팀명" required error={errors.name}>
           <Input
@@ -79,14 +81,14 @@ export const AdminTeamAddModal = ({ onClose }: IAdminTeamAddModal) => {
           <SelectBox size="full" selectBoxHook={createCountrySelectHook} label="국가 선택" />
         </Field>
       </div>
-      <div className="mt-6 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={handleClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleCreateTeam} disabled={isCreating}>
           {isCreating ? "추가 중..." : "추가"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };

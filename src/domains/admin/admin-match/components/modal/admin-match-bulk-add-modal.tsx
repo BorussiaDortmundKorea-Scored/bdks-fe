@@ -18,6 +18,9 @@ import { adminMatchFormSchema } from "@admin/admin-match/schemas/admin-match-sch
 import { convertLocalToUTC, extractKSTDateFromLocal } from "@admin/admin-match/utils/datetime-utils";
 import { useGetAllTeamsSuspense } from "@admin/admin-team/api/react-query-api/use-get-all-teams-suspense";
 
+import ModalFooter from "@shared/components/modal/modal-footer";
+import ModalTitle from "@shared/components/modal/modal-title";
+
 interface IAdminMatchBulkAddModalProps {
   onClose: () => void;
 }
@@ -157,7 +160,7 @@ export const AdminMatchBulkAddModal = ({ onClose }: IAdminMatchBulkAddModalProps
 
   return (
     <div className="flex max-h-[80vh] flex-col gap-4">
-      <h2 className="text-yds-b1 text-primary-100">경기 일괄 추가</h2>
+      <ModalTitle>경기 일괄 추가</ModalTitle>
 
       <div className="flex items-center gap-2">
         <span className="text-yds-b2 text-primary-100">경기 개수</span>
@@ -187,14 +190,14 @@ export const AdminMatchBulkAddModal = ({ onClose }: IAdminMatchBulkAddModalProps
         ))}
       </div>
 
-      <div className="mt-4 flex gap-2">
+      <ModalFooter>
         <Button variant="outlined" color="primary" size="full" onClick={handleClose}>
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleSubmit} disabled={isCreating}>
           {isCreating ? "대량 추가 중..." : "대량 추가"}
         </Button>
-      </div>
+      </ModalFooter>
     </div>
   );
 };
