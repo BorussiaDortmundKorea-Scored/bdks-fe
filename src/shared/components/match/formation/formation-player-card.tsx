@@ -12,6 +12,11 @@ import { Link } from "react-router-dom";
 
 import { Crown } from "lucide-react";
 
+import {
+  AVATAR_CLASS,
+  CARD_CONTAINER_CLASS,
+  DIAMOND_CLASS,
+} from "@shared/components/match/formation/formation-card-styles";
 import { type IFormationPlayer } from "@shared/components/match/formation/formation-types";
 import { SUPABASE_STORAGE_URL } from "@shared/constants/supabse-storage";
 
@@ -21,26 +26,6 @@ const GOAL_IMAGE = `${SUPABASE_STORAGE_URL}/asset/goal.png`;
 const EXCHANGE_IN_IMAGE = `${SUPABASE_STORAGE_URL}/asset/exchange-in.png`;
 const EXCHANGE_OUT_IMAGE = `${SUPABASE_STORAGE_URL}/asset/exchange-out.png`;
 
-/** 카드 폭 — 한 줄 4명이 320px 에서도 안 넘치는 값 */
-const CARD_WIDTH_CLASS = "xs:w-[60px] w-[52px] sm:w-[68px] md:w-[78px]";
-/**
- * 아바타 칸 = 카드 폭의 정사각형. 다이아몬드 대각선이 곧 칸 폭이라, 칸을 카드 폭까지 넓혀야
- * 옆 선수와 겹치지 않는 선에서 다이아몬드가 가장 커진다.
- * `isolate` 로 쌓임맥락을 아바타 하나에 가둬서, 배지끼리의 겹침 순서가 카드 바깥(포메이션 라인,
- * 보드 토글 등)의 z-index 와 섞이지 않게 한다. 배지 순서는 아래 Z_* 로만 정해진다.
- */
-const AVATAR_CLASS = "relative isolate aspect-square w-full";
-
-/**
- * 사각형을 45도 돌려 아바타 칸에 내접시킨다. 대각선이 칸 폭과 같아지려면 한 변이 1/√2 ≈ 70.7%,
- * 즉 사방 14.6% 씩 안쪽으로 들어가야 네 꼭짓점이 칸의 변 중앙에 닿는다.
- * 그래서 칸의 네 모서리가 비고, 배지들이 그 빈 모서리에 앉는다.
- *
- * 테두리 색은 yd-ui 의 `border-primary-400` 을 쓰지 않는다. 그 유틸리티는 색과 함께
- * `border-radius: var(--yds-border-radius)`(8px)·border-width 까지 박아 두고 rounded-none 보다
- * 뒤에 선언돼 있어서, 같이 써도 꼭짓점이 둥글게 남는다. 색만 지정하는 임의값으로 대신한다.
- */
-const DIAMOND_CLASS = "inset-[14.6%] rotate-45 border-2 border-[var(--color-primary-400)]";
 /**
  * 이미지 마스크. 아래 절반은 다이아몬드 V 를 테두리 두께만큼 안쪽으로 따라가 아래 테두리를 살리고,
  * 위 절반은 칸 위로 열어 둬서 머리가 다이아몬드 윗변을 덮고 바깥으로 튀어나오게 한다.
@@ -59,11 +44,14 @@ interface IFormationPlayerCardProps {
   /** 링크를 눌러도 이동하지 않아야 할 때의 안내 문구 */
   disabledReason?: string;
   onDisabledClick?: (reason: string) => void;
+  /** 지정하면 카드 전체가 버튼이 된다 (관리자 라인업 보드). to 와 같이 쓰지 않는다 */
+  onClick?: () => void;
 }
 
-const FormationPlayerCard = ({ player, to, disabledReason, onDisabledClick }: IFormationPlayerCardProps) => {
+const FormationPlayerCard = ({ player, to, disabledReason, onDisabledClick, onClick }: IFormationPlayerCardProps) => {
   //SECTION 상태값 영역
   const goals = player.goals ?? 0;
+  const assists = player.assists ?? 0;
   const isSentOff = player.isSentOff === true;
   const isSubstitutedIn = player.subInMinute != null;
   const isSubstitutedOut = player.subOutMinute != null;
@@ -73,6 +61,7 @@ const FormationPlayerCard = ({ player, to, disabledReason, onDisabledClick }: IF
   const shownYellowCards = isSentOff ? Math.min(player.yellowCards ?? 0, 1) : (player.yellowCards ?? 0);
   const hasCardBadge = shownYellowCards > 0 || isSentOff;
 
+  // rating 을 안 넘긴 화면(관리자 라인업)은 평점 배지를 그리지 않는다.
   // ratingCount 를 넘긴 화면에서만 미평가('-')를 구분한다. 안 넘기면 숫자를 그대로 보여준다.
   const ratingLabel = player.ratingCount === 0 ? "-" : player.rating;
   //!SECTION 상태값 영역
@@ -106,11 +95,15 @@ const FormationPlayerCard = ({ player, to, disabledReason, onDisabledClick }: IF
         </div>
 
         {/* 우하단: 평점 — 다이아몬드 바깥 빈 모서리에 앉는다 */}
-        <div
-          className={`border-primary-400 absolute ${Z_RATING} right-0 bottom-0 flex h-7 w-7 items-center justify-center rounded-full border-2 bg-black shadow-lg`}
-        >
-          <span className="text-yds-c1r font-bold text-white transition-all duration-300 ease-out">{ratingLabel}</span>
-        </div>
+        {player.rating !== undefined ? (
+          <div
+            className={`border-primary-400 absolute ${Z_RATING} right-0 bottom-0 flex h-7 w-7 items-center justify-center rounded-full border-2 bg-black shadow-lg`}
+          >
+            <span className="text-yds-c1r font-bold text-white transition-all duration-300 ease-out">
+              {ratingLabel}
+            </span>
+          </div>
+        ) : null}
 
         {/* 좌상단: BOTM / 주장 */}
         {player.isBestOfTheMatch ? (
@@ -129,15 +122,22 @@ const FormationPlayerCard = ({ player, to, disabledReason, onDisabledClick }: IF
           </div>
         ) : null}
 
-        {/* 우상단: 골 — 넣은 만큼 그대로 */}
-        {goals > 0 ? (
+        {/* 우상단: 골(넣은 만큼 그대로) + 도움(넘긴 화면만) */}
+        {goals > 0 || assists > 0 ? (
           <div
             className={`absolute ${Z_BADGE} top-0 right-0 flex items-center gap-[1px] rounded-full bg-black/80 px-1 py-[1px]`}
           >
             {Array.from({ length: goals }).map((_, index) => (
               <img key={index} src={GOAL_IMAGE} alt="" className="h-3 w-3" />
             ))}
-            <span className="sr-only">{goals}골</span>
+            {assists > 0 ? (
+              <span className="text-primary-100 text-[10px] leading-none font-bold" aria-hidden="true">
+                A{assists > 1 ? assists : ""}
+              </span>
+            ) : null}
+            <span className="sr-only">
+              {[goals > 0 && `${goals}골`, assists > 0 && `${assists}도움`].filter(Boolean).join(" ")}
+            </span>
           </div>
         ) : null}
 
@@ -181,12 +181,23 @@ const FormationPlayerCard = ({ player, to, disabledReason, onDisabledClick }: IF
     </>
   );
 
-  // 머리가 칸 위로 튀어나오는 만큼 위를 비워 윗줄 카드와 겹치지 않게 한다
-  const containerClass = `flex shrink-0 flex-col items-center gap-1 pt-2 sm:pt-2.5 md:pt-3 ${CARD_WIDTH_CLASS}`;
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        className={`${CARD_CONTAINER_CLASS} cursor-pointer`}
+        onClick={onClick}
+        aria-label={player.name}
+        title={player.name}
+      >
+        {body}
+      </button>
+    );
+  }
 
   if (!to) {
     return (
-      <div className={containerClass} title={player.name}>
+      <div className={CARD_CONTAINER_CLASS} title={player.name}>
         {body}
       </div>
     );
@@ -195,7 +206,7 @@ const FormationPlayerCard = ({ player, to, disabledReason, onDisabledClick }: IF
   return (
     <Link
       to={to}
-      className={`${containerClass} cursor-pointer`}
+      className={`${CARD_CONTAINER_CLASS} cursor-pointer`}
       onClick={handleClick}
       aria-disabled={Boolean(disabledReason)}
       aria-label={`${player.name} 평점 입력`}

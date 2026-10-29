@@ -13,13 +13,16 @@ export interface IFormationPlayer {
   /** 전체 이름. 카드에는 글자로 찍지 않고 img 의 alt · 링크의 aria-label 로만 쓴다 */
   name: string;
   imageUrl: string;
-  rating: number;
+  /** 안 넘기면 평점 배지를 그리지 않는다 (관리자 라인업 보드) */
+  rating?: number;
 
   //SECTION 값이 있을 때만 배지로 나타나는 것들
   /** 넘기면 0건일 때 평점 숫자 대신 '-' 를 보여준다 */
   ratingCount?: number;
   isCaptain?: boolean;
   goals?: number;
+  /** 관리자 라인업 보드처럼 넘기는 화면에서만 골 옆에 함께 보여준다 */
+  assists?: number;
   yellowCards?: number;
   isSentOff?: boolean;
   subInMinute?: number | null;
@@ -31,3 +34,6 @@ export interface IFormationPlayer {
 
 /** 라인별로 묶인 그라운드 선수들 (키 = line_number) */
 export type FormationLines = Record<number, IFormationPlayer[]>;
+
+/** 보드 하단 토글: 선발(그라운드) / 교체(교체 아웃·미출전) */
+export type FormationViewType = "PLAY" | "NOT_PLAY";
