@@ -3,6 +3,28 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [2.1.15] - 2026-10-30
+
+**Branch**: `bdks-v2.1.15-버셀애널리틱스성능지표및서울리전`
+
+> Vercel Web Analytics·Speed Insights 와 Sentry 성능 추적을 붙이고, Vercel 함수 리전을 서울로 지정 (v2.1.12 번호가 겹쳐 반영되지 못한 #105 를 다시 올림)
+
+### 추가
+
+- feat: Vercel Web Analytics 도입
+- feat: Vercel Speed Insights·Sentry 성능 추적 추가
+
+### 변경
+
+- chore: Vercel 함수 리전을 서울(icn1)로 지정
+- docs: v2.1.15 버셀 애널리틱스·성능 지표 및 서울 리전 정리
+
+### 수정
+
+### 제거
+
+---
+
 ## [2.1.14] - 2026-10-29
 
 **Branch**: `bdks-v2.1.14-이적유형은퇴추가`
