@@ -2,6 +2,7 @@
  * 작성자: KYD
  * 기능: 선수 이적시장 - 항공권 스타일 카드 리스트
  * 프로세스 설명: 1행(선수+방향/금액 칩), 2행(이동 경로 비행기 게이지), 3행(구분선+좋아요/싫어요)
+ *              은퇴는 회색 카드에 "은퇴" 칩만 두고(금액 없음), 경로는 도르트문트 → 은퇴로 그린다.
  */
 import { Plane, ThumbsDown, ThumbsUp } from "lucide-react";
 
@@ -12,6 +13,11 @@ import TransferMarketWrapper from "@auth/auth-info/auth-info-quick-links/transfe
 import { formatEuroToMillion } from "@shared/utils/euro-utils";
 
 const DORTMUND = "도르트문트";
+
+// 카드·칩 색: 영입 초록 / 방출·임대 빨강 / 은퇴는 이적이 아니라 회색
+const IN_TONE = { card: "border-green-500/30 bg-green-500/10", chip: "bg-green-500/25 text-green-200" };
+const OUT_TONE = { card: "border-red-500/30 bg-red-500/10", chip: "bg-red-500/25 text-red-200" };
+const RETIRED_TONE = { card: "border-white/20 bg-white/5", chip: "bg-white/15 text-white/80" };
 
 // 이동 경로 엔드포인트 (클럽 이름)
 const RouteEndpoint = ({ name }: { name: string }) => (
@@ -30,19 +36,16 @@ const TransferMarket = () => {
         {transfers.map((transfer) => {
           const isIn = transfer.direction === "IN";
           const isLoan = transfer.transfer_type === "LOAN";
-          const club = transfer.counterpart_club_name ?? "자유계약";
+          const isRetired = transfer.transfer_type === "RETIRED";
+          const club = isRetired ? "은퇴" : (transfer.counterpart_club_name ?? "자유계약");
+          const tone = isRetired ? RETIRED_TONE : isIn ? IN_TONE : OUT_TONE;
 
-          // 선수 입장 이동 경로: 영입 = 상대팀 → 도르트문트 / 방출·임대 = 도르트문트 → 상대팀
+          // 선수 입장 이동 경로: 영입 = 상대팀 → 도르트문트 / 방출·임대·은퇴 = 도르트문트 → 상대팀(은퇴)
           const originName = isIn ? club : DORTMUND;
           const destName = isIn ? DORTMUND : club;
 
           return (
-            <li
-              key={transfer.id}
-              className={`flex flex-col gap-3 rounded-xl border p-3 ${
-                isIn ? "border-green-500/30 bg-green-500/10" : "border-red-500/30 bg-red-500/10"
-              }`}
-            >
+            <li key={transfer.id} className={`flex flex-col gap-3 rounded-xl border p-3 ${tone.card}`}>
               {/* 1행: 선수 + 방향/금액 칩 */}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2">
@@ -61,16 +64,15 @@ const TransferMarket = () => {
                 </div>
 
                 <div className="flex shrink-0 items-center gap-1.5">
-                  <span
-                    className={`text-yds-c1m rounded-full px-2.5 py-1 font-medium ${
-                      isIn ? "bg-green-500/25 text-green-200" : "bg-red-500/25 text-red-200"
-                    }`}
-                  >
-                    {isLoan ? "임대" : isIn ? "영입" : "방출"}
+                  <span className={`text-yds-c1m rounded-full px-2.5 py-1 font-medium ${tone.chip}`}>
+                    {isRetired ? "은퇴" : isLoan ? "임대" : isIn ? "영입" : "방출"}
                   </span>
-                  <span className="text-yds-c1m rounded-full bg-white/10 px-2.5 py-1 text-white/90">
-                    {formatEuroToMillion(transfer.euro_fee)}
-                  </span>
+                  {/* 은퇴는 이적금액이 없다 */}
+                  {!isRetired && (
+                    <span className="text-yds-c1m rounded-full bg-white/10 px-2.5 py-1 text-white/90">
+                      {formatEuroToMillion(transfer.euro_fee)}
+                    </span>
+                  )}
                 </div>
               </div>
 

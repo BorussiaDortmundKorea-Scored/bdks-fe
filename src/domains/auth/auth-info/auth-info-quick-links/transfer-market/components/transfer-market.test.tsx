@@ -59,6 +59,42 @@ describe("TransferMarket", () => {
     expect(screen.getAllByLabelText("싫어요")).toHaveLength(4);
   });
 
+  it("은퇴는 은퇴 칩만 두고(금액 없음) 도르트문트 → 은퇴 경로로 그린다", async () => {
+    server.use(
+      http.post("*/rest/v1/rpc/get_transfers", () =>
+        HttpResponse.json([
+          {
+            id: "r1",
+            player_id: "p-sule",
+            player_name: "Niklas Süle",
+            player_korean_name: "니클라스 쥘레",
+            head_profile_image_url: null,
+            full_profile_image_url: null,
+            direction: "OUT",
+            transfer_type: "RETIRED",
+            counterpart_team_id: null,
+            counterpart_club_name: null,
+            counterpart_logo_image_url: null,
+            transfer_date: "2026-07-01",
+            euro_fee: null,
+            like_count: 0,
+            dislike_count: 0,
+            my_reaction: null,
+          },
+        ]),
+      ),
+    );
+
+    renderWithQueryClient();
+
+    expect(await screen.findByText("니클라스 쥘레")).toBeInTheDocument();
+    // 칩 + 경로 도착지
+    expect(screen.getAllByText("은퇴")).toHaveLength(2);
+    expect(screen.getByText("도르트문트")).toBeInTheDocument();
+    expect(screen.queryByText("비공개")).not.toBeInTheDocument();
+    expect(screen.queryByText("방출")).not.toBeInTheDocument();
+  });
+
   it("RPC 에러가 발생하면 에러 폴백을 렌더링한다", async () => {
     server.use(
       http.post("*/rest/v1/rpc/get_transfers", () => {
