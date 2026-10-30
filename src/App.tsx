@@ -4,6 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import * as Sentry from "@sentry/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Analytics } from "@vercel/analytics/react";
 import { OverlayProvider } from "@youngduck/yd-ui/Overlays";
 
 import { queryClient } from "@shared/provider/query-client";
@@ -51,6 +52,10 @@ const App = () => {
         <OverlayProvider>
           <Router />
           <ReactQueryDevtools initialIsOpen={false} />
+          {/* Vercel Web Analytics — Sentry 와 같은 이유로 로컬에서는 붙이지 않는다.
+              로컬엔 /_vercel/insights 엔드포인트가 없어 스크립트 404 만 쌓인다.
+              SPA 라우트 이동(pushState)은 스크립트가 알아서 페이지뷰로 잡는다 */}
+          {!isLocalHost && <Analytics />}
         </OverlayProvider>
       </QueryClientProvider>
     </HelmetProvider>
