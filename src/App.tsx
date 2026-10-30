@@ -1,10 +1,13 @@
+import { useEffect } from "react";
 import ReactGA from "react-ga4";
 import { HelmetProvider } from "react-helmet-async";
+import { createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from "react-router-dom";
 
 import * as Sentry from "@sentry/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { OverlayProvider } from "@youngduck/yd-ui/Overlays";
 
 import { queryClient } from "@shared/provider/query-client";
@@ -33,6 +36,16 @@ Sentry.init({
   enabled: !isLocalHost,
   sendDefaultPii: true,
   integrations: [
+    // 페이지 로드·라우트 이동 성능(Web Vitals)과 Supabase 요청 시간을 트레이스로 남긴다.
+    // react-router 를 넘겨야 트랜잭션 이름이 실제 URL 이 아니라 라우트 패턴(/matches/:id)으로 묶인다.
+    // Router.tsx 의 SentryRoutes 와 짝이다
+    Sentry.reactRouterV7BrowserTracingIntegration({
+      useEffect,
+      useLocation,
+      useNavigationType,
+      createRoutesFromChildren,
+      matchRoutes,
+    }),
     Sentry.replayIntegration({
       maskAllText: false, // 모든 텍스트 마스킹 비활성화
       maskAllInputs: false, // 모든 입력 필드 마스킹 비활성화
@@ -56,6 +69,8 @@ const App = () => {
               로컬엔 /_vercel/insights 엔드포인트가 없어 스크립트 404 만 쌓인다.
               SPA 라우트 이동(pushState)은 스크립트가 알아서 페이지뷰로 잡는다 */}
           {!isLocalHost && <Analytics />}
+          {/* Vercel Speed Insights — 실제 사용자 기준 Web Vitals. 로컬은 Analytics 와 같은 이유로 뺀다 */}
+          {!isLocalHost && <SpeedInsights />}
         </OverlayProvider>
       </QueryClientProvider>
     </HelmetProvider>

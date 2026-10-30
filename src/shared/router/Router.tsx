@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import NotFoundPage from "../pages/not-found-page";
 import Ga4PageViewTracker from "./ga4-page-view-tracker";
+import * as Sentry from "@sentry/react";
 
 import AdminRoute from "@admin/provider/admin-route";
 
@@ -72,13 +73,16 @@ const AdminCompetitionPage = lazyWithReload(() => import("@admin/admin-competiti
 const AdminTransferPage = lazyWithReload(() => import("@admin/admin-transfer/pages/admin-transfer-page"));
 //!SECTION Lazy Loading 페이지 - 청크 분할
 
+// Sentry 성능 트레이스가 라우트 패턴(/matches/:id)으로 이름을 붙이도록 Routes 를 감싼다 (App.tsx 의 tracing 통합과 짝)
+const SentryRoutes = Sentry.withSentryReactRouterV7Routing(Routes);
+
 const Router = () => {
   return (
     <BrowserRouter>
       <Ga4PageViewTracker />
       <AuthProvider>
         <Suspense fallback={<PageLoading />}>
-          <Routes>
+          <SentryRoutes>
             {/* 퍼블릭 라우트 - 로그인하지 않은 사용자만 접근 */}
             <Route element={<PublicRoute />}>
               <Route path={ROUTES.LOGIN} element={<LoginPage />} />
@@ -125,7 +129,7 @@ const Router = () => {
 
             {/* 404 페이지 */}
             <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+          </SentryRoutes>
         </Suspense>
       </AuthProvider>
     </BrowserRouter>
