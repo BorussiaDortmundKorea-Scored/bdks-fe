@@ -9,7 +9,7 @@ const AdminPlayerSkeleton = () => {
   return (
     <div className="flex h-full w-full flex-col">
       {/* 헤더 */}
-      <div className="flex w-full items-center justify-between p-4">
+      <div className="flex w-full items-center justify-between">
         <div className="bg-primary-100/20 h-6 w-24 animate-pulse rounded" />
         <div className="bg-primary-100/20 h-10 w-28 animate-pulse rounded" />
       </div>

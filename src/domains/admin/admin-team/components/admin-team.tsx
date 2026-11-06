@@ -54,7 +54,7 @@ const AdminTeam = () => {
   return (
     <div className="flex h-full w-full flex-col">
       {/* 헤더 */}
-      <div className="flex w-full items-center justify-between p-4">
+      <div className="flex w-full items-center justify-between">
         <h2 className="text-yds-s1 text-primary-100">팀 관리</h2>
         <button
           type="button"

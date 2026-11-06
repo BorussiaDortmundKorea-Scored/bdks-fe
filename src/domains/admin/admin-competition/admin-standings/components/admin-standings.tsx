@@ -129,7 +129,7 @@ const AdminStandings = () => {
   return (
     <div className="flex h-full w-full flex-col">
       {/* 헤더 */}
-      <div className="flex w-full items-center justify-between p-4">
+      <div className="flex w-full items-center justify-between">
         <h2 className="text-yds-s1 text-primary-100">리그 순위</h2>
         <button
           type="button"

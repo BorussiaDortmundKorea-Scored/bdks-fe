@@ -59,7 +59,7 @@ const AdminPlayer = () => {
   return (
     <div className="flex h-full w-full flex-col">
       {/* 헤더 */}
-      <div className="flex w-full items-center justify-between p-4">
+      <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-3">
           {view === "imageTool" ? (
             <button

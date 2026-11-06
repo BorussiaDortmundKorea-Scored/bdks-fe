@@ -3,9 +3,11 @@
  * 기능: 경기 관리 컴포넌트 - 경기 CRUD 기능
  * 프로세스 설명: 경기 목록 조회, 생성, 수정, 삭제 기능 제공 및 라인업 관리 접근
  */
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Chips } from "@youngduck/yd-ui";
+import { Chips, Tabs } from "@youngduck/yd-ui";
+import { HorizonDragScroll } from "@youngduck/yd-ui/HorizonDragScroll";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 import { Col, ColGroup, TBody, THead, Table, Td, Th, Tr } from "@youngduck/yd-ui/Table";
 import { Edit, ListPlus, Plus, Trash2, Users } from "lucide-react";
@@ -16,10 +18,25 @@ import { useGetAllMatchesSuspense } from "@admin/admin-match/api/react-query-api
 import { AdminMatchAddModal } from "@admin/admin-match/components/modal/admin-match-add-modal";
 import { AdminMatchBulkAddModal } from "@admin/admin-match/components/modal/admin-match-bulk-add-modal";
 import { AdminMatchEditModal } from "@admin/admin-match/components/modal/admin-match-edit-modal";
+import { useMatchViewFilter } from "@admin/admin-match/hooks/use-match-view-filter";
 import { convertUTCToLocal } from "@admin/admin-match/utils/datetime-utils";
+import {
+  type MatchViewFilter,
+  filterMatches,
+  getTodayKST,
+  isMatchViewFilter,
+  sortMatchesByUpcoming,
+} from "@admin/admin-match/utils/sort-matches-by-upcoming";
 
 import { MODAL_SLOT_CONFIG } from "@shared/components/modal/modal-slot-config";
 import { createAdminMatchLineupPath } from "@shared/constants/routes";
+
+const VIEW_FILTER_OPTIONS: { label: string; value: MatchViewFilter }[] = [
+  { label: "예정", value: "upcoming" },
+  { label: "라이브", value: "live" },
+  { label: "지난 경기", value: "past" },
+  { label: "전체", value: "all" },
+];
 
 const AdminMatch = () => {
   //SECTION HOOK호출 영역
@@ -27,10 +44,14 @@ const AdminMatch = () => {
   const { data: matches } = useGetAllMatchesSuspense();
   const { mutateAsync: deleteMatch } = useDeleteMatch();
   const overlay = useOverlay();
+  const [view, setView] = useMatchViewFilter();
   //!SECTION HOOK호출 영역
 
   //SECTION 상태값 영역
-
+  // 시즌 전체 일정이 들어 있어 다가오는 경기부터 보이게 한다 (지난 경기는 그 아래 최근 순)
+  const todayKST = getTodayKST();
+  const filteredMatches = useMemo(() => filterMatches(matches, todayKST, view), [matches, todayKST, view]);
+  const sortedMatches = useMemo(() => sortMatchesByUpcoming(filteredMatches, todayKST), [filteredMatches, todayKST]);
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
@@ -71,10 +92,22 @@ const AdminMatch = () => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      {/* 헤더 */}
-      <div className="flex w-full items-center justify-between p-4">
-        <h2 className="text-yds-s1 text-primary-100">경기 관리</h2>
-        <div className="flex items-center gap-1">
+      {/* 헤더: 제목 | 필터(가로 드래그 스크롤) | 버튼 을 모바일·PC 모두 한 줄로. 폭이 모자라면 필터 영역만 줄고 스크롤된다 */}
+      <div className="flex w-full flex-nowrap items-center gap-3">
+        <h2 className="text-yds-s1 text-primary-100 shrink-0 whitespace-nowrap">경기 관리</h2>
+        <HorizonDragScroll className="min-w-0 flex-1">
+          <Tabs
+            aria-label="경기 보기 필터"
+            options={VIEW_FILTER_OPTIONS}
+            value={view}
+            onValueChange={(value: string) => {
+              if (isMatchViewFilter(value)) setView(value);
+            }}
+            size="md"
+            className="shrink-0"
+          />
+        </HorizonDragScroll>
+        <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
             onClick={handleOpenAddModal}
@@ -95,7 +128,6 @@ const AdminMatch = () => {
           </button>
         </div>
       </div>
-
       {/* 스크롤 가능한 컨텐츠 영역 */}
       <Table scrollable={true} className="xl:w-[1200px]" scrollClassName="h-[760px] w-full xl:w-[911px]">
         <ColGroup>
@@ -123,7 +155,7 @@ const AdminMatch = () => {
           </Tr>
         </THead>
         <TBody>
-          {matches.map((match) => (
+          {sortedMatches.map((match) => (
             <Tr key={match.id}>
               <Td>{match.match_date}</Td>
               <Td>{match.match_start_time ? convertUTCToLocal(match.match_start_time).split("T")[1] : "-"}</Td>
