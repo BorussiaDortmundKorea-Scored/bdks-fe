@@ -61,7 +61,7 @@ const AdminUser = () => {
   return (
     <div className="flex h-full w-full flex-col">
       {/* 헤더 */}
-      <div className="flex w-full items-center justify-between p-4">
+      <div className="flex w-full items-center justify-between">
         <h2 className="text-yds-s1 text-primary-100">사용자 관리</h2>
         <div className="text-yds-c1m text-primary-100">
           총 {users.length}명 (관리자: {users.filter((u) => u.is_admin).length}명)
