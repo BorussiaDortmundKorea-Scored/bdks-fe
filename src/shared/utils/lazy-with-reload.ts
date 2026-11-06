@@ -8,6 +8,8 @@
  */
 import { lazy } from "react";
 
+import { safeSessionStorage } from "@shared/utils/safe-session-storage";
+
 /** React.lazy 가 받는 팩토리/모듈 타입을 그대로 따른다 (직접 정의하면 제네릭이 어긋난다) */
 type LazyFactory = Parameters<typeof lazy>[0];
 type LazyModule = Awaited<ReturnType<LazyFactory>>;
@@ -23,31 +25,6 @@ const isChunkLoadError = (error: unknown): boolean => {
     /Importing a module script failed/i.test(message) ||
     /ChunkLoadError/i.test(message)
   );
-};
-
-/** sessionStorage 는 시크릿 모드·차단 설정에서 접근 자체가 throw 할 수 있다 */
-const safeSessionStorage = {
-  get(key: string): string | null {
-    try {
-      return window.sessionStorage.getItem(key);
-    } catch {
-      return null;
-    }
-  },
-  set(key: string, value: string): void {
-    try {
-      window.sessionStorage.setItem(key, value);
-    } catch {
-      /* 저장 못 해도 동작에 지장 없음 (재시도 1회 보장만 약해짐) */
-    }
-  },
-  remove(key: string): void {
-    try {
-      window.sessionStorage.removeItem(key);
-    } catch {
-      /* noop */
-    }
-  },
 };
 
 /** 페이지 진입에 성공하면 다음 배포를 위해 재시도 기회를 되돌려 놓는다 */
