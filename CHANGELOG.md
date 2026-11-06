@@ -3,6 +3,16 @@
 이 문서는 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 형식을 기반으로 작성되었으며,
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 규칙을 준수합니다.
 
+## [Unreleased]
+
+### Added
+
+- feat: 관리자 경기 관리 화면에 예정·라이브·지난 경기·전체 필터 추가
+- feat: 필터 선택값을 현재 브라우저 세션에 유지
+- style: 경기 관리 필터를 모바일 가로 스크롤로 제공
+
+---
+
 ## [2.1.15] - 2026-10-30
 
 **Branch**: `bdks-v2.1.15-버셀애널리틱스성능지표및서울리전`
