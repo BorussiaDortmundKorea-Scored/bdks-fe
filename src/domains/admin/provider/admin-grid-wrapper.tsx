@@ -7,7 +7,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { HorizonDragScroll } from "@youngduck/yd-ui/HorizonDragScroll";
-import { ArrowLeftRight, Award, ChartNoAxesCombined, Globe, Trophy, Users, Volleyball } from "lucide-react";
+import { Award, ChartNoAxesCombined, Globe, Trophy, Users, Volleyball } from "lucide-react";
 
 import { ROUTES } from "@shared/constants/routes";
 
@@ -22,15 +22,15 @@ const adminMenus = [
   { id: "team", label: "Teams", path: ROUTES.ADMIN_TEAM, icon: Award },
   { id: "country", label: "Countries", path: ROUTES.ADMIN_COUNTRY, icon: Globe },
   { id: "competition", label: "Competition", path: ROUTES.ADMIN_COMPETITION, icon: Trophy },
-  { id: "transfer", label: "Transfers", path: ROUTES.ADMIN_TRANSFER, icon: ArrowLeftRight },
   { id: "user", label: "Users", path: ROUTES.ADMIN_USER, icon: Users },
 ];
 
 const AdminGridWrapper = ({ children }: IAdminWrapper) => {
   return (
     <main className="bdks-admin-container">
-      <div className="grid w-full grid-cols-1 gap-4 xl:grid-cols-[200px_minmax(0,1fr)]">
-        <nav className="bg-background-secondary card-navy-50 relative flex h-auto w-full flex-col gap-4 rounded-lg p-4 xl:h-full xl:min-h-[876px] xl:w-full">
+      {/* xl 에서는 높이를 876px 로 고정한다. 행이 auto 면 내부 표가 길어질 때 카드 전체가 같이 늘어난다 */}
+      <div className="grid w-full grid-cols-1 gap-4 xl:h-[876px] xl:grid-cols-[200px_minmax(0,1fr)] xl:grid-rows-[minmax(0,1fr)]">
+        <nav className="bg-background-secondary card-navy-50 relative flex h-auto w-full flex-col gap-4 rounded-lg p-4 xl:h-full xl:w-full">
           <h1 className="font-shilla-culture text-primary-100 text-center text-[24px] font-semibold">
             <Link to={ROUTES.ADMIN_DASHBOARD}>
               보돌코 <br /> 스코어드
@@ -60,7 +60,7 @@ const AdminGridWrapper = ({ children }: IAdminWrapper) => {
             ))}
           </HorizonDragScroll>
         </nav>
-        <div className="bg-background-secondary card-navy-50 rounded-lg p-4 text-white">
+        <div className="bg-background-secondary card-navy-50 rounded-lg p-4 text-white xl:min-h-0">
           <div className="grid h-full w-full grid-cols-1 gap-4 xl:grid-cols-8 xl:grid-rows-8">{children}</div>
         </div>
       </div>

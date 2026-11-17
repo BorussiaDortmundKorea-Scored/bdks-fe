@@ -15,7 +15,7 @@ const AdminMatchSkeleton = () => {
       </div>
 
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:w-[911px]">
+      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:h-auto xl:min-h-0 xl:flex-1">
         <THead>
           <Tr>
             <Th>경기일</Th>

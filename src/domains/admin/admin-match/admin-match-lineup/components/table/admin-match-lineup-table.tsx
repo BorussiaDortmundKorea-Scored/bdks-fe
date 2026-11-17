@@ -55,7 +55,7 @@ const AdminMatchLineupTable = ({ matchId }: { matchId: string }) => {
   //!SECTION 메서드 영역
 
   return (
-    <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:w-[911px]">
+    <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:h-auto xl:min-h-0 xl:flex-1">
       <ColGroup>
         <Col className="w-[120px]" />
         <Col className="w-[100px]" />

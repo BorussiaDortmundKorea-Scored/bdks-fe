@@ -1,6 +1,6 @@
 /**
  * 작성자: KYD
- * 기능: 평점 분포 카드 공통 레이아웃 쉘(스켈레톤/에러용) + 그리드 배치 클래스 공유
+ * 기능: 평점 분포 카드 공통 레이아웃 쉘(스켈레톤/에러용) + 카드 모양 클래스 공유
  * 프로세스 설명: 본체는 PagedCard를 직접 쓰므로 배치 클래스만 상수로 공유한다 (match-overview와 동일한 방식)
  */
 import { Card } from "@youngduck/yd-ui/Cards";
@@ -8,9 +8,8 @@ import { Card } from "@youngduck/yd-ui/Cards";
 /** 카드 제목 (본체 PagedCard.Header / 스켈레톤 / 에러 공통) */
 export const RATING_DISTRIBUTION_TITLE = "평점 분포";
 
-/** 대시보드 그리드 배치 클래스 (본체 PagedCard / 스켈레톤 / 에러 공통) */
-export const RATING_DISTRIBUTION_CARD_CLASS =
-  "text-primary-100 h-full w-full xl:col-start-5 xl:col-end-9 xl:row-start-7 xl:row-end-9";
+/** 카드 모양 클래스 (본체 PagedCard / 스켈레톤 / 에러 공통). 그리드 위치는 대시보드 페이지가 정한다 */
+export const RATING_DISTRIBUTION_CARD_CLASS = "text-primary-100 h-full w-full";
 
 const AdminDashboardRatingDistributionWrapper = ({ children }: { children: React.ReactNode }) => {
   return (

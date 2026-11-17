@@ -12,7 +12,7 @@ const AdminTransferSkeleton = () => {
         <div className="bg-primary-100/20 h-10 w-28 animate-pulse rounded" />
       </div>
 
-      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:w-[911px]">
+      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:h-auto xl:min-h-0 xl:flex-1">
         <THead>
           <Tr>
             <Th>선수</Th>
