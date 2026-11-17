@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
@@ -19,6 +19,17 @@ vi.mock("@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-p
     data: [
       { id: "player-1", name: "Player One", korean_name: "선수일", jersey_number: 7 },
       { id: "player-2", name: "Player Two", korean_name: "선수이", jersey_number: 9 },
+      { id: "player-3", name: "Player Three", korean_name: "선수삼", jersey_number: 10 },
+    ],
+  }),
+}));
+
+vi.mock("@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense", () => ({
+  useGetMatchLineupsSuspense: () => ({
+    data: [
+      { player_id: "player-1", lineup_type: "STARTING", sub_in_minute: null },
+      { player_id: "player-2", lineup_type: "BENCH", sub_in_minute: null },
+      { player_id: "player-3", lineup_type: "BENCH", sub_in_minute: 60 },
     ],
   }),
 }));
@@ -60,6 +71,17 @@ describe("AdminMatchLineupSubstitutionModal", () => {
 
     expect(substituteMock).not.toHaveBeenCalled();
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("교체 목록에는 현재 경기에서 아직 투입되지 않은 후보만 표시한다", () => {
+    render(<AdminMatchLineupSubstitutionModal matchId="match-1" lineup={mockLineup} onClose={vi.fn()} />);
+
+    fireEvent.click(screen.getByRole("combobox"));
+    const options = within(screen.getByRole("listbox"))
+      .getAllByRole("option")
+      .map((option) => option.textContent);
+
+    expect(options).toEqual(["선수이 (9번)"]);
   });
 
   // 사라지는 토스트 대신 어떤 칸이 문제인지 입력 밑에 남긴다

@@ -14,8 +14,7 @@ import { useAddMatchBenchPlayers } from "@admin/admin-match/admin-match-lineup/a
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
 import { useGetMatchLineupsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense";
 import {
-  filterSquadPlayers,
-  isDepartedPlayer,
+  filterCurrentSquadPlayers,
   useLineupPlayerOptions,
 } from "@admin/admin-match/admin-match-lineup/hooks/use-lineup-player-options";
 import { isUnusedBench } from "@admin/admin-match/admin-match-lineup/utils/lineup-board-utils";
@@ -38,12 +37,10 @@ export const AdminMatchLineupBenchAddModal = ({ matchId, onClose }: IAdminMatchL
   //SECTION 상태값 영역
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
-  const [includeDeparted, setIncludeDeparted] = useState(false);
 
-  // 이적한 선수는 기본으로 빼고, 이미 이 경기 명단에 있는 선수도 뺀다 (label = 선수 id, value = 화면 표시명)
-  const squadPlayers = useMemo(() => filterSquadPlayers(players, includeDeparted), [players, includeDeparted]);
+  // 이적·은퇴 선수는 제외하고, 이미 이 경기 명단에 있는 선수도 뺀다 (label = 선수 id, value = 화면 표시명)
+  const squadPlayers = useMemo(() => filterCurrentSquadPlayers(players), [players]);
   const playerOptions = useLineupPlayerOptions(squadPlayers, lineups);
-  const hasDepartedPlayers = players.some(isDepartedPlayer);
   const visibleOptions = playerOptions.filter((option) =>
     option.value.toLowerCase().includes(searchTerm.trim().toLowerCase()),
   );
@@ -80,15 +77,6 @@ export const AdminMatchLineupBenchAddModal = ({ matchId, onClose }: IAdminMatchL
         placeholder="이름으로 찾기"
         aria-label="이름으로 찾기"
       />
-      {hasDepartedPlayers && (
-        <CheckBox
-          checked={includeDeparted}
-          onCheckedChange={setIncludeDeparted}
-          value="이적한 선수도 보기"
-          shape="square"
-        />
-      )}
-
       <div className="flex flex-col gap-1" role="group" aria-label="추가할 선수">
         {visibleOptions.length === 0 ? (
           <p className="text-yds-c1r py-6 text-center text-white/50">
