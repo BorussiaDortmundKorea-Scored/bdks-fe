@@ -52,3 +52,12 @@ export const CHART_TOOLTIP_STYLE = {
    */
   multiKeyBackground: "rgba(0, 0, 0, 0)",
 } as const;
+
+/**
+ * 툴팁 글자 크기 — 제목 13 굵게 / 본문 12. 대부분의 차트가 이 조합이라 상수로 둔다.
+ * 다른 크기가 필요한 차트(예: 스파크라인 13/13)는 쓰지 말고 직접 적는다.
+ */
+export const CHART_TOOLTIP_FONT = {
+  titleFont: { size: 13, weight: "bold" as const },
+  bodyFont: { size: 12 },
+} as const;
