@@ -1,0 +1,6 @@
+[
+  { "country_id": "c-de", "country_name": "독일", "team_count": 22 },
+  { "country_id": "c-es", "country_name": "스페인", "team_count": 4 },
+  { "country_id": "c-en", "country_name": "영국", "team_count": 3 },
+  { "country_id": null, "country_name": "국가 미지정", "team_count": 1 }
+]

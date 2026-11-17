@@ -65,7 +65,7 @@ const AdminTransfer = () => {
         </button>
       </div>
 
-      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:w-[911px]">
+      <Table scrollable={true} className="xl:w-full" scrollClassName="h-[760px] w-full xl:h-auto xl:min-h-0 xl:flex-1">
         <ColGroup>
           <Col className="w-[140px]" />
           <Col className="w-[80px]" />

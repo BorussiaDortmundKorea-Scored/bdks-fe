@@ -26,11 +26,22 @@ import ModalTitle from "@shared/components/modal/modal-title";
 import { toFieldErrors } from "@shared/hooks/use-zod-form";
 import { type TransferDirection, type TransferType } from "@shared/types/entities/transfer.entity";
 
+export type PlayerTransferAction = "transfer" | "retire" | "return";
+
+/** 선수 행에서 연 모달의 제목 겸 확인 버튼 문구 */
+const ACTION_TITLE: Record<PlayerTransferAction, string> = {
+  transfer: "이적 처리",
+  retire: "은퇴 처리",
+  return: "복귀 처리",
+};
+
 interface IAdminTransferAddModal {
+  player?: { id: string; name: string; korean_name: string | null };
+  action?: PlayerTransferAction;
   onClose: () => void;
 }
 
-export const AdminTransferAddModal = ({ onClose }: IAdminTransferAddModal) => {
+export const AdminTransferAddModal = ({ onClose, player, action }: IAdminTransferAddModal) => {
   //SECTION HOOK호출 영역
   const { data: players } = useGetAllPlayersSuspense();
   const { data: teams } = useGetAllTeamsSuspense();
@@ -44,7 +55,9 @@ export const AdminTransferAddModal = ({ onClose }: IAdminTransferAddModal) => {
 
   const playerHook = useSelectBox({ options: playerOptions, search: true });
   const directionHook = useSelectBox({ options: TRANSFER_DIRECTION_OPTIONS });
-  const typeHook = useSelectBox({ options: TRANSFER_TYPE_OPTIONS });
+  const typeHook = useSelectBox({
+    options: action ? TRANSFER_TYPE_OPTIONS.filter((option) => option.label !== "RETIRED") : TRANSFER_TYPE_OPTIONS,
+  });
   const teamHook = useSelectBox({ options: teamOptions, search: true });
   //!SECTION HOOK호출 영역
 
@@ -52,15 +65,16 @@ export const AdminTransferAddModal = ({ onClose }: IAdminTransferAddModal) => {
   const [transferDate, setTransferDate] = useState("");
   const [euroFee, setEuroFee] = useState("");
   const [errors, setErrors] = useState<Partial<Record<keyof IAdminTransferFormValues, string>>>({});
-  const isRetired = isRetiredType(typeHook.label);
+  const isRetired = action === "retire" || (!action && isRetiredType(typeHook.label));
+  const title = action ? ACTION_TITLE[action] : "새 이적 추가";
   //!SECTION 상태값 영역
 
   //SECTION 메서드 영역
   const handleCreateTransfer = async () => {
     const result = adminTransferFormSchema.safeParse({
-      player_id: playerHook.label,
-      direction: directionHook.label,
-      transfer_type: typeHook.label,
+      player_id: player?.id ?? playerHook.label,
+      direction: action ? (action === "return" ? "IN" : "OUT") : directionHook.label,
+      transfer_type: isRetired ? "RETIRED" : typeHook.label,
       counterpart_team_id: isRetired ? null : teamHook.label || null,
       transfer_date: transferDate || null,
       euro_fee: isRetired || euroFee === "" ? null : Number(euroFee),
@@ -72,28 +86,43 @@ export const AdminTransferAddModal = ({ onClose }: IAdminTransferAddModal) => {
     }
     setErrors({});
 
-    await createTransfer({
-      ...result.data,
-      direction: result.data.direction as TransferDirection,
-      transfer_type: result.data.transfer_type as TransferType,
-    });
-    onClose();
+    try {
+      await createTransfer({
+        ...result.data,
+        direction: result.data.direction as TransferDirection,
+        transfer_type: result.data.transfer_type as TransferType,
+      });
+      onClose();
+    } catch {
+      // Mutation hook displays the error; keep the form open for retry.
+    }
   };
   //!SECTION 메서드 영역
 
   return (
     <div className="flex flex-col gap-4">
-      <ModalTitle>새 이적 추가</ModalTitle>
+      <ModalTitle>{title}</ModalTitle>
       <div className="space-y-4">
         <Field label="선수" required error={errors.player_id}>
-          <SelectBox size="full" selectBoxHook={playerHook} label="선수 선택" />
+          {player ? (
+            // 선수 행에서 열었으면 선수는 바꿀 수 없다 — 입력칸 모양으로 고정값만 보여준다
+            <div className="border-primary-100/20 bg-primary-100/10 text-yds-b2 text-primary-100 flex h-10 w-full items-center rounded-lg border px-3">
+              {player.korean_name ?? player.name}
+            </div>
+          ) : (
+            <SelectBox size="full" selectBoxHook={playerHook} label="선수 선택" />
+          )}
         </Field>
-        <Field label="방향" required error={errors.direction}>
-          <SelectBox size="full" selectBoxHook={directionHook} label="영입/방출 선택" />
-        </Field>
-        <Field label="유형" required error={errors.transfer_type}>
-          <SelectBox size="full" selectBoxHook={typeHook} label="완전/임대/은퇴 선택" />
-        </Field>
+        {!action && (
+          <Field label="방향" required error={errors.direction}>
+            <SelectBox size="full" selectBoxHook={directionHook} label="영입/방출 선택" />
+          </Field>
+        )}
+        {action !== "retire" && (
+          <Field label="유형" required error={errors.transfer_type}>
+            <SelectBox size="full" selectBoxHook={typeHook} label={action ? "완전/임대 선택" : "완전/임대/은퇴 선택"} />
+          </Field>
+        )}
         {!isRetired && (
           <Field label="상대 클럽" error={errors.counterpart_team_id}>
             <SelectBox size="full" selectBoxHook={teamHook} label="상대 클럽 선택 (자유계약·유스는 비움)" />
@@ -120,7 +149,7 @@ export const AdminTransferAddModal = ({ onClose }: IAdminTransferAddModal) => {
           취소
         </Button>
         <Button variant="fill" color="primary" size="full" onClick={handleCreateTransfer} disabled={isCreating}>
-          {isCreating ? "추가 중..." : "추가"}
+          {isCreating ? "저장 중..." : action ? title : "추가"}
         </Button>
       </ModalFooter>
     </div>

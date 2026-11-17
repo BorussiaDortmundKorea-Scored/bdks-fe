@@ -14,7 +14,7 @@ const AdminMatchPage = () => {
   return (
     <AdminGridWrapper>
       {/* 경기 목록 표 - 가로 전체, 세로 한 칸 빼고 */}
-      <div className="col-start-1 col-end-9 row-start-1 row-end-9 h-full w-full">
+      <div className="h-full min-h-0 w-full xl:col-start-1 xl:col-end-9 xl:row-start-1 xl:row-end-9">
         <ReactQueryBoundary skeleton={<AdminMatchSkeleton />} errorFallback={AdminMatchError}>
           <AdminMatch />
         </ReactQueryBoundary>

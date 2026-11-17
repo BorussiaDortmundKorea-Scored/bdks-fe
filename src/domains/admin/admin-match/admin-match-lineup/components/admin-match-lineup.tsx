@@ -69,7 +69,7 @@ const AdminMatchLineup = () => {
         <Tabs options={VIEW_TABS} value={view} onValueChange={setView} size="sm" />
       </div>
 
-      <div className="px-4">
+      <div className="flex min-h-0 flex-1 flex-col px-4">
         {view === "board" ? (
           <AdminMatchLineupBoard matchId={matchId} match={match} />
         ) : (

@@ -30,47 +30,84 @@ import AdminGridWrapper from "@admin/provider/admin-grid-wrapper";
 
 import ReactQueryBoundary from "@shared/provider/react-query-boundary";
 
+/**
+ * 8x8 그리드 칸 배치 — 위젯은 자기 위치를 모르고, 칸을 꽉 채우기만 한다.
+ * 칸 순서(DOM 순서)는 모바일 세로 쌓기 순서이기도 하다.
+ *
+ *   행\열  1   2   3   4   5   6   7   8
+ *   1     [회원수 ][탈퇴   ][사이트          ]
+ *   2-3   [회원 유형  ][평점 활동 추이        ]
+ *   4-6   [경기 평점 현황            ]
+ *   7-8   [회원 리텐션    ][평점 분포        ]
+ */
+const CELL = "min-h-0 min-w-0";
+const AREA = {
+  sites: `${CELL} xl:col-start-5 xl:col-end-9 xl:row-start-1 xl:row-end-2`,
+  userCount: `${CELL} xl:col-start-1 xl:col-end-3 xl:row-start-1 xl:row-end-2`,
+  deletedUsers: `${CELL} xl:col-start-3 xl:col-end-5 xl:row-start-1 xl:row-end-2`,
+  userLoginType: `${CELL} xl:col-start-1 xl:col-end-4 xl:row-start-2 xl:row-end-4`,
+  ratingTrend: `${CELL} xl:col-start-4 xl:col-end-9 xl:row-start-2 xl:row-end-4`,
+  matchOverview: `${CELL} xl:col-start-1 xl:col-end-7 xl:row-start-4 xl:row-end-7`,
+  retention: `${CELL} xl:col-start-1 xl:col-end-5 xl:row-start-7 xl:row-end-9`,
+  ratingDistribution: `${CELL} xl:col-start-5 xl:col-end-9 xl:row-start-7 xl:row-end-9`,
+};
+
 const AdminDashboardPage = () => {
   return (
     <AdminGridWrapper>
-      <AdminDashboardSites />
-      <ReactQueryBoundary skeleton={<AdminDashboardUserCountSkeleton />} errorFallback={AdminDashboardUserCountError}>
-        <AdminDashboardUserCount />
-      </ReactQueryBoundary>
-      <ReactQueryBoundary
-        skeleton={<AdminDashboardDeletedUsersSkeleton />}
-        errorFallback={AdminDashboardDeletedUsersError}
-      >
-        <AdminDashboardDeletedUsers />
-      </ReactQueryBoundary>
-      <ReactQueryBoundary
-        skeleton={<AdminDashboardUserLoginTypeSkeleton />}
-        errorFallback={AdminDashboardUserLoginTypeError}
-      >
-        <AdminDashboardUserLoginType />
-      </ReactQueryBoundary>
-      <ReactQueryBoundary
-        skeleton={<AdminDashboardRatingTrendSkeleton />}
-        errorFallback={AdminDashboardRatingTrendError}
-      >
-        <AdminDashboardRatingTrend />
-      </ReactQueryBoundary>
-      <ReactQueryBoundary
-        skeleton={<AdminDashboardMatchOverviewSkeleton />}
-        errorFallback={AdminDashboardMatchOverviewError}
-      >
-        <AdminDashboardMatchOverview />
-      </ReactQueryBoundary>
-      {/* 하단 1행: 좌 리텐션 퍼널 / 우 평점 분포 */}
-      <ReactQueryBoundary skeleton={<AdminDashboardRetentionSkeleton />} errorFallback={AdminDashboardRetentionError}>
-        <AdminDashboardRetention />
-      </ReactQueryBoundary>
-      <ReactQueryBoundary
-        skeleton={<AdminDashboardRatingDistributionSkeleton />}
-        errorFallback={AdminDashboardRatingDistributionError}
-      >
-        <AdminDashboardRatingDistribution />
-      </ReactQueryBoundary>
+      <div className={AREA.sites}>
+        <AdminDashboardSites />
+      </div>
+      <div className={AREA.userCount}>
+        <ReactQueryBoundary skeleton={<AdminDashboardUserCountSkeleton />} errorFallback={AdminDashboardUserCountError}>
+          <AdminDashboardUserCount />
+        </ReactQueryBoundary>
+      </div>
+      <div className={AREA.deletedUsers}>
+        <ReactQueryBoundary
+          skeleton={<AdminDashboardDeletedUsersSkeleton />}
+          errorFallback={AdminDashboardDeletedUsersError}
+        >
+          <AdminDashboardDeletedUsers />
+        </ReactQueryBoundary>
+      </div>
+      <div className={AREA.userLoginType}>
+        <ReactQueryBoundary
+          skeleton={<AdminDashboardUserLoginTypeSkeleton />}
+          errorFallback={AdminDashboardUserLoginTypeError}
+        >
+          <AdminDashboardUserLoginType />
+        </ReactQueryBoundary>
+      </div>
+      <div className={AREA.ratingTrend}>
+        <ReactQueryBoundary
+          skeleton={<AdminDashboardRatingTrendSkeleton />}
+          errorFallback={AdminDashboardRatingTrendError}
+        >
+          <AdminDashboardRatingTrend />
+        </ReactQueryBoundary>
+      </div>
+      <div className={AREA.matchOverview}>
+        <ReactQueryBoundary
+          skeleton={<AdminDashboardMatchOverviewSkeleton />}
+          errorFallback={AdminDashboardMatchOverviewError}
+        >
+          <AdminDashboardMatchOverview />
+        </ReactQueryBoundary>
+      </div>
+      <div className={AREA.retention}>
+        <ReactQueryBoundary skeleton={<AdminDashboardRetentionSkeleton />} errorFallback={AdminDashboardRetentionError}>
+          <AdminDashboardRetention />
+        </ReactQueryBoundary>
+      </div>
+      <div className={AREA.ratingDistribution}>
+        <ReactQueryBoundary
+          skeleton={<AdminDashboardRatingDistributionSkeleton />}
+          errorFallback={AdminDashboardRatingDistributionError}
+        >
+          <AdminDashboardRatingDistribution />
+        </ReactQueryBoundary>
+      </div>
     </AdminGridWrapper>
   );
 };

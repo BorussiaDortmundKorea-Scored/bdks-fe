@@ -129,7 +129,11 @@ const AdminMatch = () => {
         </div>
       </div>
       {/* 스크롤 가능한 컨텐츠 영역 */}
-      <Table scrollable={true} className="xl:w-[1200px]" scrollClassName="h-[760px] w-full xl:w-[911px]">
+      <Table
+        scrollable={true}
+        className="xl:w-[1200px]"
+        scrollClassName="h-[760px] w-full xl:h-auto xl:min-h-0 xl:flex-1"
+      >
         <ColGroup>
           <Col className="w-auto" />
           <Col className="w-auto" />

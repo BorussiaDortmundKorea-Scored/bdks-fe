@@ -4,6 +4,10 @@ import { type ApiResponse, type PostgrestError } from "@shared/api/types/api-typ
 import { type IPlayerEntity } from "@shared/types/entities/player.entity";
 
 export type IPlayer = IPlayerEntity;
+export type PlayerStatus = "ACTIVE" | "TRANSFERRED" | "RETIRED";
+export type IAdminPlayer = IPlayer & { status: PlayerStatus };
+export const getAdminPlayers = async (): Promise<ApiResponse<IAdminPlayer[]>> =>
+  callRpc<IAdminPlayer[]>(() => supabase.rpc("get_admin_players"));
 
 export type ICreatePlayerRequest = Pick<IPlayerEntity, "name"> &
   Partial<Omit<IPlayerEntity, "id" | "name" | "created_at" | "updated_at">>;

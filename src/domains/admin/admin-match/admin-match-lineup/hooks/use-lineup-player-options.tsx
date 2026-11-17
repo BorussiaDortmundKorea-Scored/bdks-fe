@@ -8,7 +8,8 @@
  */
 import { useMemo } from "react";
 
-import { type IPlayer } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
+import { type IMatchLineup, type IPlayer } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
+import { isUnusedBench } from "@admin/admin-match/admin-match-lineup/utils/lineup-board-utils";
 
 /** 기본값을 매 렌더 새로 만들면 useMemo 가 무의미해져 모듈 상수로 고정한다 */
 const NO_REGISTERED_LINEUPS: readonly { player_id: string }[] = [];
@@ -25,6 +26,16 @@ export const toPlayerOptionLabel = (player: IPlayer) =>
  */
 export const filterSquadPlayers = (players: IPlayer[], includeDeparted: boolean) =>
   includeDeparted ? players : players.filter((player) => !isDepartedPlayer(player));
+
+/** 후보 추가처럼 현재 스쿼드만 허용하는 흐름은 소속 여부가 명시적으로 true인 선수만 노출한다. */
+export const filterCurrentSquadPlayers = (players: IPlayer[]) =>
+  players.filter((player) => player.is_current_squad === true);
+
+/** 경기 명단의 미투입 후보만 교체 대상으로 돌려준다. */
+export const filterUnusedBenchPlayers = (players: IPlayer[], lineups: readonly IMatchLineup[]) => {
+  const unusedBenchIds = new Set(lineups.filter(isUnusedBench).map((lineup) => lineup.player_id));
+  return players.filter((player) => unusedBenchIds.has(player.id));
+};
 
 export const useLineupPlayerOptions = (
   players: IPlayer[],

@@ -11,11 +11,12 @@ vi.mock("@admin/admin-match/admin-match-lineup/api/react-query-api/use-add-match
 vi.mock("@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense", () => ({
   useGetAllPlayersSuspense: () => ({
     data: [
-      { id: "p-gk", name: "Kobel", korean_name: "코벨", jersey_number: 1 },
-      { id: "p-sub", name: "Beier", korean_name: "바이어", jersey_number: 14 },
-      { id: "p-free", name: "Adeyemi", korean_name: "아데예미", jersey_number: 27 },
-      { id: "p-free2", name: "Brandt", korean_name: "브란트", jersey_number: 10 },
+      { id: "p-gk", name: "Kobel", korean_name: "코벨", jersey_number: 1, is_current_squad: true },
+      { id: "p-sub", name: "Beier", korean_name: "바이어", jersey_number: 14, is_current_squad: true },
+      { id: "p-free", name: "Adeyemi", korean_name: "아데예미", jersey_number: 27, is_current_squad: true },
+      { id: "p-free2", name: "Brandt", korean_name: "브란트", jersey_number: 10, is_current_squad: true },
       { id: "p-left", name: "Reus", korean_name: "로이스", jersey_number: 11, is_current_squad: false },
+      { id: "p-retired", name: "Hummels", korean_name: "훔멜스", jersey_number: 15, is_current_squad: false },
     ],
   }),
 }));
@@ -46,13 +47,12 @@ describe("AdminMatchLineupBenchAddModal", () => {
     expect(getOptionNames()).toEqual(["아데예미 (27번)", "브란트 (10번)"]);
   });
 
-  it("이적한 선수는 기본으로 빼고, 이적한 선수도 보기를 켜면 표시와 함께 보여준다", () => {
+  it("이적·은퇴한 선수는 목록에서 제외하고 다시 표시할 수 없다", () => {
     render(<AdminMatchLineupBenchAddModal matchId="match-1" onClose={vi.fn()} />);
 
     expect(getOptionNames()).not.toContain("로이스 (11번) · 이적");
-    fireEvent.click(screen.getByText("이적한 선수도 보기"));
-
-    expect(getOptionNames()).toContain("로이스 (11번) · 이적");
+    expect(getOptionNames()).not.toContain("훔멜스 (15번) · 이적");
+    expect(screen.queryByText("이적한 선수도 보기")).not.toBeInTheDocument();
   });
 
   it("이름으로 좁혀 볼 수 있다", () => {

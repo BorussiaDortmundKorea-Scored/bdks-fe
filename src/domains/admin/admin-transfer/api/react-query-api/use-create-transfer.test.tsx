@@ -48,6 +48,7 @@ describe("useCreateTransfer", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["admin-transfers"] });
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["admin-all-players"] });
     expect(toastMock).toHaveBeenCalledWith({ content: "이적 등록을 성공했어요" });
   });
 

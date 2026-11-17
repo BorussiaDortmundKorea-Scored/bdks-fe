@@ -9,8 +9,12 @@ import { Button, Field, NumberInput, SelectBox, useSelectBox } from "@youngduck/
 
 import type { IMatchLineup } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 import { useGetAllPlayersSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-all-players-suspense";
+import { useGetMatchLineupsSuspense } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-get-match-lineups-suspense";
 import { useSubstituteMatchLineup } from "@admin/admin-match/admin-match-lineup/api/react-query-api/use-substitute-match-lineup";
-import { useLineupPlayerOptions } from "@admin/admin-match/admin-match-lineup/hooks/use-lineup-player-options";
+import {
+  filterUnusedBenchPlayers,
+  useLineupPlayerOptions,
+} from "@admin/admin-match/admin-match-lineup/hooks/use-lineup-player-options";
 import {
   type IAdminMatchLineupSubstitutionValues,
   MATCH_MINUTE_MAX,
@@ -31,6 +35,7 @@ interface IAdminMatchLineupSubstitutionModal {
 export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: IAdminMatchLineupSubstitutionModal) => {
   //SECTION HOOK호출 영역
   const { data: players } = useGetAllPlayersSuspense();
+  const { data: lineups } = useGetMatchLineupsSuspense(matchId);
   const { mutateAsync: substituteLineup, isPending: isSubstituting } = useSubstituteMatchLineup(matchId);
   //!SECTION HOOK호출 영역
 
@@ -40,7 +45,7 @@ export const AdminMatchLineupSubstitutionModal = ({ matchId, lineup, onClose }: 
   //!SECTION 상태값 영역
 
   //SECTION SelectBox 옵션/훅
-  const playerOptions = useLineupPlayerOptions(players);
+  const playerOptions = useLineupPlayerOptions(filterUnusedBenchPlayers(players, lineups));
 
   const substitutionBenchPlayerHook = useSelectBox({
     options: playerOptions,

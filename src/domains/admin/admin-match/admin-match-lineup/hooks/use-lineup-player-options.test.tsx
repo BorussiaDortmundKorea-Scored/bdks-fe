@@ -1,9 +1,11 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { type IPlayer } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
+import { type IMatchLineup, type IPlayer } from "@admin/admin-match/admin-match-lineup/api/admin-match-lineup-api";
 import {
+  filterCurrentSquadPlayers,
   filterSquadPlayers,
+  filterUnusedBenchPlayers,
   isDepartedPlayer,
   toPlayerOptionLabel,
   useLineupPlayerOptions,
@@ -42,6 +44,27 @@ describe("filterSquadPlayers", () => {
   it("기본은 이적한 선수를 빼고, includeDeparted 면 모두 돌려준다", () => {
     expect(filterSquadPlayers([KOBEL, REUS], false)).toEqual([KOBEL]);
     expect(filterSquadPlayers([KOBEL, REUS], true)).toEqual([KOBEL, REUS]);
+  });
+});
+
+describe("filterCurrentSquadPlayers", () => {
+  it("현재 스쿼드로 명시된 선수만 남긴다", () => {
+    const unknownStatus = makePlayer({ id: "p3", is_current_squad: undefined });
+
+    expect(filterCurrentSquadPlayers([KOBEL, REUS, unknownStatus])).toEqual([KOBEL]);
+  });
+});
+
+describe("filterUnusedBenchPlayers", () => {
+  it("현재 경기의 미투입 후보만 반환한다", () => {
+    const players = [KOBEL, REUS, makePlayer({ id: "p3" }), makePlayer({ id: "p4" })];
+    const lineups = [
+      { player_id: "p1", lineup_type: "STARTING", sub_in_minute: null },
+      { player_id: "p2", lineup_type: "BENCH", sub_in_minute: null },
+      { player_id: "p3", lineup_type: "BENCH", sub_in_minute: 60 },
+    ] as IMatchLineup[];
+
+    expect(filterUnusedBenchPlayers(players, lineups)).toEqual([REUS]);
   });
 });
 

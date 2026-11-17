@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AdminTransferAddModal } from "@admin/admin-transfer/components/modal/admin-transfer-add-modal";
@@ -98,6 +98,54 @@ describe("AdminTransferAddModal", () => {
         }),
       );
     });
+  });
+
+  it("선수 행에서 은퇴하면 선수와 방출·은퇴 유형을 고정한다", async () => {
+    const onClose = vi.fn();
+    render(
+      <AdminTransferAddModal
+        player={{ id: "p1", name: "Reus", korean_name: "로이스" }}
+        action="retire"
+        onClose={onClose}
+      />,
+    );
+    expect(screen.getByText("로이스")).toBeInTheDocument();
+    expect(screen.queryByText("방향")).not.toBeInTheDocument();
+    expect(screen.queryByText("유형")).not.toBeInTheDocument();
+    expect(screen.queryByText("상대 클럽")).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "은퇴 처리" }));
+    await waitFor(() => expect(onClose).toHaveBeenCalledOnce());
+    expect(mutateAsyncMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        player_id: "p1",
+        direction: "OUT",
+        transfer_type: "RETIRED",
+        counterpart_team_id: null,
+        euro_fee: null,
+      }),
+    );
+  });
+
+  it.each([
+    ["transfer", "이적 처리", "OUT"],
+    ["return", "복귀 처리", "IN"],
+  ] as const)("%s 처리 시 선택한 선수와 방향으로 등록한다", async (action, label, direction) => {
+    const onClose = vi.fn();
+    render(
+      <AdminTransferAddModal
+        player={{ id: "p1", name: "Reus", korean_name: "로이스" }}
+        action={action}
+        onClose={onClose}
+      />,
+    );
+    fireEvent.click(screen.getAllByRole("combobox")[0]);
+    expect(screen.queryByRole("option", { name: "은퇴" })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("option", { name: "완전이적" }));
+    fireEvent.click(screen.getByRole("button", { name: label }));
+    await waitFor(() => expect(onClose).toHaveBeenCalledOnce());
+    expect(mutateAsyncMock).toHaveBeenCalledWith(
+      expect.objectContaining({ player_id: "p1", direction, transfer_type: "PERMANENT" }),
+    );
   });
 
   it("취소 클릭 시 등록 없이 모달을 닫는다", () => {

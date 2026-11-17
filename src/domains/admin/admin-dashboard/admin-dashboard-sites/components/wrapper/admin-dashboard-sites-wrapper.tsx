@@ -24,10 +24,7 @@ const AdminDashboardSitesWrapper = ({ children }: IAdminDashboardSitesWrapper) =
   //!SECTION 메서드 영역
 
   return (
-    <Card
-      variant="outlined"
-      className="text-yds-s2 text-primary-100 flex items-center overflow-hidden xl:col-start-5 xl:col-end-9 xl:row-start-1 xl:row-end-2"
-    >
+    <Card variant="outlined" className="text-yds-s2 text-primary-100 flex h-full w-full items-center overflow-hidden">
       {children}
     </Card>
   );
