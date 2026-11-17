@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@youngduck/yd-ui/theme.css";
 @import "@youngduck/yd-ui/styles";
 
 @theme {
