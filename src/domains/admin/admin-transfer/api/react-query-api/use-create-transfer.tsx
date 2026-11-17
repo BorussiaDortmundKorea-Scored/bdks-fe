@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useOverlay } from "@youngduck/yd-ui/Overlays";
 
+import { ADMIN_PLAYER_QUERY_KEYS } from "@admin/admin-player/api/react-query-api/admin-player-query-keys";
 import { type ICreateTransferRequest, createTransfer } from "@admin/admin-transfer/api/admin-transfer-api";
 import { ADMIN_TRANSFER_QUERY_KEYS } from "@admin/admin-transfer/api/react-query-api/admin-transfer-query-keys";
 
@@ -16,6 +17,7 @@ export function useCreateTransfer() {
       return handleSupabaseApiResponse(response, transfer);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [ADMIN_PLAYER_QUERY_KEYS.ALL_PLAYERS] });
       queryClient.invalidateQueries({
         queryKey: [ADMIN_TRANSFER_QUERY_KEYS.TRANSFERS],
       });

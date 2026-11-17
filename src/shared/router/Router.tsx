@@ -70,7 +70,6 @@ const AdminMatchLineupPage = lazyWithReload(
 const AdminTeamPage = lazyWithReload(() => import("@admin/admin-team/pages/admin-team-page"));
 const AdminCountryPage = lazyWithReload(() => import("@admin/admin-country/pages/admin-country-page"));
 const AdminCompetitionPage = lazyWithReload(() => import("@admin/admin-competition/pages/admin-competition-page"));
-const AdminTransferPage = lazyWithReload(() => import("@admin/admin-transfer/pages/admin-transfer-page"));
 //!SECTION Lazy Loading 페이지 - 청크 분할
 
 // Sentry 성능 트레이스가 라우트 패턴(/matches/:id)으로 이름을 붙이도록 Routes 를 감싼다 (App.tsx 의 tracing 통합과 짝)
@@ -123,7 +122,8 @@ const Router = () => {
                 <Route path={ROUTES.ADMIN_TEAM} element={<AdminTeamPage />} />
                 <Route path={ROUTES.ADMIN_COUNTRY} element={<AdminCountryPage />} />
                 <Route path={ROUTES.ADMIN_COMPETITION} element={<AdminCompetitionPage />} />
-                <Route path={ROUTES.ADMIN_TRANSFER} element={<AdminTransferPage />} />
+                {/* 기존 이적 관리 URL은 선수 관리의 이적·은퇴 탭으로 연결한다 */}
+                <Route path={ROUTES.ADMIN_TRANSFER} element={<AdminPlayerPage initialView="transfers" />} />
               </Route>
             </Route>
 
